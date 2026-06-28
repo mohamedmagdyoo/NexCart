@@ -8,13 +8,19 @@
 import SwiftUI
 
 struct SignInScreen: View {
+    @StateObject var signViewModel: SignInViweModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            signViewModel.
+        }.task {
+            signViewModel.loginWithEmailAndPass(emailCredentials: <#T##EmailCredentials#>)
+        }
     }
 }
 
 struct SignInScreen_Previews: PreviewProvider {
     static var previews: some View {
-        SignInScreen()
+        SignInScreen(signViewModel: <#T##SignInViweModel#>)
     }
 }
