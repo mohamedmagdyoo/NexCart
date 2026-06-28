@@ -16,7 +16,7 @@ protocol EndPoint{
 
 //MARK: Example on how can we use this protocol
 //MARK: This will contain all the endPointes for each feathcer 
-/*
+
 enum ProductsEndPoints: EndPoint{
     
     case allProducts
@@ -43,9 +43,8 @@ enum ProductsEndPoints: EndPoint{
     }
  
     var method: String{
-        retrunt "GET"
+        return "GET"
     }
 }
  
-*/
 

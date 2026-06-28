@@ -20,6 +20,7 @@
 		D960C1E92FF11D3800FFF4D9 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1E82FF11D3800FFF4D9 /* EndPoint.swift */; };
 		D960C1ED2FF120A500FFF4D9 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1EB2FF120A500FFF4D9 /* ApiService.swift */; };
 		D960C1EE2FF120A500FFF4D9 /* ApiServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1EC2FF120A500FFF4D9 /* ApiServiceProtocol.swift */; };
+		D960C1F42FF1243400FFF4D9 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1F32FF1243400FFF4D9 /* LaunchScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		D960C1E82FF11D3800FFF4D9 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		D960C1EB2FF120A500FFF4D9 /* ApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		D960C1EC2FF120A500FFF4D9 /* ApiServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiServiceProtocol.swift; sourceTree = "<group>"; };
+		D960C1F32FF1243400FFF4D9 /* LaunchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,7 +109,9 @@
 			isa = PBXGroup;
 			children = (
 				D960C1DE2FF1188900FFF4D9 /* App */,
-				D960C1DA2FF1185100FFF4D9 /* Core */,
+				D960C1DB2FF1185A00FFF4D9 /* Presentation */,
+				D960C1DC2FF1185F00FFF4D9 /* Domain */,
+				D960C1DD2FF1186200FFF4D9 /* Data */,
 				D960C1CC2FF1178000FFF4D9 /* Modules */,
 				D960C1A32FF1167C00FFF4D9 /* Preview Content */,
 			);
@@ -142,6 +146,7 @@
 		D960C1CC2FF1178000FFF4D9 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				D960C1F22FF1241B00FFF4D9 /* Launch */,
 				D960C1CD2FF1178800FFF4D9 /* Auth */,
 			);
 			path = Modules;
@@ -250,16 +255,6 @@
 			path = Domain;
 			sourceTree = "<group>";
 		};
-		D960C1DA2FF1185100FFF4D9 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				D960C1DB2FF1185A00FFF4D9 /* Presentation */,
-				D960C1DC2FF1185F00FFF4D9 /* Domain */,
-				D960C1DD2FF1186200FFF4D9 /* Data */,
-			);
-			path = Core;
-			sourceTree = "<group>";
-		};
 		D960C1DB2FF1185A00FFF4D9 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -358,8 +353,8 @@
 		D960C1EA2FF120A500FFF4D9 /* ApiService */ = {
 			isa = PBXGroup;
 			children = (
-				D960C1EB2FF120A500FFF4D9 /* ApiService.swift */,
 				D960C1EC2FF120A500FFF4D9 /* ApiServiceProtocol.swift */,
+				D960C1EB2FF120A500FFF4D9 /* ApiService.swift */,
 			);
 			path = ApiService;
 			sourceTree = "<group>";
@@ -383,6 +378,14 @@
 			children = (
 			);
 			path = RepoInterfaces;
+			sourceTree = "<group>";
+		};
+		D960C1F22FF1241B00FFF4D9 /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				D960C1F32FF1243400FFF4D9 /* LaunchScreen.swift */,
+			);
+			path = Launch;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -517,6 +520,7 @@
 			files = (
 				D960C1EE2FF120A500FFF4D9 /* ApiServiceProtocol.swift in Sources */,
 				D960C1E92FF11D3800FFF4D9 /* EndPoint.swift in Sources */,
+				D960C1F42FF1243400FFF4D9 /* LaunchScreen.swift in Sources */,
 				D960C1A72FF1167C00FFF4D9 /* Persistence.swift in Sources */,
 				D960C1AA2FF1167C00FFF4D9 /* NexCart.xcdatamodeld in Sources */,
 				D960C1A02FF1167A00FFF4D9 /* ContentView.swift in Sources */,
