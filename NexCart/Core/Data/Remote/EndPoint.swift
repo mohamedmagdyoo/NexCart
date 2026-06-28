@@ -10,6 +10,7 @@ import Foundation
 protocol EndPoint{
     var baseUrl: String {get}
     var path: String {get}
+    var method: String{get}
 }
 
 
@@ -39,6 +40,10 @@ enum ProductsEndPoints: EndPoint{
         case .getNumberOfProducts(let numsOfProducts):
             return ""
         }
+    }
+ 
+    var method: String{
+        retrunt "GET"
     }
 }
  
