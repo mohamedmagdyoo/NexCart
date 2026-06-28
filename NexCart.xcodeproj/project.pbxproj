@@ -98,11 +98,9 @@
 		D960C19C2FF1167A00FFF4D9 /* NexCart */ = {
 			isa = PBXGroup;
 			children = (
-				D960C19D2FF1167A00FFF4D9 /* NexCartApp.swift */,
-				D960C19F2FF1167A00FFF4D9 /* ContentView.swift */,
-				D960C1A12FF1167C00FFF4D9 /* Assets.xcassets */,
-				D960C1A62FF1167C00FFF4D9 /* Persistence.swift */,
-				D960C1A82FF1167C00FFF4D9 /* NexCart.xcdatamodeld */,
+				D960C1DE2FF1188900FFF4D9 /* App */,
+				D960C1DA2FF1185100FFF4D9 /* Core */,
+				D960C1CC2FF1178000FFF4D9 /* Modules */,
 				D960C1A32FF1167C00FFF4D9 /* Preview Content */,
 			);
 			path = NexCart;
@@ -131,6 +129,192 @@
 				D960C1BF2FF1167C00FFF4D9 /* NexCartUITestsLaunchTests.swift */,
 			);
 			path = NexCartUITests;
+			sourceTree = "<group>";
+		};
+		D960C1CC2FF1178000FFF4D9 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				D960C1CD2FF1178800FFF4D9 /* Auth */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		D960C1CD2FF1178800FFF4D9 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				D960C1CE2FF1178E00FFF4D9 /* SignIn */,
+				D960C1CF2FF117B800FFF4D9 /* SignUp */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		D960C1CE2FF1178E00FFF4D9 /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				D960C1D02FF117C000FFF4D9 /* Presentation */,
+				D960C1D62FF1182300FFF4D9 /* Domain */,
+				D960C1D72FF1182700FFF4D9 /* Data */,
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
+		D960C1CF2FF117B800FFF4D9 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				D960C1D32FF1180000FFF4D9 /* Presentation */,
+				D960C1D92FF1183C00FFF4D9 /* Domain */,
+				D960C1D82FF1183800FFF4D9 /* Data */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
+		D960C1D02FF117C000FFF4D9 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				D960C1D12FF117C900FFF4D9 /* View */,
+				D960C1D22FF117CF00FFF4D9 /* VM */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		D960C1D12FF117C900FFF4D9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D960C1D22FF117CF00FFF4D9 /* VM */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = VM;
+			sourceTree = "<group>";
+		};
+		D960C1D32FF1180000FFF4D9 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				D960C1D52FF1181100FFF4D9 /* View */,
+				D960C1D42FF1180B00FFF4D9 /* VM */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		D960C1D42FF1180B00FFF4D9 /* VM */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = VM;
+			sourceTree = "<group>";
+		};
+		D960C1D52FF1181100FFF4D9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D960C1D62FF1182300FFF4D9 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		D960C1D72FF1182700FFF4D9 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		D960C1D82FF1183800FFF4D9 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		D960C1D92FF1183C00FFF4D9 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		D960C1DA2FF1185100FFF4D9 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				D960C1DB2FF1185A00FFF4D9 /* Presentation */,
+				D960C1DC2FF1185F00FFF4D9 /* Domain */,
+				D960C1DD2FF1186200FFF4D9 /* Data */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		D960C1DB2FF1185A00FFF4D9 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				D960C19D2FF1167A00FFF4D9 /* NexCartApp.swift */,
+				D960C19F2FF1167A00FFF4D9 /* ContentView.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		D960C1DC2FF1185F00FFF4D9 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		D960C1DD2FF1186200FFF4D9 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				D960C1E02FF1196900FFF4D9 /* Remote */,
+				D960C1DF2FF118CB00FFF4D9 /* Local */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		D960C1DE2FF1188900FFF4D9 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				D960C1A12FF1167C00FFF4D9 /* Assets.xcassets */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		D960C1DF2FF118CB00FFF4D9 /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				D960C1A62FF1167C00FFF4D9 /* Persistence.swift */,
+				D960C1A82FF1167C00FFF4D9 /* NexCart.xcdatamodeld */,
+			);
+			path = Local;
+			sourceTree = "<group>";
+		};
+		D960C1E02FF1196900FFF4D9 /* Remote */ = {
+			isa = PBXGroup;
+			children = (
+				D960C1E12FF1198100FFF4D9 /* DTOs */,
+				D960C1E22FF1199A00FFF4D9 /* Services */,
+			);
+			path = Remote;
+			sourceTree = "<group>";
+		};
+		D960C1E12FF1198100FFF4D9 /* DTOs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DTOs;
+			sourceTree = "<group>";
+		};
+		D960C1E22FF1199A00FFF4D9 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
