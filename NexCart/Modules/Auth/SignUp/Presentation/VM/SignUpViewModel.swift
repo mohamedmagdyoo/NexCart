@@ -1,5 +1,5 @@
 //
-//  SignInViewModel.swift
+//  SignUpViewModel.swift
 //  NexCart
 //
 //  Created by Mohamed Magdy on 28/06/2026.
@@ -7,48 +7,32 @@
 
 import Foundation
 
-enum SignInScreenState {
-    case idle
-    case loading
-    case success
-}
-
-struct AlertModel: Identifiable {
-    var id: UUID = UUID()
-    var title: String
-    var description: String
-}
-
-final class SignInViewModel: ObservableObject {
-    @Published var screenState: SignInScreenState = .idle
+final class SignUpViewModel: ObservableObject {
+    @Published var screenState: ScreenState = .idle
     @Published var alert: AlertModel?
 
     // MARK: - Use Cases
-    private let loginWithEmailPassUC: LoginWithEmailUseCaseProtocol
+    private let signUpUseCase: CreatNewAccountUseCaseProtocol
     private let loginWithProviderUC: LoginWithSocialProviderUseCaseProtocol
-    private let loginAsGuestUC: LoginAsGuestUseCaseProtocol
     
     private var userEntity: UserEntity?
 
     init(
-        loginWithEmailPassUC: LoginWithEmailUseCaseProtocol,
-        loginWithProviderUC: LoginWithSocialProviderUseCaseProtocol,
-        loginAsGuestUC: LoginAsGuestUseCaseProtocol
+        signUpUseCase: CreatNewAccountUseCaseProtocol,
+        loginWithProviderUC: LoginWithSocialProviderUseCaseProtocol
     ) {
-        self.loginWithEmailPassUC = loginWithEmailPassUC
+        self.signUpUseCase = signUpUseCase
         self.loginWithProviderUC = loginWithProviderUC
-        self.loginAsGuestUC = loginAsGuestUC
     }
 
-    // MARK: - Login with Email & Password
-    func loginWithEmailAndPass(credentials: EmailCredentials) {
+    // MARK: - Create New Account
+    func createNewAccount(credentials: SignUpCredentials) {
         screenState = .loading
         Task { @MainActor in
             do {
-                userEntity = try await loginWithEmailPassUC.execute(credentials: credentials)
+                userEntity = try await signUpUseCase.excute(credentials: credentials)
                 screenState = .success
             } catch let error as AuthError {
-                print("ErrorIs: \(error.errorDescription)")
                 alert = AlertModel(title: "Error", description: error.errorDescription)
                 screenState = .idle
             }
@@ -68,20 +52,12 @@ final class SignInViewModel: ObservableObject {
             }
         }
     }
-
-    // MARK: - Login as Guest
-    func loginAsGuest() {
-        userEntity = loginAsGuestUC.excute()
-        screenState = .success
-    }
     
-    // To emity that there a new user loged in and restate the content view to nav to home screen direct
-    func saveUser(){
+    func saveUserEntity(){
         guard let userEntity = userEntity else{
-            alert = AlertModel(title: "Wrong With Login Try Again..",description: "try agian...")
+            screenState = .error(error: "Error, try again...")
             return
         }
-        
         saveUser(userEntity)
     }
 

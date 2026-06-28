@@ -1,5 +1,5 @@
 //
-//  SignInScreen.swift
+//  SignUpScreen.swift
 //  NexCart
 //
 //  Created by Mohamed Magdy on 28/06/2026.
@@ -8,8 +8,8 @@
 import SwiftUI
 
 // MARK: - Root Screen
-struct SignInScreen: View {
-    @StateObject private var viewModel: SignInViewModel = DIContainer.shared.container.resolve(SignInViewModel.self)!
+struct SignUpScreen: View {
+    @StateObject private var viewModel: SignUpViewModel = DIContainer.shared.container.resolve(SignUpViewModel.self)!
 
     var body: some View {
         ZStack {
@@ -17,17 +17,20 @@ struct SignInScreen: View {
 
             switch viewModel.screenState {
             case .idle:
-                SignInIdleState(viewModel: viewModel)
+                SignUpIdleState(viewModel: viewModel)
             case .loading:
-                SignInLoadingState()
+                SignUpLoadingState()
             case .success:
-                SignInSuccessState(vm: viewModel)
+                SignUpSuccessState(vm: viewModel)
+            case .error(error: let error):
+                Text("\(error)")
             }
         }
+        .navigationBarBackButtonHidden(true)
         .alert(item: $viewModel.alert) { alert in
             Alert(
                 title: Text(alert.title),
-                message: Text(alert.description ),
+                message: Text(alert.description),
                 dismissButton: .default(Text("OK"))
             )
         }
@@ -35,52 +38,63 @@ struct SignInScreen: View {
 }
 
 // MARK: - Idle State
-struct SignInIdleState: View {
-    @ObservedObject var viewModel: SignInViewModel
+struct SignUpIdleState: View {
+    @ObservedObject var viewModel: SignUpViewModel
 
+    @State private var fullName: String = ""
     @State private var email: String = ""
     @State private var password: String = ""
     
-    @State private var navToSignUp: Bool = false
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
 
+            // MARK: Back Button
+            Button {
+                dismiss()
+            } label: {
+                Image(systemName: "arrow.left")
+                    .foregroundColor(.authTitle)
+                    .font(.system(size: 18, weight: .medium))
+            }
+            .padding(.top, 16)
+            .padding(.bottom, 32)
+
             // MARK: Title
-            Text("Welcome\nback.")
+            Text("Make it\nyours.")
                 .font(.system(size: 38, weight: .bold))
                 .foregroundColor(.authTitle)
                 .lineSpacing(2)
 
-            Text("Sign in to continue your wardrobe.")
+            Text("A few details and your wardrobe is ready.")
                 .font(.subheadline)
                 .foregroundColor(.authSubtitle)
                 .padding(.top, 8)
                 .padding(.bottom, 36)
 
             // MARK: Fields
+            ObsidianField(label: "FULL NAME", placeholder: "Eliza Hart", text: $fullName)
+
             ObsidianField(label: "EMAIL", placeholder: "hello@maison.co", text: $email)
                 .keyboardType(.emailAddress)
-
-            ObsidianField(label: "PASSWORD", placeholder: "••••••••", text: $password, isSecure: true)
                 .padding(.top, 16)
 
-            // MARK: Forgot Password
-            Button("Forgot password?") {
-                // navigate to ForgotPassScreen
-            }
-            .font(.footnote)
-            .foregroundColor(.authForgotPass)
-            .padding(.top, 10)
-            .padding(.bottom, 28)
+            ObsidianField(label: "PASSWORD", placeholder: "At least 8 characters", text: $password, isSecure: true)
+                .padding(.top, 16)
+                .padding(.bottom, 28)
 
-            // MARK: Sign In Button
+            // MARK: Create Account Button
             Button {
-                viewModel.loginWithEmailAndPass(
-                    credentials: EmailCredentials(email: email, password: password)
+                viewModel.createNewAccount(
+                    credentials: SignUpCredentials(
+                        name: fullName,
+                        email: email,
+                        password: password
+                    )
                 )
             } label: {
-                Text("Sign in")
+                Text("Create account")
             }
             .buttonStyle(AuthPrimaryButtonStyle())
 
@@ -105,36 +119,29 @@ struct SignInIdleState: View {
                 .buttonStyle(AuthSocialButtonStyle())
             }
 
-//            Spacer()
-
             // MARK: Footer
             AuthFooterLink(
-                message: "New here?",
-                linkText: "Create an account"
+                message: "Already have one?",
+                linkText: "Sign in"
             ) {
-                print("Nav To SignUpScreen")
-                // flip the flage
-                navToSignUp = true
+                // navigate to SignInScreen use dismis to pop
+                dismiss()
             }
             .frame(maxWidth: .infinity)
             .padding(.bottom, 24)
         }
-        .navigationDestination(isPresented: $navToSignUp){
-            SignUpScreen()
-        }
         .padding(.horizontal, 24)
     }
-        
 }
 
 // MARK: - Loading State
-struct SignInLoadingState: View {
+struct SignUpLoadingState: View {
     var body: some View {
         VStack(spacing: 16) {
             ProgressView()
                 .scaleEffect(1.5)
                 .tint(.authTitle)
-            Text("Signing in...")
+            Text("Creating your account...")
                 .font(.footnote)
                 .foregroundColor(.authSubtitle)
         }
@@ -142,13 +149,12 @@ struct SignInLoadingState: View {
 }
 
 // MARK: - Success State
-struct SignInSuccessState: View {
+struct SignUpSuccessState: View {
     @State private var scale: CGFloat = 0.5
     @State private var opacity: Double = 0
-    @State var navToHomeScreen: Bool = false
-    @ObservedObject var vm: SignInViewModel
-
-
+    
+    @ObservedObject var vm: SignUpViewModel
+    
     var body: some View {
         VStack(spacing: 16) {
             Image(systemName: "checkmark.circle.fill")
@@ -158,7 +164,7 @@ struct SignInSuccessState: View {
                 .scaleEffect(scale)
                 .opacity(opacity)
 
-            Text("Welcome back.")
+            Text("Welcome to NexCart.")
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(.authTitle)
@@ -173,22 +179,21 @@ struct SignInSuccessState: View {
         .task {
             do{
                 try await Task.sleep(nanoseconds: 2000000000)
-                print("Nav to home screen")
-                vm.saveUser()
+                vm.saveUserEntity()
             }catch{
-                print(error.localizedDescription)
+                vm.screenState = .error(error: error.localizedDescription)
             }
+            
         }
     }
 }
 
 // MARK: - Preview
-struct SignInScreen_Previews: PreviewProvider {
+struct SignUpScreen_Previews: PreviewProvider {
     static var previews: some View {
-        SignInIdleState(viewModel: SignInViewModel(
-            loginWithEmailPassUC: MockLoginWithEmailUseCase(),
-            loginWithProviderUC: MockLoginWithSocialProviderUseCase(),
-            loginAsGuestUC: MockLoginAsGuestUseCase()
+        SignUpIdleState(viewModel: SignUpViewModel(
+            signUpUseCase: MockCreateNewAccountUseCase(),
+            loginWithProviderUC: MockLoginWithSocialProviderUseCase()
         ))
     }
 }

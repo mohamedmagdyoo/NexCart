@@ -16,14 +16,18 @@ struct ContentView: View {
     @AppStorage("userEntity") private var userData: Data?
  
     var body: some View {
-        NavigationStack{
+        
             if userData != nil {
-                HomeScreen()
-//                SignInScreen()
+                NavigationStack{
+                    HomeScreen()
+                }
             } else {
-                SignInScreen()
+                NavigationStack{
+                    SignInScreen()
+                }
+                .navigationBarBackButtonHidden(true)
             }
-        }
+    
     }
 }
 
@@ -38,6 +42,12 @@ struct HomeScreen: View{
         VStack{
             Text("NexCart")
                 .font(.system(size: 22,weight: .heavy, design: .rounded))
+            
+            Button{
+                UserDefaults.standard.removeObject(forKey: "userEntity")
+            }label: {
+                Text("RemoveUserEntity")
+            }
         }
     }
 }

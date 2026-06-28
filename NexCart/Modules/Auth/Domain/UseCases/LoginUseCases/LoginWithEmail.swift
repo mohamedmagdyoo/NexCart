@@ -24,7 +24,7 @@ final class LoginWithEmailUseCase: LoginWithEmailUseCaseProtocol {
         if credentials.email.isEmpty || !credentials.email.contains("@") {
             throw AuthError.invalidEmail
         }
-        if credentials.password.count < 6 {
+        if credentials.password.count < 8 {
             throw AuthError.weakPassword
         }
         return try await repository.loginWithEmail(credentials)

@@ -55,7 +55,7 @@ final class MockLoginAsGuestUseCase: LoginAsGuestUseCaseProtocol {
 final class MockCreateNewAccountUseCase: CreatNewAccountUseCaseProtocol {
     var shouldFail = false
 
-    func excute(signUpCredentials: SignUpCredentials) async throws -> UserEntity {
+    func excute(credentials: SignUpCredentials) async throws -> UserEntity {
         if shouldFail { throw AuthError.emailAlreadyInUse }
         return mockUser
     }

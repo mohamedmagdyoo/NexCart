@@ -18,11 +18,9 @@ extension DIContainer {
             )
         }
 
-//        container.register(SignUpViewModel.self) { r in
-//            SignUpViewModel(
-//                createAccountUseCase: r.resolve(CreatNewAccountUseCaseProtocol.self)!
-//            )
-//        }
+        container.register(SignUpViewModel.self) { r in
+            SignUpViewModel(signUpUseCase: r.resolve(CreatNewAccountUseCaseProtocol.self)!, loginWithProviderUC: r.resolve(LoginWithSocialProviderUseCaseProtocol.self)!)
+        }
 
     }
 }

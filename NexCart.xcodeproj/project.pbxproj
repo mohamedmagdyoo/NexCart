@@ -40,6 +40,9 @@
 		D960C2382FF1990900FFF4D9 /* DIContainer+ViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C2372FF1990900FFF4D9 /* DIContainer+ViewModels.swift */; };
 		D960C23A2FF1A0AB00FFF4D9 /* AuthDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C2392FF1A0AB00FFF4D9 /* AuthDesignSystem.swift */; };
 		D960C23D2FF1A1D500FFF4D9 /* FakeUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C23C2FF1A1D500FFF4D9 /* FakeUseCases.swift */; };
+		D960C23F2FF1B28E00FFF4D9 /* SignUpScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C23E2FF1B28E00FFF4D9 /* SignUpScreen.swift */; };
+		D960C2452FF1B40300FFF4D9 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C2442FF1B40300FFF4D9 /* SignUpViewModel.swift */; };
+		D960C2472FF1B6CA00FFF4D9 /* ShardViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C2462FF1B6CA00FFF4D9 /* ShardViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +98,9 @@
 		D960C2372FF1990900FFF4D9 /* DIContainer+ViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+ViewModels.swift"; sourceTree = "<group>"; };
 		D960C2392FF1A0AB00FFF4D9 /* AuthDesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDesignSystem.swift; sourceTree = "<group>"; };
 		D960C23C2FF1A1D500FFF4D9 /* FakeUseCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeUseCases.swift; sourceTree = "<group>"; };
+		D960C23E2FF1B28E00FFF4D9 /* SignUpScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpScreen.swift; sourceTree = "<group>"; };
+		D960C2442FF1B40300FFF4D9 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		D960C2462FF1B6CA00FFF4D9 /* ShardViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShardViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +200,7 @@
 		D960C1CD2FF1178800FFF4D9 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				D960C1D62FF1182300FFF4D9 /* Domain */,
 				D960C1CE2FF1178E00FFF4D9 /* SignIn */,
 				D960C1CF2FF117B800FFF4D9 /* SignUp */,
 				D960C2392FF1A0AB00FFF4D9 /* AuthDesignSystem.swift */,
@@ -205,7 +212,6 @@
 			isa = PBXGroup;
 			children = (
 				D960C1D02FF117C000FFF4D9 /* Presentation */,
-				D960C1D62FF1182300FFF4D9 /* Domain */,
 				D960C1D72FF1182700FFF4D9 /* Data */,
 			);
 			path = SignIn;
@@ -215,7 +221,6 @@
 			isa = PBXGroup;
 			children = (
 				D960C1D32FF1180000FFF4D9 /* Presentation */,
-				D960C1D92FF1183C00FFF4D9 /* Domain */,
 				D960C1D82FF1183800FFF4D9 /* Data */,
 			);
 			path = SignUp;
@@ -258,6 +263,7 @@
 		D960C1D42FF1180B00FFF4D9 /* VM */ = {
 			isa = PBXGroup;
 			children = (
+				D960C2442FF1B40300FFF4D9 /* SignUpViewModel.swift */,
 			);
 			path = VM;
 			sourceTree = "<group>";
@@ -265,6 +271,7 @@
 		D960C1D52FF1181100FFF4D9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D960C23E2FF1B28E00FFF4D9 /* SignUpScreen.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -291,13 +298,6 @@
 			children = (
 			);
 			path = Data;
-			sourceTree = "<group>";
-		};
-		D960C1D92FF1183C00FFF4D9 /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Domain;
 			sourceTree = "<group>";
 		};
 		D960C1DB2FF1185A00FFF4D9 /* Presentation */ = {
@@ -392,6 +392,7 @@
 		D960C1E72FF11B0B00FFF4D9 /* ShardViews */ = {
 			isa = PBXGroup;
 			children = (
+				D960C2462FF1B6CA00FFF4D9 /* ShardViews.swift */,
 			);
 			path = ShardViews;
 			sourceTree = "<group>";
@@ -677,6 +678,7 @@
 				D960C23A2FF1A0AB00FFF4D9 /* AuthDesignSystem.swift in Sources */,
 				D960C23D2FF1A1D500FFF4D9 /* FakeUseCases.swift in Sources */,
 				D960C2282FF1813900FFF4D9 /* SignInViweModel.swift in Sources */,
+				D960C2472FF1B6CA00FFF4D9 /* ShardViews.swift in Sources */,
 				D960C21D2FF17B6100FFF4D9 /* LoginAsGuest.swift in Sources */,
 				D960C1E92FF11D3800FFF4D9 /* EndPoint.swift in Sources */,
 				D960C1F42FF1243400FFF4D9 /* LaunchScreen.swift in Sources */,
@@ -684,6 +686,7 @@
 				D960C1A72FF1167C00FFF4D9 /* Persistence.swift in Sources */,
 				D960C2192FF17AF700FFF4D9 /* LoginWithEmail.swift in Sources */,
 				D960C1AA2FF1167C00FFF4D9 /* NexCart.xcdatamodeld in Sources */,
+				D960C2452FF1B40300FFF4D9 /* SignUpViewModel.swift in Sources */,
 				D960C2312FF1981D00FFF4D9 /* DIContainer.swift in Sources */,
 				D960C22A2FF18C6500FFF4D9 /* FakeAuthRepo.swift in Sources */,
 				D960C2382FF1990900FFF4D9 /* DIContainer+ViewModels.swift in Sources */,
@@ -691,6 +694,7 @@
 				D960C2202FF17BE800FFF4D9 /* CreatNewAccount.swift in Sources */,
 				D960C19E2FF1167A00FFF4D9 /* NexCartApp.swift in Sources */,
 				D960C1ED2FF120A500FFF4D9 /* ApiService.swift in Sources */,
+				D960C23F2FF1B28E00FFF4D9 /* SignUpScreen.swift in Sources */,
 				D960C2232FF17C8200FFF4D9 /* ForgotPass.swift in Sources */,
 				D960C1E52FF11ACE00FFF4D9 /* AppTheme.swift in Sources */,
 				D960C2262FF17D6D00FFF4D9 /* LogOut.swift in Sources */,
