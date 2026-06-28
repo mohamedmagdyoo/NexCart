@@ -6,8 +6,8 @@
 //
 
 import Foundation
-
-protocol ProductViewModelProtocol: ObservableObject {
-    var product: Product? { get set }
-    func setProduct(_ product: Product)
-}
+//
+//protocol ProductViewModelProtocol: ObservableObject {
+//    var product: Product? { get set }
+//    func setProduct(_ product: Product)
+//}

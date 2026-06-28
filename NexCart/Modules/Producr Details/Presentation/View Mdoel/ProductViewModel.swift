@@ -8,16 +8,16 @@
 import Foundation
 import Foundation
 
-@MainActor
-final class ProductDetailViewModel: ProductViewModelProtocol {
-
-    @Published var product: Product?
-
-    init(product: Product) {
-        self.product = product
-    }
-
-    func setProduct(_ product: Product) {
-        self.product = product
-    }
-}
+//@MainActor
+//final class ProductDetailViewModel: ProductViewModelProtocol {
+//
+//    @Published var product: Product?
+//
+//    init(product: Product) {
+//        self.product = product
+//    }
+//
+//    func setProduct(_ product: Product) {
+//        self.product = product
+//    }
+//}
