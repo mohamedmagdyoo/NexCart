@@ -16,6 +16,8 @@
 		D960C1B42FF1167C00FFF4D9 /* NexCartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1B32FF1167C00FFF4D9 /* NexCartTests.swift */; };
 		D960C1BE2FF1167C00FFF4D9 /* NexCartUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1BD2FF1167C00FFF4D9 /* NexCartUITests.swift */; };
 		D960C1C02FF1167C00FFF4D9 /* NexCartUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1BF2FF1167C00FFF4D9 /* NexCartUITestsLaunchTests.swift */; };
+		D960C1E52FF11ACE00FFF4D9 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1E42FF11ACE00FFF4D9 /* AppTheme.swift */; };
+		D960C1E92FF11D3800FFF4D9 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1E82FF11D3800FFF4D9 /* EndPoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		D960C1B92FF1167C00FFF4D9 /* NexCartUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NexCartUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D960C1BD2FF1167C00FFF4D9 /* NexCartUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NexCartUITests.swift; sourceTree = "<group>"; };
 		D960C1BF2FF1167C00FFF4D9 /* NexCartUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NexCartUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D960C1E42FF11ACE00FFF4D9 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		D960C1E82FF11D3800FFF4D9 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,8 +259,9 @@
 		D960C1DB2FF1185A00FFF4D9 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				D960C19D2FF1167A00FFF4D9 /* NexCartApp.swift */,
-				D960C19F2FF1167A00FFF4D9 /* ContentView.swift */,
+				D960C1E62FF11B0100FFF4D9 /* App */,
+				D960C1E32FF11AC400FFF4D9 /* AppTheme */,
+				D960C1E72FF11B0B00FFF4D9 /* ShardViews */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -299,6 +304,7 @@
 			children = (
 				D960C1E12FF1198100FFF4D9 /* DTOs */,
 				D960C1E22FF1199A00FFF4D9 /* Services */,
+				D960C1E82FF11D3800FFF4D9 /* EndPoint.swift */,
 			);
 			path = Remote;
 			sourceTree = "<group>";
@@ -315,6 +321,30 @@
 			children = (
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		D960C1E32FF11AC400FFF4D9 /* AppTheme */ = {
+			isa = PBXGroup;
+			children = (
+				D960C1E42FF11ACE00FFF4D9 /* AppTheme.swift */,
+			);
+			path = AppTheme;
+			sourceTree = "<group>";
+		};
+		D960C1E62FF11B0100FFF4D9 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				D960C19D2FF1167A00FFF4D9 /* NexCartApp.swift */,
+				D960C19F2FF1167A00FFF4D9 /* ContentView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		D960C1E72FF11B0B00FFF4D9 /* ShardViews */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ShardViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -447,10 +477,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D960C1E92FF11D3800FFF4D9 /* EndPoint.swift in Sources */,
 				D960C1A72FF1167C00FFF4D9 /* Persistence.swift in Sources */,
 				D960C1AA2FF1167C00FFF4D9 /* NexCart.xcdatamodeld in Sources */,
 				D960C1A02FF1167A00FFF4D9 /* ContentView.swift in Sources */,
 				D960C19E2FF1167A00FFF4D9 /* NexCartApp.swift in Sources */,
+				D960C1E52FF11ACE00FFF4D9 /* AppTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
