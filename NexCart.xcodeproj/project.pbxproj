@@ -22,6 +22,14 @@
 		D960C1EE2FF120A500FFF4D9 /* ApiServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1EC2FF120A500FFF4D9 /* ApiServiceProtocol.swift */; };
 		D960C1F42FF1243400FFF4D9 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1F32FF1243400FFF4D9 /* LaunchScreen.swift */; };
 		D960C1F62FF12A1500FFF4D9 /* SignInScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1F52FF12A1500FFF4D9 /* SignInScreen.swift */; };
+		D960C1F92FF12A6200FFF4D9 /* temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1F82FF12A6200FFF4D9 /* temp.swift */; };
+		D960C1FB2FF12A7A00FFF4D9 /* temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1FA2FF12A7A00FFF4D9 /* temp.swift */; };
+		D960C1FD2FF12A8100FFF4D9 /* temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1FC2FF12A8100FFF4D9 /* temp.swift */; };
+		D960C1FF2FF12A8600FFF4D9 /* temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1FE2FF12A8600FFF4D9 /* temp.swift */; };
+		D960C2012FF12A8C00FFF4D9 /* temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C2002FF12A8C00FFF4D9 /* temp.swift */; };
+		D960C2032FF12AAF00FFF4D9 /* temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C2022FF12AAF00FFF4D9 /* temp.swift */; };
+		D960C2052FF12ABB00FFF4D9 /* temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C2042FF12ABB00FFF4D9 /* temp.swift */; };
+		D960C2072FF12AC000FFF4D9 /* temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C2062FF12AC000FFF4D9 /* temp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +68,14 @@
 		D960C1EC2FF120A500FFF4D9 /* ApiServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiServiceProtocol.swift; sourceTree = "<group>"; };
 		D960C1F32FF1243400FFF4D9 /* LaunchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
 		D960C1F52FF12A1500FFF4D9 /* SignInScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInScreen.swift; sourceTree = "<group>"; };
+		D960C1F82FF12A6200FFF4D9 /* temp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = temp.swift; sourceTree = "<group>"; };
+		D960C1FA2FF12A7A00FFF4D9 /* temp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = temp.swift; sourceTree = "<group>"; };
+		D960C1FC2FF12A8100FFF4D9 /* temp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = temp.swift; sourceTree = "<group>"; };
+		D960C1FE2FF12A8600FFF4D9 /* temp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = temp.swift; sourceTree = "<group>"; };
+		D960C2002FF12A8C00FFF4D9 /* temp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = temp.swift; sourceTree = "<group>"; };
+		D960C2022FF12AAF00FFF4D9 /* temp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = temp.swift; sourceTree = "<group>"; };
+		D960C2042FF12ABB00FFF4D9 /* temp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = temp.swift; sourceTree = "<group>"; };
+		D960C2062FF12AC000FFF4D9 /* temp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = temp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +219,7 @@
 		D960C1D22FF117CF00FFF4D9 /* VM */ = {
 			isa = PBXGroup;
 			children = (
+				D960C2022FF12AAF00FFF4D9 /* temp.swift */,
 			);
 			path = VM;
 			sourceTree = "<group>";
@@ -233,6 +250,7 @@
 		D960C1D62FF1182300FFF4D9 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				D960C2042FF12ABB00FFF4D9 /* temp.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -240,6 +258,7 @@
 		D960C1D72FF1182700FFF4D9 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				D960C2062FF12AC000FFF4D9 /* temp.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -317,6 +336,7 @@
 		D960C1E12FF1198100FFF4D9 /* DTOs */ = {
 			isa = PBXGroup;
 			children = (
+				D960C2002FF12A8C00FFF4D9 /* temp.swift */,
 			);
 			path = DTOs;
 			sourceTree = "<group>";
@@ -349,6 +369,7 @@
 		D960C1E72FF11B0B00FFF4D9 /* ShardViews */ = {
 			isa = PBXGroup;
 			children = (
+				D960C1F82FF12A6200FFF4D9 /* temp.swift */,
 			);
 			path = ShardViews;
 			sourceTree = "<group>";
@@ -365,6 +386,7 @@
 		D960C1EF2FF1213900FFF4D9 /* Entites */ = {
 			isa = PBXGroup;
 			children = (
+				D960C1FA2FF12A7A00FFF4D9 /* temp.swift */,
 			);
 			path = Entites;
 			sourceTree = "<group>";
@@ -372,6 +394,7 @@
 		D960C1F02FF1214100FFF4D9 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				D960C1FC2FF12A8100FFF4D9 /* temp.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -379,6 +402,7 @@
 		D960C1F12FF1214C00FFF4D9 /* RepoInterfaces */ = {
 			isa = PBXGroup;
 			children = (
+				D960C1FE2FF12A8600FFF4D9 /* temp.swift */,
 			);
 			path = RepoInterfaces;
 			sourceTree = "<group>";
@@ -526,11 +550,19 @@
 				D960C1E92FF11D3800FFF4D9 /* EndPoint.swift in Sources */,
 				D960C1F42FF1243400FFF4D9 /* LaunchScreen.swift in Sources */,
 				D960C1A72FF1167C00FFF4D9 /* Persistence.swift in Sources */,
+				D960C1FF2FF12A8600FFF4D9 /* temp.swift in Sources */,
 				D960C1AA2FF1167C00FFF4D9 /* NexCart.xcdatamodeld in Sources */,
 				D960C1A02FF1167A00FFF4D9 /* ContentView.swift in Sources */,
 				D960C19E2FF1167A00FFF4D9 /* NexCartApp.swift in Sources */,
 				D960C1ED2FF120A500FFF4D9 /* ApiService.swift in Sources */,
+				D960C1F92FF12A6200FFF4D9 /* temp.swift in Sources */,
+				D960C2072FF12AC000FFF4D9 /* temp.swift in Sources */,
+				D960C2032FF12AAF00FFF4D9 /* temp.swift in Sources */,
+				D960C1FD2FF12A8100FFF4D9 /* temp.swift in Sources */,
+				D960C2052FF12ABB00FFF4D9 /* temp.swift in Sources */,
 				D960C1E52FF11ACE00FFF4D9 /* AppTheme.swift in Sources */,
+				D960C1FB2FF12A7A00FFF4D9 /* temp.swift in Sources */,
+				D960C2012FF12A8C00FFF4D9 /* temp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
