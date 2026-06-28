@@ -33,6 +33,13 @@
 		D960C2262FF17D6D00FFF4D9 /* LogOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C2252FF17D6D00FFF4D9 /* LogOut.swift */; };
 		D960C2282FF1813900FFF4D9 /* SignInViweModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C2272FF1813900FFF4D9 /* SignInViweModel.swift */; };
 		D960C22A2FF18C6500FFF4D9 /* FakeAuthRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C2292FF18C6500FFF4D9 /* FakeAuthRepo.swift */; };
+		D960C22D2FF197CC00FFF4D9 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = D960C22C2FF197CC00FFF4D9 /* Swinject */; };
+		D960C2312FF1981D00FFF4D9 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C2302FF1981D00FFF4D9 /* DIContainer.swift */; };
+		D960C2342FF1987600FFF4D9 /* DIContainer+Repositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C2332FF1987600FFF4D9 /* DIContainer+Repositories.swift */; };
+		D960C2362FF1989F00FFF4D9 /* DIContainer+UseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C2352FF1989F00FFF4D9 /* DIContainer+UseCases.swift */; };
+		D960C2382FF1990900FFF4D9 /* DIContainer+ViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C2372FF1990900FFF4D9 /* DIContainer+ViewModels.swift */; };
+		D960C23A2FF1A0AB00FFF4D9 /* AuthDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C2392FF1A0AB00FFF4D9 /* AuthDesignSystem.swift */; };
+		D960C23D2FF1A1D500FFF4D9 /* FakeUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C23C2FF1A1D500FFF4D9 /* FakeUseCases.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +89,12 @@
 		D960C2252FF17D6D00FFF4D9 /* LogOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogOut.swift; sourceTree = "<group>"; };
 		D960C2272FF1813900FFF4D9 /* SignInViweModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViweModel.swift; sourceTree = "<group>"; };
 		D960C2292FF18C6500FFF4D9 /* FakeAuthRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeAuthRepo.swift; sourceTree = "<group>"; };
+		D960C2302FF1981D00FFF4D9 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
+		D960C2332FF1987600FFF4D9 /* DIContainer+Repositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+Repositories.swift"; sourceTree = "<group>"; };
+		D960C2352FF1989F00FFF4D9 /* DIContainer+UseCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+UseCases.swift"; sourceTree = "<group>"; };
+		D960C2372FF1990900FFF4D9 /* DIContainer+ViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+ViewModels.swift"; sourceTree = "<group>"; };
+		D960C2392FF1A0AB00FFF4D9 /* AuthDesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDesignSystem.swift; sourceTree = "<group>"; };
+		D960C23C2FF1A1D500FFF4D9 /* FakeUseCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeUseCases.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D960C22D2FF197CC00FFF4D9 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,6 +146,7 @@
 		D960C19C2FF1167A00FFF4D9 /* NexCart */ = {
 			isa = PBXGroup;
 			children = (
+				D960C22E2FF1980C00FFF4D9 /* Core */,
 				D960C1DE2FF1188900FFF4D9 /* App */,
 				D960C1DB2FF1185A00FFF4D9 /* Presentation */,
 				D960C1DC2FF1185F00FFF4D9 /* Domain */,
@@ -181,6 +196,7 @@
 			children = (
 				D960C1CE2FF1178E00FFF4D9 /* SignIn */,
 				D960C1CF2FF117B800FFF4D9 /* SignUp */,
+				D960C2392FF1A0AB00FFF4D9 /* AuthDesignSystem.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -266,7 +282,6 @@
 		D960C1D72FF1182700FFF4D9 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				D960C2292FF18C6500FFF4D9 /* FakeAuthRepo.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -310,6 +325,7 @@
 			children = (
 				D960C1E02FF1196900FFF4D9 /* Remote */,
 				D960C1DF2FF118CB00FFF4D9 /* Local */,
+				D960C23B2FF1A1BB00FFF4D9 /* FakeData */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -480,6 +496,42 @@
 			path = LogOutUseCase;
 			sourceTree = "<group>";
 		};
+		D960C22E2FF1980C00FFF4D9 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				D960C22F2FF1981100FFF4D9 /* DI */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		D960C22F2FF1981100FFF4D9 /* DI */ = {
+			isa = PBXGroup;
+			children = (
+				D960C2322FF1986000FFF4D9 /* InjectedFolders */,
+				D960C2302FF1981D00FFF4D9 /* DIContainer.swift */,
+			);
+			path = DI;
+			sourceTree = "<group>";
+		};
+		D960C2322FF1986000FFF4D9 /* InjectedFolders */ = {
+			isa = PBXGroup;
+			children = (
+				D960C2332FF1987600FFF4D9 /* DIContainer+Repositories.swift */,
+				D960C2352FF1989F00FFF4D9 /* DIContainer+UseCases.swift */,
+				D960C2372FF1990900FFF4D9 /* DIContainer+ViewModels.swift */,
+			);
+			path = InjectedFolders;
+			sourceTree = "<group>";
+		};
+		D960C23B2FF1A1BB00FFF4D9 /* FakeData */ = {
+			isa = PBXGroup;
+			children = (
+				D960C2292FF18C6500FFF4D9 /* FakeAuthRepo.swift */,
+				D960C23C2FF1A1D500FFF4D9 /* FakeUseCases.swift */,
+			);
+			path = FakeData;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -496,6 +548,9 @@
 			dependencies = (
 			);
 			name = NexCart;
+			packageProductDependencies = (
+				D960C22C2FF197CC00FFF4D9 /* Swinject */,
+			);
 			productName = NexCart;
 			productReference = D960C19A2FF1167A00FFF4D9 /* NexCart.app */;
 			productType = "com.apple.product-type.application";
@@ -568,6 +623,9 @@
 				Base,
 			);
 			mainGroup = D960C1912FF1167A00FFF4D9;
+			packageReferences = (
+				D960C22B2FF197CC00FFF4D9 /* XCRemoteSwiftPackageReference "swinject" */,
+			);
 			productRefGroup = D960C19B2FF1167A00FFF4D9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -613,7 +671,11 @@
 				D960C1EE2FF120A500FFF4D9 /* ApiServiceProtocol.swift in Sources */,
 				D960C1F62FF12A1500FFF4D9 /* SignInScreen.swift in Sources */,
 				D960C20F2FF1734B00FFF4D9 /* AuthEntities.swift in Sources */,
+				D960C2342FF1987600FFF4D9 /* DIContainer+Repositories.swift in Sources */,
+				D960C2362FF1989F00FFF4D9 /* DIContainer+UseCases.swift in Sources */,
 				D960C21B2FF17B3600FFF4D9 /* LoginWithSocialProvider.swift in Sources */,
+				D960C23A2FF1A0AB00FFF4D9 /* AuthDesignSystem.swift in Sources */,
+				D960C23D2FF1A1D500FFF4D9 /* FakeUseCases.swift in Sources */,
 				D960C2282FF1813900FFF4D9 /* SignInViweModel.swift in Sources */,
 				D960C21D2FF17B6100FFF4D9 /* LoginAsGuest.swift in Sources */,
 				D960C1E92FF11D3800FFF4D9 /* EndPoint.swift in Sources */,
@@ -622,7 +684,9 @@
 				D960C1A72FF1167C00FFF4D9 /* Persistence.swift in Sources */,
 				D960C2192FF17AF700FFF4D9 /* LoginWithEmail.swift in Sources */,
 				D960C1AA2FF1167C00FFF4D9 /* NexCart.xcdatamodeld in Sources */,
+				D960C2312FF1981D00FFF4D9 /* DIContainer.swift in Sources */,
 				D960C22A2FF18C6500FFF4D9 /* FakeAuthRepo.swift in Sources */,
+				D960C2382FF1990900FFF4D9 /* DIContainer+ViewModels.swift in Sources */,
 				D960C1A02FF1167A00FFF4D9 /* ContentView.swift in Sources */,
 				D960C2202FF17BE800FFF4D9 /* CreatNewAccount.swift in Sources */,
 				D960C19E2FF1167A00FFF4D9 /* NexCartApp.swift in Sources */,
@@ -949,6 +1013,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D960C22B2FF197CC00FFF4D9 /* XCRemoteSwiftPackageReference "swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/swinject/swinject";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D960C22C2FF197CC00FFF4D9 /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D960C22B2FF197CC00FFF4D9 /* XCRemoteSwiftPackageReference "swinject" */;
+			productName = Swinject;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		D960C1A82FF1167C00FFF4D9 /* NexCart.xcdatamodeld */ = {

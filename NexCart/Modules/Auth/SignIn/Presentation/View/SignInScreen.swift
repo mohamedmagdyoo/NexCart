@@ -7,20 +7,192 @@
 
 import SwiftUI
 
+// MARK: - Root Screen
 struct SignInScreen: View {
-    @StateObject var signViewModel: SignInViweModel
-    
+    @StateObject private var viewModel: SignInViewModel = DIContainer.shared.container.resolve(SignInViewModel.self)!
+
     var body: some View {
-        VStack{
-            signViewModel.
-        }.task {
-            signViewModel.loginWithEmailAndPass(emailCredentials: <#T##EmailCredentials#>)
+        ZStack {
+            Color.authBackground.ignoresSafeArea()
+
+            switch viewModel.screenState {
+            case .idle:
+                SignInIdleState(viewModel: viewModel)
+            case .loading:
+                SignInLoadingState()
+            case .success:
+                SignInSuccessState(vm: viewModel)
+            }
+        }
+        .alert(item: $viewModel.alert) { alert in
+            Alert(
+                title: Text(alert.title),
+                message: Text(alert.description ?? ""),
+                dismissButton: .default(Text("OK"))
+            )
         }
     }
 }
 
+// MARK: - Idle State
+struct SignInIdleState: View {
+    @ObservedObject var viewModel: SignInViewModel
+
+    @State private var email: String = ""
+    @State private var password: String = ""
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+
+            // MARK: Back Button
+            Button {
+                // handle back
+            } label: {
+                Image(systemName: "arrow.left")
+                    .foregroundColor(.authTitle)
+                    .font(.system(size: 18, weight: .medium))
+            }
+            .padding(.top, 16)
+            .padding(.bottom, 32)
+
+            // MARK: Title
+            Text("Welcome\nback.")
+                .font(.system(size: 38, weight: .bold))
+                .foregroundColor(.authTitle)
+                .lineSpacing(2)
+
+            Text("Sign in to continue your wardrobe.")
+                .font(.subheadline)
+                .foregroundColor(.authSubtitle)
+                .padding(.top, 8)
+                .padding(.bottom, 36)
+
+            // MARK: Fields
+            ObsidianField(label: "EMAIL", placeholder: "hello@maison.co", text: $email)
+                .keyboardType(.emailAddress)
+
+            ObsidianField(label: "PASSWORD", placeholder: "••••••••", text: $password, isSecure: true)
+                .padding(.top, 16)
+
+            // MARK: Forgot Password
+            Button("Forgot password?") {
+                // navigate to ForgotPassScreen
+            }
+            .font(.footnote)
+            .foregroundColor(.authForgotPass)
+            .padding(.top, 10)
+            .padding(.bottom, 28)
+
+            // MARK: Sign In Button
+            Button {
+                viewModel.loginWithEmailAndPass(
+                    credentials: EmailCredentials(email: email, password: password)
+                )
+            } label: {
+                Text("Sign in")
+            }
+            .buttonStyle(AuthPrimaryButtonStyle())
+
+            // MARK: Social Divider
+            AuthDivider(text: "OR CONTINUE WITH")
+                .padding(.vertical, 24)
+
+            // MARK: Social Buttons
+            HStack(spacing: 12) {
+                Button {
+                    viewModel.loginWithSocialProvider(provider: .apple)
+                } label: {
+                    Text("Apple")
+                }
+                .buttonStyle(AuthSocialButtonStyle())
+
+                Button {
+                    viewModel.loginWithSocialProvider(provider: .google)
+                } label: {
+                    Text("Google")
+                }
+                .buttonStyle(AuthSocialButtonStyle())
+            }
+
+//            Spacer()
+
+            // MARK: Footer
+            AuthFooterLink(
+                message: "New here?",
+                linkText: "Create an account"
+            ) {
+                print("Nav To SignUpScreen")
+                // navigate to SignUpScreen
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.bottom, 24)
+        }
+        .padding(.horizontal, 24)
+    }
+}
+
+// MARK: - Loading State
+struct SignInLoadingState: View {
+    var body: some View {
+        VStack(spacing: 16) {
+            ProgressView()
+                .scaleEffect(1.5)
+                .tint(.authTitle)
+            Text("Signing in...")
+                .font(.footnote)
+                .foregroundColor(.authSubtitle)
+        }
+    }
+}
+
+// MARK: - Success State
+struct SignInSuccessState: View {
+    @State private var scale: CGFloat = 0.5
+    @State private var opacity: Double = 0
+    @State var navToHomeScreen: Bool = false
+    @ObservedObject var vm: SignInViewModel
+
+
+    var body: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "checkmark.circle.fill")
+                .resizable()
+                .frame(width: 80, height: 80)
+                .foregroundColor(.authTitle)
+                .scaleEffect(scale)
+                .opacity(opacity)
+
+            Text("Welcome back.")
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(.authTitle)
+                .opacity(opacity)
+        }
+        .onAppear {
+            withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
+                scale = 1.0
+                opacity = 1.0
+            }
+        }
+        .task {
+            do{
+                try await Task.sleep(nanoseconds: 2000000000)
+                print("Nav to home screen")
+                vm.saveUser()
+            }catch{
+                print(error.localizedDescription)
+            }
+        }
+    }
+}
+
+// MARK: - Preview
 struct SignInScreen_Previews: PreviewProvider {
     static var previews: some View {
-        SignInScreen(signViewModel: <#T##SignInViweModel#>)
+        SignInIdleState(viewModel: SignInViewModel(
+            loginWithEmailPassUC: MockLoginWithEmailUseCase(),
+            loginWithProviderUC: MockLoginWithSocialProviderUseCase(),
+            loginAsGuestUC: MockLoginAsGuestUseCase()
+        ))
     }
 }
