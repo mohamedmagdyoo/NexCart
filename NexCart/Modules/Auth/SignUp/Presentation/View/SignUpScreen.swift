@@ -18,6 +18,7 @@ struct SignUpScreen: View {
             switch viewModel.screenState {
             case .idle:
                 SignUpIdleState(viewModel: viewModel)
+                
             case .loading:
                 SignUpLoadingState()
             case .success:
@@ -48,89 +49,105 @@ struct SignUpIdleState: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        ScrollView{
+            VStack(alignment: .leading, spacing: 0) {
 
-            // MARK: Back Button
-            Button {
-                dismiss()
-            } label: {
-                Image(systemName: "arrow.left")
+                // MARK: Back Button
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.left")
+                        .foregroundColor(.authTitle)
+                        .font(.system(size: 18, weight: .medium))
+                }
+                .padding(.top, 16)
+                .padding(.bottom, 32)
+
+                // MARK: Title
+                Text("Make it\nyours.")
+                    .font(.system(size: 38, weight: .bold))
                     .foregroundColor(.authTitle)
-                    .font(.system(size: 18, weight: .medium))
-            }
-            .padding(.top, 16)
-            .padding(.bottom, 32)
+                    .lineSpacing(2)
 
-            // MARK: Title
-            Text("Make it\nyours.")
-                .font(.system(size: 38, weight: .bold))
-                .foregroundColor(.authTitle)
-                .lineSpacing(2)
+                Text("A few details and your wardrobe is ready.")
+                    .font(.subheadline)
+                    .foregroundColor(.authSubtitle)
+                    .padding(.top, 8)
+                    .padding(.bottom, 36)
 
-            Text("A few details and your wardrobe is ready.")
-                .font(.subheadline)
-                .foregroundColor(.authSubtitle)
-                .padding(.top, 8)
-                .padding(.bottom, 36)
+                // MARK: Fields
+                ObsidianField(label: "FULL NAME", placeholder: "Eliza Hart", text: $fullName)
 
-            // MARK: Fields
-            ObsidianField(label: "FULL NAME", placeholder: "Eliza Hart", text: $fullName)
+                ObsidianField(label: "EMAIL", placeholder: "hello@maison.co", text: $email)
+                    .keyboardType(.emailAddress)
+                    .padding(.top, 16)
 
-            ObsidianField(label: "EMAIL", placeholder: "hello@maison.co", text: $email)
-                .keyboardType(.emailAddress)
-                .padding(.top, 16)
+                ObsidianField(label: "PASSWORD", placeholder: "At least 8 characters", text: $password, isSecure: true)
+                    .padding(.top, 16)
+                    .padding(.bottom, 28)
 
-            ObsidianField(label: "PASSWORD", placeholder: "At least 8 characters", text: $password, isSecure: true)
-                .padding(.top, 16)
-                .padding(.bottom, 28)
-
-            // MARK: Create Account Button
-            Button {
-                viewModel.createNewAccount(
-                    credentials: SignUpCredentials(
-                        name: fullName,
-                        email: email,
-                        password: password
+                // MARK: Create Account Button
+                Button {
+                    viewModel.createNewAccount(
+                        credentials: SignUpCredentials(
+                            name: fullName,
+                            email: email,
+                            password: password
+                        )
                     )
-                )
-            } label: {
-                Text("Create account")
-            }
-            .buttonStyle(AuthPrimaryButtonStyle())
-
-            // MARK: Social Divider
-            AuthDivider(text: "OR CONTINUE WITH")
-                .padding(.vertical, 24)
-
-            // MARK: Social Buttons
-            HStack(spacing: 12) {
-                Button {
-                    viewModel.loginWithSocialProvider(provider: .apple)
                 } label: {
-                    Text("Apple")
+                    Text("Create account")
                 }
-                .buttonStyle(AuthSocialButtonStyle())
+                .buttonStyle(AuthPrimaryButtonStyle())
 
-                Button {
-                    viewModel.loginWithSocialProvider(provider: .google)
-                } label: {
-                    Text("Google")
+                // MARK: Social Divider
+                AuthDivider(text: "OR CONTINUE WITH")
+                    .padding(.vertical, 24)
+
+                VStack{
+                    // MARK: Social Buttons
+                    HStack(spacing: 12) {
+                        Button {
+                            viewModel.loginWithSocialProvider(provider: .apple)
+                        } label: {
+                            HStack{
+                                Image(systemName: "applelogo")
+                                Text("Apple")
+                            }
+                        }
+                        .buttonStyle(AuthSocialButtonStyle())
+
+                        Button {
+                            viewModel.loginWithSocialProvider(provider: .google)
+                        } label: {
+                            HStack{
+                                Image("icon_google")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                Text("Google")
+                            }
+                        }
+                        .buttonStyle(AuthSocialButtonStyle())
+                    }
+
+                    Spacer(minLength: 30)
+                    
+                    // MARK: Footer
+                    AuthFooterLink(
+                        message: "Already have one?",
+                        linkText: "Sign in"
+                    ) {
+                        // navigate to SignInScreen use dismis to pop
+                        dismiss()
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.bottom, 24)
                 }
-                .buttonStyle(AuthSocialButtonStyle())
             }
-
-            // MARK: Footer
-            AuthFooterLink(
-                message: "Already have one?",
-                linkText: "Sign in"
-            ) {
-                // navigate to SignInScreen use dismis to pop
-                dismiss()
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.bottom, 24)
-        }
-        .padding(.horizontal, 24)
+            .padding(.horizontal, 24)
+                }
+               
     }
 }
 

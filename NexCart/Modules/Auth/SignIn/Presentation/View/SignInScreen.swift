@@ -45,7 +45,6 @@ struct SignInIdleState: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-
             // MARK: Title
             Text("Welcome\nback.")
                 .font(.system(size: 38, weight: .bold))
@@ -88,36 +87,58 @@ struct SignInIdleState: View {
             AuthDivider(text: "OR CONTINUE WITH")
                 .padding(.vertical, 24)
 
-            // MARK: Social Buttons
-            HStack(spacing: 12) {
-                Button {
-                    viewModel.loginWithSocialProvider(provider: .apple)
-                } label: {
-                    Text("Apple")
+            VStack(spacing: 0){
+                // MARK: Social Buttons
+                HStack(spacing: 12) {
+                    Button {
+                        viewModel.loginWithSocialProvider(provider: .apple)
+                    } label: {
+                        HStack{
+                            Image(systemName: "applelogo")
+                            Text("Apple")
+                        }
+                    }
+                    .buttonStyle(AuthSocialButtonStyle())
+
+                    Button {
+                        viewModel.loginWithSocialProvider(provider: .google)
+                    } label: {
+                        HStack{
+                            Image("icon_google")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                            Text("Google")
+                        }
+                    }
+                    .buttonStyle(AuthSocialButtonStyle())
                 }
-                .buttonStyle(AuthSocialButtonStyle())
+                .padding(.bottom, 20)
 
-                Button {
-                    viewModel.loginWithSocialProvider(provider: .google)
-                } label: {
-                    Text("Google")
+
+                // MARK: Footer
+                AuthFooterLink(
+                    message: "New here?",
+                    linkText: "Create an account"
+                ) {
+                    print("Nav To SignUpScreen")
+                    // flip the flage
+                    navToSignUp = true
                 }
-                .buttonStyle(AuthSocialButtonStyle())
+                .frame(maxWidth: .infinity)
+                .padding(.bottom, 24)
+                
+                
+                HStack{
+                    Image(systemName: "person.fill")
+                    Text("Try with guest mode")
+                        .font(.system(size: 16,weight: .medium,design: .serif))
+                        .opacity(0.5)
+                }
+                .onTapGesture {
+                    viewModel.loginAsGuest()                }
             }
-
-//            Spacer()
-
-            // MARK: Footer
-            AuthFooterLink(
-                message: "New here?",
-                linkText: "Create an account"
-            ) {
-                print("Nav To SignUpScreen")
-                // flip the flage
-                navToSignUp = true
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.bottom, 24)
+            
         }
         .navigationDestination(isPresented: $navToSignUp){
             SignUpScreen()
