@@ -9,7 +9,10 @@ import SwiftUI
 
 struct LaunchScreen: View {
     var body: some View {
-        VStack{
+        ZStack {
+            Color.white
+                .ignoresSafeArea()
+
             Image("logo_splash")
                 .resizable()
                 .scaledToFit()
@@ -17,7 +20,6 @@ struct LaunchScreen: View {
         }
     }
 }
-
 struct LaunchScreen_Previews: PreviewProvider {
     static var previews: some View {
         LaunchScreen()

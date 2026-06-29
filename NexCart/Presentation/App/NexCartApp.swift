@@ -6,10 +6,30 @@
 //
 
 import SwiftUI
+import FirebaseCore
+
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+  func application(_ application: UIApplication,
+                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    FirebaseApp.configure()
+
+    return true
+  }
+}
+
 
 @main
 struct NexCartApp: App {
+    // register app delegate for Firebase setup
+     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
+//    init() {
+//        FirebaseApp.configure()
+//    }
+
     let persistenceController = PersistenceController.shared
+    
     
     //Flag For Splash Screen
     @State private var showSplash: Bool = true
