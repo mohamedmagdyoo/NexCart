@@ -6,8 +6,14 @@
 //
 
 import Foundation
-//
-//protocol ProductViewModelProtocol: ObservableObject {
+
+protocol ProductDetailsViewModelProtocol: ObservableObject {
 //    var product: Product? { get set }
 //    func setProduct(_ product: Product)
-//}
+    func addToCart(
+        variantID: Int,
+        customerID: Int,
+        quantity: Int
+    ) async 
+    
+}

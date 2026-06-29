@@ -14,9 +14,12 @@ struct ProductDetailView: View {
     @State private var selectedColor: String = ""
     @State private var isFavorited: Bool = false
     @State private var currentImageIndex: Int = 0
+    @State private var quantity: Int = 1
+    @StateObject private var productDetailsViewModel: ProductDetailViewModel
 
-    init(product: Product) {
+    init(product: Product, productViewModel: ProductDetailViewModel) {
         _product = State(initialValue: product)
+        _productDetailsViewModel = StateObject(wrappedValue: productViewModel)
     }
 
     private var sizes: [String] {
@@ -49,6 +52,31 @@ struct ProductDetailView: View {
         }
     }
 
+    private var currentCustomerID: Int {
+        0
+    }
+
+    private var isAddingToCart: Bool {
+        if case .loading = productDetailsViewModel.screenState {
+            return true
+        }
+        return false
+    }
+
+    private var errorMessage: String? {
+        if case .error(let error) = productDetailsViewModel.screenState {
+            return error.localizedDescription
+        }
+        return nil
+    }
+    
+    private var scuccess:Bool{
+        if case .success=productDetailsViewModel.screenState{
+            return true
+        }
+        return false
+    }
+
     var body: some View {
         ZStack(alignment: .top) {
             AppColor.bg.ignoresSafeArea()
@@ -65,7 +93,7 @@ struct ProductDetailView: View {
                         .clipped()
                         .background(AppColor.card)
 
-                        
+
                         HStack {
                             NavButton(systemName: "chevron.left") {
                                 guard !images.isEmpty else { return }
@@ -79,7 +107,7 @@ struct ProductDetailView: View {
                         }
                         .padding(.horizontal, 8)
                         .offset(y: 200)
-                        
+
                         VStack {
                             HStack {
                                 Spacer()
@@ -141,8 +169,13 @@ struct ProductDetailView: View {
                             Spacer()
 
                             VStack(alignment: .trailing, spacing: 2) {
-                                Text("$\(selectedVariant?.price ?? product.variants.first?.price ?? "")")
-                                    .font(AppColor.sans(20, .bold))
+                                Text(
+                                    String(
+                                        format: "$%.2f",
+                                        (Double(selectedVariant?.price ?? product.variants.first?.price ?? "0") ?? 0) * Double(quantity)
+                                    )
+                                )
+                                .font(AppColor.sans(20, .bold))
                                     .foregroundColor(AppColor.gold)
 
                                 if let compareAt = selectedVariant?.compareAtPrice ?? product.variants.first?.compareAtPrice {
@@ -207,10 +240,48 @@ struct ProductDetailView: View {
                             }
                         }
 
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("QUANTITY")
+                                .font(AppColor.sans(12, .semibold))
+                                .foregroundColor(AppColor.textSec)
+                                .tracking(1)
+
+                            QuantitySelector(
+                                quantity: $quantity,
+                                maxQuantity: nil
+                            )
+                        }
+
                         InfoRow(icon: "shippingbox", text: "Free express shipping worldwide")
                         InfoRow(icon: "checkmark.shield", text: "100% authenticity guaranteed")
 
-                        AddToBagButton()
+                        AddToBagButton(
+                            action: {
+                                guard let variantID = selectedVariant?.id else { return }
+
+                                Task {
+                                    await productDetailsViewModel.addToCart(
+                                        variantID: variantID,
+                                        customerID: 111,
+                                        quantity: quantity
+                                    )
+                                }
+                            }
+                        )
+                        .disabled(isAddingToCart)
+                        .opacity(isAddingToCart ? 0.6 : 1)
+                        .overlay {
+                            if isAddingToCart {
+                                ProgressView()
+                                    .tint(AppColor.bg)
+                            }
+                        }
+
+                        if let errorMessage {
+                            Text(errorMessage)
+                                .font(AppColor.sans(13))
+                                .foregroundColor(AppColor.tagSold)
+                        }
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 24)
@@ -219,10 +290,25 @@ struct ProductDetailView: View {
                 }
             }
 
+            if scuccess {
+                VStack {
+                    Spacer()
+                    ToastView(message: "Added to bag")
+                        .padding(.bottom, 24)
+                }
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+                .animation(.easeInOut(duration: 0.25), value: scuccess)
+            }
+            
+            
         }
         .onAppear {
             selectedSize = sizes.first ?? ""
             selectedColor = colors.first ?? ""
         }
+        .onChange(of: selectedVariant?.id) { _ in
+            quantity = 1
+        }
+      
     }
 }

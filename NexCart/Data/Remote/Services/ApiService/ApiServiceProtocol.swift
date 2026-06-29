@@ -7,6 +7,9 @@
 
 import Foundation
 
-protocol ApiServiceProtocol{
-    func fetch<T: Decodable>(endPoint: EndPoint) async throws -> T
+protocol ApiServiceProtocol {
+    func request<T: Decodable, U: Encodable>(
+        endPoint: EndPoint,
+        body: U?
+    ) async throws -> T
 }

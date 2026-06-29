@@ -106,9 +106,10 @@ struct InfoRow: View {
 
 struct AddToBagButton: View {
     var action: () -> Void = {}
-
+ 
     var body: some View {
         Button(action: action) {
+           
             HStack(spacing: 8) {
                 Image(systemName: "bag")
                     .font(.system(size: 16, weight: .semibold))
