@@ -6,15 +6,16 @@
 //
 
 import SwiftUI
+import _AuthenticationServices_SwiftUI
 
 // MARK: - Root Screen
 struct SignInScreen: View {
     @StateObject private var viewModel: SignInViewModel = DIContainer.shared.container.resolve(SignInViewModel.self)!
-
+    
     var body: some View {
         ZStack {
             Color.authBackground.ignoresSafeArea()
-
+            
             switch viewModel.screenState {
             case .idle:
                 SignInIdleState(viewModel: viewModel)
@@ -37,12 +38,12 @@ struct SignInScreen: View {
 // MARK: - Idle State
 struct SignInIdleState: View {
     @ObservedObject var viewModel: SignInViewModel
-
+    
     @State private var email: String = ""
     @State private var password: String = ""
     
     @State private var navToSignUp: Bool = false
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             // MARK: Title
@@ -50,20 +51,20 @@ struct SignInIdleState: View {
                 .font(.system(size: 38, weight: .bold))
                 .foregroundColor(.authTitle)
                 .lineSpacing(2)
-
+            
             Text("Sign in to continue your wardrobe.")
                 .font(.subheadline)
                 .foregroundColor(.authSubtitle)
                 .padding(.top, 8)
                 .padding(.bottom, 36)
-
+            
             // MARK: Fields
             ObsidianField(label: "EMAIL", placeholder: "hello@maison.co", text: $email)
                 .keyboardType(.emailAddress)
-
+            
             ObsidianField(label: "PASSWORD", placeholder: "••••••••", text: $password, isSecure: true)
                 .padding(.top, 16)
-
+            
             // MARK: Forgot Password
             Button("Forgot password?") {
                 // navigate to ForgotPassScreen
@@ -72,7 +73,7 @@ struct SignInIdleState: View {
             .foregroundColor(.authForgotPass)
             .padding(.top, 10)
             .padding(.bottom, 28)
-
+            
             // MARK: Sign In Button
             Button {
                 viewModel.loginWithEmailAndPass(
@@ -82,27 +83,30 @@ struct SignInIdleState: View {
                 Text("Sign in")
             }
             .buttonStyle(AuthPrimaryButtonStyle())
-
+            
             // MARK: Social Divider
             AuthDivider(text: "OR CONTINUE WITH")
                 .padding(.vertical, 24)
-
+            
             VStack(spacing: 0){
+                
                 // MARK: Social Buttons
-                HStack(spacing: 12) {
-                    Button {
-                        viewModel.loginWithSocialProvider(provider: .apple)
-                    } label: {
-                        HStack{
-                            Image(systemName: "applelogo")
-                            Text("Apple")
-                        }
+                SignInWithAppleButton(.signIn) { request in
+                    request.requestedScopes = [.fullName, .email]
+                } onCompletion: { result in
+                    switch result {
+                    case .success(let authorization):
+                        viewModel.loginWithSocialProvider(provider: .apple(authorization: authorization))
+                    case .failure(let error):
+                        print("Apple Sign In failed: \(error)")
                     }
-                    .buttonStyle(AuthSocialButtonStyle())
-
-                    Button {
-                        viewModel.loginWithSocialProvider(provider: .google)
-                    } label: {
+                }
+                .frame(height: 50)
+                
+                Button {
+                    guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                          let vc = scene.windows.first?.rootViewController else { return }
+                    viewModel.loginWithSocialProvider(provider: .google(vc: vc))                        } label: {
                         HStack{
                             Image("icon_google")
                                 .resizable()
@@ -112,41 +116,39 @@ struct SignInIdleState: View {
                         }
                     }
                     .buttonStyle(AuthSocialButtonStyle())
-                }
-                .padding(.bottom, 20)
-
-
-                // MARK: Footer
-                AuthFooterLink(
-                    message: "New here?",
-                    linkText: "Create an account"
-                ) {
-                    print("Nav To SignUpScreen")
-                    // flip the flage
-                    navToSignUp = true
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.bottom, 24)
-                
-                
-                HStack{
-                    Image(systemName: "person.fill")
-                    Text("Try with guest mode")
-                        .font(.system(size: 16,weight: .medium,design: .serif))
-                        .opacity(0.5)
-                }
-                .onTapGesture {
-                    viewModel.loginAsGuest()                }
             }
             
+            
+            // MARK: Footer
+            AuthFooterLink(
+                message: "New here?",
+                linkText: "Create an account"
+            ) {
+                print("Nav To SignUpScreen")
+                // flip the flage
+                navToSignUp = true
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.bottom, 24)
+            
+            
+            HStack{
+                Image(systemName: "person.fill")
+                Text("Try with guest mode")
+                    .font(.system(size: 16,weight: .medium,design: .serif))
+                    .opacity(0.5)
+            }
+            .onTapGesture {
+                viewModel.loginAsGuest()                }
         }
         .navigationDestination(isPresented: $navToSignUp){
             SignUpScreen()
         }
         .padding(.horizontal, 24)
     }
-        
 }
+
+
 
 // MARK: - Loading State
 struct SignInLoadingState: View {
@@ -168,8 +170,8 @@ struct SignInSuccessState: View {
     @State private var opacity: Double = 0
     @State var navToHomeScreen: Bool = false
     @ObservedObject var vm: SignInViewModel
-
-
+    
+    
     var body: some View {
         VStack(spacing: 16) {
             Image(systemName: "checkmark.circle.fill")
@@ -178,7 +180,7 @@ struct SignInSuccessState: View {
                 .foregroundColor(.authTitle)
                 .scaleEffect(scale)
                 .opacity(opacity)
-
+            
             Text("Welcome back.")
                 .font(.title2)
                 .fontWeight(.bold)

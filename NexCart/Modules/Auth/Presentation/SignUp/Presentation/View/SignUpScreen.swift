@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import _AuthenticationServices_SwiftUI
 
 // MARK: - Root Screen
 struct SignUpScreen: View {
@@ -107,19 +108,34 @@ struct SignUpIdleState: View {
                 VStack{
                     // MARK: Social Buttons
                     HStack(spacing: 12) {
-                        Button {
-                            viewModel.loginWithSocialProvider(provider: .apple)
-                        } label: {
-                            HStack{
-                                Image(systemName: "applelogo")
-                                Text("Apple")
+                        
+//                        Button {
+//                            viewModel.loginWithSocialProvider(provider: .apple(authorization: ASAuthorization))
+//                        } label: {
+//                            HStack{
+//                                Image(systemName: "applelogo")
+//                                Text("Apple")
+//                            }
+//                        }
+//                        .buttonStyle(AuthSocialButtonStyle())
+                        
+                        // MARK: Social Buttons
+                        SignInWithAppleButton(.signIn) { request in
+                            request.requestedScopes = [.fullName, .email]
+                        } onCompletion: { result in
+                            switch result {
+                            case .success(let authorization):
+                                viewModel.loginWithSocialProvider(provider: .apple(authorization: authorization))
+                            case .failure(let error):
+                                print("Apple Sign In failed: \(error)")
                             }
                         }
-                        .buttonStyle(AuthSocialButtonStyle())
+                        .frame(height: 50)
 
                         Button {
-                            viewModel.loginWithSocialProvider(provider: .google)
-                        } label: {
+                            guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                                  let vc = scene.windows.first?.rootViewController else { return }
+                            viewModel.loginWithSocialProvider(provider: .google(vc: vc))                        } label: {
                             HStack{
                                 Image("icon_google")
                                     .resizable()

@@ -18,6 +18,7 @@ final class DIContainer {
     }
 
     private func registerAll() {
+        registerServices()
         registerRepositories()
         registerUseCases()
         registerViewModels()

@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import UIKit
+import AuthenticationServices
 
 struct UserEntity: Codable {
     let id: String
@@ -37,6 +39,6 @@ struct SignUpCredentials {
 
 // SocialProviders
 enum SocialAuthProvider {
-    case google
-    case apple
+    case google(vc: UIViewController)
+    case apple(authorization: ASAuthorization)
 }
