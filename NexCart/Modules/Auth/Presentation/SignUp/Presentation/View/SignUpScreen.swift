@@ -8,7 +8,6 @@
 import SwiftUI
 import _AuthenticationServices_SwiftUI
 
-// MARK: - Root Screen
 struct SignUpScreen: View {
     @StateObject private var viewModel: SignUpViewModel = DIContainer.shared.container.resolve(SignUpViewModel.self)!
 
@@ -19,26 +18,32 @@ struct SignUpScreen: View {
             switch viewModel.screenState {
             case .idle:
                 SignUpIdleState(viewModel: viewModel)
-                
             case .loading:
                 SignUpLoadingState()
             case .success:
                 SignUpSuccessState(vm: viewModel)
-            case .error(error: let error):
+            case .error(let error):
                 Text("\(error)")
             }
         }
-        .navigationBarBackButtonHidden(true)
+        .fullScreenCover(isPresented: $viewModel.shouldNavigateToHome) {
+            // كانت HomeScreen() - الـ placeholder الوهمي. دلوقتي بقت
+            // HomeView() الحقيقية بتاعتك (فيها الـ tab bar والمنتجات).
+            HomeView()
+                // بنمنع قفل الشاشة دي بـ swipe down أو tap برّه.
+                // السبب: SignInScreen لسه "عايشة" تحت الـ cover ده (مش
+                // اتشالت)، فلو الـ cover اتقفل بالغلط (مثلاً swipe)،
+                // الـ flag shouldNavigateToHome بيرجع false تلقائي من
+                // النظام، والمستخدم يلاقي نفسه راجع لشاشة تسجيل الدخول.
+                // ده الحل السريع لمنع الرجوع الغير مقصود؛ الحل الجذري
+                // الحقيقي هو تغيير الـ navigation architecture بالكامل.
+                .interactiveDismissDisabled(true)
+        }
         .alert(item: $viewModel.alert) { alert in
-            Alert(
-                title: Text(alert.title),
-                message: Text(alert.description),
-                dismissButton: .default(Text("OK"))
-            )
+            Alert(title: Text(alert.title), message: Text(alert.description), dismissButton: .default(Text("OK")))
         }
     }
 }
-
 // MARK: - Idle State
 struct SignUpIdleState: View {
     @ObservedObject var viewModel: SignUpViewModel
@@ -109,15 +114,7 @@ struct SignUpIdleState: View {
                     // MARK: Social Buttons
                     HStack(spacing: 12) {
                         
-//                        Button {
-//                            viewModel.loginWithSocialProvider(provider: .apple(authorization: ASAuthorization))
-//                        } label: {
-//                            HStack{
-//                                Image(systemName: "applelogo")
-//                                Text("Apple")
-//                            }
-//                        }
-//                        .buttonStyle(AuthSocialButtonStyle())
+
                         
                         // MARK: Social Buttons
                         SignInWithAppleButton(.signIn) { request in
@@ -184,9 +181,11 @@ struct SignUpLoadingState: View {
 struct SignUpSuccessState: View {
     @State private var scale: CGFloat = 0.5
     @State private var opacity: Double = 0
-    
+
     @ObservedObject var vm: SignUpViewModel
-    
+
+    @State private var didTriggerNavigation: Bool = false
+
     var body: some View {
         VStack(spacing: 16) {
             Image(systemName: "checkmark.circle.fill")
@@ -209,8 +208,13 @@ struct SignUpSuccessState: View {
             }
         }
         .task {
+           
+            guard !didTriggerNavigation else { return }
+
             do{
                 try await Task.sleep(nanoseconds: 2000000000)
+                guard !Task.isCancelled else { return }
+                didTriggerNavigation = true
                 vm.saveUserEntity()
             }catch{
                 vm.screenState = .error(error: error.localizedDescription)

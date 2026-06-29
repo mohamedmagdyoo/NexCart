@@ -7,17 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F8F1E512FF3898D0016B844 /* FetchHomeProductsUseCaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E452FF3898D0016B844 /* FetchHomeProductsUseCaseProtocol.swift */; };
+		9F8F1E522FF3898D0016B844 /* HomeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E412FF3898D0016B844 /* HomeRepository.swift */; };
+		9F8F1E532FF3898D0016B844 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E4B2FF3898D0016B844 /* HomeView.swift */; };
+		9F8F1E542FF3898D0016B844 /* HomeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E3F2FF3898D0016B844 /* HomeEntity.swift */; };
+		9F8F1E552FF3898D0016B844 /* ProductEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E3D2FF3898D0016B844 /* ProductEndPoint.swift */; };
+		9F8F1E562FF3898D0016B844 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E4D2FF3898D0016B844 /* HomeViewModel.swift */; };
+		9F8F1E572FF3898D0016B844 /* HomeBrandSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E482FF3898D0016B844 /* HomeBrandSection.swift */; };
+		9F8F1E582FF3898D0016B844 /* HomeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E432FF3898D0016B844 /* HomeProtocol.swift */; };
+		9F8F1E592FF3898D0016B844 /* HomeHeroSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E492FF3898D0016B844 /* HomeHeroSection.swift */; };
+		9F8F1E5A2FF3898D0016B844 /* HomenewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E4A2FF3898D0016B844 /* HomenewSection.swift */; };
+		9F8F1E622FF38A6E0016B844 /* ProductDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E612FF38A6E0016B844 /* ProductDto.swift */; };
+		9F8F1E632FF38A6E0016B844 /* BrandDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E602FF38A6E0016B844 /* BrandDto.swift */; };
+		9F8F1E652FF38A980016B844 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E642FF38A980016B844 /* EndPoint.swift */; };
+		9F8F1E672FF38B3F0016B844 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E662FF38B3F0016B844 /* CoreData.swift */; };
+		9F8F1E6A2FF38CBB0016B844 /* NexCart.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E682FF38CBA0016B844 /* NexCart.xcdatamodeld */; };
 		D960C19E2FF1167A00FFF4D9 /* NexCartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C19D2FF1167A00FFF4D9 /* NexCartApp.swift */; };
 		D960C1A02FF1167A00FFF4D9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C19F2FF1167A00FFF4D9 /* ContentView.swift */; };
 		D960C1A22FF1167C00FFF4D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D960C1A12FF1167C00FFF4D9 /* Assets.xcassets */; };
 		D960C1A52FF1167C00FFF4D9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D960C1A42FF1167C00FFF4D9 /* Preview Assets.xcassets */; };
 		D960C1A72FF1167C00FFF4D9 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1A62FF1167C00FFF4D9 /* Persistence.swift */; };
-		D960C1AA2FF1167C00FFF4D9 /* NexCart.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D960C1A82FF1167C00FFF4D9 /* NexCart.xcdatamodeld */; };
 		D960C1B42FF1167C00FFF4D9 /* NexCartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1B32FF1167C00FFF4D9 /* NexCartTests.swift */; };
 		D960C1BE2FF1167C00FFF4D9 /* NexCartUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1BD2FF1167C00FFF4D9 /* NexCartUITests.swift */; };
 		D960C1C02FF1167C00FFF4D9 /* NexCartUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1BF2FF1167C00FFF4D9 /* NexCartUITestsLaunchTests.swift */; };
 		D960C1E52FF11ACE00FFF4D9 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1E42FF11ACE00FFF4D9 /* AppTheme.swift */; };
-		D960C1E92FF11D3800FFF4D9 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1E82FF11D3800FFF4D9 /* EndPoint.swift */; };
 		D960C1ED2FF120A500FFF4D9 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1EB2FF120A500FFF4D9 /* ApiService.swift */; };
 		D960C1EE2FF120A500FFF4D9 /* ApiServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1EC2FF120A500FFF4D9 /* ApiServiceProtocol.swift */; };
 		D960C1F42FF1243400FFF4D9 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1F32FF1243400FFF4D9 /* LaunchScreen.swift */; };
@@ -71,20 +84,33 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9F8F1E3D2FF3898D0016B844 /* ProductEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEndPoint.swift; sourceTree = "<group>"; };
+		9F8F1E3F2FF3898D0016B844 /* HomeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEntity.swift; sourceTree = "<group>"; };
+		9F8F1E412FF3898D0016B844 /* HomeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRepository.swift; sourceTree = "<group>"; };
+		9F8F1E432FF3898D0016B844 /* HomeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeProtocol.swift; sourceTree = "<group>"; };
+		9F8F1E452FF3898D0016B844 /* FetchHomeProductsUseCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchHomeProductsUseCaseProtocol.swift; sourceTree = "<group>"; };
+		9F8F1E482FF3898D0016B844 /* HomeBrandSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBrandSection.swift; sourceTree = "<group>"; };
+		9F8F1E492FF3898D0016B844 /* HomeHeroSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeroSection.swift; sourceTree = "<group>"; };
+		9F8F1E4A2FF3898D0016B844 /* HomenewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomenewSection.swift; sourceTree = "<group>"; };
+		9F8F1E4B2FF3898D0016B844 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		9F8F1E4D2FF3898D0016B844 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		9F8F1E602FF38A6E0016B844 /* BrandDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandDto.swift; sourceTree = "<group>"; };
+		9F8F1E612FF38A6E0016B844 /* ProductDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDto.swift; sourceTree = "<group>"; };
+		9F8F1E642FF38A980016B844 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
+		9F8F1E662FF38B3F0016B844 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
+		9F8F1E692FF38CBA0016B844 /* NexCart.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NexCart.xcdatamodel; sourceTree = "<group>"; };
 		D960C19A2FF1167A00FFF4D9 /* NexCart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NexCart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D960C19D2FF1167A00FFF4D9 /* NexCartApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NexCartApp.swift; sourceTree = "<group>"; };
 		D960C19F2FF1167A00FFF4D9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D960C1A12FF1167C00FFF4D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D960C1A42FF1167C00FFF4D9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D960C1A62FF1167C00FFF4D9 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		D960C1A92FF1167C00FFF4D9 /* NexCart.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NexCart.xcdatamodel; sourceTree = "<group>"; };
 		D960C1AF2FF1167C00FFF4D9 /* NexCartTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NexCartTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D960C1B32FF1167C00FFF4D9 /* NexCartTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NexCartTests.swift; sourceTree = "<group>"; };
 		D960C1B92FF1167C00FFF4D9 /* NexCartUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NexCartUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D960C1BD2FF1167C00FFF4D9 /* NexCartUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NexCartUITests.swift; sourceTree = "<group>"; };
 		D960C1BF2FF1167C00FFF4D9 /* NexCartUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NexCartUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D960C1E42FF11ACE00FFF4D9 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
-		D960C1E82FF11D3800FFF4D9 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		D960C1EB2FF120A500FFF4D9 /* ApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		D960C1EC2FF120A500FFF4D9 /* ApiServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiServiceProtocol.swift; sourceTree = "<group>"; };
 		D960C1F32FF1243400FFF4D9 /* LaunchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
@@ -147,6 +173,103 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9F8F1E3E2FF3898D0016B844 /* EndPoints */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = EndPoints;
+			sourceTree = "<group>";
+		};
+		9F8F1E402FF3898D0016B844 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				9F8F1E3F2FF3898D0016B844 /* HomeEntity.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		9F8F1E422FF3898D0016B844 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				9F8F1E3E2FF3898D0016B844 /* EndPoints */,
+				9F8F1E402FF3898D0016B844 /* Entities */,
+				9F8F1E412FF3898D0016B844 /* HomeRepository.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		9F8F1E442FF3898D0016B844 /* RepoInterface */ = {
+			isa = PBXGroup;
+			children = (
+				9F8F1E432FF3898D0016B844 /* HomeProtocol.swift */,
+			);
+			path = RepoInterface;
+			sourceTree = "<group>";
+		};
+		9F8F1E462FF3898D0016B844 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				9F8F1E452FF3898D0016B844 /* FetchHomeProductsUseCaseProtocol.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		9F8F1E472FF3898D0016B844 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				9F8F1E442FF3898D0016B844 /* RepoInterface */,
+				9F8F1E462FF3898D0016B844 /* UseCase */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		9F8F1E4C2FF3898D0016B844 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9F8F1E482FF3898D0016B844 /* HomeBrandSection.swift */,
+				9F8F1E492FF3898D0016B844 /* HomeHeroSection.swift */,
+				9F8F1E4A2FF3898D0016B844 /* HomenewSection.swift */,
+				9F8F1E4B2FF3898D0016B844 /* HomeView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9F8F1E4E2FF3898D0016B844 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				9F8F1E4D2FF3898D0016B844 /* HomeViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		9F8F1E4F2FF3898D0016B844 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				9F8F1E4C2FF3898D0016B844 /* View */,
+				9F8F1E4E2FF3898D0016B844 /* ViewModel */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		9F8F1E502FF3898D0016B844 /* HomeScreen */ = {
+			isa = PBXGroup;
+			children = (
+				9F8F1E422FF3898D0016B844 /* Data */,
+				9F8F1E472FF3898D0016B844 /* Domain */,
+				9F8F1E4F2FF3898D0016B844 /* Presentation */,
+			);
+			path = HomeScreen;
+			sourceTree = "<group>";
+		};
+		9F8F1E5F2FF38A150016B844 /* Dtos */ = {
+			isa = PBXGroup;
+			children = (
+				9F8F1E602FF38A6E0016B844 /* BrandDto.swift */,
+				9F8F1E612FF38A6E0016B844 /* ProductDto.swift */,
+			);
+			path = Dtos;
+			sourceTree = "<group>";
+		};
 		D960C1912FF1167A00FFF4D9 = {
 			isa = PBXGroup;
 			children = (
@@ -212,6 +335,7 @@
 		D960C1CC2FF1178000FFF4D9 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				9F8F1E502FF3898D0016B844 /* HomeScreen */,
 				D960C1F22FF1241B00FFF4D9 /* Launch */,
 				D960C1CD2FF1178800FFF4D9 /* Auth */,
 			);
@@ -327,6 +451,8 @@
 		D960C1DD2FF1186200FFF4D9 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				9F8F1E3D2FF3898D0016B844 /* ProductEndPoint.swift */,
+				9F8F1E642FF38A980016B844 /* EndPoint.swift */,
 				D960C1E02FF1196900FFF4D9 /* Remote */,
 				D960C1DF2FF118CB00FFF4D9 /* Local */,
 				D960C23B2FF1A1BB00FFF4D9 /* FakeData */,
@@ -345,8 +471,9 @@
 		D960C1DF2FF118CB00FFF4D9 /* Local */ = {
 			isa = PBXGroup;
 			children = (
+				9F8F1E682FF38CBA0016B844 /* NexCart.xcdatamodeld */,
 				D960C1A62FF1167C00FFF4D9 /* Persistence.swift */,
-				D960C1A82FF1167C00FFF4D9 /* NexCart.xcdatamodeld */,
+				9F8F1E662FF38B3F0016B844 /* CoreData.swift */,
 			);
 			path = Local;
 			sourceTree = "<group>";
@@ -354,18 +481,10 @@
 		D960C1E02FF1196900FFF4D9 /* Remote */ = {
 			isa = PBXGroup;
 			children = (
-				D960C1E82FF11D3800FFF4D9 /* EndPoint.swift */,
-				D960C1E12FF1198100FFF4D9 /* DTOs */,
+				9F8F1E5F2FF38A150016B844 /* Dtos */,
 				D960C1E22FF1199A00FFF4D9 /* Services */,
 			);
 			path = Remote;
-			sourceTree = "<group>";
-		};
-		D960C1E12FF1198100FFF4D9 /* DTOs */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DTOs;
 			sourceTree = "<group>";
 		};
 		D960C1E22FF1199A00FFF4D9 /* Services */ = {
@@ -713,23 +832,36 @@
 				D960C20F2FF1734B00FFF4D9 /* AuthEntities.swift in Sources */,
 				D960C2342FF1987600FFF4D9 /* DIContainer+Repositories.swift in Sources */,
 				D9EAA13D2FF28FC70097C038 /* AuthMappers.swift in Sources */,
+				9F8F1E512FF3898D0016B844 /* FetchHomeProductsUseCaseProtocol.swift in Sources */,
+				9F8F1E522FF3898D0016B844 /* HomeRepository.swift in Sources */,
+				9F8F1E532FF3898D0016B844 /* HomeView.swift in Sources */,
+				9F8F1E542FF3898D0016B844 /* HomeEntity.swift in Sources */,
+				9F8F1E552FF3898D0016B844 /* ProductEndPoint.swift in Sources */,
+				9F8F1E562FF3898D0016B844 /* HomeViewModel.swift in Sources */,
+				9F8F1E572FF3898D0016B844 /* HomeBrandSection.swift in Sources */,
+				9F8F1E582FF3898D0016B844 /* HomeProtocol.swift in Sources */,
+				9F8F1E592FF3898D0016B844 /* HomeHeroSection.swift in Sources */,
+				9F8F1E5A2FF3898D0016B844 /* HomenewSection.swift in Sources */,
 				D960C2362FF1989F00FFF4D9 /* DIContainer+UseCases.swift in Sources */,
 				D960C21B2FF17B3600FFF4D9 /* LoginWithSocialProvider.swift in Sources */,
 				D960C23A2FF1A0AB00FFF4D9 /* AuthDesignSystem.swift in Sources */,
 				D960C23D2FF1A1D500FFF4D9 /* FakeUseCases.swift in Sources */,
 				D960C2282FF1813900FFF4D9 /* SignInViweModel.swift in Sources */,
+				9F8F1E652FF38A980016B844 /* EndPoint.swift in Sources */,
 				D960C2472FF1B6CA00FFF4D9 /* ShardViews.swift in Sources */,
 				D9EAA1332FF27A3F0097C038 /* FirebaseAuthRepository.swift in Sources */,
+				9F8F1E672FF38B3F0016B844 /* CoreData.swift in Sources */,
 				D960C21D2FF17B6100FFF4D9 /* LoginAsGuest.swift in Sources */,
-				D960C1E92FF11D3800FFF4D9 /* EndPoint.swift in Sources */,
 				D960C1F42FF1243400FFF4D9 /* LaunchScreen.swift in Sources */,
 				D960C2162FF1778200FFF4D9 /* AuthError.swift in Sources */,
 				D960C1A72FF1167C00FFF4D9 /* Persistence.swift in Sources */,
 				D960C2192FF17AF700FFF4D9 /* LoginWithEmail.swift in Sources */,
-				D960C1AA2FF1167C00FFF4D9 /* NexCart.xcdatamodeld in Sources */,
 				D960C2452FF1B40300FFF4D9 /* SignUpViewModel.swift in Sources */,
 				D960C2312FF1981D00FFF4D9 /* DIContainer.swift in Sources */,
+				9F8F1E622FF38A6E0016B844 /* ProductDto.swift in Sources */,
+				9F8F1E632FF38A6E0016B844 /* BrandDto.swift in Sources */,
 				D960C22A2FF18C6500FFF4D9 /* FakeAuthRepo.swift in Sources */,
+				9F8F1E6A2FF38CBB0016B844 /* NexCart.xcdatamodeld in Sources */,
 				D9EAA12C2FF275690097C038 /* FirebaseAuthService.swift in Sources */,
 				D960C2382FF1990900FFF4D9 /* DIContainer+ViewModels.swift in Sources */,
 				D960C1A02FF1167A00FFF4D9 /* ContentView.swift in Sources */,
@@ -1116,12 +1248,12 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		D960C1A82FF1167C00FFF4D9 /* NexCart.xcdatamodeld */ = {
+		9F8F1E682FF38CBA0016B844 /* NexCart.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				D960C1A92FF1167C00FFF4D9 /* NexCart.xcdatamodel */,
+				9F8F1E692FF38CBA0016B844 /* NexCart.xcdatamodel */,
 			);
-			currentVersion = D960C1A92FF1167C00FFF4D9 /* NexCart.xcdatamodel */;
+			currentVersion = 9F8F1E692FF38CBA0016B844 /* NexCart.xcdatamodel */;
 			path = NexCart.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
