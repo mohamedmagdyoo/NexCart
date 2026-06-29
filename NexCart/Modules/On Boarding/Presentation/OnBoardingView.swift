@@ -107,8 +107,7 @@ struct OnboardingFlowView: View {
                 Button(action: advance) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 14)
-                            .fill(Color(hex: "#3D1A0E"))
-
+                            .fill(AppColor.textPrim)
                         Text(currentPage == pages.count - 1 ? "GET STARTED" : "CONTINUE")
                             .font(AppColor.sans(12, .semibold))
                             .foregroundColor(AppColor.white)
