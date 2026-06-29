@@ -32,8 +32,20 @@ struct ProductDetailView: View {
     }
 
     private var selectedVariant: Variant? {
-        product.variants.first {
-            $0.option1 == selectedSize || $0.option2 == selectedSize || $0.option3 == selectedSize
+        product.variants.first { variant in
+            let matchesSize =
+                selectedSize.isEmpty ||
+                variant.option1 == selectedSize ||
+                variant.option2 == selectedSize ||
+                variant.option3 == selectedSize
+
+            let matchesColor =
+                selectedColor.isEmpty ||
+                variant.option1 == selectedColor ||
+                variant.option2 == selectedColor ||
+                variant.option3 == selectedColor
+
+            return matchesSize && matchesColor
         }
     }
 
@@ -53,6 +65,21 @@ struct ProductDetailView: View {
                         .clipped()
                         .background(AppColor.card)
 
+                        
+                        HStack {
+                            NavButton(systemName: "chevron.left") {
+                                guard !images.isEmpty else { return }
+                                currentImageIndex = (currentImageIndex - 1 + images.count) % images.count
+                            }
+                            Spacer()
+                            NavButton(systemName: "chevron.right") {
+                                guard !images.isEmpty else { return }
+                                currentImageIndex = (currentImageIndex + 1) % images.count
+                            }
+                        }
+                        .padding(.horizontal, 8)
+                        .offset(y: 200)
+                        
                         VStack {
                             HStack {
                                 Spacer()
@@ -61,21 +88,21 @@ struct ProductDetailView: View {
                                     isFavorited.toggle()
                                 } label: {
                                     Image(systemName: isFavorited ? "heart.fill" : "heart")
-                                        .foregroundColor(isFavorited ? AppColor.gold : AppColor.textPrim)
+                                        .foregroundColor(isFavorited ? AppColor.gold : AppColor.bg)
                                         .padding(10)
                                         .background(AppColor.white)
                                         .clipShape(Circle())
                                 }
                             }
                             .padding(.horizontal, 16)
-                            .padding(.top, 16)
+                            .padding(.top, 20)
 
                             Spacer()
 
                             HStack(spacing: 6) {
                                 ForEach(images.indices, id: \.self) { index in
                                     Circle()
-                                        .fill(index == currentImageIndex ? AppColor.gold : AppColor.white.opacity(0.5))
+                                        .fill(index == currentImageIndex ? AppColor.gold : AppColor.bg.opacity(0.5))
                                         .frame(width: 6, height: 6)
                                 }
                             }
@@ -192,19 +219,6 @@ struct ProductDetailView: View {
                 }
             }
 
-            HStack {
-                NavButton(systemName: "chevron.left") {
-                    guard !images.isEmpty else { return }
-                    currentImageIndex = (currentImageIndex - 1 + images.count) % images.count
-                }
-                Spacer()
-                NavButton(systemName: "chevron.right") {
-                    guard !images.isEmpty else { return }
-                    currentImageIndex = (currentImageIndex + 1) % images.count
-                }
-            }
-            .padding(.horizontal, 8)
-            .offset(y: 200)
         }
         .onAppear {
             selectedSize = sizes.first ?? ""

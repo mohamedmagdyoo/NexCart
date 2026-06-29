@@ -23,6 +23,7 @@
 		D960C1F42FF1243400FFF4D9 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1F32FF1243400FFF4D9 /* LaunchScreen.swift */; };
 		D960C1F62FF12A1500FFF4D9 /* SignInScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1F52FF12A1500FFF4D9 /* SignInScreen.swift */; };
 		D960C1FF2FF12A8600FFF4D9 /* temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1FE2FF12A8600FFF4D9 /* temp.swift */; };
+		F50644BD2FF283810049FDA3 /* ProductDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = F571D5172FF16C3C005E0EBA /* ProductDetails.swift */; };
 		F583E1952FF1A33D00793B1B /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = F583E1942FF1A33D00793B1B /* Components.swift */; };
 		F5DC003C2FF1B86000F84E07 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DC003B2FF1B86000F84E07 /* Product.swift */; };
 /* End PBXBuildFile section */
@@ -582,6 +583,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F50644BD2FF283810049FDA3 /* ProductDetails.swift in Sources */,
 				D960C1EE2FF120A500FFF4D9 /* ApiServiceProtocol.swift in Sources */,
 				F583E1952FF1A33D00793B1B /* Components.swift in Sources */,
 				D960C1F62FF12A1500FFF4D9 /* SignInScreen.swift in Sources */,

@@ -16,7 +16,7 @@ struct NavButton: View {
         Button(action: action) {
             Image(systemName: systemName)
                 .font(.system(size: 14, weight: .semibold))
-                .foregroundColor(AppColor.textPrim)
+                .foregroundColor(AppColor.bg)
                 .frame(width: 36, height: 36)
                 .background(AppColor.white)
                 .clipShape(Circle())
