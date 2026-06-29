@@ -8,6 +8,7 @@
 import Foundation
 
 final class SignUpViewModel: ObservableObject {
+    @Published var shouldNavigateToHome: Bool = false
     @Published var screenState: ScreenState = .idle
     @Published var alert: AlertModel?
 
@@ -59,6 +60,7 @@ final class SignUpViewModel: ObservableObject {
             return
         }
         saveUser(userEntity)
+        self.shouldNavigateToHome = true 
     }
 
     // MARK: - Private Helpers

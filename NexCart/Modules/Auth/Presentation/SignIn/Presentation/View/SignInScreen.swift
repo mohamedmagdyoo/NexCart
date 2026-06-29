@@ -8,7 +8,6 @@
 import SwiftUI
 import _AuthenticationServices_SwiftUI
 
-// MARK: - Root Screen
 struct SignInScreen: View {
     @StateObject private var viewModel: SignInViewModel = DIContainer.shared.container.resolve(SignInViewModel.self)!
     
@@ -25,12 +24,13 @@ struct SignInScreen: View {
                 SignInSuccessState(vm: viewModel)
             }
         }
+        .fullScreenCover(isPresented: $viewModel.shouldNavigateToHome) {
+            HomeView()
+            
+                .interactiveDismissDisabled(true)
+        }
         .alert(item: $viewModel.alert) { alert in
-            Alert(
-                title: Text(alert.title),
-                message: Text(alert.description ),
-                dismissButton: .default(Text("OK"))
-            )
+            Alert(title: Text(alert.title), message: Text(alert.description), dismissButton: .default(Text("OK")))
         }
     }
 }
@@ -173,8 +173,14 @@ struct SignInSuccessState: View {
     @State private var opacity: Double = 0
     @State var navToHomeScreen: Bool = false
     @ObservedObject var vm: SignInViewModel
-    
-    
+
+    // فلاج جديد: بنستخدمه عشان نضمن إن saveUser() يتنفذ مرة واحدة بس.
+    // السبب: .task ممكن يتعمل له re-trigger لو الـ view اتعملها
+    // re-render (مثلاً بسبب onAppear أو أي state تغيرت)، وده كان
+    // يأدي لاستدعاء saveUser() أكتر من مرة، أو في توقيت غلط بيتعارض
+    // مع حالة الـ fullScreenCover.
+    @State private var didTriggerNavigation: Bool = false
+
     var body: some View {
         VStack(spacing: 16) {
             Image(systemName: "checkmark.circle.fill")
@@ -197,9 +203,16 @@ struct SignInSuccessState: View {
             }
         }
         .task {
+            // بنتأكد إن ده أول مرة بس قبل ما ننفذ أي حاجة.
+            // ده بيمنع استدعاء saveUser() أكتر من مرة لو الـ .task
+            // اتعمل له re-trigger بسبب re-render في الشجرة.
+            guard !didTriggerNavigation else { return }
+
             do{
                 try await Task.sleep(nanoseconds: 2000000000)
+                guard !Task.isCancelled else { return } // لو الـ task اتكنسل، منكملش
                 print("Nav to home screen")
+                didTriggerNavigation = true
                 vm.saveUser()
             }catch{
                 print(error.localizedDescription)
