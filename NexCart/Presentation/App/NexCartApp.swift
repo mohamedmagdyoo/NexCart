@@ -147,7 +147,7 @@ struct NexCartApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack{
-                ProductDetailView(product:dummy)
+                ProductDetailView(product: dummy)
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 
                 //Splash Screen
