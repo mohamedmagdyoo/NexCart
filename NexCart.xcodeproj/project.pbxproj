@@ -427,6 +427,7 @@
 		F571D5132FF16BF3005E0EBA /* Producr Details */ = {
 			isa = PBXGroup;
 			children = (
+				F5C7E3162FF2B85400D0C274 /* Domain */,
 				F571D5142FF16C12005E0EBA /* Presentation */,
 			);
 			path = "Producr Details";
@@ -473,6 +474,13 @@
 				F5C3E2222FF299E3001C6F53 /* OnBoardingView.swift */,
 			);
 			path = Presentation;
+			sourceTree = "<group>";
+		};
+		F5C7E3162FF2B85400D0C274 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
