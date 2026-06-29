@@ -1,55 +1,43 @@
-//
-//  OnBoardingView.swift
-//  NexCart
-//
-//  Created by Antoneos Philip on 29/06/2026.
-//
-
 import SwiftUI
 
-
+struct OnboardingPage {
+    let imageName: String
+    let eyebrow: String
+    let headline: String
+    let body: String
+}
 
 struct OnboardingFlowView: View {
+
     var onFinish: () -> Void
 
     @State private var currentPage = 0
 
     private let pages: [OnboardingPage] = [
         OnboardingPage(
-            eyebrow: "EST. MMXVIII",
-            title: "OBSIDIAN",
-            subtitle: "MAISON DE MODE",
-            body: "Curated luxury, delivered with intent.",
-            symbol: "sparkles"
+            imageName: "onboarding1",
+            eyebrow: "WELCOME",
+            headline: "Wear what feels like you.",
+            body: "A pocket-sized boutique of considered pieces — soft fabrics, honest cuts, made to be lived in."
         ),
         OnboardingPage(
-            eyebrow: "SELECTION",
-            title: "CURATED",
-            subtitle: "FOR THE FEW",
-            body: "Every piece hand-picked by our style council, never mass produced.",
-            symbol: "bag"
+            imageName: "onboarding2",
+            eyebrow: "CURATED",
+            headline: "A small, thoughtful wardrobe.",
+            body: "Every piece is hand-picked from independent makers who care about how things are made and how they last."
         ),
         OnboardingPage(
+            imageName: "onboarding3",
             eyebrow: "DELIVERY",
-            title: "WHITE GLOVE",
-            subtitle: "AT YOUR DOOR",
-            body: "Discreet packaging, signature delivery, white glove service worldwide.",
-            symbol: "shippingbox"
+            headline: "Arrives like a gift.",
+            body: "Discreet packaging, signature service — delivered with the same care it was made with."
         )
     ]
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottom) {
             AppColor.bg
                 .ignoresSafeArea()
-
-            RadialGradient(
-                colors: [AppColor.gold.opacity(0.16), AppColor.bg.opacity(0)],
-                center: .center,
-                startRadius: 10,
-                endRadius: 280
-            )
-            .ignoresSafeArea()
 
             VStack(spacing: 0) {
                 HStack {
@@ -57,114 +45,130 @@ struct OnboardingFlowView: View {
                     if currentPage < pages.count - 1 {
                         Button(action: onFinish) {
                             Text("Skip")
-                                .font(AppColor.sans(14))
+                                .font(AppColor.sans(13))
                                 .foregroundColor(AppColor.textSec)
                         }
+                        .padding(.trailing, 20)
                     }
                 }
-                .padding(.horizontal, 24)
-                .padding(.top, 12)
-                .frame(height: 36)
+                .frame(height: 80)
+                .padding(.top, 2)
 
                 TabView(selection: $currentPage) {
                     ForEach(Array(pages.enumerated()), id: \.offset) { index, page in
-                        OnboardingPageView(page: page)
+                        ImageCard(imageName: page.imageName)
+                            .padding(.horizontal, 16)
                             .tag(index)
                     }
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
-                .animation(.easeInOut(duration: 0.3), value: currentPage)
+                .frame(height: UIScreen.main.bounds.height * 0.56)
+                .animation(.easeInOut(duration: 0.35), value: currentPage)
 
-                VStack(spacing: 28) {
-                    HStack(spacing: 8) {
-                        ForEach(0..<pages.count, id: \.self) { index in
-                            Capsule()
-                                .fill(index == currentPage ? AppColor.gold : AppColor.pill)
-                                .frame(width: index == currentPage ? 22 : 7, height: 7)
-                                .animation(.easeInOut(duration: 0.25), value: currentPage)
-                        }
-                    }
+                VStack(spacing: 6) {
+                    Text(pages[currentPage].eyebrow)
+                        .font(AppColor.sans(10, .semibold))
+                        .foregroundColor(AppColor.gold)
+                        .tracking(3)
+                        .padding(.top, 20)
 
-                    Button(action: advance) {
-                        Text(currentPage == pages.count - 1 ? "Get Started" : "Next")
-                            .font(AppColor.sans(16, .semibold))
-                            .foregroundColor(AppColor.bg)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 54)
-                            .background(AppColor.gold)
-                            .clipShape(RoundedRectangle(cornerRadius: 14))
-                    }
-                    .padding(.horizontal, 24)
+                    Text(pages[currentPage].headline)
+                        .font(AppColor.serif(26))
+                        .foregroundColor(AppColor.textPrim)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 24)
+                        .padding(.top, 2)
+
+                    Text(pages[currentPage].body)
+                        .font(AppColor.sans(13))
+                        .foregroundColor(AppColor.textSec)
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(4)
+                        .padding(.horizontal, 32)
+                        .padding(.top, 4)
                 }
-                .padding(.bottom, 28)
+                .animation(.easeInOut(duration: 0.25), value: currentPage)
+                .id(currentPage)
+
+                HStack(spacing: 5) {
+                    ForEach(0..<pages.count, id: \.self) { index in
+                        Capsule()
+                            .fill(index == currentPage ? AppColor.pillSel : AppColor.pill)
+                            .frame(
+                                width: index == currentPage ? 18 : 6,
+                                height: 6
+                            )
+                            .animation(.easeInOut(duration: 0.2), value: currentPage)
+                    }
+                }
+                .padding(.top, 16)
+                .padding(.bottom, 88)
+                
+                Button(action: advance) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 14)
+                            .fill(Color(hex: "#3D1A0E"))
+
+                        Text(currentPage == pages.count - 1 ? "GET STARTED" : "CONTINUE")
+                            .font(AppColor.sans(12, .semibold))
+                            .foregroundColor(AppColor.white)
+                            .tracking(2.5)
+                    }
+                    .frame(height: 48)
+                }
+                .padding(.horizontal, 16)
+                .padding(.bottom, bottomSafeArea() + 12)
             }
         }
+    
     }
 
     private func advance() {
         if currentPage < pages.count - 1 {
-            withAnimation(.easeInOut(duration: 0.3)) {
-                currentPage += 1
-            }
+            withAnimation(.easeInOut(duration: 0.3)) { currentPage += 1 }
         } else {
             onFinish()
         }
     }
+
+    private func bottomSafeArea() -> CGFloat {
+        UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .first?.windows.first?.safeAreaInsets.bottom ?? 0
+    }
 }
 
-private struct OnboardingPageView: View {
-    let page: OnboardingPage
+private struct ImageCard: View {
+    let imageName: String
 
     var body: some View {
-        VStack(spacing: 18) {
-            Spacer()
-
-            Image(systemName: page.symbol)
-                .font(.system(size: 34, weight: .light))
-                .foregroundColor(AppColor.gold)
-                .padding(.bottom, 8)
-
-            ornamentLine(height: 32)
-
-            Text(page.eyebrow)
-                .font(AppColor.sans(11, .medium))
-                .foregroundColor(AppColor.gold)
-                .tracking(4)
-
-            Text(page.title)
-                .font(AppColor.serif(42))
-                .foregroundColor(AppColor.textPrim)
-
-            Text(page.subtitle)
-                .font(AppColor.sans(12, .medium))
-                .foregroundColor(AppColor.textSec)
-                .tracking(5)
-
-            ornamentLine(height: 18)
-
-            Text(page.body)
-                .font(AppColor.sans(15))
-                .foregroundColor(AppColor.textSec)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 40)
-                .padding(.top, 6)
-
-            Spacer()
-            Spacer()
-        }
-        .padding(.horizontal, 16)
-    }
-
-    private func ornamentLine(height: CGFloat) -> some View {
-        Rectangle()
-            .fill(
-                LinearGradient(
-                    colors: [AppColor.gold.opacity(0), AppColor.gold, AppColor.gold.opacity(0)],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
+        GeometryReader { geo in
+            Group {
+                if UIImage(named: imageName) != nil {
+                    Image(imageName)
+                        .resizable()
+                        .scaledToFill()
+                } else {
+                    AppColor.surface
+                        .overlay(
+                            VStack(spacing: 8) {
+                                Image(systemName: "photo")
+                                    .font(.system(size: 28, weight: .light))
+                                    .foregroundColor(AppColor.gold)
+                                Text(imageName)
+                                    .font(AppColor.sans(11))
+                                    .foregroundColor(AppColor.textSec)
+                            }
+                        )
+                }
+            }
+            .frame(width: geo.size.width, height: geo.size.height)
+            .clipped()
+            .clipShape(RoundedRectangle(cornerRadius: 24))
+            .overlay(
+                RoundedRectangle(cornerRadius: 24)
+                    .stroke(AppColor.border, lineWidth: 1)
             )
-            .frame(width: 1, height: height)
+        }
     }
 }
-

@@ -147,7 +147,7 @@ struct NexCartApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack{
-                ProductDetailView(product: dummy)
+                OnboardingFlowView(onFinish:{})
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 
                 //Splash Screen

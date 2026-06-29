@@ -25,7 +25,6 @@
 		D960C1FF2FF12A8600FFF4D9 /* temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1FE2FF12A8600FFF4D9 /* temp.swift */; };
 		F50644BD2FF283810049FDA3 /* ProductDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = F571D5172FF16C3C005E0EBA /* ProductDetails.swift */; };
 		F583E1952FF1A33D00793B1B /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = F583E1942FF1A33D00793B1B /* Components.swift */; };
-		F5AA5AF72FF29FC500AF9A17 /* OnBorading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AA5AF62FF29FC500AF9A17 /* OnBorading.swift */; };
 		F5C3E2232FF299E3001C6F53 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C3E2222FF299E3001C6F53 /* OnBoardingView.swift */; };
 		F5DC003C2FF1B86000F84E07 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DC003B2FF1B86000F84E07 /* Product.swift */; };
 /* End PBXBuildFile section */
@@ -78,7 +77,6 @@
 		F571D5182FF16C4B005E0EBA /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
 		F571D5192FF16C4B005E0EBA /* ProductViewModelPorotocl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModelPorotocl.swift; sourceTree = "<group>"; };
 		F583E1942FF1A33D00793B1B /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
-		F5AA5AF62FF29FC500AF9A17 /* OnBorading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBorading.swift; sourceTree = "<group>"; };
 		F5C3E2222FF299E3001C6F53 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		F5DC003B2FF1B86000F84E07 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -395,7 +393,6 @@
 			children = (
 				D960C1FA2FF12A7A00FFF4D9 /* temp.swift */,
 				F5DC003B2FF1B86000F84E07 /* Product.swift */,
-				F5AA5AF62FF29FC500AF9A17 /* OnBorading.swift */,
 			);
 			path = Entites;
 			sourceTree = "<group>";
@@ -627,7 +624,6 @@
 				D960C19E2FF1167A00FFF4D9 /* NexCartApp.swift in Sources */,
 				D960C1ED2FF120A500FFF4D9 /* ApiService.swift in Sources */,
 				D960C1E52FF11ACE00FFF4D9 /* AppTheme.swift in Sources */,
-				F5AA5AF72FF29FC500AF9A17 /* OnBorading.swift in Sources */,
 				F5DC003C2FF1B86000F84E07 /* Product.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
