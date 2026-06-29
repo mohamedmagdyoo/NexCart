@@ -50,6 +50,7 @@
 		D9EAA1332FF27A3F0097C038 /* FirebaseAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EAA1322FF27A3F0097C038 /* FirebaseAuthRepository.swift */; };
 		D9EAA1352FF281F30097C038 /* DIContainer+Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EAA1342FF281F30097C038 /* DIContainer+Services.swift */; };
 		D9EAA1392FF28A480097C038 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9EAA1382FF28A480097C038 /* GoogleService-Info.plist */; };
+		D9EAA13D2FF28FC70097C038 /* AuthMappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EAA13C2FF28FC70097C038 /* AuthMappers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +113,9 @@
 		D9EAA1322FF27A3F0097C038 /* FirebaseAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthRepository.swift; sourceTree = "<group>"; };
 		D9EAA1342FF281F30097C038 /* DIContainer+Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+Services.swift"; sourceTree = "<group>"; };
 		D9EAA1382FF28A480097C038 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D9EAA13A2FF28BDF0097C038 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D9EAA13B2FF28C800097C038 /* NexCart.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NexCart.entitlements; sourceTree = "<group>"; };
+		D9EAA13C2FF28FC70097C038 /* AuthMappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthMappers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +170,8 @@
 		D960C19C2FF1167A00FFF4D9 /* NexCart */ = {
 			isa = PBXGroup;
 			children = (
+				D9EAA13B2FF28C800097C038 /* NexCart.entitlements */,
+				D9EAA13A2FF28BDF0097C038 /* Info.plist */,
 				D9EAA1382FF28A480097C038 /* GoogleService-Info.plist */,
 				D960C22E2FF1980C00FFF4D9 /* Core */,
 				D960C1DE2FF1188900FFF4D9 /* App */,
@@ -555,6 +561,7 @@
 			children = (
 				D9EAA12B2FF275690097C038 /* FirebaseAuthService.swift */,
 				D9EAA1322FF27A3F0097C038 /* FirebaseAuthRepository.swift */,
+				D9EAA13C2FF28FC70097C038 /* AuthMappers.swift */,
 			);
 			path = Remote;
 			sourceTree = "<group>";
@@ -705,6 +712,7 @@
 				D960C1F62FF12A1500FFF4D9 /* SignInScreen.swift in Sources */,
 				D960C20F2FF1734B00FFF4D9 /* AuthEntities.swift in Sources */,
 				D960C2342FF1987600FFF4D9 /* DIContainer+Repositories.swift in Sources */,
+				D9EAA13D2FF28FC70097C038 /* AuthMappers.swift in Sources */,
 				D960C2362FF1989F00FFF4D9 /* DIContainer+UseCases.swift in Sources */,
 				D960C21B2FF17B3600FFF4D9 /* LoginWithSocialProvider.swift in Sources */,
 				D960C23A2FF1A0AB00FFF4D9 /* AuthDesignSystem.swift in Sources */,
@@ -889,11 +897,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NexCart/NexCart.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"NexCart/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NexCart/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -917,11 +927,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NexCart/NexCart.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"NexCart/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NexCart/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

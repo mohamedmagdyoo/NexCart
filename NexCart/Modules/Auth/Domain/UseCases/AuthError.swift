@@ -22,7 +22,7 @@ enum AuthError: Error, LocalizedError {
         case .invalidEmail:
             return "Please enter a valid email address."
         case .weakPassword:
-            return "Password must be at least 6 characters."
+            return "Password must be at least 8 characters."
         case .emailAlreadyInUse:
             return "An account with this email already exists."
         case .wrongPassword:

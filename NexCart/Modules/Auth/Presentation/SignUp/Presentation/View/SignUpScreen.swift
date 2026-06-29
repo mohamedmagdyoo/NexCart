@@ -154,7 +154,6 @@ struct SignUpIdleState: View {
                         message: "Already have one?",
                         linkText: "Sign in"
                     ) {
-                        // navigate to SignInScreen use dismis to pop
                         dismiss()
                     }
                     .frame(maxWidth: .infinity)

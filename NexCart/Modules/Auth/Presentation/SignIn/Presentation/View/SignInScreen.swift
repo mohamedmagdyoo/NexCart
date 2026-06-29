@@ -88,10 +88,11 @@ struct SignInIdleState: View {
             AuthDivider(text: "OR CONTINUE WITH")
                 .padding(.vertical, 24)
             
-            VStack(spacing: 0){
+            VStack(spacing: 5){
                 
                 // MARK: Social Buttons
                 SignInWithAppleButton(.signIn) { request in
+                    
                     request.requestedScopes = [.fullName, .email]
                 } onCompletion: { result in
                     switch result {
@@ -101,7 +102,8 @@ struct SignInIdleState: View {
                         print("Apple Sign In failed: \(error)")
                     }
                 }
-                .frame(height: 50)
+                .frame(maxHeight: 40)
+                .buttonStyle(AuthPrimaryButtonStyle())
                 
                 Button {
                     guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -116,35 +118,36 @@ struct SignInIdleState: View {
                         }
                     }
                     .buttonStyle(AuthSocialButtonStyle())
+                
+                // MARK: Footer
+                AuthFooterLink(
+                    message: "New here?",
+                    linkText: "Create an account"
+                ) {
+                    print("Nav To SignUpScreen")
+                    // flip the flage
+                    navToSignUp = true
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.bottom, 24)
+                
+                
+                
+                HStack{
+                    Image(systemName: "person.fill")
+                    Text("Try with guest mode")
+                        .font(.system(size: 16,weight: .medium,design: .serif))
+                        .opacity(0.5)
+                }
+                .onTapGesture {
+                    viewModel.loginAsGuest()                }
             }
-            
-            
-            // MARK: Footer
-            AuthFooterLink(
-                message: "New here?",
-                linkText: "Create an account"
-            ) {
-                print("Nav To SignUpScreen")
-                // flip the flage
-                navToSignUp = true
+            .navigationDestination(isPresented: $navToSignUp){
+                SignUpScreen()
             }
-            .frame(maxWidth: .infinity)
-            .padding(.bottom, 24)
-            
-            
-            HStack{
-                Image(systemName: "person.fill")
-                Text("Try with guest mode")
-                    .font(.system(size: 16,weight: .medium,design: .serif))
-                    .opacity(0.5)
-            }
-            .onTapGesture {
-                viewModel.loginAsGuest()                }
-        }
-        .navigationDestination(isPresented: $navToSignUp){
-            SignUpScreen()
-        }
-        .padding(.horizontal, 24)
+            .padding(.horizontal, 24)
+            }//VStack
+        .padding()
     }
 }
 
