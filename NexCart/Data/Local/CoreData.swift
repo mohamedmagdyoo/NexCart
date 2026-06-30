@@ -25,7 +25,7 @@ final class CoreDataService {
        func saveProductToDatabase(product: ProductEntity) {
         let context = container.viewContext
         
-             let cachedProduct = NSEntityDescription.insertNewObject(forEntityName: "NextCartModel", into: context)
+             let cachedProduct = NSEntityDescription.insertNewObject(forEntityName: "NexCartProduct", into: context)
         
         cachedProduct.setValue(product.id, forKey: "id")
         cachedProduct.setValue(product.name, forKey: "name")
