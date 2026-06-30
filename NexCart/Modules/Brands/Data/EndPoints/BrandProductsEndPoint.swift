@@ -17,11 +17,10 @@ enum BrandProductsEndPoint: EndPoint {
     var path: String {
         switch self {
         case .productsByCollection(let collectionId, let brandName):
-            // Fallback to vendor filtering if collection rules are incomplete.
-            // Shopify is case-sensitive for vendor. If Smart Collection title is "ADIDAS", 
-            // the vendor on products might be "Adidas". 
-            // We'll use the capitalized version for the vendor query.
-            let vendor = brandName.trimmingCharacters(in: .whitespacesAndNewlines).capitalized
+            if brandName.lowercased() == "all" {
+                return "/products.json?limit=250"
+            }
+            let vendor = brandName.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
             let encoded = vendor.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? vendor
             return "/products.json?vendor=\(encoded)&limit=250"
         }

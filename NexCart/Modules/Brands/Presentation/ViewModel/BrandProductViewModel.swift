@@ -52,12 +52,22 @@ final class BrandProductsViewModel: ObservableObject {
         do {
             let fetchedProducts = try await fetchBrandProductsUseCase.execute(collectionId: brand.id, brandName: brand.name)
             #if DEBUG
-            print("✅ Brand '\(brand.name)' (id: \(brand.id)) returned \(fetchedProducts.count) products")
+            print("==================================================")
+            print("🚀 [SUCCESS] Fetched Products for Brand: \(brand.name)")
+            print("📊 Total Products Received from API: \(fetchedProducts.count)")
+            if fetchedProducts.count > 0 {
+                let firstFew = fetchedProducts.prefix(3).map { "[\($0.name) - Vendor: \($0.brand)]" }.joined(separator: ", ")
+                print("👀 Sample Products: \(firstFew)")
+            }
+            print("==================================================")
             #endif
             products = fetchedProducts
         } catch {
             #if DEBUG
-            print("❌ FetchProducts failed for \(brand.name) (id: \(brand.id)): \(error)")
+            print("==================================================")
+            print("❌ [ERROR] FetchProducts failed for \(brand.name) (id: \(brand.id))")
+            print("❌ Error details: \(error)")
+            print("==================================================")
             #endif
             errorMessage = "Couldn't load products. Pull to refresh."
         }
