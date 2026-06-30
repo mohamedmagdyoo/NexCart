@@ -1,3 +1,10 @@
+//
+//  HomeBrandSection.swift
+//  NexCart
+//
+//  Created by shady ramadan on 28/06/2026.
+//
+
 import SwiftUI
 
 struct HomeBrandsSection: View {
@@ -52,23 +59,28 @@ struct HomeBrandsSection: View {
                         .stroke(isSelected ? AppColor.gold : Color.clear, lineWidth: 2)
                         .frame(width: 74, height: 74)
                     
-                    AsyncImage(url: URL(string: brand.imageURL)) { phase in
-                        switch phase {
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 66, height: 66)
-                                .clipShape(Circle())
-                        case .empty:
-                            Circle()
-                                .fill(AppColor.border.opacity(0.4))
-                                .frame(width: 66, height: 66)
-                                .overlay(ProgressView().tint(AppColor.gold))
-                        case .failure:
-                            fallbackBrandImage(name: brand.name)
-                        @unknown default:
-                            fallbackBrandImage(name: brand.name)
+                    if brand.imageURL.isEmpty {
+                        fallbackBrandImage(name: brand.name)
+                    } else {
+                        AsyncImage(url: URL(string: brand.imageURL)) { phase in
+                            switch phase {
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 66, height: 66)
+                                    .clipShape(Circle())
+                            case .empty:
+                                Circle()
+                                    .fill(AppColor.border.opacity(0.4))
+                                    .frame(width: 66, height: 66)
+                                    .overlay(ProgressView().tint(AppColor.gold))
+                            case .failure:
+                                fallbackBrandImage(name: brand.name)
+                            @unknown default:
+                                fallbackBrandImage(name: brand.name)
+                            }
+                        
                         }
                     }
                 }
@@ -85,7 +97,7 @@ struct HomeBrandsSection: View {
         .buttonStyle(PlainButtonStyle())
     }
     
-      private func fallbackBrandImage(name: String) -> some View {
+    private func fallbackBrandImage(name: String) -> some View {
         Circle()
             .fill(AppColor.border.opacity(0.4))
             .frame(width: 66, height: 66)
