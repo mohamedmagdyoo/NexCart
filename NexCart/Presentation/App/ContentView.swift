@@ -18,8 +18,9 @@ struct ContentView: View {
     var body: some View {
         
             if userData != nil {
+            
                 NavigationStack{
-                    HomeScreen()
+                    HomeView()
                 }
             } else {
                 NavigationStack{
@@ -37,17 +38,3 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-struct HomeScreen: View{
-    var body: some View{
-        VStack{
-            Text("NexCart")
-                .font(.system(size: 22,weight: .heavy, design: .rounded))
-            
-            Button{
-                UserDefaults.standard.removeObject(forKey: "userEntity")
-            }label: {
-                Text("RemoveUserEntity")
-            }
-        }
-    }
-}
