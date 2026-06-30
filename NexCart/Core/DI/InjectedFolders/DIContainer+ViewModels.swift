@@ -22,5 +22,14 @@ extension DIContainer {
             SignUpViewModel(signUpUseCase: r.resolve(CreatNewAccountUseCaseProtocol.self)!, loginWithProviderUC: r.resolve(LoginWithSocialProviderUseCaseProtocol.self)!)
         }
 
-    }
-}
+        container.register(HomeViewModel.self) { r in
+                  HomeViewModel(
+                      fetchProductsUseCase: r.resolve(FetchHomeProductsUseCaseProtocol.self)!,
+                      fetchBrandsUseCase: r.resolve(FetchHomeBrandsUseCaseProtocol.self)!,
+                      fetchSlidesUseCase: r.resolve(FetchHeroSlidesUseCaseProtocol.self)!
+                  )
+              }
+       
+          }
+      }
+       
