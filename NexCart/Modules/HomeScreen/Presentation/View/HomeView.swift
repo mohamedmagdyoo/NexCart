@@ -106,7 +106,4 @@ struct HomeTabBar: View {
     }
 }
 
-#Preview {
-    HomeView()
-        .preferredColorScheme(.light)
-}
+
