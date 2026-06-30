@@ -20,6 +20,7 @@ struct AlertModel: Identifiable {
 }
 
 final class SignInViewModel: ObservableObject {
+    @Published var shouldNavigateToHome: Bool = false
     @Published var screenState: SignInScreenState = .idle
     @Published var alert: AlertModel?
 
@@ -73,6 +74,7 @@ final class SignInViewModel: ObservableObject {
     func loginAsGuest() {
         userEntity = loginAsGuestUC.excute()
         screenState = .success
+        self.shouldNavigateToHome = true
     }
     
     // To emity that there a new user loged in and restate the content view to nav to home screen direct
@@ -83,11 +85,13 @@ final class SignInViewModel: ObservableObject {
         }
         
         saveUser(userEntity)
+        self.shouldNavigateToHome = true
     }
 
     // MARK: - Private Helpers
     private func saveUser(_ userEntity: UserEntity) {
         guard let userData = try? JSONEncoder().encode(userEntity) else { return }
         UserDefaults.standard.set(userData, forKey: "userEntity")
+        
     }
 }
