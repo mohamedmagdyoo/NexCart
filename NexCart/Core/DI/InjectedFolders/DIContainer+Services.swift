@@ -15,5 +15,9 @@ extension DIContainer{
         container.register(FirebaseAuthService.self){ _ in
             FirebaseAuthService()
         }
+               container.register(ApiServiceProtocol.self){ _ in
+                   ApiService()
+               }.inObjectScope(.container)
     }
-}
+       }
+        

@@ -34,5 +34,19 @@ extension DIContainer {
         container.register(ForgotPassUseCaseProtocol.self) { r in
             ForgotPassUseCase(authRepo: r.resolve(AuthRepositoryProtocol.self)!)
         }
-    }
-}
+   
+        container.register(FetchHomeProductsUseCaseProtocol.self) { r in
+                  FetchHomeProductsUseCase(repo: r.resolve(HomeRepoProtocol.self)!)
+              }
+       
+              container.register(FetchHomeBrandsUseCaseProtocol.self) { r in
+                  FetchHomeBrandsUseCase(repo: r.resolve(HomeRepoProtocol.self)!)
+              }
+       
+              container.register(FetchHeroSlidesUseCaseProtocol.self) { _ in
+                  FetchHeroSlidesUseCase()
+              }
+          }
+      }
+       
+       
