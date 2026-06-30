@@ -40,13 +40,12 @@ final class HomeViewModel: ObservableObject {
         guard products.indices.contains(index) else { return }
         products[index].isFavorited.toggle()
         
-        if products[index].isFavorited {
-            saveProductLocally(product: products[index])
+        let product = products[index]
+        if product.isFavorited {
+            coreDataService.saveProductToDatabase(product: product)
+        } else {
+            coreDataService.deleteProductFromDatabase(id: product.id)
         }
-    }
-
-    func saveProductLocally(product: ProductEntity) {
-        coreDataService.saveProductToDatabase(product: product)
     }
 
     func selectBrand(at index: Int) {
@@ -58,7 +57,14 @@ final class HomeViewModel: ObservableObject {
         isLoadingProducts = true
         defer { isLoadingProducts = false }
         do {
-            products = try await fetchProductsUseCase.execute()
+            var fetchedProducts = try await fetchProductsUseCase.execute()
+            
+            // Check favorites against Core Data
+            for i in fetchedProducts.indices {
+                fetchedProducts[i].isFavorited = coreDataService.isFavorite(id: fetchedProducts[i].id)
+            }
+            
+            products = fetchedProducts
         } catch {
             errorMessage = error.localizedDescription
         }
