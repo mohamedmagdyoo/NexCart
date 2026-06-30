@@ -47,24 +47,33 @@ final class BrandProductsViewModel: ObservableObject {
     func loadProducts() async {
         isLoading = true
         errorMessage = nil
+        
+        // Fetch products
         do {
-            async let productsTask = fetchBrandProductsUseCase.execute(collectionId: brand.id)
-            async let categoriesTask = fetchBrandProductsUseCase.fetchCategories()
-            
-            let (fetchedProducts, fetchedCategories) = try await (productsTask, categoriesTask)
-            
+            let fetchedProducts = try await fetchBrandProductsUseCase.execute(collectionId: brand.id)
+            #if DEBUG
+            print("✅ Brand '\(brand.name)' (id: \(brand.id)) returned \(fetchedProducts.count) products")
+            #endif
             products = fetchedProducts
-            
-            var allCats = [CategoryEntity(id: "all", name: "All")]
-            allCats.append(contentsOf: fetchedCategories)
-            categories = allCats
-            
         } catch {
             #if DEBUG
-            print("FetchBrandProductsUseCase failed for \(brand.name): \(error)")
+            print("❌ FetchProducts failed for \(brand.name) (id: \(brand.id)): \(error)")
             #endif
             errorMessage = "Couldn't load products. Pull to refresh."
         }
+        
+        // Fetch categories separately
+        do {
+            let fetchedCategories = try await fetchBrandProductsUseCase.fetchCategories()
+            var allCats = [CategoryEntity(id: "all", name: "All")]
+            allCats.append(contentsOf: fetchedCategories)
+            categories = allCats
+        } catch {
+            #if DEBUG
+            print("❌ FetchCategories failed: \(error)")
+            #endif
+        }
+        
         isLoading = false
     }
 

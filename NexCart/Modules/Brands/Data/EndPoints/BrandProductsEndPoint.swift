@@ -17,7 +17,7 @@ enum BrandProductsEndPoint: EndPoint {
     var path: String {
         switch self {
         case .productsByCollection(let collectionId):
-            return "/collections/\(collectionId)/products.json?limit=250"
+            return "/products.json?collection_id=\(collectionId)&limit=250"
         }
     }
 
