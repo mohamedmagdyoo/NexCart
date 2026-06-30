@@ -15,6 +15,7 @@ struct CategoryEntity: Identifiable, Hashable {
 final class BrandProductsViewModel: ObservableObject {
 
     @Published var products: [ProductEntity] = []
+    @Published var categories: [CategoryEntity] = [CategoryEntity(id: "all", name: "All")]
     @Published var selectedCategory: CategoryEntity = CategoryEntity(id: "all", name: "All")
     @Published var isLoading = false
     @Published var errorMessage: String?
@@ -27,14 +28,7 @@ final class BrandProductsViewModel: ObservableObject {
         self.fetchBrandProductsUseCase = fetchBrandProductsUseCase
     }
 
-    var categories: [CategoryEntity] {
-        [
-            CategoryEntity(id: "all", name: "All"),
-            CategoryEntity(id: "tshirts", name: "T-Shirts"),
-            CategoryEntity(id: "shoes", name: "Shoes"),
-            CategoryEntity(id: "accessories", name: "Accessories")
-        ]
-    }
+
 
     // NOTE: This still matches on the product name as a stand-in, since ProductEntity
     // doesn't currently expose a product type / tags field from the API.
@@ -46,16 +40,7 @@ final class BrandProductsViewModel: ObservableObject {
 
         return products.filter { product in
             let name = product.name.lowercased()
-            switch selectedCategory.id {
-            case "tshirts":
-                return name.contains("shirt") || name.contains("t-shirt") || name.contains("tee")
-            case "shoes":
-                return name.contains("shoe") || name.contains("sneaker") || name.contains("boot")
-            case "accessories":
-                return name.contains("accessor") || name.contains("hat") || name.contains("bag") || name.contains("belt")
-            default:
-                return name.contains(selectedCategory.name.lowercased())
-            }
+            return name.contains(selectedCategory.name.lowercased())
         }
     }
 
@@ -63,8 +48,17 @@ final class BrandProductsViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
         do {
+            async let productsTask = fetchBrandProductsUseCase.execute(vendorName: brand.name)
+            async let categoriesTask = fetchBrandProductsUseCase.fetchCategories()
             
-            products = try await fetchBrandProductsUseCase.execute(vendorName: brand.name)
+            let (fetchedProducts, fetchedCategories) = try await (productsTask, categoriesTask)
+            
+            products = fetchedProducts
+            
+            var allCats = [CategoryEntity(id: "all", name: "All")]
+            allCats.append(contentsOf: fetchedCategories)
+            categories = allCats
+            
         } catch {
             #if DEBUG
             print("FetchBrandProductsUseCase failed for \(brand.name): \(error)")

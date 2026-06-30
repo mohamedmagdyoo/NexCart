@@ -116,9 +116,12 @@ struct ProductCardView: View {
                 AsyncImage(url: URL(string: product.imageURL)) { phase in
                     switch phase {
                     case .success(let image):
-                        image.resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        Color.clear
+                            .overlay(
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                            )
                             .clipped()
                     case .empty, .failure:
                         Rectangle().fill(Color.gray.opacity(0.1))

@@ -23,9 +23,11 @@ final class BrandsRepository: BrandsRepoProtocol {
         let response: ProductsResponseDTO = try await apiService.fetch(
             endPoint: BrandProductsEndPoint.productsByVendor(brandName: brandName)
         )
-        let products = response.products.map { $0.toEntity() }
+        return response.products.map { $0.toEntity() }
+    }
 
-        let normalizedTarget = brandName.lowercased()
-        return products.filter { $0.brand.lowercased() == normalizedTarget }
+    func fetchCategories() async throws -> [CategoryEntity] {
+        let response: CategoriesResponseDTO = try await apiService.fetch(endPoint: BrandsEndPoint.allCategories)
+        return response.customCollections.map { $0.toEntity() }
     }
 }

@@ -37,6 +37,7 @@ struct BrandsListView: View {
                         }
                     }
                     .padding(20)
+                    .buttonStyle(PlainButtonStyle())
                 }
             }
             .background(AppColor.bg.ignoresSafeArea())
@@ -87,10 +88,12 @@ struct BrandCardView: View {
                 AsyncImage(url: URL(string: brand.imageURL)) { phase in
                     switch phase {
                     case .success(let image):
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        Color.clear
+                            .overlay(
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                            )
                             .clipped()
                     case .empty:
                         ProgressView()
