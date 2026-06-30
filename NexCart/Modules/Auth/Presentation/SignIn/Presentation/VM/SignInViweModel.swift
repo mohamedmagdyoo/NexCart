@@ -13,11 +13,6 @@ enum SignInScreenState {
     case success
 }
 
-struct AlertModel: Identifiable {
-    var id: UUID = UUID()
-    var title: String
-    var description: String
-}
 
 final class SignInViewModel: ObservableObject {
     @Published var shouldNavigateToHome: Bool = false
