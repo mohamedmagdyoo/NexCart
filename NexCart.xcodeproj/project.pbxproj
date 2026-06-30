@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D911EE462FF438340023A1B4 /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F571D5182FF16C4B005E0EBA /* ProductViewModel.swift */; };
 		D960C19E2FF1167A00FFF4D9 /* NexCartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C19D2FF1167A00FFF4D9 /* NexCartApp.swift */; };
 		D960C1A02FF1167A00FFF4D9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C19F2FF1167A00FFF4D9 /* ContentView.swift */; };
 		D960C1A22FF1167C00FFF4D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D960C1A12FF1167C00FFF4D9 /* Assets.xcassets */; };
@@ -75,7 +76,6 @@
 		D960C2062FF12AC000FFF4D9 /* temp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = temp.swift; sourceTree = "<group>"; };
 		F571D5172FF16C3C005E0EBA /* ProductDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetails.swift; sourceTree = "<group>"; };
 		F571D5182FF16C4B005E0EBA /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
-		F571D5192FF16C4B005E0EBA /* ProductViewModelPorotocl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModelPorotocl.swift; sourceTree = "<group>"; };
 		F583E1942FF1A33D00793B1B /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		F5C3E2222FF299E3001C6F53 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		F5DC003B2FF1B86000F84E07 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
@@ -452,7 +452,6 @@
 			isa = PBXGroup;
 			children = (
 				F571D5182FF16C4B005E0EBA /* ProductViewModel.swift */,
-				F571D5192FF16C4B005E0EBA /* ProductViewModelPorotocl.swift */,
 			);
 			path = "View Mdoel";
 			sourceTree = "<group>";
@@ -624,6 +623,7 @@
 				D960C19E2FF1167A00FFF4D9 /* NexCartApp.swift in Sources */,
 				D960C1ED2FF120A500FFF4D9 /* ApiService.swift in Sources */,
 				D960C1E52FF11ACE00FFF4D9 /* AppTheme.swift in Sources */,
+				D911EE462FF438340023A1B4 /* ProductViewModel.swift in Sources */,
 				F5DC003C2FF1B86000F84E07 /* Product.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
