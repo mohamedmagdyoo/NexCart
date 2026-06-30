@@ -10,6 +10,7 @@ import Foundation
 
 protocol FetchBrandProductsUseCaseProtocol {
     func execute(vendorName: String) async throws -> [ProductEntity]
+    func fetchCategories() async throws -> [CategoryEntity]
 }
 
 final class FetchBrandProductsUseCase: FetchBrandProductsUseCaseProtocol {
@@ -21,5 +22,9 @@ final class FetchBrandProductsUseCase: FetchBrandProductsUseCaseProtocol {
 
     func execute(vendorName: String) async throws -> [ProductEntity] {
         try await repo.fetchProducts(forVendorName: vendorName)
+    }
+
+    func fetchCategories() async throws -> [CategoryEntity] {
+        try await repo.fetchCategories()
     }
 }

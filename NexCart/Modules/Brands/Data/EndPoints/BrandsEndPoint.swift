@@ -9,6 +9,7 @@ import Foundation
 
 enum BrandsEndPoint: EndPoint {
     case allBrands
+    case allCategories
 
     var baseUrl: String {
         "https://mad46-ios-team9.myshopify.com/admin/api/2024-01"
@@ -18,6 +19,8 @@ enum BrandsEndPoint: EndPoint {
         switch self {
         case .allBrands:
             return "/smart_collections.json"
+        case .allCategories:
+            return "/custom_collections.json"
         }
     }
 
