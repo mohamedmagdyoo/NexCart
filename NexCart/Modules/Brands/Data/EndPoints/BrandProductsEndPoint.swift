@@ -17,7 +17,7 @@ enum BrandProductsEndPoint: EndPoint {
     var path: String {
         switch self {
         case .productsByVendor(let brandName):
-            let vendor = brandName.uppercased()
+            let vendor = brandName.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
             let allowed = CharacterSet.urlQueryAllowed
             let encoded = vendor.addingPercentEncoding(withAllowedCharacters: allowed) ?? vendor
             return "/products.json?vendor=\(encoded)&limit=250"
