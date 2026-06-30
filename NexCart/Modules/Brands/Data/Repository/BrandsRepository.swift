@@ -21,7 +21,7 @@ final class BrandsRepository: BrandsRepoProtocol {
 
     func fetchProducts(forVendorName vendorName: String) async throws -> [ProductEntity] {
         let response: ProductsResponseDTO = try await apiService.fetch(
-            endPoint: BrandProductsEndPoint.allProducts
+            endPoint: BrandProductsEndPoint.productsByVendor(brandName: vendorName)
         )
         let products = response.products.map { $0.toEntity() }
         let normalizedTarget = vendorName.lowercased()
