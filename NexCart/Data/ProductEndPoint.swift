@@ -5,7 +5,7 @@
 
 import Foundation
 
-enum HomeEndPoint: EndPoint {
+enum ProductEndPoint: EndPoint {
 
     case allProducts
     case productsByBrand(brandName: String)

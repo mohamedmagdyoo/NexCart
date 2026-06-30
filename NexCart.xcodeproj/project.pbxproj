@@ -11,7 +11,7 @@
 		9F8F1E522FF3898D0016B844 /* HomeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E412FF3898D0016B844 /* HomeRepository.swift */; };
 		9F8F1E532FF3898D0016B844 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E4B2FF3898D0016B844 /* HomeView.swift */; };
 		9F8F1E542FF3898D0016B844 /* HomeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E3F2FF3898D0016B844 /* HomeEntity.swift */; };
-		9F8F1E552FF3898D0016B844 /* HomeEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E3D2FF3898D0016B844 /* HomeEndPoint.swift */; };
+		9F8F1E552FF3898D0016B844 /* ProductEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E3D2FF3898D0016B844 /* ProductEndPoint.swift */; };
 		9F8F1E562FF3898D0016B844 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E4D2FF3898D0016B844 /* HomeViewModel.swift */; };
 		9F8F1E572FF3898D0016B844 /* HomeBrandSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E482FF3898D0016B844 /* HomeBrandSection.swift */; };
 		9F8F1E582FF3898D0016B844 /* HomeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E432FF3898D0016B844 /* HomeProtocol.swift */; };
@@ -84,7 +84,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9F8F1E3D2FF3898D0016B844 /* HomeEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEndPoint.swift; sourceTree = "<group>"; };
+		9F8F1E3D2FF3898D0016B844 /* ProductEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEndPoint.swift; sourceTree = "<group>"; };
 		9F8F1E3F2FF3898D0016B844 /* HomeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEntity.swift; sourceTree = "<group>"; };
 		9F8F1E412FF3898D0016B844 /* HomeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRepository.swift; sourceTree = "<group>"; };
 		9F8F1E432FF3898D0016B844 /* HomeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeProtocol.swift; sourceTree = "<group>"; };
@@ -176,7 +176,6 @@
 		9F8F1E3E2FF3898D0016B844 /* EndPoints */ = {
 			isa = PBXGroup;
 			children = (
-				9F8F1E3D2FF3898D0016B844 /* HomeEndPoint.swift */,
 			);
 			path = EndPoints;
 			sourceTree = "<group>";
@@ -452,6 +451,7 @@
 		D960C1DD2FF1186200FFF4D9 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				9F8F1E3D2FF3898D0016B844 /* ProductEndPoint.swift */,
 				9F8F1E642FF38A980016B844 /* EndPoint.swift */,
 				D960C1E02FF1196900FFF4D9 /* Remote */,
 				D960C1DF2FF118CB00FFF4D9 /* Local */,
@@ -836,7 +836,7 @@
 				9F8F1E522FF3898D0016B844 /* HomeRepository.swift in Sources */,
 				9F8F1E532FF3898D0016B844 /* HomeView.swift in Sources */,
 				9F8F1E542FF3898D0016B844 /* HomeEntity.swift in Sources */,
-				9F8F1E552FF3898D0016B844 /* HomeEndPoint.swift in Sources */,
+				9F8F1E552FF3898D0016B844 /* ProductEndPoint.swift in Sources */,
 				9F8F1E562FF3898D0016B844 /* HomeViewModel.swift in Sources */,
 				9F8F1E572FF3898D0016B844 /* HomeBrandSection.swift in Sources */,
 				9F8F1E582FF3898D0016B844 /* HomeProtocol.swift in Sources */,
