@@ -5,25 +5,24 @@
 //  Created by shady ramadan on 28/06/2026.
 //
 
-
 import SwiftUI
 
 struct HomeBrandsSection: View {
 
-    let brands:  [BrandEntity]
+    let brands: [BrandEntity]
     let onBrandSelected: (Int) -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             header
-            pillsRow
+            brandsAvatarRow
         }
-        .padding(.bottom, 4)
+        .padding(.bottom, 12)
     }
 
     private var header: some View {
         HStack {
-            Text("BRANDS")
+            Text("SHOP BY BRAND")
                 .font(AppColor.sans(11, .semibold))
                 .tracking(3)
                 .foregroundColor(AppColor.textSec)
@@ -34,14 +33,14 @@ struct HomeBrandsSection: View {
         }
         .padding(.horizontal, 20)
         .padding(.top, 24)
-        .padding(.bottom, 14)
+        .padding(.bottom, 16)
     }
 
-    private var pillsRow: some View {
+    private var brandsAvatarRow: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 8) {
+            HStack(spacing: 16) {
                 ForEach(brands.indices, id: \.self) { i in
-                    brandPill(at: i)
+                    brandAvatarItem(at: i)
                 }
             }
             .padding(.horizontal, 20)
@@ -49,23 +48,63 @@ struct HomeBrandsSection: View {
         }
     }
 
-    private func brandPill(at index: Int) -> some View {
-        let brand      = brands[index]
+    private func brandAvatarItem(at index: Int) -> some View {
+        let brand = brands[index]
         let isSelected = brand.isSelected
 
         return Button { onBrandSelected(index) } label: {
-            Text(brand.name)
-                .font(AppColor.sans(11, .semibold))
-                .tracking(1.5)
-                .foregroundColor(isSelected ? AppColor.white : AppColor.textPrim)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 10)
-                .background(
-                    Capsule().fill(isSelected ? AppColor.pillSel : AppColor.pill)
-                )
-                .overlay(
-                    Capsule().stroke(AppColor.border, lineWidth: isSelected ? 0 : 0.5)
-                )
+            VStack(spacing: 8) {
+                ZStack {
+                    Circle()
+                        .stroke(isSelected ? AppColor.gold : Color.clear, lineWidth: 2)
+                        .frame(width: 74, height: 74)
+                    
+                    if brand.imageURL.isEmpty {
+                        fallbackBrandImage(name: brand.name)
+                    } else {
+                        AsyncImage(url: URL(string: brand.imageURL)) { phase in
+                            switch phase {
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 66, height: 66)
+                                    .clipShape(Circle())
+                            case .empty:
+                                Circle()
+                                    .fill(AppColor.border.opacity(0.4))
+                                    .frame(width: 66, height: 66)
+                                    .overlay(ProgressView().tint(AppColor.gold))
+                            case .failure:
+                                fallbackBrandImage(name: brand.name)
+                            @unknown default:
+                                fallbackBrandImage(name: brand.name)
+                            }
+                        
+                        }
+                    }
+                }
+                .shadow(color: Color.black.opacity(isSelected ? 0.08 : 0.02), radius: 4, x: 0, y: 2)
+                
+                Text(brand.name)
+                    .font(AppColor.sans(11, isSelected ? .bold : .medium))
+                    .tracking(0.5)
+                    .foregroundColor(isSelected ? AppColor.gold : AppColor.textPrim)
+                    .lineLimit(1)
+                    .frame(width: 76)
+            }
         }
+        .buttonStyle(PlainButtonStyle())
+    }
+    
+    private func fallbackBrandImage(name: String) -> some View {
+        Circle()
+            .fill(AppColor.border.opacity(0.4))
+            .frame(width: 66, height: 66)
+            .overlay(
+                Text(name.prefix(1).uppercased())
+                    .font(AppColor.sans(16, .bold))
+                    .foregroundColor(AppColor.textSec)
+            )
     }
 }

@@ -14,5 +14,11 @@ extension DIContainer {
         container.register(AuthRepositoryProtocol.self) { r in
             FirebaseAuthRepository(service: r.resolve(FirebaseAuthService.self)!)
         }.inObjectScope(.container) // to make it singltone
-    }
-}
+
+     
+        container.register(HomeRepoProtocol.self) { r in
+                 HomeRepository(apiService: r.resolve(ApiServiceProtocol.self)!)
+             }.inObjectScope(.container)
+         }
+     }
+      

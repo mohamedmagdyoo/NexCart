@@ -2,7 +2,7 @@ import SwiftUI
 
 struct HomeView: View {
 
-    @StateObject private var viewModel = HomeViewModel()
+    @StateObject private var viewModel = DIContainer.shared.container.resolve(HomeViewModel.self)!
     @State private var heroIndex: Int = 0
     @State private var selectedTab: Int = 0
 
@@ -106,9 +106,11 @@ struct HomeTabBar: View {
     }
 }
 
+
 struct HomeView_Previews: PreviewProvider{
     static var previews: some View{
         HomeView()
             .preferredColorScheme(.light)
     }
 }
+
