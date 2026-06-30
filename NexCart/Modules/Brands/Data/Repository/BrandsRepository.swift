@@ -19,9 +19,9 @@ final class BrandsRepository: BrandsRepoProtocol {
         return response.smartCollections.map { $0.toEntity() }
     }
 
-    func fetchProducts(forVendorName vendorName: String) async throws -> [ProductEntity] {
+    func fetchProducts(forCollectionId collectionId: String) async throws -> [ProductEntity] {
         let response: ProductsResponseDTO = try await apiService.fetch(
-            endPoint: BrandProductsEndPoint.productsByVendor(brandName: vendorName)
+            endPoint: BrandProductsEndPoint.productsByCollection(collectionId: collectionId)
         )
         return response.products.map { $0.toEntity() }
     }
