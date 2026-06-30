@@ -34,6 +34,8 @@ struct BrandProductsView: View {
                         .foregroundColor(AppColor.textSec)
                         .padding(.top, 60)
                         .frame(maxWidth: .infinity)
+                } else if viewModel.filteredProducts.isEmpty {
+                    emptyStatePlaceholder
                 } else {
                     productGrid
                 }
@@ -101,6 +103,26 @@ struct BrandProductsView: View {
             }
         }
         .padding(.horizontal, 20)
+    }
+
+    private var emptyStatePlaceholder: some View {
+        VStack(spacing: 20) {
+            Image(systemName: "magnifyingglass")
+                .font(.system(size: 40))
+                .foregroundColor(AppColor.textSec)
+            
+            Text("No Products Found")
+                .font(AppColor.serif(20, .medium))
+                .foregroundColor(AppColor.textPrim)
+            
+            Text("We couldn't find any products in this category for \(viewModel.brand.name).")
+                .font(AppColor.sans(14))
+                .foregroundColor(AppColor.textSec)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 40)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 80)
     }
 }
 

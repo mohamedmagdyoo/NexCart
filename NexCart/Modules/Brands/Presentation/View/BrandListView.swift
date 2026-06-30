@@ -26,6 +26,8 @@ struct BrandsListView: View {
                         .font(AppColor.sans(14))
                         .foregroundColor(AppColor.textSec)
                         .padding(.top, 60)
+                } else if viewModel.brands.isEmpty {
+                    emptyBrandsPlaceholder
                 } else {
                     LazyVGrid(columns: columns, spacing: 16) {
                         ForEach(viewModel.brands) { brand in
@@ -45,6 +47,26 @@ struct BrandsListView: View {
             .task { await viewModel.loadBrands() }
             .refreshable { await viewModel.loadBrands() }
         }
+    }
+
+    private var emptyBrandsPlaceholder: some View {
+        VStack(spacing: 20) {
+            Image(systemName: "tag.slash")
+                .font(.system(size: 40))
+                .foregroundColor(AppColor.textSec)
+            
+            Text("No Brands Available")
+                .font(AppColor.serif(20, .medium))
+                .foregroundColor(AppColor.textPrim)
+            
+            Text("There are currently no brands to display. Please check back later.")
+                .font(AppColor.sans(14))
+                .foregroundColor(AppColor.textSec)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 40)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 80)
     }
 }
 
