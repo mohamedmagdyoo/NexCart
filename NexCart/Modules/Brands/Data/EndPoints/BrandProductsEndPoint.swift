@@ -8,7 +8,7 @@
 import Foundation
 
 enum BrandProductsEndPoint: EndPoint {
-    case productsByCollection(collectionId: String)
+    case allProducts
 
     var baseUrl: String {
         "https://mad46-ios-team9.myshopify.com/admin/api/2024-01"
@@ -16,8 +16,8 @@ enum BrandProductsEndPoint: EndPoint {
 
     var path: String {
         switch self {
-        case .productsByCollection(let collectionId):
-            return "/products.json?collection_id=\(collectionId)&limit=250"
+        case .allProducts:
+            return "/products.json?limit=250"
         }
     }
 
