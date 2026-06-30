@@ -53,9 +53,6 @@
 		D960C23F2FF1B28E00FFF4D9 /* SignUpScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C23E2FF1B28E00FFF4D9 /* SignUpScreen.swift */; };
 		D960C2452FF1B40300FFF4D9 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C2442FF1B40300FFF4D9 /* SignUpViewModel.swift */; };
 		D960C2472FF1B6CA00FFF4D9 /* ShardViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C2462FF1B6CA00FFF4D9 /* ShardViews.swift */; };
-		D9CFF5722FF4004C00B7B8DE /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CFF55D2FF4004C00B7B8DE /* Persistence.swift */; };
-		D9CFF5732FF4004C00B7B8DE /* NexCart.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D9CFF55E2FF4004C00B7B8DE /* NexCart.xcdatamodeld */; };
-		D9CFF5742FF4004C00B7B8DE /* ProductsRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CFF5612FF4004C00B7B8DE /* ProductsRepo.swift */; };
 		D9CFF5752FF4004C00B7B8DE /* FavProductsDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CFF5632FF4004C00B7B8DE /* FavProductsDAO.swift */; };
 		D9CFF5762FF4004C00B7B8DE /* FavProductsDaoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CFF5642FF4004C00B7B8DE /* FavProductsDaoProtocol.swift */; };
 		D9CFF5772FF4004C00B7B8DE /* ProductsRepoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CFF5662FF4004C00B7B8DE /* ProductsRepoProtocol.swift */; };
@@ -64,6 +61,9 @@
 		D9CFF57B2FF4004C00B7B8DE /* FavProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CFF56C2FF4004C00B7B8DE /* FavProduct.swift */; };
 		D9CFF57C2FF4004C00B7B8DE /* FavProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CFF56F2FF4004C00B7B8DE /* FavProductViewModel.swift */; };
 		D9CFF57D2FF4004C00B7B8DE /* FavProductsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CFF5712FF4004C00B7B8DE /* FavProductsScreen.swift */; };
+		D9CFF5872FF4125200B7B8DE /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CFF57F2FF400B100B7B8DE /* Persistence.swift */; };
+		D9CFF5882FF4126200B7B8DE /* NexCart.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D9CFF5802FF400B100B7B8DE /* NexCart.xcdatamodeld */; };
+		D9CFF5892FF412CC00B7B8DE /* ProductsRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CFF5822FF400C100B7B8DE /* ProductsRepo.swift */; };
 		D9EAA1272FF274410097C038 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D9EAA1262FF274410097C038 /* FirebaseAuth */; };
 		D9EAA12C2FF275690097C038 /* FirebaseAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EAA12B2FF275690097C038 /* FirebaseAuthService.swift */; };
 		D9EAA12F2FF278000097C038 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = D9EAA12E2FF278000097C038 /* GoogleSignIn */; };
@@ -140,9 +140,6 @@
 		D960C23E2FF1B28E00FFF4D9 /* SignUpScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpScreen.swift; sourceTree = "<group>"; };
 		D960C2442FF1B40300FFF4D9 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		D960C2462FF1B6CA00FFF4D9 /* ShardViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShardViews.swift; sourceTree = "<group>"; };
-		D9CFF55D2FF4004C00B7B8DE /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		D9CFF55F2FF4004C00B7B8DE /* NexCart.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NexCart.xcdatamodel; sourceTree = "<group>"; };
-		D9CFF5612FF4004C00B7B8DE /* ProductsRepo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductsRepo.swift; sourceTree = "<group>"; };
 		D9CFF5632FF4004C00B7B8DE /* FavProductsDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavProductsDAO.swift; sourceTree = "<group>"; };
 		D9CFF5642FF4004C00B7B8DE /* FavProductsDaoProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavProductsDaoProtocol.swift; sourceTree = "<group>"; };
 		D9CFF5662FF4004C00B7B8DE /* ProductsRepoProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductsRepoProtocol.swift; sourceTree = "<group>"; };
@@ -690,25 +687,14 @@
 		D9CFF55B2FF4004C00B7B8DE /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				D9CFF55C2FF4004C00B7B8DE /* Core */,
 				D9CFF5602FF4004C00B7B8DE /* Local */,
 			);
 			path = Data;
 			sourceTree = "<group>";
 		};
-		D9CFF55C2FF4004C00B7B8DE /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				D9CFF55D2FF4004C00B7B8DE /* Persistence.swift */,
-				D9CFF55E2FF4004C00B7B8DE /* NexCart.xcdatamodeld */,
-			);
-			path = Core;
-			sourceTree = "<group>";
-		};
 		D9CFF5602FF4004C00B7B8DE /* Local */ = {
 			isa = PBXGroup;
 			children = (
-				D9CFF5612FF4004C00B7B8DE /* ProductsRepo.swift */,
 				D9CFF5622FF4004C00B7B8DE /* FavProducts */,
 			);
 			path = Local;
@@ -966,14 +952,15 @@
 				9F8F1E532FF3898D0016B844 /* HomeView.swift in Sources */,
 				9F8F1E542FF3898D0016B844 /* HomeEntity.swift in Sources */,
 				9F8F1E552FF3898D0016B844 /* ProductEndPoint.swift in Sources */,
-				D9CFF5742FF4004C00B7B8DE /* ProductsRepo.swift in Sources */,
 				9F8F1E562FF3898D0016B844 /* HomeViewModel.swift in Sources */,
 				9F8F1E572FF3898D0016B844 /* HomeBrandSection.swift in Sources */,
 				9F8F1E582FF3898D0016B844 /* HomeProtocol.swift in Sources */,
 				9F8F1E592FF3898D0016B844 /* HomeHeroSection.swift in Sources */,
+				D9CFF5872FF4125200B7B8DE /* Persistence.swift in Sources */,
 				9F8F1E5A2FF3898D0016B844 /* HomenewSection.swift in Sources */,
 				D960C2362FF1989F00FFF4D9 /* DIContainer+UseCases.swift in Sources */,
 				D9CFF5772FF4004C00B7B8DE /* ProductsRepoProtocol.swift in Sources */,
+				D9CFF5882FF4126200B7B8DE /* NexCart.xcdatamodeld in Sources */,
 				D9CFF5752FF4004C00B7B8DE /* FavProductsDAO.swift in Sources */,
 				D960C21B2FF17B3600FFF4D9 /* LoginWithSocialProvider.swift in Sources */,
 				D960C23A2FF1A0AB00FFF4D9 /* AuthDesignSystem.swift in Sources */,
@@ -982,8 +969,6 @@
 				9F8F1E652FF38A980016B844 /* EndPoint.swift in Sources */,
 				D960C2472FF1B6CA00FFF4D9 /* ShardViews.swift in Sources */,
 				D9EAA1332FF27A3F0097C038 /* FirebaseAuthRepository.swift in Sources */,
-				D9CFF5732FF4004C00B7B8DE /* NexCart.xcdatamodeld in Sources */,
-				D9CFF5722FF4004C00B7B8DE /* Persistence.swift in Sources */,
 				D9CFF57C2FF4004C00B7B8DE /* FavProductViewModel.swift in Sources */,
 				D960C21D2FF17B6100FFF4D9 /* LoginAsGuest.swift in Sources */,
 				D960C1F42FF1243400FFF4D9 /* LaunchScreen.swift in Sources */,
@@ -1008,6 +993,7 @@
 				D960C1E52FF11ACE00FFF4D9 /* AppTheme.swift in Sources */,
 				D960C2262FF17D6D00FFF4D9 /* LogOut.swift in Sources */,
 				D960C2112FF174C100FFF4D9 /* AuthRepoInterface.swift in Sources */,
+				D9CFF5892FF412CC00B7B8DE /* ProductsRepo.swift in Sources */,
 				D9CFF57D2FF4004C00B7B8DE /* FavProductsScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1383,16 +1369,6 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		D9CFF55E2FF4004C00B7B8DE /* NexCart.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				D9CFF55F2FF4004C00B7B8DE /* NexCart.xcdatamodel */,
-			);
-			currentVersion = D9CFF55F2FF4004C00B7B8DE /* NexCart.xcdatamodel */;
-			path = NexCart.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
 		D9CFF5802FF400B100B7B8DE /* NexCart.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

@@ -8,6 +8,7 @@
 import Foundation
 
 final class ProductsRepo: ProductsRepoProtocol {
+
     private let dao: FavProductsDaoProtocol
 
     init(dao: FavProductsDaoProtocol = FavProductsDAO.shared) {
@@ -21,4 +22,9 @@ final class ProductsRepo: ProductsRepoProtocol {
     func removeFavProduct(productId: Int) throws {
         try dao.removeFromFav(productId: productId)
     }
+    
+    func removeAllFav() throws {
+        try dao.cleanFavTable()
+    }
+    
 }
