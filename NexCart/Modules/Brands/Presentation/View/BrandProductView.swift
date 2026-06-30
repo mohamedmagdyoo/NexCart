@@ -10,7 +10,6 @@ import SwiftUI
 
 struct BrandProductsView: View {
     @StateObject var viewModel: BrandProductsViewModel
-    @State private var favorites: Set<Int> = []
 
     private let columns = [
         GridItem(.flexible(), spacing: 16),
@@ -93,12 +92,8 @@ struct BrandProductsView: View {
     private var productGrid: some View {
         LazyVGrid(columns: columns, spacing: 20) {
             ForEach(viewModel.filteredProducts) { product in
-                ProductCardView(product: product, isFavorited: favorites.contains(product.id)) {
-                    if favorites.contains(product.id) {
-                        favorites.remove(product.id)
-                    } else {
-                        favorites.insert(product.id)
-                    }
+                ProductCardView(product: product, isFavorited: product.isFavorited) {
+                    viewModel.toggleFavorite(productId: product.id)
                 }
             }
         }

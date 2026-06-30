@@ -22,13 +22,24 @@ final class BrandProductsViewModel: ObservableObject {
 
     let brand: BrandEntity
     private let fetchBrandProductsUseCase: FetchBrandProductsUseCaseProtocol
+    private let coreDataService = CoreDataService.shared
 
     init(brand: BrandEntity, fetchBrandProductsUseCase: FetchBrandProductsUseCaseProtocol) {
         self.brand = brand
         self.fetchBrandProductsUseCase = fetchBrandProductsUseCase
     }
 
-
+    func toggleFavorite(productId: Int) {
+        guard let index = products.firstIndex(where: { $0.id == productId }) else { return }
+        products[index].isFavorited.toggle()
+        
+        let product = products[index]
+        if product.isFavorited {
+            coreDataService.saveProductToDatabase(product: product)
+        } else {
+            coreDataService.deleteProductFromDatabase(id: product.id)
+        }
+    }
 
     // NOTE: This still matches on the product name as a stand-in, since ProductEntity
     // doesn't currently expose a product type / tags field from the API.
@@ -50,7 +61,13 @@ final class BrandProductsViewModel: ObservableObject {
         
         // Fetch products
         do {
-            let fetchedProducts = try await fetchBrandProductsUseCase.execute(collectionId: brand.id, brandName: brand.name)
+            var fetchedProducts = try await fetchBrandProductsUseCase.execute(collectionId: brand.id, brandName: brand.name)
+            
+            // Check favorites against Core Data
+            for i in fetchedProducts.indices {
+                fetchedProducts[i].isFavorited = coreDataService.isFavorite(id: fetchedProducts[i].id)
+            }
+            
             #if DEBUG
             print("==================================================")
             print("🚀 [SUCCESS] Fetched Products for Brand: \(brand.name)")
