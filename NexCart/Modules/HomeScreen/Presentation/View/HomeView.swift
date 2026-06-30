@@ -13,14 +13,19 @@ struct HomeView: View {
     @State private var heroIndex: Int = 0
     @State private var selectedTab: Int = 0
 
-    var body: some View {
-        NavigationStack {
-            ZStack(alignment: .bottom) {
-                AppColor.bg.ignoresSafeArea()
+    init() {
+    
+        UITabBar.appearance().isHidden = true
+    }
 
-                // 🔥 هنا بنبدل الشاشات على حسب التابة المختارة
-                if selectedTab == 0 {
-                    // تابة الـ Home الرئيسية
+    var body: some View {
+        ZStack(alignment: .bottom) {
+            AppColor.bg.ignoresSafeArea()
+
+           
+            TabView(selection: $selectedTab) {
+                // تابة الـ Home الرئيسية
+                NavigationView {
                     ScrollView(showsIndicators: false) {
                         VStack(spacing: 0) {
                             HomeHeroSection(
@@ -46,40 +51,62 @@ struct HomeView: View {
                     }
                     .ignoresSafeArea(edges: .top)
                     .task { await viewModel.fetchHomeData() }
-                    
-                } else if selectedTab == 1 {
-                    // تابة الـ Shop (عرض كل البراندات) ممرر ليها الـ ViewModel من الـ DI Container
+                }
+                .navigationViewStyle(.stack) 
+                .tag(0)
+                
+                // تابة الـ Shop
+                NavigationView {
                     BrandsListView(
                         viewModel: DIContainer.shared.container.resolve(BrandsListViewModel.self)!
                     )
-                    .padding(.bottom, 90) // مسافة أمان عشان الـ TabBar الكاستم
-                    
-                } else if selectedTab == 2 {
-                    // تابة الـ Cart (تقدر تستبدلها بالـ View الحقيقي بتاعك لاحقاً)
+                    .padding(.bottom, 90)
+                }
+                .navigationViewStyle(.stack)
+                .tag(1)
+                
+                // تابة الـ Favorites
+                NavigationView {
+                    Text("Favorites View")
+                        .font(AppColor.sans(16, .medium))
+                        .foregroundColor(AppColor.textPrim)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .padding(.bottom, 90)
+                }
+                .navigationViewStyle(.stack)
+                .tag(2)
+                
+               
+                NavigationView {
                     Text("Cart View")
                         .font(AppColor.sans(16, .medium))
                         .foregroundColor(AppColor.textPrim)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .padding(.bottom, 90)
-                        
-                } else if selectedTab == 3 {
-                    // تابة الـ Profile (تقدر تستبدلها بالـ View الحقيقي بتاعك لاحقاً)
+                }
+                .navigationViewStyle(.stack)
+                .tag(3)
+                
+              
+                NavigationView {
                     Text("Profile View")
                         .font(AppColor.sans(16, .medium))
                         .foregroundColor(AppColor.textPrim)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .padding(.bottom, 90)
                 }
-
-                // الـ TabBar الكاستم بتاعك ثابت في الأسفل
-                HomeTabBar(selectedTab: $selectedTab)
+                .navigationViewStyle(.stack)
+                .tag(4)
             }
-            .preferredColorScheme(.light)
+
+           
+            HomeTabBar(selectedTab: $selectedTab)
         }
+        .preferredColorScheme(.light)
     }
 }
 
-// MARK: - HomeTabBar Component
+
 
 struct TabItemModel {
     let icon: String
@@ -92,6 +119,7 @@ struct HomeTabBar: View {
     let tabs = [
         TabItemModel(icon: "house", label: "Home"),
         TabItemModel(icon: "bag", label: "Shop"),
+        TabItemModel(icon: "heart", label: "Favorite"),
         TabItemModel(icon: "cart", label: "Cart"),
         TabItemModel(icon: "person", label: "Profile")
     ]
