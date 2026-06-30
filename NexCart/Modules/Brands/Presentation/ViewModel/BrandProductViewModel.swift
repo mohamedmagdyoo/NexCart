@@ -50,7 +50,7 @@ final class BrandProductsViewModel: ObservableObject {
         
         // Fetch products
         do {
-            let fetchedProducts = try await fetchBrandProductsUseCase.execute(collectionId: brand.id)
+            let fetchedProducts = try await fetchBrandProductsUseCase.execute(collectionId: brand.id, brandName: brand.name)
             #if DEBUG
             print("✅ Brand '\(brand.name)' (id: \(brand.id)) returned \(fetchedProducts.count) products")
             #endif

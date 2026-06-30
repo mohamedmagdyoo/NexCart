@@ -9,6 +9,6 @@ import Foundation
 
 protocol BrandsRepoProtocol {
     func fetchBrands() async throws -> [BrandEntity]
-    func fetchProducts(forCollectionId collectionId: String) async throws -> [ProductEntity]
+    func fetchProducts(forCollectionId collectionId: String, brandName: String) async throws -> [ProductEntity]
     func fetchCategories() async throws -> [CategoryEntity]
 }
