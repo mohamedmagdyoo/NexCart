@@ -38,9 +38,13 @@ extension ProductDTO {
         let imageURL = images.first?.src ?? ""
 
         let tagLower = (tags ?? "").lowercased()
-        let productTag: ProductTag? = if tagLower.contains("new") { .new }
-                                      else if tagLower.contains("sold") { .soldOut }
-                                      else { nil }
+
+        var productTag: ProductTag? = nil
+        if tagLower.contains("new") {
+            productTag = .new
+        } else if tagLower.contains("sold") {
+            productTag = .soldOut
+        }
 
         return ProductEntity(
             id: id,
@@ -53,3 +57,4 @@ extension ProductDTO {
         )
     }
 }
+
