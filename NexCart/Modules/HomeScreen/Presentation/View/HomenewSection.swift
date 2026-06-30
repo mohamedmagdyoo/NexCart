@@ -113,10 +113,21 @@ struct HomeProductCard: View {
     }
 
     private func tagBadge(_ tag: ProductTag) -> some View {
-        let (label, bg, fg): (String, Color, Color) = switch tag {
-            case .new:     ("NEW",      AppColor.tagNew,  .white)
-            case .soldOut: ("SOLD OUT", AppColor.tagSold, .white)
+        var label: String
+        var bg: Color
+        var fg: Color
+        
+        switch tag {
+            case .new:
+                label = "NEW"
+                bg = AppColor.tagNew
+                fg = .white
+            case .soldOut:
+                label = "SOLD OUT"
+                bg = AppColor.tagSold
+                fg = .white
         }
+        
         return Text(label)
             .font(AppColor.sans(8, .bold))
             .tracking(1.5)
