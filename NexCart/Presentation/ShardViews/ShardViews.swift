@@ -13,3 +13,9 @@ enum ScreenState {
     case success
     case error(error: String)
 }
+
+struct AlertModel: Identifiable {
+    var id: UUID = UUID()
+    var title: String
+    var description: String
+}

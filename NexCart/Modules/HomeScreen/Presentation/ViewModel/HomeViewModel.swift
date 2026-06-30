@@ -1,6 +1,6 @@
 import Foundation
 
-
+@MainActor // to make sure all the updating on the ui happen on the main thread
 final class HomeViewModel: ObservableObject {
     @Published var slides: [HeroSlideEntity] = []
     @Published var brands: [BrandEntity] = []
@@ -16,7 +16,7 @@ final class HomeViewModel: ObservableObject {
     private let fetchProductsUseCase: FetchHomeProductsUseCaseProtocol
     private let fetchBrandsUseCase: FetchHomeBrandsUseCaseProtocol
     private let fetchSlidesUseCase: FetchHeroSlidesUseCaseProtocol
-    private let coreDataService = CoreDataService.shared
+    private let coreDataService = FavProductsDAO.shared
 
     init(
         fetchProductsUseCase: FetchHomeProductsUseCaseProtocol = FetchHomeProductsUseCase(),
@@ -46,7 +46,11 @@ final class HomeViewModel: ObservableObject {
     }
 
     func saveProductLocally(product: ProductEntity) {
-        coreDataService.saveProductToDatabase(product: product)
+        do{
+            try coreDataService.addToFav(product: product)
+        }catch{
+            print(error)
+        }
     }
 
     func selectBrand(at index: Int) {

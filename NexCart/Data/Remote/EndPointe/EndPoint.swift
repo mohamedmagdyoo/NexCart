@@ -50,6 +50,6 @@ protocol EndPoint{
 // 
 extension EndPoint {
     var ApiToken : String {
-        ""
+        "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"
     }
 }
