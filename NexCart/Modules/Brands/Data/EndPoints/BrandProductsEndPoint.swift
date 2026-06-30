@@ -8,7 +8,7 @@
 import Foundation
 
 enum BrandProductsEndPoint: EndPoint {
-    case allProducts
+    case productsByVendor(brandName: String)
 
     var baseUrl: String {
         "https://mad46-ios-team9.myshopify.com/admin/api/2024-01"
@@ -16,8 +16,11 @@ enum BrandProductsEndPoint: EndPoint {
 
     var path: String {
         switch self {
-        case .allProducts:
-            return "/products.json?limit=250"
+        case .productsByVendor(let brandName):
+            let vendor = brandName.uppercased()
+            let allowed = CharacterSet.urlQueryAllowed
+            let encoded = vendor.addingPercentEncoding(withAllowedCharacters: allowed) ?? vendor
+            return "/products.json?vendor=\(encoded)&limit=250"
         }
     }
 
