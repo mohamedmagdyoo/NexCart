@@ -1,5 +1,7 @@
 import Foundation
 
+
+//MARK: TODO remove this folder to the domain layer
 struct ProductEntity: Identifiable, Hashable {
     let id: Int
     let brand: String
