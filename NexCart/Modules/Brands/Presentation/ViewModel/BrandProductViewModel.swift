@@ -48,7 +48,7 @@ final class BrandProductsViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
         do {
-            async let productsTask = fetchBrandProductsUseCase.execute(collectionId: brand.id)
+            async let productsTask = fetchBrandProductsUseCase.execute(vendorName: brand.name)
             async let categoriesTask = fetchBrandProductsUseCase.fetchCategories()
             
             let (fetchedProducts, fetchedCategories) = try await (productsTask, categoriesTask)

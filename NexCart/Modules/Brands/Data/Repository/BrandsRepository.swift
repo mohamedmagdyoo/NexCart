@@ -19,11 +19,13 @@ final class BrandsRepository: BrandsRepoProtocol {
         return response.smartCollections.map { $0.toEntity() }
     }
 
-    func fetchProducts(forCollectionId collectionId: String) async throws -> [ProductEntity] {
+    func fetchProducts(forVendorName vendorName: String) async throws -> [ProductEntity] {
         let response: ProductsResponseDTO = try await apiService.fetch(
-            endPoint: BrandProductsEndPoint.productsByCollection(collectionId: collectionId)
+            endPoint: BrandProductsEndPoint.allProducts
         )
-        return response.products.map { $0.toEntity() }
+        let products = response.products.map { $0.toEntity() }
+        let normalizedTarget = vendorName.lowercased()
+        return products.filter { $0.brand.lowercased() == normalizedTarget }
     }
 
     func fetchCategories() async throws -> [CategoryEntity] {
