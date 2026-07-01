@@ -420,29 +420,6 @@
 			path = EndPointe;
 			sourceTree = "<group>";
 		};
-		9F94981D2FF579D5000CEB5A /* Core */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Core;
-			sourceTree = "<group>";
-		};
-		9F94981E2FF579D5000CEB5A /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				9F94981D2FF579D5000CEB5A /* Core */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
-		9F94981F2FF579D5000CEB5A /* FavProducts */ = {
-			isa = PBXGroup;
-			children = (
-				9F94981E2FF579D5000CEB5A /* Data */,
-			);
-			path = FavProducts;
-			sourceTree = "<group>";
-		};
 		D960C1912FF1167A00FFF4D9 = {
 			isa = PBXGroup;
 			children = (
@@ -507,7 +484,6 @@
 		D960C1CC2FF1178000FFF4D9 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				9F94981F2FF579D5000CEB5A /* FavProducts */,
 				9F92BF3B2FF4774900E090B7 /* Brands */,
 				9F8F1E502FF3898D0016B844 /* HomeScreen */,
 				D960C1F22FF1241B00FFF4D9 /* Launch */,
