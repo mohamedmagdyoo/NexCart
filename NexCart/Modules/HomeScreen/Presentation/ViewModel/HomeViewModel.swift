@@ -59,7 +59,6 @@ final class HomeViewModel: ObservableObject {
         do {
             var fetchedProducts = try await fetchProductsUseCase.execute()
             
-            // Check favorites against Core Data
             for i in fetchedProducts.indices {
                 fetchedProducts[i].isFavorited = coreDataService.isFavorite(id: fetchedProducts[i].id)
             }
