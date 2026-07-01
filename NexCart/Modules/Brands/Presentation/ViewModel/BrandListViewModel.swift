@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+@MainActor
 final class BrandsListViewModel: ObservableObject {
     @Published var brands: [BrandEntity] = []
     @Published var isLoading = false
