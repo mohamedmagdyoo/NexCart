@@ -13,6 +13,7 @@ struct HomeNewInSection: View {
     let isLoading:Bool
     let errorMessage:String?
     let onToggleFavorite: (Int) -> Void
+    let onProductSelected: (ProductEntity) -> Void
     let onRetry:() async -> Void
 
     var body: some View {
@@ -49,7 +50,7 @@ struct HomeNewInSection: View {
             spacing: 10
         ) {
             ForEach(products.indices, id: \.self) { i in
-                HomeProductCard(product: products[i]) { onToggleFavorite(i) }
+                HomeProductCard(product: products[i], onToggleFavorite: { onToggleFavorite(i) }, onTap: { onProductSelected(products[i]) })
             }
         }
         .padding(.horizontal, 16)
@@ -58,14 +59,17 @@ struct HomeNewInSection: View {
 
 struct HomeProductCard: View {
 
-    let product:         ProductEntity
+    let product: ProductEntity
     let onToggleFavorite: () -> Void
+    let onTap: () -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             imageArea
             infoArea
         }
+        .contentShape(Rectangle())
+        .onTapGesture(perform: onTap)
         .background(AppColor.card)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .overlay(RoundedRectangle(cornerRadius: 12).stroke(AppColor.border, lineWidth: 0.5))

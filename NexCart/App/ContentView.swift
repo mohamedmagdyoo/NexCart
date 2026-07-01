@@ -16,20 +16,15 @@ struct ContentView: View {
     @AppStorage("userEntity") private var userData: Data?
  
     var body: some View {
-        
-            if userData != nil {
-                NavigationStack{
-                    ProductDetailView(product: dummyProducts)
-//                    HomeView()
-//                    FavProductsScreen()
-                }
-            } else {
-                NavigationStack{
-                    SignInScreen()
-                }
+        if userData != nil {
+            HomeView()
                 .navigationBarBackButtonHidden(true)
+        } else {
+            NavigationStack {
+                SignInScreen()
             }
-    
+            .navigationBarBackButtonHidden(true)
+        }
     }
 }
 

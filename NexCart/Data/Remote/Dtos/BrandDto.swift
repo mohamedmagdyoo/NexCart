@@ -23,3 +23,31 @@ struct SmartCollectionDTO: Codable {
 struct SmartCollectionImageDTO: Codable {
     let src: String
 }
+extension SmartCollectionDTO {
+    func toEntity() -> BrandEntity {
+        BrandEntity(
+            id: String(id),
+            name: title,
+            imageURL: image?.src ?? ""
+        )
+    }
+}
+
+struct CategoriesResponseDTO: Codable {
+    let customCollections: [CustomCollectionDTO]
+
+    enum CodingKeys: String, CodingKey {
+        case customCollections = "custom_collections"
+    }
+}
+
+struct CustomCollectionDTO: Codable {
+    let id: Int
+    let title: String
+}
+
+extension CustomCollectionDTO {
+    func toEntity() -> CategoryEntity {
+        CategoryEntity(id: String(id), name: title)
+    }
+}

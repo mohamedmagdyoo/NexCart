@@ -19,14 +19,14 @@ extension DIContainer {
         container.register(HomeRepoProtocol.self) { r in
             HomeRepository(apiService: r.resolve(ApiServiceProtocol.self)!)
         }.inObjectScope(.container)
-    
+        
+        container.register(BrandsRepoProtocol.self) { r in
+            BrandsRepository(apiService: r.resolve(ApiServiceProtocol.self)!)
+        }.inObjectScope(.container)
         
         //Prouducts Repo
         container.register(ProductsRepoProtocol.self){ _ in
             ProductsRepo()
         }
     }
-    
-    
 }
-

@@ -52,7 +52,14 @@ struct HomeBrandsSection: View {
         let brand = brands[index]
         let isSelected = brand.isSelected
 
-        return Button { onBrandSelected(index) } label: {
+        return NavigationLink {
+            BrandProductsView(
+                viewModel: DIContainer.shared.container.resolve(
+                    BrandProductsViewModel.self,
+                    argument: brand
+                )!
+            )
+        } label: {
             VStack(spacing: 8) {
                 ZStack {
                     Circle()
@@ -67,9 +74,10 @@ struct HomeBrandsSection: View {
                             case .success(let image):
                                 image
                                     .resizable()
-                                    .scaledToFit()
+                                    .scaledToFill()
                                     .frame(width: 66, height: 66)
                                     .clipShape(Circle())
+                                    .contentShape(Circle())
                             case .empty:
                                 Circle()
                                     .fill(AppColor.border.opacity(0.4))
@@ -80,7 +88,6 @@ struct HomeBrandsSection: View {
                             @unknown default:
                                 fallbackBrandImage(name: brand.name)
                             }
-                        
                         }
                     }
                 }
@@ -94,6 +101,9 @@ struct HomeBrandsSection: View {
                     .frame(width: 76)
             }
         }
+        .simultaneousGesture(TapGesture().onEnded {
+            onBrandSelected(index)
+        })
         .buttonStyle(PlainButtonStyle())
     }
     
