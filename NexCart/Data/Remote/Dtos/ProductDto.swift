@@ -7,6 +7,10 @@
 
 
 import Foundation
+ struct ProductResponseDTO: Decodable {
+    let product: ProductDTO
+}
+
 
 struct ProductsResponseDTO: Decodable {
     let products: [ProductDTO]

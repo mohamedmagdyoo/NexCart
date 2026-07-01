@@ -29,11 +29,15 @@ final class HomeViewModel: ObservableObject {
     }
 
     func fetchHomeData() async {
+        print("🟡 [HomeViewModel] Started fetching all home data...")
         errorMessage = nil
-        await withTaskGroup(of: Void.self) { group in
-            group.addTask { await self.loadProducts() }
-            group.addTask { await self.loadBrandsAndSlides() }
-        }
+        
+        // استخدام async let بيخلي الطلبين يشتغلوا مع بعض في نفس الوقت بشكل آمن جداً
+        async let fetchProducts: () = loadProducts()
+        async let fetchBrands: () = loadBrandsAndSlides()
+        
+        await (fetchProducts, fetchBrands)
+        print("🟢 [HomeViewModel] Finished fetching all home data!")
     }
 
     func toggleFavorite(at index: Int) {
@@ -54,10 +58,17 @@ final class HomeViewModel: ObservableObject {
     }
 
     private func loadProducts() async {
+        print("⏳ [HomeViewModel] loadProducts started")
         isLoadingProducts = true
-        defer { isLoadingProducts = false }
+        
+        defer {
+            isLoadingProducts = false
+            print("✅ [HomeViewModel] loadProducts defer block executed (isLoadingProducts = false)")
+        }
+        
         do {
             var fetchedProducts = try await fetchProductsUseCase.execute()
+            print("📦 [HomeViewModel] Fetched \(fetchedProducts.count) products successfully")
             
             for i in fetchedProducts.indices {
                 fetchedProducts[i].isFavorited = coreDataService.isFavorite(id: fetchedProducts[i].id)
@@ -65,17 +76,26 @@ final class HomeViewModel: ObservableObject {
             
             products = fetchedProducts
         } catch {
+            print("❌ [HomeViewModel] Error fetching products: \(error.localizedDescription)")
             errorMessage = error.localizedDescription
         }
     }
 
     private func loadBrandsAndSlides() async {
+        print("⏳ [HomeViewModel] loadBrandsAndSlides started")
         isLoadingBrands = true
-        defer { isLoadingBrands = false }
+        
+        defer {
+            isLoadingBrands = false
+            print("✅ [HomeViewModel] loadBrandsAndSlides defer block executed (isLoadingBrands = false)")
+        }
+        
         do {
             brands = try await fetchBrandsUseCase.execute()
+            print("🏷️ [HomeViewModel] Fetched \(brands.count) brands successfully")
             slides = fetchSlidesUseCase.execute()
         } catch {
+            print("❌ [HomeViewModel] Error fetching brands: \(error.localizedDescription)")
             brands = []
             slides = []
         }
