@@ -34,11 +34,21 @@ extension DIContainer {
             )
         }
         
+        container.register(BrandsListViewModel.self) { r in
+            BrandsListViewModel(fetchBrandsUseCase: r.resolve(FetchBrandsUseCaseProtocol.self)!)
+        }
+         
+        // Needs the tapped BrandEntity, registered with an argument.
+        container.register(BrandProductsViewModel.self) { (r, brand: BrandEntity) in
+            BrandProductsViewModel(
+                brand: brand,
+                fetchBrandProductsUseCase: r.resolve(FetchBrandProductsUseCaseProtocol.self)!
+            )
+        }
+        
         //Fav
         container.register(FavProductsViewModel.self){ r in
             FavProductsViewModel(fetchFavProductsUseCase: r.resolve(FetchFavProductsUseCaseProtocol.self)!, removeFavProductUseCase: r.resolve(RemoveFavProductUseCaseProtocol.self)!)
         }
-        
     }
 }
-
