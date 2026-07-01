@@ -14,6 +14,7 @@ import AuthenticationServices
 final class FirebaseAuthRepository: AuthRepositoryProtocol {
 
     private let service: FirebaseAuthService
+    //Should has other service for shopify ( post new customer)
 
     init(service: FirebaseAuthService) {
         self.service = service
@@ -34,7 +35,7 @@ final class FirebaseAuthRepository: AuthRepositoryProtocol {
         do {
             let authUser = try await service.signUp(email: credentials.email,
                                             password: credentials.password,
-                                                    fullName: credentials.name)
+                                                    fullName: credentials.displayName)
             return mapToUserEntity(authUser)
         } catch let error as NSError {
             throw mapFirebaseError(error)

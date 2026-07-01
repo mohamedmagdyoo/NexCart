@@ -32,9 +32,15 @@ struct EmailCredentials {
 
 // For sign up we need name too
 struct SignUpCredentials {
-    let name: String
+    let firstName: String
+    let lastName: String
     let email: String
+    let phone: String?
     let password: String
+    let passwordConfirmation: String
+    let sendEmailWelcome: Bool = true
+
+    var displayName: String { "\(firstName) \(lastName)" }
 }
 
 // SocialProviders
