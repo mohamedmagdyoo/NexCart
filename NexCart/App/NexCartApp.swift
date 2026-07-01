@@ -33,17 +33,26 @@ struct NexCartApp: App {
     
     //Flag For Splash Screen
     @State private var showSplash: Bool = true
+    //Flag For OnBoarding Flow
+    @AppStorage("showOnBoarding") private var showOnBoarding = true
 
     var body: some Scene {
         WindowGroup {
             ZStack{
-                ContentView()
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                
+
                 //Splash Screen
                 if showSplash{
                     LaunchScreen()
-                }
+                }else if showOnBoarding{
+                    //OnBoarding
+                    OnboardingFlowView(onFinish:{
+                        UserDefaults.standard.set(false, forKey: "showOnBoarding")
+                    })
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                }else{
+                    ContentView()
+                        .environment(\.managedObjectContext, persistenceController.container.viewContext)                }
+                
             }// ZStack
             .task {
                 try! await Task.sleep(nanoseconds: 2000000000)

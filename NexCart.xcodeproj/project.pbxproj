@@ -20,6 +20,7 @@
 		9F8F1E622FF38A6E0016B844 /* ProductDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E612FF38A6E0016B844 /* ProductDto.swift */; };
 		9F8F1E632FF38A6E0016B844 /* BrandDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E602FF38A6E0016B844 /* BrandDto.swift */; };
 		9F8F1E652FF38A980016B844 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E642FF38A980016B844 /* EndPoint.swift */; };
+		D91E748B2FF5152E00D941C4 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91E748A2FF5152E00D941C4 /* OnBoardingView.swift */; };
 		D960C19E2FF1167A00FFF4D9 /* NexCartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C19D2FF1167A00FFF4D9 /* NexCartApp.swift */; };
 		D960C1A02FF1167A00FFF4D9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C19F2FF1167A00FFF4D9 /* ContentView.swift */; };
 		D960C1A22FF1167C00FFF4D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D960C1A12FF1167C00FFF4D9 /* Assets.xcassets */; };
@@ -105,6 +106,7 @@
 		9F8F1E602FF38A6E0016B844 /* BrandDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandDto.swift; sourceTree = "<group>"; };
 		9F8F1E612FF38A6E0016B844 /* ProductDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDto.swift; sourceTree = "<group>"; };
 		9F8F1E642FF38A980016B844 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
+		D91E748A2FF5152E00D941C4 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		D960C19A2FF1167A00FFF4D9 /* NexCart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NexCart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D960C19D2FF1167A00FFF4D9 /* NexCartApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NexCartApp.swift; sourceTree = "<group>"; };
 		D960C19F2FF1167A00FFF4D9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -278,6 +280,14 @@
 			path = Dtos;
 			sourceTree = "<group>";
 		};
+		D91E74892FF5150E00D941C4 /* OnBoarding */ = {
+			isa = PBXGroup;
+			children = (
+				D91E748A2FF5152E00D941C4 /* OnBoardingView.swift */,
+			);
+			path = OnBoarding;
+			sourceTree = "<group>";
+		};
 		D960C1912FF1167A00FFF4D9 = {
 			isa = PBXGroup;
 			children = (
@@ -343,6 +353,7 @@
 		D960C1CC2FF1178000FFF4D9 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				D91E74892FF5150E00D941C4 /* OnBoarding */,
 				D960C1F22FF1241B00FFF4D9 /* Launch */,
 				D960C1CD2FF1178800FFF4D9 /* Auth */,
 				9F8F1E502FF3898D0016B844 /* HomeScreen */,
@@ -969,6 +980,7 @@
 				D960C2192FF17AF700FFF4D9 /* LoginWithEmail.swift in Sources */,
 				D960C2452FF1B40300FFF4D9 /* SignUpViewModel.swift in Sources */,
 				D9CFF5782FF4004C00B7B8DE /* FetchFavProducts.swift in Sources */,
+				D91E748B2FF5152E00D941C4 /* OnBoardingView.swift in Sources */,
 				D960C2312FF1981D00FFF4D9 /* DIContainer.swift in Sources */,
 				9F8F1E622FF38A6E0016B844 /* ProductDto.swift in Sources */,
 				9F8F1E632FF38A6E0016B844 /* BrandDto.swift in Sources */,
