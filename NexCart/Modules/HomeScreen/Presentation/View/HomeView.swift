@@ -5,7 +5,10 @@ struct HomeView: View {
     @StateObject private var viewModel = DIContainer.shared.container.resolve(HomeViewModel.self)!
     @State private var heroIndex: Int = 0
     @State private var selectedTab: Int = 0
-    @State private var selectedProduct: ProductEntity?
+    
+    // 1️⃣ التعديل هنا: فصلنا الـ State عشان الـ Navigation ميهنجش
+    @State private var selectedProductId: Int = 0
+    @State private var isNavigatingToProduct: Bool = false
 
     init() {
         UITabBar.appearance().isHidden = true
@@ -47,32 +50,29 @@ struct HomeView: View {
                         isLoading: viewModel.isLoading,
                         errorMessage: viewModel.errorMessage,
                         onToggleFavorite: { viewModel.toggleFavorite(at: $0) },
-                        onProductSelected: { selectedProduct = $0 },
+                        onProductSelected: { product in
+                            // 2️⃣ هنا بنباصي الـ ID ونفعل الـ Navigation فوراً
+                            selectedProductId = product.id
+                            isNavigatingToProduct = true
+                        },
                         onRetry: { await viewModel.fetchHomeData() }
                     )
 
                     Spacer().frame(height: 100)
-
-                    NavigationLink(
-                        isActive: Binding(
-                            get: { selectedProduct != nil },
-                            set: { if !$0 { selectedProduct = nil } }
-                        ),
-                        destination: {
-                            if let product = selectedProduct {
-                                ProductDetailView(
-                                    viewModel: ProductDetailViewModel(),
-                                    productId: product.id
-                                )
-                            } else {
-                                EmptyView()
-                            }
-                        },
-                        label: { EmptyView() }
-                    )
                 }
             }
             .ignoresSafeArea(edges: .top)
+            // 3️⃣ الـ NavigationLink مخفي في الخلفية ومربوط بالـ Bool
+            .background(
+                NavigationLink(
+                    destination: ProductDetailView(
+                        viewModel: ProductDetailViewModel(),
+                        productId: selectedProductId
+                    ),
+                    isActive: $isNavigatingToProduct,
+                    label: { EmptyView() }
+                )
+            )
             .task { await viewModel.fetchHomeData() }
         }
         .navigationViewStyle(.stack)
