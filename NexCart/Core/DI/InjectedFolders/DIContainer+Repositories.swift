@@ -25,8 +25,8 @@ extension DIContainer {
         }.inObjectScope(.container)
         
         //Prouducts Repo
-//        container.register(ProductsRepoProtocol.self){ _ in
-//            ProductsRepo()
-//        }
+        container.register(ProductsRepoProtocol.self){ _ in
+            ProductsRepo()
+        }
     }
 }

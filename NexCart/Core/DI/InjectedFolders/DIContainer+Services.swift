@@ -19,9 +19,9 @@ extension DIContainer{
         }.inObjectScope(.container)
         
         //FavProductsDao
-//        container.register(FavProductsDAO.self){ _ in
-//            FavProductsDAO()
-//        }
+        container.register(FavProductsDAO.self){ _ in
+            FavProductsDAO()
+        }
         
         
     }

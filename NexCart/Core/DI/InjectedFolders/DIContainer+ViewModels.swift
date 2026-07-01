@@ -47,8 +47,8 @@ extension DIContainer {
         }
         
         //Fav
-//        container.register(FavProductsViewModel.self){ r in
-//            FavProductsViewModel(fetchFavProductsUseCase: r.resolve(FetchFavProductsUseCaseProtocol.self)!, removeFavProductUseCase: r.resolve(RemoveFavProductUseCaseProtocol.self)!)
-//        }
+        container.register(FavProductsViewModel.self){ r in
+            FavProductsViewModel(fetchFavProductsUseCase: r.resolve(FetchFavProductsUseCaseProtocol.self)!, removeFavProductUseCase: r.resolve(RemoveFavProductUseCaseProtocol.self)!)
+        }
     }
 }
