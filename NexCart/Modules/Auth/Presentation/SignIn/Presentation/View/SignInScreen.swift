@@ -39,8 +39,7 @@ struct SignInScreen: View {
 struct SignInIdleState: View {
     @ObservedObject var viewModel: SignInViewModel
     
-    @State private var email: String = ""
-    @State private var password: String = ""
+
     
     @State private var navToSignUp: Bool = false
     
@@ -59,10 +58,10 @@ struct SignInIdleState: View {
                 .padding(.bottom, 36)
             
             // MARK: Fields
-            ObsidianField(label: "EMAIL", placeholder: "hello@maison.co", text: $email)
+            ObsidianField(label: "EMAIL", placeholder: "hello@maison.co", text: $viewModel.email)
                 .keyboardType(.emailAddress)
             
-            ObsidianField(label: "PASSWORD", placeholder: "••••••••", text: $password, isSecure: true)
+            ObsidianField(label: "PASSWORD", placeholder: "••••••••", text: $viewModel.password, isSecure: true)
                 .padding(.top, 16)
             
             // MARK: Forgot Password
@@ -77,7 +76,7 @@ struct SignInIdleState: View {
             // MARK: Sign In Button
             Button {
                 viewModel.loginWithEmailAndPass(
-                    credentials: EmailCredentials(email: email, password: password)
+                    credentials: EmailCredentials(email: viewModel.email, password: viewModel.password)
                 )
             } label: {
                 Text("Sign in")

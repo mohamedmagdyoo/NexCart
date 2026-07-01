@@ -43,6 +43,8 @@
 		D91E74982FF518FD00D941C4 /* ProductDetailss.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91E74972FF518FD00D941C4 /* ProductDetailss.swift */; };
 		D91E749A2FF5193F00D941C4 /* FakeProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91E74992FF5193F00D941C4 /* FakeProduct.swift */; };
 		D9259B0F2FF57BAD00A3A9D8 /* AuthShopifyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9259B0E2FF57BAD00A3A9D8 /* AuthShopifyService.swift */; };
+		D9259B122FF582DC00A3A9D8 /* AuthDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9259B112FF582DC00A3A9D8 /* AuthDTOs.swift */; };
+		D9259B142FF5838000A3A9D8 /* AuthEndpointes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9259B132FF5838000A3A9D8 /* AuthEndpointes.swift */; };
 		D93C25FD2FF5294400486A11 /* FavProductsDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93C25EC2FF5294400486A11 /* FavProductsDAO.swift */; };
 		D93C25FE2FF5294400486A11 /* FavProductsDaoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93C25ED2FF5294400486A11 /* FavProductsDaoProtocol.swift */; };
 		D93C25FF2FF5294400486A11 /* ProductsRepoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93C25EF2FF5294400486A11 /* ProductsRepoProtocol.swift */; };
@@ -87,7 +89,7 @@
 		D9EAA12C2FF275690097C038 /* FirebaseAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EAA12B2FF275690097C038 /* FirebaseAuthService.swift */; };
 		D9EAA12F2FF278000097C038 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = D9EAA12E2FF278000097C038 /* GoogleSignIn */; };
 		D9EAA1312FF278000097C038 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D9EAA1302FF278000097C038 /* GoogleSignInSwift */; };
-		D9EAA1332FF27A3F0097C038 /* FirebaseAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EAA1322FF27A3F0097C038 /* FirebaseAuthRepository.swift */; };
+		D9EAA1332FF27A3F0097C038 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EAA1322FF27A3F0097C038 /* AuthRepository.swift */; };
 		D9EAA1352FF281F30097C038 /* DIContainer+Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EAA1342FF281F30097C038 /* DIContainer+Services.swift */; };
 		D9EAA1392FF28A480097C038 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9EAA1382FF28A480097C038 /* GoogleService-Info.plist */; };
 		D9EAA13D2FF28FC70097C038 /* AuthMappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EAA13C2FF28FC70097C038 /* AuthMappers.swift */; };
@@ -148,6 +150,8 @@
 		D91E74972FF518FD00D941C4 /* ProductDetailss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailss.swift; sourceTree = "<group>"; };
 		D91E74992FF5193F00D941C4 /* FakeProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeProduct.swift; sourceTree = "<group>"; };
 		D9259B0E2FF57BAD00A3A9D8 /* AuthShopifyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthShopifyService.swift; sourceTree = "<group>"; };
+		D9259B112FF582DC00A3A9D8 /* AuthDTOs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDTOs.swift; sourceTree = "<group>"; };
+		D9259B132FF5838000A3A9D8 /* AuthEndpointes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthEndpointes.swift; sourceTree = "<group>"; };
 		D93C25EC2FF5294400486A11 /* FavProductsDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavProductsDAO.swift; sourceTree = "<group>"; };
 		D93C25ED2FF5294400486A11 /* FavProductsDaoProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavProductsDaoProtocol.swift; sourceTree = "<group>"; };
 		D93C25EF2FF5294400486A11 /* ProductsRepoProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductsRepoProtocol.swift; sourceTree = "<group>"; };
@@ -193,7 +197,7 @@
 		D960C2462FF1B6CA00FFF4D9 /* ShardViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShardViews.swift; sourceTree = "<group>"; };
 		D9CFF5822FF400C100B7B8DE /* ProductsRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsRepo.swift; sourceTree = "<group>"; };
 		D9EAA12B2FF275690097C038 /* FirebaseAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthService.swift; sourceTree = "<group>"; };
-		D9EAA1322FF27A3F0097C038 /* FirebaseAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthRepository.swift; sourceTree = "<group>"; };
+		D9EAA1322FF27A3F0097C038 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		D9EAA1342FF281F30097C038 /* DIContainer+Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+Services.swift"; sourceTree = "<group>"; };
 		D9EAA1382FF28A480097C038 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D9EAA13A2FF28BDF0097C038 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -513,6 +517,14 @@
 				D9259B0E2FF57BAD00A3A9D8 /* AuthShopifyService.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		D9259B102FF582D000A3A9D8 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				D9259B112FF582DC00A3A9D8 /* AuthDTOs.swift */,
+			);
+			path = DTO;
 			sourceTree = "<group>";
 		};
 		D93C25E12FF5294400486A11 /* FavProducts */ = {
@@ -966,8 +978,10 @@
 		D9EAA12A2FF2755A0097C038 /* Remote */ = {
 			isa = PBXGroup;
 			children = (
+				D9259B102FF582D000A3A9D8 /* DTO */,
 				D9259B0D2FF57B9800A3A9D8 /* Service */,
-				D9EAA1322FF27A3F0097C038 /* FirebaseAuthRepository.swift */,
+				D9EAA1322FF27A3F0097C038 /* AuthRepository.swift */,
+				D9259B132FF5838000A3A9D8 /* AuthEndpointes.swift */,
 			);
 			path = Remote;
 			sourceTree = "<group>";
@@ -1154,7 +1168,7 @@
 				D960C2282FF1813900FFF4D9 /* SignInViweModel.swift in Sources */,
 				D91E74952FF5188700D941C4 /* Components.swift in Sources */,
 				D960C2472FF1B6CA00FFF4D9 /* ShardViews.swift in Sources */,
-				D9EAA1332FF27A3F0097C038 /* FirebaseAuthRepository.swift in Sources */,
+				D9EAA1332FF27A3F0097C038 /* AuthRepository.swift in Sources */,
 				D960C21D2FF17B6100FFF4D9 /* LoginAsGuest.swift in Sources */,
 				D93C25FE2FF5294400486A11 /* FavProductsDaoProtocol.swift in Sources */,
 				D960C1F42FF1243400FFF4D9 /* LaunchScreen.swift in Sources */,
@@ -1177,9 +1191,11 @@
 				9F94981A2FF578BE000CEB5A /* EndPoint.swift in Sources */,
 				9F94981B2FF578BE000CEB5A /* ProductEndPoint.swift in Sources */,
 				D960C19E2FF1167A00FFF4D9 /* NexCartApp.swift in Sources */,
+				D9259B122FF582DC00A3A9D8 /* AuthDTOs.swift in Sources */,
 				D960C1ED2FF120A500FFF4D9 /* ApiService.swift in Sources */,
 				9F92BF532FF47D7900E090B7 /* BrandListViewModel.swift in Sources */,
 				D93C26032FF5294400486A11 /* FavProductViewModel.swift in Sources */,
+				D9259B142FF5838000A3A9D8 /* AuthEndpointes.swift in Sources */,
 				D960C23F2FF1B28E00FFF4D9 /* SignUpScreen.swift in Sources */,
 				9F92BF552FF47D9E00E090B7 /* BrandListView.swift in Sources */,
 				D960C2232FF17C8200FFF4D9 /* ForgotPass.swift in Sources */,
