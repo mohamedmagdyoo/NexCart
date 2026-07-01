@@ -18,6 +18,10 @@ struct ProductDetailView: View {
     init(product: Product) {
         _product = State(initialValue: product)
     }
+
+    init(productEntity: ProductEntity) {
+        self.init(product: productEntity.toProduct())
+    }
     
     private var sizes: [String] {
         product.options.first(where: { $0.name.caseInsensitiveCompare("Size") == .orderedSame })?.values ?? []

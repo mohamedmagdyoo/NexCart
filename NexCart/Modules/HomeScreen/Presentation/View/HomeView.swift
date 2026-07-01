@@ -12,6 +12,7 @@ struct HomeView: View {
     @StateObject private var viewModel = DIContainer.shared.container.resolve(HomeViewModel.self)!
     @State private var heroIndex: Int = 0
     @State private var selectedTab: Int = 0
+    @State private var selectedProduct: ProductEntity?
 
     init() {
     
@@ -43,6 +44,7 @@ struct HomeView: View {
                                 isLoading: viewModel.isLoading,
                                 errorMessage: viewModel.errorMessage,
                                 onToggleFavorite: { viewModel.toggleFavorite(at: $0) },
+                                onProductSelected: { selectedProduct = $0 },
                                 onRetry: { await viewModel.fetchHomeData() }
                             )
 
@@ -67,10 +69,7 @@ struct HomeView: View {
                 
                 // تابة الـ Favorites
                 NavigationView {
-                    Text("Favorites View")
-                        .font(AppColor.sans(16, .medium))
-                        .foregroundColor(AppColor.textPrim)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    FavProductsScreen()
                         .padding(.bottom, 90)
                 }
                 .navigationViewStyle(.stack)
@@ -102,6 +101,21 @@ struct HomeView: View {
            
             HomeTabBar(selectedTab: $selectedTab)
         }
+        .background(
+            Group {
+                if let product = selectedProduct {
+                    NavigationLink(
+                        destination: ProductDetailView(productEntity: product),
+                        isActive: Binding(
+                            get: { selectedProduct != nil },
+                            set: { if !$0 { selectedProduct = nil } }
+                        )
+                    ) {
+                        EmptyView()
+                    }
+                }
+            }
+        )
         .preferredColorScheme(.light)
     }
 }

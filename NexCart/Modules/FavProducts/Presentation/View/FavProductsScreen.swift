@@ -18,6 +18,7 @@ private extension Color {
 struct FavProductsScreen: View {
 
     @StateObject private var viewModel: FavProductsViewModel = DIContainer.shared.container.resolve(FavProductsViewModel.self)!
+    @State private var selectedProduct: ProductEntity?
     
 
     var body: some View {
@@ -33,10 +34,25 @@ struct FavProductsScreen: View {
                 case .empty:
                     FavScreenEmptyState()
                 case .succes:
-                    FavScreenSuccesState(viewModel: viewModel)
+                    FavScreenSuccesState(viewModel: viewModel, selectedProduct: $selectedProduct)
                 }
             }
         }
+        .background(
+            Group {
+                if let product = selectedProduct {
+                    NavigationLink(
+                        destination: ProductDetailView(productEntity: product),
+                        isActive: Binding(
+                            get: { selectedProduct != nil },
+                            set: { if !$0 { selectedProduct = nil } }
+                        )
+                    ) {
+                        EmptyView()
+                    }
+                }
+            }
+        )
         .onAppear { viewModel.onAppear() }
         .alert(item: $viewModel.alert) { alert in
             Alert(
@@ -68,6 +84,7 @@ struct FavProductsScreen: View {
 // MARK: - Success State
 struct FavScreenSuccesState: View {
     @ObservedObject var viewModel: FavProductsViewModel
+    @Binding var selectedProduct: ProductEntity?
 
     var body: some View {
         ScrollView {
@@ -75,7 +92,9 @@ struct FavScreenSuccesState: View {
                 ForEach(viewModel.favProducts) { product in
                     FavProductRow(
                         product: product,
-                        onTap: { print("Nav to product detatils") },
+                        onTap: { 
+                            selectedProduct = product.toProductEntity()
+                        },
                         onRemove: {
                             withAnimation(.easeInOut(duration: 0.2)) {
                                 viewModel.removeFromFav(product)
@@ -151,6 +170,21 @@ private struct FavProductRow: View {
 
     private var formattedPrice: String {
         product.price.formatted(.currency(code: "USD").precision(.fractionLength(0)))
+    }
+}
+
+private extension FavProduct {
+    func toProductEntity() -> ProductEntity {
+        ProductEntity(
+            id: id,
+            brand: brand,
+            name: name,
+            price: price,
+            originalPrice: nil,
+            imageURL: imageURL,
+            tag: nil,
+            isFavorited: true
+        )
     }
 }
 
