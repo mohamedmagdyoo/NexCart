@@ -440,7 +440,6 @@
 		D960C1DB2FF1185A00FFF4D9 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				D960C1E62FF11B0100FFF4D9 /* App */,
 				D960C1E32FF11AC400FFF4D9 /* AppTheme */,
 				D960C1E72FF11B0B00FFF4D9 /* ShardViews */,
 			);
@@ -470,6 +469,8 @@
 		D960C1DE2FF1188900FFF4D9 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				D960C19D2FF1167A00FFF4D9 /* NexCartApp.swift */,
+				D960C19F2FF1167A00FFF4D9 /* ContentView.swift */,
 				D960C1A12FF1167C00FFF4D9 /* Assets.xcassets */,
 			);
 			path = App;
@@ -508,15 +509,6 @@
 				D960C1E42FF11ACE00FFF4D9 /* AppTheme.swift */,
 			);
 			path = AppTheme;
-			sourceTree = "<group>";
-		};
-		D960C1E62FF11B0100FFF4D9 /* App */ = {
-			isa = PBXGroup;
-			children = (
-				D960C19D2FF1167A00FFF4D9 /* NexCartApp.swift */,
-				D960C19F2FF1167A00FFF4D9 /* ContentView.swift */,
-			);
-			path = App;
 			sourceTree = "<group>";
 		};
 		D960C1E72FF11B0B00FFF4D9 /* ShardViews */ = {
