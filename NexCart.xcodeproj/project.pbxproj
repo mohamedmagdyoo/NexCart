@@ -11,7 +11,6 @@
 		9F8F1E522FF3898D0016B844 /* HomeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E412FF3898D0016B844 /* HomeRepository.swift */; };
 		9F8F1E532FF3898D0016B844 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E4B2FF3898D0016B844 /* HomeView.swift */; };
 		9F8F1E542FF3898D0016B844 /* HomeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E3F2FF3898D0016B844 /* HomeEntity.swift */; };
-		9F8F1E552FF3898D0016B844 /* ProductEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E3D2FF3898D0016B844 /* ProductEndPoint.swift */; };
 		9F8F1E562FF3898D0016B844 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E4D2FF3898D0016B844 /* HomeViewModel.swift */; };
 		9F8F1E572FF3898D0016B844 /* HomeBrandSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E482FF3898D0016B844 /* HomeBrandSection.swift */; };
 		9F8F1E582FF3898D0016B844 /* HomeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E432FF3898D0016B844 /* HomeProtocol.swift */; };
@@ -19,9 +18,6 @@
 		9F8F1E5A2FF3898D0016B844 /* HomenewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E4A2FF3898D0016B844 /* HomenewSection.swift */; };
 		9F8F1E622FF38A6E0016B844 /* ProductDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E612FF38A6E0016B844 /* ProductDto.swift */; };
 		9F8F1E632FF38A6E0016B844 /* BrandDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E602FF38A6E0016B844 /* BrandDto.swift */; };
-		9F8F1E652FF38A980016B844 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E642FF38A980016B844 /* EndPoint.swift */; };
-		9F8F1E672FF38B3F0016B844 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E662FF38B3F0016B844 /* CoreData.swift */; };
-		9F8F1E6A2FF38CBB0016B844 /* NexCart.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E682FF38CBA0016B844 /* NexCart.xcdatamodeld */; };
 		9F92BF412FF478C300E090B7 /* BrandEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F92BF402FF478C300E090B7 /* BrandEntity.swift */; };
 		9F92BF442FF4796C00E090B7 /* BrandsRepoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F92BF432FF4796C00E090B7 /* BrandsRepoProtocol.swift */; };
 		9F92BF472FF479D300E090B7 /* BrandUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F92BF462FF479D300E090B7 /* BrandUseCase.swift */; };
@@ -33,11 +29,16 @@
 		9F92BF572FF47DCF00E090B7 /* BrandProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F92BF562FF47DCF00E090B7 /* BrandProductViewModel.swift */; };
 		9F92BF592FF47DF100E090B7 /* BrandProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F92BF582FF47DF100E090B7 /* BrandProductView.swift */; };
 		9F92BF5B2FF4803E00E090B7 /* BrandProductUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F92BF5A2FF4803E00E090B7 /* BrandProductUseCase.swift */; };
+		9F9498132FF57881000CEB5A /* NexCart.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F94980C2FF57881000CEB5A /* NexCart.xcdatamodeld */; };
+		9F9498142FF57881000CEB5A /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F94980F2FF57881000CEB5A /* CoreData.swift */; };
+		9F9498152FF57881000CEB5A /* ProductsRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9498102FF57881000CEB5A /* ProductsRepo.swift */; };
+		9F9498162FF57881000CEB5A /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F94980D2FF57881000CEB5A /* Persistence.swift */; };
+		9F94981A2FF578BE000CEB5A /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9498172FF578BE000CEB5A /* EndPoint.swift */; };
+		9F94981B2FF578BE000CEB5A /* ProductEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9498182FF578BE000CEB5A /* ProductEndPoint.swift */; };
 		D960C19E2FF1167A00FFF4D9 /* NexCartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C19D2FF1167A00FFF4D9 /* NexCartApp.swift */; };
 		D960C1A02FF1167A00FFF4D9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C19F2FF1167A00FFF4D9 /* ContentView.swift */; };
 		D960C1A22FF1167C00FFF4D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D960C1A12FF1167C00FFF4D9 /* Assets.xcassets */; };
 		D960C1A52FF1167C00FFF4D9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D960C1A42FF1167C00FFF4D9 /* Preview Assets.xcassets */; };
-		D960C1A72FF1167C00FFF4D9 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1A62FF1167C00FFF4D9 /* Persistence.swift */; };
 		D960C1B42FF1167C00FFF4D9 /* NexCartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1B32FF1167C00FFF4D9 /* NexCartTests.swift */; };
 		D960C1BE2FF1167C00FFF4D9 /* NexCartUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1BD2FF1167C00FFF4D9 /* NexCartUITests.swift */; };
 		D960C1C02FF1167C00FFF4D9 /* NexCartUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C1BF2FF1167C00FFF4D9 /* NexCartUITestsLaunchTests.swift */; };
@@ -95,7 +96,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9F8F1E3D2FF3898D0016B844 /* ProductEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEndPoint.swift; sourceTree = "<group>"; };
 		9F8F1E3F2FF3898D0016B844 /* HomeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEntity.swift; sourceTree = "<group>"; };
 		9F8F1E412FF3898D0016B844 /* HomeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRepository.swift; sourceTree = "<group>"; };
 		9F8F1E432FF3898D0016B844 /* HomeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeProtocol.swift; sourceTree = "<group>"; };
@@ -107,9 +107,6 @@
 		9F8F1E4D2FF3898D0016B844 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		9F8F1E602FF38A6E0016B844 /* BrandDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandDto.swift; sourceTree = "<group>"; };
 		9F8F1E612FF38A6E0016B844 /* ProductDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDto.swift; sourceTree = "<group>"; };
-		9F8F1E642FF38A980016B844 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
-		9F8F1E662FF38B3F0016B844 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
-		9F8F1E692FF38CBA0016B844 /* NexCart.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NexCart.xcdatamodel; sourceTree = "<group>"; };
 		9F92BF402FF478C300E090B7 /* BrandEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandEntity.swift; sourceTree = "<group>"; };
 		9F92BF432FF4796C00E090B7 /* BrandsRepoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsRepoProtocol.swift; sourceTree = "<group>"; };
 		9F92BF462FF479D300E090B7 /* BrandUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandUseCase.swift; sourceTree = "<group>"; };
@@ -121,12 +118,17 @@
 		9F92BF562FF47DCF00E090B7 /* BrandProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandProductViewModel.swift; sourceTree = "<group>"; };
 		9F92BF582FF47DF100E090B7 /* BrandProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandProductView.swift; sourceTree = "<group>"; };
 		9F92BF5A2FF4803E00E090B7 /* BrandProductUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandProductUseCase.swift; sourceTree = "<group>"; };
+		9F94980D2FF57881000CEB5A /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		9F94980F2FF57881000CEB5A /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
+		9F9498102FF57881000CEB5A /* ProductsRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsRepo.swift; sourceTree = "<group>"; };
+		9F9498122FF57881000CEB5A /* NexCart.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NexCart.xcdatamodel; sourceTree = "<group>"; };
+		9F9498172FF578BE000CEB5A /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
+		9F9498182FF578BE000CEB5A /* ProductEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEndPoint.swift; sourceTree = "<group>"; };
 		D960C19A2FF1167A00FFF4D9 /* NexCart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NexCart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D960C19D2FF1167A00FFF4D9 /* NexCartApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NexCartApp.swift; sourceTree = "<group>"; };
 		D960C19F2FF1167A00FFF4D9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D960C1A12FF1167C00FFF4D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D960C1A42FF1167C00FFF4D9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		D960C1A62FF1167C00FFF4D9 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		D960C1AF2FF1167C00FFF4D9 /* NexCartTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NexCartTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D960C1B32FF1167C00FFF4D9 /* NexCartTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NexCartTests.swift; sourceTree = "<group>"; };
 		D960C1B92FF1167C00FFF4D9 /* NexCartUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NexCartUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -390,6 +392,57 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		9F94980E2FF57881000CEB5A /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				9F94980C2FF57881000CEB5A /* NexCart.xcdatamodeld */,
+				9F94980D2FF57881000CEB5A /* Persistence.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		9F9498112FF57881000CEB5A /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				9F94980E2FF57881000CEB5A /* Core */,
+				9F94980F2FF57881000CEB5A /* CoreData.swift */,
+				9F9498102FF57881000CEB5A /* ProductsRepo.swift */,
+			);
+			path = Local;
+			sourceTree = "<group>";
+		};
+		9F9498192FF578BE000CEB5A /* EndPointe */ = {
+			isa = PBXGroup;
+			children = (
+				9F9498172FF578BE000CEB5A /* EndPoint.swift */,
+				9F9498182FF578BE000CEB5A /* ProductEndPoint.swift */,
+			);
+			path = EndPointe;
+			sourceTree = "<group>";
+		};
+		9F94981D2FF579D5000CEB5A /* Core */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		9F94981E2FF579D5000CEB5A /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				9F94981D2FF579D5000CEB5A /* Core */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		9F94981F2FF579D5000CEB5A /* FavProducts */ = {
+			isa = PBXGroup;
+			children = (
+				9F94981E2FF579D5000CEB5A /* Data */,
+			);
+			path = FavProducts;
+			sourceTree = "<group>";
+		};
 		D960C1912FF1167A00FFF4D9 = {
 			isa = PBXGroup;
 			children = (
@@ -419,7 +472,6 @@
 				D960C22E2FF1980C00FFF4D9 /* Core */,
 				D960C1DE2FF1188900FFF4D9 /* App */,
 				D960C1DB2FF1185A00FFF4D9 /* Presentation */,
-				D960C1DC2FF1185F00FFF4D9 /* Domain */,
 				D960C1DD2FF1186200FFF4D9 /* Data */,
 				D960C1CC2FF1178000FFF4D9 /* Modules */,
 				D960C1A32FF1167C00FFF4D9 /* Preview Content */,
@@ -455,6 +507,7 @@
 		D960C1CC2FF1178000FFF4D9 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				9F94981F2FF579D5000CEB5A /* FavProducts */,
 				9F92BF3B2FF4774900E090B7 /* Brands */,
 				9F8F1E502FF3898D0016B844 /* HomeScreen */,
 				D960C1F22FF1241B00FFF4D9 /* Launch */,
@@ -559,23 +612,11 @@
 			path = Presentation;
 			sourceTree = "<group>";
 		};
-		D960C1DC2FF1185F00FFF4D9 /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-				D960C1EF2FF1213900FFF4D9 /* Entites */,
-				D960C1F02FF1214100FFF4D9 /* UseCases */,
-				D960C1F12FF1214C00FFF4D9 /* RepoInterfaces */,
-			);
-			path = Domain;
-			sourceTree = "<group>";
-		};
 		D960C1DD2FF1186200FFF4D9 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				9F8F1E3D2FF3898D0016B844 /* ProductEndPoint.swift */,
-				9F8F1E642FF38A980016B844 /* EndPoint.swift */,
+				9F9498112FF57881000CEB5A /* Local */,
 				D960C1E02FF1196900FFF4D9 /* Remote */,
-				D960C1DF2FF118CB00FFF4D9 /* Local */,
 				D960C23B2FF1A1BB00FFF4D9 /* FakeData */,
 			);
 			path = Data;
@@ -589,19 +630,10 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		D960C1DF2FF118CB00FFF4D9 /* Local */ = {
-			isa = PBXGroup;
-			children = (
-				9F8F1E682FF38CBA0016B844 /* NexCart.xcdatamodeld */,
-				D960C1A62FF1167C00FFF4D9 /* Persistence.swift */,
-				9F8F1E662FF38B3F0016B844 /* CoreData.swift */,
-			);
-			path = Local;
-			sourceTree = "<group>";
-		};
 		D960C1E02FF1196900FFF4D9 /* Remote */ = {
 			isa = PBXGroup;
 			children = (
+				9F9498192FF578BE000CEB5A /* EndPointe */,
 				9F8F1E5F2FF38A150016B844 /* Dtos */,
 				D960C1E22FF1199A00FFF4D9 /* Services */,
 			);
@@ -648,27 +680,6 @@
 				D960C1EB2FF120A500FFF4D9 /* ApiService.swift */,
 			);
 			path = ApiService;
-			sourceTree = "<group>";
-		};
-		D960C1EF2FF1213900FFF4D9 /* Entites */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Entites;
-			sourceTree = "<group>";
-		};
-		D960C1F02FF1214100FFF4D9 /* UseCases */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = UseCases;
-			sourceTree = "<group>";
-		};
-		D960C1F12FF1214C00FFF4D9 /* RepoInterfaces */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = RepoInterfaces;
 			sourceTree = "<group>";
 		};
 		D960C1F22FF1241B00FFF4D9 /* Launch */ = {
@@ -962,27 +973,27 @@
 				9F92BF5B2FF4803E00E090B7 /* BrandProductUseCase.swift in Sources */,
 				9F8F1E532FF3898D0016B844 /* HomeView.swift in Sources */,
 				9F8F1E542FF3898D0016B844 /* HomeEntity.swift in Sources */,
-				9F8F1E552FF3898D0016B844 /* ProductEndPoint.swift in Sources */,
 				9F8F1E562FF3898D0016B844 /* HomeViewModel.swift in Sources */,
 				9F8F1E572FF3898D0016B844 /* HomeBrandSection.swift in Sources */,
 				9F8F1E582FF3898D0016B844 /* HomeProtocol.swift in Sources */,
 				9F92BF472FF479D300E090B7 /* BrandUseCase.swift in Sources */,
 				9F8F1E592FF3898D0016B844 /* HomeHeroSection.swift in Sources */,
 				9F8F1E5A2FF3898D0016B844 /* HomenewSection.swift in Sources */,
+				9F9498132FF57881000CEB5A /* NexCart.xcdatamodeld in Sources */,
+				9F9498142FF57881000CEB5A /* CoreData.swift in Sources */,
+				9F9498152FF57881000CEB5A /* ProductsRepo.swift in Sources */,
+				9F9498162FF57881000CEB5A /* Persistence.swift in Sources */,
 				D960C2362FF1989F00FFF4D9 /* DIContainer+UseCases.swift in Sources */,
 				9F92BF412FF478C300E090B7 /* BrandEntity.swift in Sources */,
 				D960C21B2FF17B3600FFF4D9 /* LoginWithSocialProvider.swift in Sources */,
 				D960C23A2FF1A0AB00FFF4D9 /* AuthDesignSystem.swift in Sources */,
 				D960C23D2FF1A1D500FFF4D9 /* FakeUseCases.swift in Sources */,
 				D960C2282FF1813900FFF4D9 /* SignInViweModel.swift in Sources */,
-				9F8F1E652FF38A980016B844 /* EndPoint.swift in Sources */,
 				D960C2472FF1B6CA00FFF4D9 /* ShardViews.swift in Sources */,
 				D9EAA1332FF27A3F0097C038 /* FirebaseAuthRepository.swift in Sources */,
-				9F8F1E672FF38B3F0016B844 /* CoreData.swift in Sources */,
 				D960C21D2FF17B6100FFF4D9 /* LoginAsGuest.swift in Sources */,
 				D960C1F42FF1243400FFF4D9 /* LaunchScreen.swift in Sources */,
 				D960C2162FF1778200FFF4D9 /* AuthError.swift in Sources */,
-				D960C1A72FF1167C00FFF4D9 /* Persistence.swift in Sources */,
 				D960C2192FF17AF700FFF4D9 /* LoginWithEmail.swift in Sources */,
 				D960C2452FF1B40300FFF4D9 /* SignUpViewModel.swift in Sources */,
 				D960C2312FF1981D00FFF4D9 /* DIContainer.swift in Sources */,
@@ -990,11 +1001,12 @@
 				9F92BF4A2FF47AA500E090B7 /* BrandsEndPoint.swift in Sources */,
 				9F8F1E632FF38A6E0016B844 /* BrandDto.swift in Sources */,
 				D960C22A2FF18C6500FFF4D9 /* FakeAuthRepo.swift in Sources */,
-				9F8F1E6A2FF38CBB0016B844 /* NexCart.xcdatamodeld in Sources */,
 				D9EAA12C2FF275690097C038 /* FirebaseAuthService.swift in Sources */,
 				D960C2382FF1990900FFF4D9 /* DIContainer+ViewModels.swift in Sources */,
 				D960C1A02FF1167A00FFF4D9 /* ContentView.swift in Sources */,
 				D960C2202FF17BE800FFF4D9 /* CreatNewAccount.swift in Sources */,
+				9F94981A2FF578BE000CEB5A /* EndPoint.swift in Sources */,
+				9F94981B2FF578BE000CEB5A /* ProductEndPoint.swift in Sources */,
 				D960C19E2FF1167A00FFF4D9 /* NexCartApp.swift in Sources */,
 				D960C1ED2FF120A500FFF4D9 /* ApiService.swift in Sources */,
 				9F92BF532FF47D7900E090B7 /* BrandListViewModel.swift in Sources */,
@@ -1380,12 +1392,12 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		9F8F1E682FF38CBA0016B844 /* NexCart.xcdatamodeld */ = {
+		9F94980C2FF57881000CEB5A /* NexCart.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				9F8F1E692FF38CBA0016B844 /* NexCart.xcdatamodel */,
+				9F9498122FF57881000CEB5A /* NexCart.xcdatamodel */,
 			);
-			currentVersion = 9F8F1E692FF38CBA0016B844 /* NexCart.xcdatamodel */;
+			currentVersion = 9F9498122FF57881000CEB5A /* NexCart.xcdatamodel */;
 			path = NexCart.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

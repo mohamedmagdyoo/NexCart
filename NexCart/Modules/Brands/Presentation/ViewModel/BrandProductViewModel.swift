@@ -11,9 +11,9 @@ struct CategoryEntity: Identifiable, Hashable {
     let id: String
     let name: String
 }
-
+@MainActor
 final class BrandProductsViewModel: ObservableObject {
-
+    
     @Published var products: [ProductEntity] = []
     @Published var categories: [CategoryEntity] = [CategoryEntity(id: "all", name: "All")]
     @Published var selectedCategory: CategoryEntity = CategoryEntity(id: "all", name: "All")

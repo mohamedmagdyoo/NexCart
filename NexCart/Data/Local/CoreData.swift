@@ -71,27 +71,27 @@ final class CoreDataService {
         }
     }
     
-    func fetchFavoriteProducts() -> [ProductEntity] {
-        let context = container.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "NexCartProduct")
-        
-        do {
-            let results = try context.fetch(fetchRequest)
-            return results.compactMap { object in
-                guard let id = object.value(forKey: "id") as? Int,
-                      let name = object.value(forKey: "name") as? String else {
-                    return nil
-                }
-                
-                let brand = object.value(forKey: "brand") as? String ?? ""
-                let price = object.value(forKey: "price") as? Double ?? 0.0
-                let imageURL = object.value(forKey: "imageURL") as? String ?? ""
-                
-                return ProductEntity(id: id, name: name, imageURL: imageURL, price: price, originalPrice: nil, isFavorited: true, brand: brand)
-            }
-        } catch {
-            print("❌ Failed to fetch favorites: \(error.localizedDescription)")
-            return []
-        }
-    }
+//    func fetchFavoriteProducts() -> [ProductEntity] {
+//        let context = container.viewContext
+//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "NexCartProduct")
+//        
+//        do {
+//            let results = try context.fetch(fetchRequest)
+//            return results.compactMap { object in
+//                guard let id = object.value(forKey: "id") as? Int,
+//                      let name = object.value(forKey: "name") as? String else {
+//                    return nil
+//                }
+//                
+//                let brand = object.value(forKey: "brand") as? String ?? ""
+//                let price = object.value(forKey: "price") as? Double ?? 0.0
+//                let imageURL = object.value(forKey: "imageURL") as? String ?? ""
+//                
+//                return ProductEntity(id: id, name: name, imageURL: imageURL, price: price, originalPrice: nil, isFavorited: true, brand: brand)
+//            }
+//        } catch {
+//            print("❌ Failed to fetch favorites: \(error.localizedDescription)")
+//            return []
+//        }
+//    }
 }
