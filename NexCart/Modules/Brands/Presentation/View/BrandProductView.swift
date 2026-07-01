@@ -10,6 +10,7 @@ import SwiftUI
 
 struct BrandProductsView: View {
     @StateObject var viewModel: BrandProductsViewModel
+    @State private var selectedProduct: ProductEntity?
 
     private let columns = [
         GridItem(.flexible(), spacing: 16),
@@ -41,6 +42,21 @@ struct BrandProductsView: View {
             }
         }
         .background(AppColor.bg.ignoresSafeArea())
+        .background(
+            Group {
+                if let product = selectedProduct {
+                    NavigationLink(
+                        destination: ProductDetailView(productEntity: product),
+                        isActive: Binding(
+                            get: { selectedProduct != nil },
+                            set: { if !$0 { selectedProduct = nil } }
+                        )
+                    ) {
+                        EmptyView()
+                    }
+                }
+            }
+        )
         .task { await viewModel.loadProducts() }
         .refreshable { await viewModel.loadProducts() }
     }
@@ -92,9 +108,16 @@ struct BrandProductsView: View {
     private var productGrid: some View {
         LazyVGrid(columns: columns, spacing: 20) {
             ForEach(viewModel.filteredProducts) { product in
-                ProductCardView(product: product, isFavorited: product.isFavorited) {
-                    viewModel.toggleFavorite(productId: product.id)
-                }
+                ProductCardView(
+                    product: product,
+                    isFavorited: product.isFavorited,
+                    onFavoriteToggle: {
+                        viewModel.toggleFavorite(productId: product.id)
+                    },
+                    onTap: {
+                        selectedProduct = product
+                    }
+                )
             }
         }
         .padding(.horizontal, 20)
@@ -125,6 +148,7 @@ struct ProductCardView: View {
     let product: ProductEntity
     let isFavorited: Bool
     let onFavoriteToggle: () -> Void
+    let onTap: () -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -175,5 +199,7 @@ struct ProductCardView: View {
                 }
             }
         }
+        .contentShape(Rectangle())
+        .onTapGesture(perform: onTap)
     }
 }
