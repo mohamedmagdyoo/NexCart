@@ -10,11 +10,16 @@ import UIKit
 import AuthenticationServices
 
 struct UserEntity: Codable {
-    let id: String
+    let id: String                     // Firebase uid
     let email: String
     let displayName: String?
     let authProvider: AuthProvider
     let isGuest: Bool
+
+    // Shopify-linked fields
+    let shopifyCustomerId: String?     //nil for guests
+    var phone: String?
+    let acceptsMarketing: Bool
 }
 
 enum AuthProvider: Codable {
@@ -32,7 +37,7 @@ struct EmailCredentials {
 
 // For sign up we need name too
 struct SignUpCredentials {
-    let firstName: String
+    var firstName: String
     let lastName: String
     let email: String
     let phone: String?
@@ -47,4 +52,9 @@ struct SignUpCredentials {
 enum SocialAuthProvider {
     case google(vc: UIViewController)
     case apple(authorization: ASAuthorization)
+}
+
+
+struct ShopifyCustomerSearchResponse: Codable {
+    let customers: [ShopifyCustomerDTO]
 }

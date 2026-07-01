@@ -8,6 +8,10 @@
 import Foundation
 
 enum BrandsEndPoint: EndPoint {
+    var body: Data?{
+        return nil
+    }
+    
     case allBrands
     case allCategories
 

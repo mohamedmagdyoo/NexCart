@@ -35,7 +35,7 @@ enum AuthError: Error, LocalizedError {
         case .socialLoginCancelled:
             return "Sign in was cancelled."
         case .unknown(let error):
-            return error.localizedDescription
+            return "Try again..."
         case .passwordsDidNotMatchConfirmedPass:
             return "The pass don't mathc the confirm pass"
         }

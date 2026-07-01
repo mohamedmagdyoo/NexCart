@@ -39,12 +39,12 @@ struct SignUpScreen: View {
 struct SignUpIdleState: View {
     @ObservedObject var viewModel: SignUpViewModel
 
-    @State private var firstName: String = ""
-    @State private var lastName: String = ""
-    @State private var phone: String = ""
-    @State private var email: String = ""
-    @State private var password: String = ""
-    @State private var passwordConfirmation: String = ""
+//    @State private var firstName: String = ""
+//    @State private var lastName: String = ""
+//    @State private var phone: String = ""
+//    @State private var email: String = ""
+//    @State private var password: String = ""
+//    @State private var passwordConfirmation: String = ""
     
     @Environment(\.dismiss) private var dismiss
 
@@ -77,20 +77,20 @@ struct SignUpIdleState: View {
 
                 // MARK: Fields
                 VStack{
-                    ObsidianField(label: "FIRST NAME", placeholder: "Eliza", text: $firstName)
-                    ObsidianField(label: "Last NAME", placeholder: "Hart", text: $lastName)
+                    ObsidianField(label: "FIRST NAME", placeholder: "Eliza", text: $viewModel.firstName)
+                    ObsidianField(label: "Last NAME", placeholder: "Hart", text: $viewModel.lastName)
 
-                    ObsidianField(label: "EMAIL", placeholder: "hello@maison.co", text: $email)
+                    ObsidianField(label: "EMAIL", placeholder: "hello@maison.co", text: $viewModel.email)
                         .keyboardType(.emailAddress)
                         .padding(.top, 16)
-                    ObsidianField(label: "Phone", placeholder: "01094858338", text: $phone)
+                    ObsidianField(label: "Phone", placeholder: "+201094858338", text: $viewModel.phone)
                         .keyboardType(.numberPad)
                         .padding(.top, 16)
 
-                    ObsidianField(label: "PASSWORD", placeholder: "At least 8 characters", text: $password, isSecure: true)
+                    ObsidianField(label: "PASSWORD", placeholder: "At least 8 characters", text: $viewModel.password, isSecure: true)
                         .padding(.top, 16)
                         .padding(.bottom, 28)
-                    ObsidianField(label: "passwordConfirmation", placeholder: "At least 8 characters", text: $passwordConfirmation, isSecure: true)
+                    ObsidianField(label: "passwordConfirmation", placeholder: "At least 8 characters", text: $viewModel.passwordConfirmation, isSecure: true)
                         .padding(.top, 16)
                         .padding(.bottom, 28)
                 }
@@ -98,7 +98,7 @@ struct SignUpIdleState: View {
                 // MARK: Create Account Button
                 Button {
                     viewModel.createNewAccount(
-                        credentials: SignUpCredentials(firstName: firstName, lastName: lastName, email: email, phone: phone, password: password, passwordConfirmation: passwordConfirmation)
+                        credentials: viewModel.credentials()
                     )
                 } label: {
                     Text("Create account")

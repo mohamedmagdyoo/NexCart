@@ -14,24 +14,24 @@ import AuthenticationServices
 //MARK: Mappers
 func mapFirebaseError(_ error: Error) -> AuthError {
     let nsError = error as NSError
-
+    
     guard let authError = AuthErrorCode.Code(rawValue: nsError.code) else {
         return .unknown(error)
     }
-
+    
     switch authError {
-    case .wrongPassword, .invalidCredential:
+    case .wrongPassword, .invalidCredential, .invalidEmail:
         return .wrongPassword
-
+        
     case .emailAlreadyInUse:
         return .emailAlreadyInUse
-
+        
     case .userNotFound:
         return .userNotFound
-
+        
     case .networkError:
         return .networkError
-
+        
     default:
         return .unknown(error)
     }
@@ -44,7 +44,27 @@ func mapToUserEntity(_ user: FirebaseAuth.User) -> UserEntity {
         email: user.email ?? "",
         displayName: user.displayName ?? "",
         authProvider: detectProvider(user),
-        isGuest: false
+        isGuest: false,
+        shopifyCustomerId: nil,
+        phone: nil,
+        acceptsMarketing: false
+    )
+}
+
+func mapToUserEntity(
+    _ user: FirebaseAuth.User,
+    shopifyUser: ShopifyCustomerDTO,
+    acceptsMarketing: Bool = true
+) -> UserEntity {
+    UserEntity(
+        id: user.uid,
+        email: user.email ?? shopifyUser.email ?? "",
+        displayName: user.displayName ?? "\(shopifyUser.firstName ?? "") \(shopifyUser.lastName ?? "")".trimmingCharacters(in: .whitespaces),
+        authProvider: detectProvider(user),
+        isGuest: false,
+        shopifyCustomerId: String(shopifyUser.id),
+        phone: shopifyUser.phone,
+        acceptsMarketing: acceptsMarketing
     )
 }
 
