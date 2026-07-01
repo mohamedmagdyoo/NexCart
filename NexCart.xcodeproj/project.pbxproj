@@ -21,6 +21,11 @@
 		9F8F1E632FF38A6E0016B844 /* BrandDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E602FF38A6E0016B844 /* BrandDto.swift */; };
 		9F8F1E652FF38A980016B844 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F1E642FF38A980016B844 /* EndPoint.swift */; };
 		D91E748B2FF5152E00D941C4 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91E748A2FF5152E00D941C4 /* OnBoardingView.swift */; };
+		D91E74912FF5181900D941C4 /* ProductDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91E74902FF5181900D941C4 /* ProductDetails.swift */; };
+		D91E74932FF5184200D941C4 /* ProductDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91E74922FF5184200D941C4 /* ProductDetailsViewModel.swift */; };
+		D91E74952FF5188700D941C4 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91E74942FF5188700D941C4 /* Components.swift */; };
+		D91E74982FF518FD00D941C4 /* ProductDetailss.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91E74972FF518FD00D941C4 /* ProductDetailss.swift */; };
+		D91E749A2FF5193F00D941C4 /* FakeProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91E74992FF5193F00D941C4 /* FakeProduct.swift */; };
 		D960C19E2FF1167A00FFF4D9 /* NexCartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C19D2FF1167A00FFF4D9 /* NexCartApp.swift */; };
 		D960C1A02FF1167A00FFF4D9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C19F2FF1167A00FFF4D9 /* ContentView.swift */; };
 		D960C1A22FF1167C00FFF4D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D960C1A12FF1167C00FFF4D9 /* Assets.xcassets */; };
@@ -107,6 +112,11 @@
 		9F8F1E612FF38A6E0016B844 /* ProductDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDto.swift; sourceTree = "<group>"; };
 		9F8F1E642FF38A980016B844 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		D91E748A2FF5152E00D941C4 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
+		D91E74902FF5181900D941C4 /* ProductDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetails.swift; sourceTree = "<group>"; };
+		D91E74922FF5184200D941C4 /* ProductDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewModel.swift; sourceTree = "<group>"; };
+		D91E74942FF5188700D941C4 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
+		D91E74972FF518FD00D941C4 /* ProductDetailss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailss.swift; sourceTree = "<group>"; };
+		D91E74992FF5193F00D941C4 /* FakeProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeProduct.swift; sourceTree = "<group>"; };
 		D960C19A2FF1167A00FFF4D9 /* NexCart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NexCart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D960C19D2FF1167A00FFF4D9 /* NexCartApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NexCartApp.swift; sourceTree = "<group>"; };
 		D960C19F2FF1167A00FFF4D9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -288,6 +298,49 @@
 			path = OnBoarding;
 			sourceTree = "<group>";
 		};
+		D91E748C2FF517F000D941C4 /* ProductDetails */ = {
+			isa = PBXGroup;
+			children = (
+				D91E74962FF518E400D941C4 /* Data */,
+				D91E748D2FF517FC00D941C4 /* Presentation */,
+			);
+			path = ProductDetails;
+			sourceTree = "<group>";
+		};
+		D91E748D2FF517FC00D941C4 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				D91E748F2FF5180800D941C4 /* VM */,
+				D91E748E2FF5180500D941C4 /* View */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		D91E748E2FF5180500D941C4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D91E74902FF5181900D941C4 /* ProductDetails.swift */,
+				D91E74942FF5188700D941C4 /* Components.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D91E748F2FF5180800D941C4 /* VM */ = {
+			isa = PBXGroup;
+			children = (
+				D91E74922FF5184200D941C4 /* ProductDetailsViewModel.swift */,
+			);
+			path = VM;
+			sourceTree = "<group>";
+		};
+		D91E74962FF518E400D941C4 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				D91E74972FF518FD00D941C4 /* ProductDetailss.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		D960C1912FF1167A00FFF4D9 = {
 			isa = PBXGroup;
 			children = (
@@ -353,6 +406,7 @@
 		D960C1CC2FF1178000FFF4D9 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				D91E748C2FF517F000D941C4 /* ProductDetails */,
 				D91E74892FF5150E00D941C4 /* OnBoarding */,
 				D960C1F22FF1241B00FFF4D9 /* Launch */,
 				D960C1CD2FF1178800FFF4D9 /* Auth */,
@@ -663,6 +717,7 @@
 			children = (
 				D960C2292FF18C6500FFF4D9 /* FakeAuthRepo.swift */,
 				D960C23C2FF1A1D500FFF4D9 /* FakeUseCases.swift */,
+				D91E74992FF5193F00D941C4 /* FakeProduct.swift */,
 			);
 			path = FakeData;
 			sourceTree = "<group>";
@@ -970,6 +1025,7 @@
 				D960C23D2FF1A1D500FFF4D9 /* FakeUseCases.swift in Sources */,
 				D960C2282FF1813900FFF4D9 /* SignInViweModel.swift in Sources */,
 				9F8F1E652FF38A980016B844 /* EndPoint.swift in Sources */,
+				D91E74952FF5188700D941C4 /* Components.swift in Sources */,
 				D960C2472FF1B6CA00FFF4D9 /* ShardViews.swift in Sources */,
 				D9EAA1332FF27A3F0097C038 /* FirebaseAuthRepository.swift in Sources */,
 				D9CFF57C2FF4004C00B7B8DE /* FavProductViewModel.swift in Sources */,
@@ -979,6 +1035,7 @@
 				D960C2162FF1778200FFF4D9 /* AuthError.swift in Sources */,
 				D960C2192FF17AF700FFF4D9 /* LoginWithEmail.swift in Sources */,
 				D960C2452FF1B40300FFF4D9 /* SignUpViewModel.swift in Sources */,
+				D91E749A2FF5193F00D941C4 /* FakeProduct.swift in Sources */,
 				D9CFF5782FF4004C00B7B8DE /* FetchFavProducts.swift in Sources */,
 				D91E748B2FF5152E00D941C4 /* OnBoardingView.swift in Sources */,
 				D960C2312FF1981D00FFF4D9 /* DIContainer.swift in Sources */,
@@ -986,6 +1043,8 @@
 				9F8F1E632FF38A6E0016B844 /* BrandDto.swift in Sources */,
 				D960C22A2FF18C6500FFF4D9 /* FakeAuthRepo.swift in Sources */,
 				D9EAA12C2FF275690097C038 /* FirebaseAuthService.swift in Sources */,
+				D91E74932FF5184200D941C4 /* ProductDetailsViewModel.swift in Sources */,
+				D91E74912FF5181900D941C4 /* ProductDetails.swift in Sources */,
 				D960C2382FF1990900FFF4D9 /* DIContainer+ViewModels.swift in Sources */,
 				D960C1A02FF1167A00FFF4D9 /* ContentView.swift in Sources */,
 				D960C2202FF17BE800FFF4D9 /* CreatNewAccount.swift in Sources */,
@@ -994,6 +1053,7 @@
 				D960C23F2FF1B28E00FFF4D9 /* SignUpScreen.swift in Sources */,
 				D960C2232FF17C8200FFF4D9 /* ForgotPass.swift in Sources */,
 				D9EAA1352FF281F30097C038 /* DIContainer+Services.swift in Sources */,
+				D91E74982FF518FD00D941C4 /* ProductDetailss.swift in Sources */,
 				D960C1E52FF11ACE00FFF4D9 /* AppTheme.swift in Sources */,
 				D960C2262FF17D6D00FFF4D9 /* LogOut.swift in Sources */,
 				D960C2112FF174C100FFF4D9 /* AuthRepoInterface.swift in Sources */,
