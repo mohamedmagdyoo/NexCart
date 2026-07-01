@@ -56,12 +56,12 @@ extension DIContainer {
         }
         
         //FavUseCases
-//        container.register(FetchFavProductsUseCaseProtocol.self){ r in
-//            FetchFavProducts(repo: r.resolve(ProductsRepoProtocol.self)!)
-//        }
-//
-//        container.register(RemoveFavProductUseCaseProtocol.self){ r in
-//            RemoveFavProduct(repo: r.resolve(ProductsRepoProtocol.self)!)
-//        }
+        container.register(FetchFavProductsUseCaseProtocol.self){ r in
+            FetchFavProducts(repo: r.resolve(ProductsRepoProtocol.self)!)
+        }
+
+        container.register(RemoveFavProductUseCaseProtocol.self){ r in
+            RemoveFavProduct(repo: r.resolve(ProductsRepoProtocol.self)!)
+        }
     }
 }
