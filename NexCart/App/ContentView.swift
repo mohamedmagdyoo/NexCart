@@ -19,8 +19,9 @@ struct ContentView: View {
         
             if userData != nil {
                 NavigationStack{
+                    ProductDetailView(product: dummyProducts)
 //                    HomeView()
-                    FavProductsScreen()
+//                    FavProductsScreen()
                 }
             } else {
                 NavigationStack{
