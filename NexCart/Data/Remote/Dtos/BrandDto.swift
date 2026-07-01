@@ -23,3 +23,12 @@ struct SmartCollectionDTO: Codable {
 struct SmartCollectionImageDTO: Codable {
     let src: String
 }
+extension SmartCollectionDTO {
+    func toEntity() -> BrandEntity {
+        BrandEntity(
+            id: String(id),
+            name: title,
+            imageURL: image?.src ?? ""
+        )
+    }
+}

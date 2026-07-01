@@ -1,3 +1,10 @@
+//
+//  HomeView.swift
+//  NexCart
+//
+//  Created by shady ramadan on 28/06/2026.
+//
+
 import SwiftUI
 
 struct HomeView: View {
@@ -11,62 +18,88 @@ struct HomeView: View {
             ZStack(alignment: .bottom) {
                 AppColor.bg.ignoresSafeArea()
 
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 0) {
-                        HomeHeroSection(
-                            slides: viewModel.slides,
-                            heroIndex: $heroIndex
-                        )
+                // 🔥 هنا بنبدل الشاشات على حسب التابة المختارة
+                if selectedTab == 0 {
+                    // تابة الـ Home الرئيسية
+                    ScrollView(showsIndicators: false) {
+                        VStack(spacing: 0) {
+                            HomeHeroSection(
+                                slides: viewModel.slides,
+                                heroIndex: $heroIndex
+                            )
 
-                        HomeBrandsSection(
-                            brands: viewModel.brands,
-                            onBrandSelected: { viewModel.selectBrand(at: $0) }
-                        )
+                            HomeBrandsSection(
+                                brands: viewModel.brands,
+                                onBrandSelected: { viewModel.selectBrand(at: $0) }
+                            )
 
-                        HomeNewInSection(
-                            products: viewModel.products,
-                            isLoading: viewModel.isLoading,
-                            errorMessage: viewModel.errorMessage,
-                            onToggleFavorite: { viewModel.toggleFavorite(at: $0) },
-                            onRetry: { await viewModel.fetchHomeData() }
-                        )
+                            HomeNewInSection(
+                                products: viewModel.products,
+                                isLoading: viewModel.isLoading,
+                                errorMessage: viewModel.errorMessage,
+                                onToggleFavorite: { viewModel.toggleFavorite(at: $0) },
+                                onRetry: { await viewModel.fetchHomeData() }
+                            )
 
-                        Spacer().frame(height: 100)
+                            Spacer().frame(height: 100) // مساحة عشان الـ TabBar مايغطيش المحتوى
+                        }
                     }
+                    .ignoresSafeArea(edges: .top)
+                    .task { await viewModel.fetchHomeData() }
+                    
+                } else if selectedTab == 1 {
+                    // تابة الـ Shop (عرض كل البراندات) ممرر ليها الـ ViewModel من الـ DI Container
+                    BrandsListView(
+                        viewModel: DIContainer.shared.container.resolve(BrandsListViewModel.self)!
+                    )
+                    .padding(.bottom, 90) // مسافة أمان عشان الـ TabBar الكاستم
+                    
+                } else if selectedTab == 2 {
+                    // تابة الـ Cart (تقدر تستبدلها بالـ View الحقيقي بتاعك لاحقاً)
+                    Text("Cart View")
+                        .font(AppColor.sans(16, .medium))
+                        .foregroundColor(AppColor.textPrim)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .padding(.bottom, 90)
+                        
+                } else if selectedTab == 3 {
+                    // تابة الـ Profile (تقدر تستبدلها بالـ View الحقيقي بتاعك لاحقاً)
+                    Text("Profile View")
+                        .font(AppColor.sans(16, .medium))
+                        .foregroundColor(AppColor.textPrim)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .padding(.bottom, 90)
                 }
-                .ignoresSafeArea(edges: .top)
-                .task { await viewModel.fetchHomeData() }
 
+                // الـ TabBar الكاستم بتاعك ثابت في الأسفل
                 HomeTabBar(selectedTab: $selectedTab)
             }
-            .navigationDestination(for: ProductEntity.self) { product in
-                 Text(product.name)
-            }
-            .navigationDestination(for: BrandEntity.self) { brand in
-                 Text(brand.name)
-            }
+            .preferredColorScheme(.light)
         }
-        .preferredColorScheme(.light)
-        .ignoresSafeArea(edges: .bottom)
     }
 }
 
+// MARK: - HomeTabBar Component
+
+struct TabItemModel {
+    let icon: String
+    let label: String
+}
+
 struct HomeTabBar: View {
-
     @Binding var selectedTab: Int
-
-    private let tabs: [(icon: String, label: String)] = [
-        ("house", "Home"),
-        ("magnifyingglass", "Shop"),
-        ("heart", "Saved"),
-        ("bag", "Cart"),
-        ("person", "Profile"),
+    
+    let tabs = [
+        TabItemModel(icon: "house", label: "Home"),
+        TabItemModel(icon: "bag", label: "Shop"),
+        TabItemModel(icon: "cart", label: "Cart"),
+        TabItemModel(icon: "person", label: "Profile")
     ]
 
     var body: some View {
         VStack(spacing: 0) {
-            Rectangle()
-                .fill(AppColor.border)
+            Divider()
+                .background(AppColor.border)
                 .frame(height: 0.5)
 
             HStack(spacing: 0) {
@@ -106,11 +139,9 @@ struct HomeTabBar: View {
     }
 }
 
-
-struct HomeView_Previews: PreviewProvider{
-    static var previews: some View{
+struct HomeView_Previews: PreviewProvider {
+    static var previews: some View {
         HomeView()
             .preferredColorScheme(.light)
     }
 }
-

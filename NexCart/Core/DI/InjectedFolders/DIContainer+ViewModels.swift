@@ -29,7 +29,16 @@ extension DIContainer {
                       fetchSlidesUseCase: r.resolve(FetchHeroSlidesUseCaseProtocol.self)!
                   )
               }
-       
-          }
-      }
-       
+        container.register(BrandsListViewModel.self) { r in
+                    BrandsListViewModel(fetchBrandsUseCase: r.resolve(FetchBrandsUseCaseProtocol.self)!)
+                }
+         
+                // Needs the tapped BrandEntity, registered with an argument.
+                container.register(BrandProductsViewModel.self) { (r, brand: BrandEntity) in
+                    BrandProductsViewModel(
+                        brand: brand,
+                        fetchBrandProductsUseCase: r.resolve(FetchBrandProductsUseCaseProtocol.self)!
+                    )
+                }
+            }
+        }
