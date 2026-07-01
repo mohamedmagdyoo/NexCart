@@ -26,6 +26,10 @@ final class CreatNewAccountUseCase: CreatNewAccountUseCaseProtocol{
         if credentials.password.count < 8 {
             throw AuthError.weakPassword
         }
+        
+        if credentials.password != credentials.passwordConfirmation{
+            throw AuthError.passwordsDidNotMatchConfirmedPass
+        }
         return try await authRepo.createAccount(with: credentials)
     }
 }

@@ -27,16 +27,7 @@ struct SignUpScreen: View {
             }
         }
         .fullScreenCover(isPresented: $viewModel.shouldNavigateToHome) {
-            // كانت HomeScreen() - الـ placeholder الوهمي. دلوقتي بقت
-            // HomeView() الحقيقية بتاعتك (فيها الـ tab bar والمنتجات).
             HomeView()
-                // بنمنع قفل الشاشة دي بـ swipe down أو tap برّه.
-                // السبب: SignInScreen لسه "عايشة" تحت الـ cover ده (مش
-                // اتشالت)، فلو الـ cover اتقفل بالغلط (مثلاً swipe)،
-                // الـ flag shouldNavigateToHome بيرجع false تلقائي من
-                // النظام، والمستخدم يلاقي نفسه راجع لشاشة تسجيل الدخول.
-                // ده الحل السريع لمنع الرجوع الغير مقصود؛ الحل الجذري
-                // الحقيقي هو تغيير الـ navigation architecture بالكامل.
                 .interactiveDismissDisabled(true)
         }
         .alert(item: $viewModel.alert) { alert in
@@ -48,9 +39,12 @@ struct SignUpScreen: View {
 struct SignUpIdleState: View {
     @ObservedObject var viewModel: SignUpViewModel
 
-    @State private var fullName: String = ""
+    @State private var firstName: String = ""
+    @State private var lastName: String = ""
+    @State private var phone: String = ""
     @State private var email: String = ""
     @State private var password: String = ""
+    @State private var passwordConfirmation: String = ""
     
     @Environment(\.dismiss) private var dismiss
 
@@ -82,24 +76,29 @@ struct SignUpIdleState: View {
                     .padding(.bottom, 36)
 
                 // MARK: Fields
-                ObsidianField(label: "FULL NAME", placeholder: "Eliza Hart", text: $fullName)
+                VStack{
+                    ObsidianField(label: "FIRST NAME", placeholder: "Eliza", text: $firstName)
+                    ObsidianField(label: "Last NAME", placeholder: "Hart", text: $lastName)
 
-                ObsidianField(label: "EMAIL", placeholder: "hello@maison.co", text: $email)
-                    .keyboardType(.emailAddress)
-                    .padding(.top, 16)
+                    ObsidianField(label: "EMAIL", placeholder: "hello@maison.co", text: $email)
+                        .keyboardType(.emailAddress)
+                        .padding(.top, 16)
+                    ObsidianField(label: "Phone", placeholder: "01094858338", text: $phone)
+                        .keyboardType(.numberPad)
+                        .padding(.top, 16)
 
-                ObsidianField(label: "PASSWORD", placeholder: "At least 8 characters", text: $password, isSecure: true)
-                    .padding(.top, 16)
-                    .padding(.bottom, 28)
+                    ObsidianField(label: "PASSWORD", placeholder: "At least 8 characters", text: $password, isSecure: true)
+                        .padding(.top, 16)
+                        .padding(.bottom, 28)
+                    ObsidianField(label: "passwordConfirmation", placeholder: "At least 8 characters", text: $passwordConfirmation, isSecure: true)
+                        .padding(.top, 16)
+                        .padding(.bottom, 28)
+                }
 
                 // MARK: Create Account Button
                 Button {
                     viewModel.createNewAccount(
-                        credentials: SignUpCredentials(
-                            name: fullName,
-                            email: email,
-                            password: password
-                        )
+                        credentials: SignUpCredentials(firstName: firstName, lastName: lastName, email: email, phone: phone, password: password, passwordConfirmation: passwordConfirmation)
                     )
                 } label: {
                     Text("Create account")
