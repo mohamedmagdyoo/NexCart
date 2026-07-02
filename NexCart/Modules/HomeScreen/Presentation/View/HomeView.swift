@@ -1,10 +1,3 @@
-//
-//  HomeView.swift
-//  NexCart
-//
-//  Created by shady ramadan on 28/06/2026.
-//
-
 import SwiftUI
 
 struct HomeView: View {
@@ -15,7 +8,6 @@ struct HomeView: View {
     @State private var selectedProduct: ProductEntity?
 
     init() {
-    
         UITabBar.appearance().isHidden = true
     }
 
@@ -23,104 +15,114 @@ struct HomeView: View {
         ZStack(alignment: .bottom) {
             AppColor.bg.ignoresSafeArea()
 
-           
             TabView(selection: $selectedTab) {
-                // تابة الـ Home الرئيسية
-                NavigationView {
-                    ScrollView(showsIndicators: false) {
-                        VStack(spacing: 0) {
-                            HomeHeroSection(
-                                slides: viewModel.slides,
-                                heroIndex: $heroIndex
-                            )
-
-                            HomeBrandsSection(
-                                brands: viewModel.brands,
-                                onBrandSelected: { viewModel.selectBrand(at: $0) }
-                            )
-
-                            HomeNewInSection(
-                                products: viewModel.products,
-                                isLoading: viewModel.isLoading,
-                                errorMessage: viewModel.errorMessage,
-                                onToggleFavorite: { viewModel.toggleFavorite(at: $0) },
-                                onProductSelected: { selectedProduct = $0 },
-                                onRetry: { await viewModel.fetchHomeData() }
-                            )
-
-                            Spacer().frame(height: 100) // مساحة عشان الـ TabBar مايغطيش المحتوى
-                        }
-                    }
-                    .ignoresSafeArea(edges: .top)
-                    .task { await viewModel.fetchHomeData() }
-                }
-                .navigationViewStyle(.stack) 
-                .tag(0)
-                
-                // تابة الـ Shop
-                NavigationView {
-                    BrandsListView(
-                        viewModel: DIContainer.shared.container.resolve(BrandsListViewModel.self)!
-                    )
-                    .padding(.bottom, 90)
-                }
-                .navigationViewStyle(.stack)
-                .tag(1)
-                
-                // تابة الـ Favorites
-                NavigationView {
-                    FavProductsScreen()
-                        .padding(.bottom, 90)
-                }
-                .navigationViewStyle(.stack)
-                .tag(2)
-                
-               
-                NavigationView {
-                    Text("Cart View")
-                        .font(AppColor.sans(16, .medium))
-                        .foregroundColor(AppColor.textPrim)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .padding(.bottom, 90)
-                }
-                .navigationViewStyle(.stack)
-                .tag(3)
-                
-              
-                NavigationView {
-                    Text("Profile View")
-                        .font(AppColor.sans(16, .medium))
-                        .foregroundColor(AppColor.textPrim)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .padding(.bottom, 90)
-                }
-                .navigationViewStyle(.stack)
-                .tag(4)
+                homeTab
+                shopTab
+                favoritesTab
+                cartTab
+                profileTab
             }
 
-           
             HomeTabBar(selectedTab: $selectedTab)
         }
-        .background(
-            Group {
-                if let product = selectedProduct {
+        .preferredColorScheme(.light)
+    }
+
+    private var homeTab: some View {
+        NavigationView {
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 0) {
+                    HomeHeroSection(
+                        slides: viewModel.slides,
+                        heroIndex: $heroIndex
+                    )
+
+                    HomeBrandsSection(
+                        brands: viewModel.brands,
+                        onBrandSelected: { viewModel.selectBrand(at: $0) }
+                    )
+
+                    HomeNewInSection(
+                        products: viewModel.products,
+                        isLoading: viewModel.isLoading,
+                        errorMessage: viewModel.errorMessage,
+                        onToggleFavorite: { viewModel.toggleFavorite(at: $0) },
+                        onProductSelected: { selectedProduct = $0 },
+                        onRetry: { await viewModel.fetchHomeData() }
+                    )
+
+                    Spacer().frame(height: 100)
+
                     NavigationLink(
-                        destination: ProductDetailView(productEntity: product),
                         isActive: Binding(
                             get: { selectedProduct != nil },
                             set: { if !$0 { selectedProduct = nil } }
-                        )
-                    ) {
-                        EmptyView()
-                    }
+                        ),
+                        destination: {
+                            if let product = selectedProduct {
+                                ProductDetailView(
+                                    viewModel: ProductDetailViewModel(),
+                                    productId: product.id
+                                )
+                            } else {
+                                EmptyView()
+                            }
+                        },
+                        label: { EmptyView() }
+                    )
                 }
             }
-        )
-        .preferredColorScheme(.light)
+            .ignoresSafeArea(edges: .top)
+            .task { await viewModel.fetchHomeData() }
+        }
+        .navigationViewStyle(.stack)
+        .tag(0)
+    }
+
+    private var shopTab: some View {
+        NavigationView {
+            BrandsListView(
+                viewModel: DIContainer.shared.container.resolve(BrandsListViewModel.self)!
+            )
+            .padding(.bottom, 90)
+        }
+        .navigationViewStyle(.stack)
+        .tag(1)
+    }
+
+    private var favoritesTab: some View {
+        NavigationView {
+            FavProductsScreen()
+                .padding(.bottom, 90)
+        }
+        .navigationViewStyle(.stack)
+        .tag(2)
+    }
+
+    private var cartTab: some View {
+        NavigationView {
+            Text("Cart View")
+                .font(AppColor.sans(16, .medium))
+                .foregroundColor(AppColor.textPrim)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.bottom, 90)
+        }
+        .navigationViewStyle(.stack)
+        .tag(3)
+    }
+
+    private var profileTab: some View {
+        NavigationView {
+            Text("Profile View")
+                .font(AppColor.sans(16, .medium))
+                .foregroundColor(AppColor.textPrim)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.bottom, 90)
+        }
+        .navigationViewStyle(.stack)
+        .tag(4)
     }
 }
-
-
 
 struct TabItemModel {
     let icon: String
