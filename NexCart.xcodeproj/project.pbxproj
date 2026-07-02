@@ -88,7 +88,6 @@
 		D9EAA13D2FF28FC70097C038 /* AuthMappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EAA13C2FF28FC70097C038 /* AuthMappers.swift */; };
 		F51C989D2FF5A0A800A9C2EE /* ProductBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C989A2FF5A0A800A9C2EE /* ProductBody.swift */; };
 		F51C989E2FF5A0A800A9C2EE /* ProductDetailsRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C98982FF5A0A800A9C2EE /* ProductDetailsRepo.swift */; };
-		F51C989F2FF5A0A800A9C2EE /* AddCartReponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C989B2FF5A0A800A9C2EE /* AddCartReponse.swift */; };
 		F51C98A02FF5A0A800A9C2EE /* AddCartUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C98962FF5A0A800A9C2EE /* AddCartUseCase.swift */; };
 		F51C98A62FF5A0E000A9C2EE /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C98A22FF5A0E000A9C2EE /* ProductService.swift */; };
 		F51C98A72FF5A0E000A9C2EE /* AddCartResponseMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C98A42FF5A0E000A9C2EE /* AddCartResponseMapper.swift */; };
@@ -101,6 +100,7 @@
 		F51C98B62FF5A12600A9C2EE /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C98AF2FF5A12600A9C2EE /* Components.swift */; };
 		F51C98B72FF5A12600A9C2EE /* ProductViewModelPorotocl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C98AC2FF5A12600A9C2EE /* ProductViewModelPorotocl.swift */; };
 		F51C98B82FF5A12600A9C2EE /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C98AB2FF5A12600A9C2EE /* ProductViewModel.swift */; };
+		F5A68BBA2FF6567A002E41FD /* AddCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A68BB92FF6567A002E41FD /* AddCart.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -207,7 +207,6 @@
 		F51C98962FF5A0A800A9C2EE /* AddCartUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCartUseCase.swift; sourceTree = "<group>"; };
 		F51C98982FF5A0A800A9C2EE /* ProductDetailsRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsRepo.swift; sourceTree = "<group>"; };
 		F51C989A2FF5A0A800A9C2EE /* ProductBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductBody.swift; sourceTree = "<group>"; };
-		F51C989B2FF5A0A800A9C2EE /* AddCartReponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddCartReponse.swift; path = "../../Desktop/NexCart/NexCart/Modules/Producr Details/Data/Remote/AddCartReponse.swift"; sourceTree = SOURCE_ROOT; };
 		F51C98A12FF5A0E000A9C2EE /* ProductBodyMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductBodyMapper.swift; sourceTree = "<group>"; };
 		F51C98A22FF5A0E000A9C2EE /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
 		F51C98A32FF5A0E000A9C2EE /* AddCartResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCartResponse.swift; sourceTree = "<group>"; };
@@ -219,6 +218,7 @@
 		F51C98AF2FF5A12600A9C2EE /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		F51C98B02FF5A12600A9C2EE /* QuantitySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantitySelector.swift; sourceTree = "<group>"; };
 		F51C98B12FF5A12600A9C2EE /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		F5A68BB92FF6567A002E41FD /* AddCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCart.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1001,7 +1001,7 @@
 			isa = PBXGroup;
 			children = (
 				F51C989A2FF5A0A800A9C2EE /* ProductBody.swift */,
-				F51C989B2FF5A0A800A9C2EE /* AddCartReponse.swift */,
+				F5A68BB92FF6567A002E41FD /* AddCart.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -1185,7 +1185,6 @@
 				F51C98A92FF5A0E000A9C2EE /* AddCartResponse.swift in Sources */,
 				F51C98AA2FF5A0E000A9C2EE /* ProductRepoImpl.swift in Sources */,
 				F51C989E2FF5A0A800A9C2EE /* ProductDetailsRepo.swift in Sources */,
-				F51C989F2FF5A0A800A9C2EE /* AddCartReponse.swift in Sources */,
 				F51C98A02FF5A0A800A9C2EE /* AddCartUseCase.swift in Sources */,
 				9F8F1E522FF3898D0016B844 /* HomeRepository.swift in Sources */,
 				9F92BF5B2FF4803E00E090B7 /* BrandProductUseCase.swift in Sources */,
@@ -1207,6 +1206,7 @@
 				9F92BF412FF478C300E090B7 /* BrandEntity.swift in Sources */,
 				D93C26022FF5294400486A11 /* FavProduct.swift in Sources */,
 				D93C25FF2FF5294400486A11 /* ProductsRepoProtocol.swift in Sources */,
+				F5A68BBA2FF6567A002E41FD /* AddCart.swift in Sources */,
 				D93C26002FF5294400486A11 /* FetchFavProducts.swift in Sources */,
 				D9CFF5882FF4126200B7B8DE /* (null) in Sources */,
 				D960C21B2FF17B3600FFF4D9 /* LoginWithSocialProvider.swift in Sources */,
