@@ -860,7 +860,6 @@
 			isa = PBXGroup;
 			children = (
 				D960C2102FF174C100FFF4D9 /* AuthRepoInterface.swift */,
-				D9EAA13C2FF28FC70097C038 /* AuthMappers.swift */,
 			);
 			path = RepoInterface;
 			sourceTree = "<group>";
@@ -872,7 +871,6 @@
 				D960C2242FF17D6300FFF4D9 /* LogOutUseCase */,
 				D960C21E2FF17BC400FFF4D9 /* CreatNewAccountUseCases */,
 				D960C2212FF17C6A00FFF4D9 /* ForgotPassUseCase */,
-				D960C2152FF1778200FFF4D9 /* AuthError.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -881,6 +879,7 @@
 			isa = PBXGroup;
 			children = (
 				D960C20E2FF1734B00FFF4D9 /* AuthEntities.swift */,
+				D960C2152FF1778200FFF4D9 /* AuthError.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -970,6 +969,7 @@
 		D9EAA1292FF275230097C038 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				D9EAA13C2FF28FC70097C038 /* AuthMappers.swift */,
 				D9EAA12A2FF2755A0097C038 /* Remote */,
 			);
 			path = Data;

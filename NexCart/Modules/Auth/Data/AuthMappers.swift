@@ -14,29 +14,35 @@ import AuthenticationServices
 //MARK: Mappers
 func mapFirebaseError(_ error: Error) -> AuthError {
     let nsError = error as NSError
-    
-    guard let authError = AuthErrorCode.Code(rawValue: nsError.code) else {
+
+    print("Domain:", nsError.domain)
+    print("Code:", nsError.code)
+    print("Description:", nsError.localizedDescription)
+
+    guard let code = AuthErrorCode.Code(rawValue: nsError.code) else {
         return .unknown(error)
     }
     
-    switch authError {
-    case .wrongPassword, .invalidCredential, .invalidEmail:
+    switch code {
+    case .wrongPassword:
         return .wrongPassword
-        
+
+    case .invalidCredential:
+        return .wrongPassword
+
     case .emailAlreadyInUse:
         return .emailAlreadyInUse
-        
+
     case .userNotFound:
         return .userNotFound
-        
+
     case .networkError:
         return .networkError
-        
+
     default:
         return .unknown(error)
     }
 }
-
 
 func mapToUserEntity(_ user: FirebaseAuth.User) -> UserEntity {
     UserEntity(
