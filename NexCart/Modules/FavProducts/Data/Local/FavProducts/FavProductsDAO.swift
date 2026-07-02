@@ -47,7 +47,7 @@ final class FavProductsDAO: FavProductsDaoProtocol {
     }
 
     // MARK: - Add
-    func addToFav(product: ProductEntity) throws {
+    func addToFav(product: FavProduct) throws {
         let context = container.viewContext
 
         // Avoid duplicate entries

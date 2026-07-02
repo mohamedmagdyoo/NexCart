@@ -26,8 +26,13 @@ extension DIContainer {
         }.inObjectScope(.container)
         
         //Prouducts Repo
-        container.register(ProductsRepoProtocol.self){ _ in
-            ProductsRepo()
+        container.register(ProductsRepoProtocol.self){ r in
+            ProductsRepo(favProductReopo: r.resolve(FavProductRepoInterface.self)!)
+        }
+        
+        //FavProductsRepo
+        container.register(FavProductRepoInterface.self){ r in
+            FavProductsRepository(localDao: r.resolve(FavProductsDAO.self)!, remoteService: r.resolve(FavProductsRemoteServiceProtocol.self)!)
         }
         
         container.register(ProductDetailsRepo.self) { r in
