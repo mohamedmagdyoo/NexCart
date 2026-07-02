@@ -24,7 +24,9 @@ extension DIContainer {
         container.register(BrandsRepoProtocol.self) { r in
             BrandsRepository(apiService: r.resolve(ApiServiceProtocol.self)!)
         }.inObjectScope(.container)
-        
+        container.register(CollectionsRepoProtocol.self) { r in
+                    CollectionsRepository(apiService: r.resolve(ApiServiceProtocol.self)!)
+                }.inObjectScope(.container)
         //Prouducts Repo
         container.register(ProductsRepoProtocol.self){ _ in
             ProductsRepo()
