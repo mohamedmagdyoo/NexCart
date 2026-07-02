@@ -94,8 +94,8 @@ struct BrandProductsView: View {
             ForEach(viewModel.filteredProducts) { product in
                 NavigationLink(
                     destination: ProductDetailView(
-                        viewModel: ProductDetailViewModel(product: nil),
-                        productId: product.id
+                        product: product,
+                        productViewModel: DIContainer.shared.container.resolve(ProductDetailViewModel.self)!
                     )
                 ) {
                     ProductCardView(

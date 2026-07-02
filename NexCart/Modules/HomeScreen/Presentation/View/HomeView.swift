@@ -26,8 +26,12 @@ struct HomeView: View {
                 profileTab
             }
 
-            HomeTabBar(selectedTab: $selectedTab)
+            if !isNavigatingToProduct {
+                HomeTabBar(selectedTab: $selectedTab)
+                    .transition(.move(edge: .bottom))
+            }
         }
+        .animation(.easeInOut, value: isNavigatingToProduct)
         .preferredColorScheme(.light)
     }
 
@@ -63,16 +67,23 @@ struct HomeView: View {
             }
             .ignoresSafeArea(edges: .top)
             // 3️⃣ الـ NavigationLink مخفي في الخلفية ومربوط بالـ Bool
-            .background(
-                NavigationLink(
-                    destination: ProductDetailView(
-                        viewModel: ProductDetailViewModel(),
-                        productId: selectedProductId
-                    ),
-                    isActive: $isNavigatingToProduct,
-                    label: { EmptyView() }
-                )
-            )
+            .background {
+                if let product = viewModel.products.first(where: { $0.id == selectedProductId }) {
+
+                    NavigationLink(
+                        destination: ProductDetailView(
+                            product: product,
+                            productViewModel: DIContainer.shared.container.resolve(ProductDetailViewModel.self)!
+                        ),
+                        isActive: $isNavigatingToProduct
+                    ) {
+                        EmptyView()
+                    }
+
+                } else {
+                    EmptyView()
+                }
+            }
             .task { await viewModel.fetchHomeData() }
         }
         .navigationViewStyle(.stack)
