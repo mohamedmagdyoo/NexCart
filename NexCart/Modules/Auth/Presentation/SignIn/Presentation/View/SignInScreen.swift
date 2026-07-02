@@ -172,12 +172,7 @@ struct SignInSuccessState: View {
     @State private var opacity: Double = 0
     @State var navToHomeScreen: Bool = false
     @ObservedObject var vm: SignInViewModel
-
-    // فلاج جديد: بنستخدمه عشان نضمن إن saveUser() يتنفذ مرة واحدة بس.
-    // السبب: .task ممكن يتعمل له re-trigger لو الـ view اتعملها
-    // re-render (مثلاً بسبب onAppear أو أي state تغيرت)، وده كان
-    // يأدي لاستدعاء saveUser() أكتر من مرة، أو في توقيت غلط بيتعارض
-    // مع حالة الـ fullScreenCover.
+    
     @State private var didTriggerNavigation: Bool = false
 
     var body: some View {
@@ -189,7 +184,7 @@ struct SignInSuccessState: View {
                 .scaleEffect(scale)
                 .opacity(opacity)
             
-            Text("Welcome back.")
+            Text("Welcome \(vm.userEntity?.displayName ?? "back").")
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(.authTitle)
@@ -202,9 +197,6 @@ struct SignInSuccessState: View {
             }
         }
         .task {
-            // بنتأكد إن ده أول مرة بس قبل ما ننفذ أي حاجة.
-            // ده بيمنع استدعاء saveUser() أكتر من مرة لو الـ .task
-            // اتعمل له re-trigger بسبب re-render في الشجرة.
             guard !didTriggerNavigation else { return }
 
             do{

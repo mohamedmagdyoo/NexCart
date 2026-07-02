@@ -12,7 +12,7 @@ protocol FavProductRepoInterface {
     func removeFavorite(productId: Int) async throws
     func getAllFavorites() throws -> [FavProduct]
     func isFav(productId: Int) -> Bool
-    func syncFromRemote() async throws
+    func syncFromRemote(userId: String) async throws
     func cleanFavTabel() 
 }
 
