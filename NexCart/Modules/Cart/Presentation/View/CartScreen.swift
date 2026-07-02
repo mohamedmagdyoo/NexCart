@@ -317,7 +317,7 @@ struct BagItemRow: View {
 
                 Spacer()
 
-                Text("$\(item.price)")
+                Text("$\(item.price, specifier: "%.2f")")
                     .font(AppColor.serif(19, .medium))
                     .foregroundColor(AppColor.textPrim)
             }

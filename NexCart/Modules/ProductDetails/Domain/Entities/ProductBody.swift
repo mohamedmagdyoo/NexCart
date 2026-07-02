@@ -6,7 +6,7 @@
 //
 
 import Foundation
-struct DraftOrderRequest: Codable {
+struct DraftOrderRequest: Encodable {
     let draftOrder: DraftOrderBody
 
     enum CodingKeys: String, CodingKey {
@@ -14,19 +14,23 @@ struct DraftOrderRequest: Codable {
     }
 }
 
-struct DraftOrderBody: Codable {
+struct DraftOrderBody: Encodable {
     let lineItems: [LineItem]
-    let customerID: Int
+    let customer: CustomerRef
     let useCustomerDefaultAddress: Bool
 
     enum CodingKeys: String, CodingKey {
         case lineItems = "line_items"
-        case customerID = "customer_id"
+        case customer
         case useCustomerDefaultAddress = "use_customer_default_address"
     }
 }
 
-struct LineItem: Codable {
+struct CustomerRef: Encodable {
+    let id: Int
+}
+
+struct LineItem: Encodable {
     let variantID: Int
     let quantity: Int
 
