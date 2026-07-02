@@ -26,6 +26,11 @@ extension DIContainer{
             AuthShopifyService()
         }
         
+        container.register(ProductDetailsService.self) { r in
+            ProductDetailsService(
+                networkClient: r.resolve(ApiServiceProtocol.self)!
+            )
+        }
     }
 }
 
