@@ -101,6 +101,15 @@
 		F51C98B62FF5A12600A9C2EE /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C98AF2FF5A12600A9C2EE /* Components.swift */; };
 		F51C98B72FF5A12600A9C2EE /* ProductViewModelPorotocl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C98AC2FF5A12600A9C2EE /* ProductViewModelPorotocl.swift */; };
 		F51C98B82FF5A12600A9C2EE /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C98AB2FF5A12600A9C2EE /* ProductViewModel.swift */; };
+		F5B53ADA2FF5F40F009F9F87 /* CartScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AD92FF5F40F009F9F87 /* CartScreen.swift */; };
+		F5B53ADF2FF60643009F9F87 /* CartRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53ADE2FF60643009F9F87 /* CartRepo.swift */; };
+		F5B53AE12FF6065F009F9F87 /* GetAllCartEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AE02FF6065F009F9F87 /* GetAllCartEndPoint.swift */; };
+		F5B53AE62FF606B3009F9F87 /* CartRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AE52FF606B3009F9F87 /* CartRepo.swift */; };
+		F5B53AE82FF60829009F9F87 /* CartEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AE72FF60829009F9F87 /* CartEntity.swift */; };
+		F5B53AEB2FF60BFB009F9F87 /* CartEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AEA2FF60BFB009F9F87 /* CartEndPoint.swift */; };
+		F5B53AED2FF610C3009F9F87 /* CartUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AEC2FF610C3009F9F87 /* CartUseCase.swift */; };
+		F5B53AEF2FF61223009F9F87 /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AEE2FF61223009F9F87 /* CartViewModel.swift */; };
+		F5B53AF12FF6124F009F9F87 /* CartViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AF02FF6124F009F9F87 /* CartViewModelProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -219,6 +228,15 @@
 		F51C98AF2FF5A12600A9C2EE /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		F51C98B02FF5A12600A9C2EE /* QuantitySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantitySelector.swift; sourceTree = "<group>"; };
 		F51C98B12FF5A12600A9C2EE /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		F5B53AD92FF5F40F009F9F87 /* CartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartScreen.swift; sourceTree = "<group>"; };
+		F5B53ADE2FF60643009F9F87 /* CartRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRepo.swift; sourceTree = "<group>"; };
+		F5B53AE02FF6065F009F9F87 /* GetAllCartEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GetAllCartEndPoint.swift; path = NexCart/Modules/Cart/Data/Repository/GetAllCartEndPoint.swift; sourceTree = SOURCE_ROOT; };
+		F5B53AE52FF606B3009F9F87 /* CartRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRepo.swift; sourceTree = "<group>"; };
+		F5B53AE72FF60829009F9F87 /* CartEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartEntity.swift; sourceTree = "<group>"; };
+		F5B53AEA2FF60BFB009F9F87 /* CartEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartEndPoint.swift; sourceTree = "<group>"; };
+		F5B53AEC2FF610C3009F9F87 /* CartUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartUseCase.swift; sourceTree = "<group>"; };
+		F5B53AEE2FF61223009F9F87 /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
+		F5B53AF02FF6124F009F9F87 /* CartViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModelProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -676,6 +694,7 @@
 		D960C1CC2FF1178000FFF4D9 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				F5B53AD32FF5F243009F9F87 /* Cart */,
 				9F92BF3B2FF4774900E090B7 /* Brands */,
 				D93C25E12FF5294400486A11 /* FavProducts */,
 				D91E748C2FF517F000D941C4 /* ProductDetails */,
@@ -1026,6 +1045,110 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		F5B53AD32FF5F243009F9F87 /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+				F5B53AD62FF5F25F009F9F87 /* Data */,
+				F5B53AD52FF5F256009F9F87 /* Domain */,
+				F5B53AD42FF5F24E009F9F87 /* Presentation */,
+			);
+			path = Cart;
+			sourceTree = "<group>";
+		};
+		F5B53AD42FF5F24E009F9F87 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				F5B53AD82FF5F3E9009F9F87 /* ViewModel */,
+				F5B53AD72FF5F3E2009F9F87 /* View */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		F5B53AD52FF5F256009F9F87 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				F5B53AE42FF60699009F9F87 /* Entity */,
+				F5B53AE32FF60689009F9F87 /* Repository */,
+				F5B53AE22FF6067C009F9F87 /* UseCase */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		F5B53AD62FF5F25F009F9F87 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				F5B53AE92FF60BE1009F9F87 /* Dto */,
+				F5B53ADC2FF6061B009F9F87 /* EndPoints */,
+				F5B53ADB2FF6060C009F9F87 /* Repository */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		F5B53AD72FF5F3E2009F9F87 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F5B53AD92FF5F40F009F9F87 /* CartScreen.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F5B53AD82FF5F3E9009F9F87 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				F5B53AEE2FF61223009F9F87 /* CartViewModel.swift */,
+				F5B53AF02FF6124F009F9F87 /* CartViewModelProtocol.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		F5B53ADB2FF6060C009F9F87 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				F5B53ADE2FF60643009F9F87 /* CartRepo.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		F5B53ADC2FF6061B009F9F87 /* EndPoints */ = {
+			isa = PBXGroup;
+			children = (
+				F5B53AEA2FF60BFB009F9F87 /* CartEndPoint.swift */,
+			);
+			path = EndPoints;
+			sourceTree = "<group>";
+		};
+		F5B53AE22FF6067C009F9F87 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				F5B53AEC2FF610C3009F9F87 /* CartUseCase.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		F5B53AE32FF60689009F9F87 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				F5B53AE52FF606B3009F9F87 /* CartRepo.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		F5B53AE42FF60699009F9F87 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				F5B53AE72FF60829009F9F87 /* CartEntity.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		F5B53AE92FF60BE1009F9F87 /* Dto */ = {
+			isa = PBXGroup;
+			children = (
+				F5B53AE02FF6065F009F9F87 /* GetAllCartEndPoint.swift */,
+			);
+			path = Dto;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1179,6 +1302,7 @@
 				9F8F1E512FF3898D0016B844 /* FetchHomeProductsUseCaseProtocol.swift in Sources */,
 				9F92BF4C2FF47AD900E090B7 /* BrandProductsEndPoint.swift in Sources */,
 				F51C989D2FF5A0A800A9C2EE /* ProductBody.swift in Sources */,
+				F5B53ADA2FF5F40F009F9F87 /* CartScreen.swift in Sources */,
 				F51C98A62FF5A0E000A9C2EE /* ProductService.swift in Sources */,
 				F51C98A72FF5A0E000A9C2EE /* AddCartResponseMapper.swift in Sources */,
 				F51C98A82FF5A0E000A9C2EE /* ProductBodyMapper.swift in Sources */,
@@ -1194,19 +1318,25 @@
 				9F8F1E562FF3898D0016B844 /* HomeViewModel.swift in Sources */,
 				D93C25FD2FF5294400486A11 /* FavProductsDAO.swift in Sources */,
 				9F8F1E572FF3898D0016B844 /* HomeBrandSection.swift in Sources */,
+				F5B53AED2FF610C3009F9F87 /* CartUseCase.swift in Sources */,
 				9F8F1E582FF3898D0016B844 /* HomeProtocol.swift in Sources */,
 				9F92BF472FF479D300E090B7 /* BrandUseCase.swift in Sources */,
 				9F0C0DC42FF5C71D007E7E8C /* ProductsRepo.swift in Sources */,
+				F5B53AE62FF606B3009F9F87 /* CartRepo.swift in Sources */,
 				9F8F1E592FF3898D0016B844 /* HomeHeroSection.swift in Sources */,
 				9F8F1E5A2FF3898D0016B844 /* HomenewSection.swift in Sources */,
 				9F9498132FF57881000CEB5A /* NexCart.xcdatamodeld in Sources */,
+				F5B53AEF2FF61223009F9F87 /* CartViewModel.swift in Sources */,
 				9F9498142FF57881000CEB5A /* CoreData.swift in Sources */,
 				9F9498152FF57881000CEB5A /* ProductsRepo.swift in Sources */,
 				9F9498162FF57881000CEB5A /* Persistence.swift in Sources */,
 				D960C2362FF1989F00FFF4D9 /* DIContainer+UseCases.swift in Sources */,
+				F5B53AE82FF60829009F9F87 /* CartEntity.swift in Sources */,
 				9F92BF412FF478C300E090B7 /* BrandEntity.swift in Sources */,
 				D93C26022FF5294400486A11 /* FavProduct.swift in Sources */,
+				F5B53AE12FF6065F009F9F87 /* GetAllCartEndPoint.swift in Sources */,
 				D93C25FF2FF5294400486A11 /* ProductsRepoProtocol.swift in Sources */,
+				F5B53ADF2FF60643009F9F87 /* CartRepo.swift in Sources */,
 				D93C26002FF5294400486A11 /* FetchFavProducts.swift in Sources */,
 				D9CFF5882FF4126200B7B8DE /* (null) in Sources */,
 				D960C21B2FF17B3600FFF4D9 /* LoginWithSocialProvider.swift in Sources */,
@@ -1234,6 +1364,7 @@
 				D960C1A02FF1167A00FFF4D9 /* ContentView.swift in Sources */,
 				D960C2202FF17BE800FFF4D9 /* CreatNewAccount.swift in Sources */,
 				9F94981A2FF578BE000CEB5A /* EndPoint.swift in Sources */,
+				F5B53AF12FF6124F009F9F87 /* CartViewModelProtocol.swift in Sources */,
 				9F94981B2FF578BE000CEB5A /* ProductEndPoint.swift in Sources */,
 				F51C98B32FF5A12600A9C2EE /* Toast.swift in Sources */,
 				F51C98B42FF5A12600A9C2EE /* QuantitySelector.swift in Sources */,
@@ -1242,6 +1373,7 @@
 				F51C98B72FF5A12600A9C2EE /* ProductViewModelPorotocl.swift in Sources */,
 				F51C98B82FF5A12600A9C2EE /* ProductViewModel.swift in Sources */,
 				D960C19E2FF1167A00FFF4D9 /* NexCartApp.swift in Sources */,
+				F5B53AEB2FF60BFB009F9F87 /* CartEndPoint.swift in Sources */,
 				D960C1ED2FF120A500FFF4D9 /* ApiService.swift in Sources */,
 				9F92BF532FF47D7900E090B7 /* BrandListViewModel.swift in Sources */,
 				D93C26032FF5294400486A11 /* FavProductViewModel.swift in Sources */,
@@ -1411,6 +1543,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1441,6 +1574,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
