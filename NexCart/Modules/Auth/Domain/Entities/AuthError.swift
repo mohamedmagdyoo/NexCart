@@ -34,8 +34,8 @@ enum AuthError: Error, LocalizedError {
             return "Network error. Please check your connection and try again."
         case .socialLoginCancelled:
             return "Sign in was cancelled."
-        case .unknown(let error):
-            return "Try again..."
+        case .unknown(_):
+            return "Email or Password wrong, try again..."
         case .passwordsDidNotMatchConfirmedPass:
             return "The pass don't mathc the confirm pass"
         }
