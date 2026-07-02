@@ -12,6 +12,7 @@ protocol EndPoint{
     var path: String {get}
     var method: String{get}
     var ApiToken : String { get }
+    var body: Data? {get}
 }
 
 

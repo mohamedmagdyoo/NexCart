@@ -12,11 +12,12 @@ enum AuthError: Error, LocalizedError {
     case weakPassword
     case emailAlreadyInUse
     case wrongPassword
+    case passwordsDidNotMatchConfirmedPass
     case userNotFound
     case networkError
     case socialLoginCancelled
     case unknown(Error)
-
+    
     var errorDescription: String {
         switch self {
         case .invalidEmail:
@@ -33,8 +34,10 @@ enum AuthError: Error, LocalizedError {
             return "Network error. Please check your connection and try again."
         case .socialLoginCancelled:
             return "Sign in was cancelled."
-        case .unknown(let error):
-            return error.localizedDescription
+        case .unknown(_):
+            return "Email or Password wrong, try again..."
+        case .passwordsDidNotMatchConfirmedPass:
+            return "The pass don't mathc the confirm pass"
         }
     }
 }

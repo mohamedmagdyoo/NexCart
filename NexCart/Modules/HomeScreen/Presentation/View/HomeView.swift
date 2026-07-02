@@ -125,11 +125,23 @@ struct HomeView: View {
 
     private var profileTab: some View {
         NavigationView {
-            Text("Profile View")
-                .font(AppColor.sans(16, .medium))
-                .foregroundColor(AppColor.textPrim)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding(.bottom, 90)
+            VStack{
+                Text("Profile View")
+                    .font(AppColor.sans(16, .medium))
+                    .foregroundColor(AppColor.textPrim)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.bottom, 90)
+                    .onTapGesture {
+                        UserDefaults.standard.removeObject(forKey: "userEntity")
+                    }
+                
+                Button{
+                    UserDefaults.standard.removeObject(forKey: "userEntity")
+                }label: {
+                    Text("LogOut")
+                        .foregroundColor(.black)
+                }
+            }
         }
         .navigationViewStyle(.stack)
         .tag(4)
