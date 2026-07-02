@@ -131,7 +131,7 @@ final class FavProductsDAO: FavProductsDaoProtocol {
     }
 
     // MARK: - Clean
-    func cleanFavTable() throws {
+    func cleanFavTable() {
         let context = container.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "NexCartProduct")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
@@ -147,7 +147,7 @@ final class FavProductsDAO: FavProductsDaoProtocol {
             }
             print("🧹 Favorites table cleared!")
         } catch {
-            throw FavDaoError.deleteFailed
+            print(error.localizedDescription)
         }
     }
 }

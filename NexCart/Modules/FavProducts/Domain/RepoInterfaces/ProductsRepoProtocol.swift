@@ -13,4 +13,5 @@ protocol ProductsRepoProtocol {
     func removeFavProduct(productId: Int) async throws
     func isFavProduct(productId: Int) -> Bool
     func syncData() async throws
+    func cleanFavTabel() 
 }
