@@ -18,10 +18,19 @@ enum ProductDetailScreenState {
 final class ProductDetailViewModel: ObservableObject, ProductDetailsViewModelProtocol {
 
     private let addCartUseCase: AddCartUseCase
+    private let coreDataService = CoreDataService.shared
     @Published var screenState: ProductDetailScreenState = .idle
 
     init(addCartUseCase: AddCartUseCase) {
         self.addCartUseCase = addCartUseCase
+    }
+
+    func toggleFavorite(product: ProductEntity) {
+        if product.isFavorited {
+            coreDataService.saveProductToDatabase(product: product)
+        } else {
+            coreDataService.deleteProductFromDatabase(id: product.id)
+        }
     }
 
     func addToCart(
