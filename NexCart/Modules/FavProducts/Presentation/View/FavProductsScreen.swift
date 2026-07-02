@@ -16,18 +16,18 @@ private extension Color {
 }
 
 struct FavProductsScreen: View {
-
+    
     @StateObject private var viewModel: FavProductsViewModel = DIContainer.shared.container.resolve(FavProductsViewModel.self)!
     @State private var selectedProduct: ProductEntity?
     
-
+    
     var body: some View {
         ZStack {
             Color.favBackground.ignoresSafeArea()
-
+            
             VStack(spacing: 0) {
                 header
-
+                
                 switch viewModel.screenStates {
                 case .loading:
                     FavScreenLoadingState()
@@ -65,15 +65,15 @@ struct FavProductsScreen: View {
             )
         }
     }
-
+    
     private var header: some View {
         HStack(alignment: .firstTextBaseline) {
             Text("Favorites")
                 .font(.system(.largeTitle, design: .serif))
                 .foregroundColor(.favTextPrimary)
-
+            
             Spacer()
-
+            
             Text("\(viewModel.favProducts.count) piece\(viewModel.favProducts.count == 1 ? "" : "s")")
                 .font(.subheadline)
                 .foregroundColor(.favTextSecondary)
@@ -88,19 +88,20 @@ struct FavProductsScreen: View {
 struct FavScreenSuccesState: View {
     @ObservedObject var viewModel: FavProductsViewModel
     @Binding var selectedProduct: ProductEntity?
-
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 14) {
                 ForEach(viewModel.favProducts) { product in
                     FavProductRow(
                         product: product,
-                        onTap: { 
+                        onTap: {
                             selectedProduct = product.toProductEntity()
                         },
                         onRemove: {
                             withAnimation(.easeInOut(duration: 0.2)) {
-                                viewModel.removeFromFav(product)
+                                //Show Alert
+                                viewModel.didTapToDelete(product: product)
                             }
                         }
                     )
@@ -108,6 +109,12 @@ struct FavScreenSuccesState: View {
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 24)
+        }
+        .alert("Remove Favorite", isPresented: $viewModel.showRemoveAlert){
+            Button("Ok", role: .cancel){
+                viewModel.confirmRemoveProduct()
+            }
+            Button("Cancel", role: .destructive){}
         }
         
     }
@@ -117,31 +124,31 @@ private struct FavProductRow: View {
     let product: FavProduct
     let onTap: () -> Void
     let onRemove: () -> Void
-
+    
     var body: some View {
         HStack(spacing: 14) {
             productImage
                 .onTapGesture(perform: onTap)
-
+            
             VStack(alignment: .leading, spacing: 4) {
                 Text(product.brand.uppercased())
                     .font(.caption2)
                     .tracking(1)
                     .foregroundColor(.favTextSecondary)
-
+                
                 Text(product.name)
                     .font(.system(.body, design: .default))
                     .fontWeight(.semibold)
                     .foregroundColor(.favTextPrimary)
-
+                
                 Text(formattedPrice)
                     .font(.subheadline)
                     .foregroundColor(.favTextSecondary)
             }
             .onTapGesture(perform: onTap)
-
+            
             Spacer()
-
+            
             Button(action: onRemove) {
                 Image(systemName: "xmark")
                     .font(.system(size: 13, weight: .semibold))
@@ -157,7 +164,7 @@ private struct FavProductRow: View {
                 .fill(Color.favCard)
         )
     }
-
+    
     private var productImage: some View {
         AsyncImage(url: URL(string: product.imageURL)) { phase in
             switch phase {
@@ -170,7 +177,7 @@ private struct FavProductRow: View {
         .frame(width: 64, height: 64)
         .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
     }
-
+    
     private var formattedPrice: String {
         product.price.formatted(.currency(code: "USD").precision(.fractionLength(0)))
     }
@@ -187,7 +194,7 @@ private extension FavProduct {
             imageURL: imageURL,
             tag: nil,
             isFavorited: true,
-
+            
             bodyHtml: nil,
             vendor: brand,
             productType: "",
@@ -198,7 +205,7 @@ private extension FavProduct {
             publishedScope: "",
             tags: nil,
             status: "",
-
+            
             variants: [],
             options: [],
             images: [],
@@ -255,12 +262,12 @@ struct FavProductsScreen_Previews: PreviewProvider {
             ]
         }
     }
-
+    
     final class PreviewRemoveUseCase: RemoveFavProductUseCaseProtocol {
         func execute(productId: Int) throws {}
     }
-
-
+    
+    
     static var previews: some View {
         FavProductsScreen()
     }

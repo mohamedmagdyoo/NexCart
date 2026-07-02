@@ -19,6 +19,9 @@ final class FavProductsViewModel: ObservableObject {
     @Published var favProducts: [FavProduct] = [FavProduct]()
     @Published var screenStates: FavProductsScreenStates = .loading
     @Published var alert: AlertModel?
+    @Published var selectedProductToRemove: FavProduct?
+    @Published var showRemoveAlert: Bool = false
+    
 
     // MARK: - UseCases
     private let fetchFavProductsUseCase: FetchFavProductsUseCaseProtocol
@@ -51,6 +54,15 @@ final class FavProductsViewModel: ObservableObject {
                 description: error.localizedDescription
             )
         }
+    }
+    
+    func didTapToDelete(product: FavProduct){
+        selectedProductToRemove = product
+        showRemoveAlert = true
+    }
+    
+    func confirmRemoveProduct(){
+        removeFromFav(selectedProductToRemove!)
     }
 
     func removeFromFav(_ product: FavProduct) {
