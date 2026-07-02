@@ -35,4 +35,8 @@ final class ProductsRepo: ProductsRepoProtocol {
     func syncData() async throws {
         try await favProductReopo.syncFromRemote()
     }
+    
+    func cleanFavTabel() {
+        favProductReopo.cleanFavTabel()
+    }
 }

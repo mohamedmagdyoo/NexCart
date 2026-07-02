@@ -13,5 +13,6 @@ protocol FavProductRepoInterface {
     func getAllFavorites() throws -> [FavProduct]
     func isFav(productId: Int) -> Bool
     func syncFromRemote() async throws
+    func cleanFavTabel() 
 }
 

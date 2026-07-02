@@ -8,8 +8,6 @@
 import Foundation
 
 
-
-
 final class FavProductsRepository: FavProductRepoInterface {
 
     private let favDao: FavProductsDaoProtocol
@@ -88,5 +86,9 @@ final class FavProductsRepository: FavProductRepoInterface {
         for remoteFavProduct in remoteFavProducts {
             try favDao.addToFav(product: remoteFavProduct)
         }
+    }
+    
+    func cleanFavTabel() {
+        favDao.cleanFavTable()
     }
 }

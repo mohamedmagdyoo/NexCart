@@ -13,5 +13,5 @@ protocol FavProductsDaoProtocol {
     func removeFromFav(productId: Int) throws
     func getAllFav() throws -> [FavProduct]
     func isFav(productId: Int) -> Bool
-    func cleanFavTable() throws
+    func cleanFavTable() 
 }
