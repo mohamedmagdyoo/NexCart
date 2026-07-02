@@ -9,4 +9,5 @@ import Foundation
 protocol CartViewModelProtocol{
     func getAllCart() async
     
+    func getSingleProdut() async
 }

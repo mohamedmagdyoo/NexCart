@@ -6,10 +6,3 @@
 //
 
 import Foundation
-protocol CartRepoProtcol
-{
-
-    func getAllProduct() async throws ->[BagEntity]
-    
-    
-}

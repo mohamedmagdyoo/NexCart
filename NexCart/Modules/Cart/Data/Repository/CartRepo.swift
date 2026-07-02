@@ -8,6 +8,9 @@
 import Foundation
 
 final class CartRepo:CartRepoProtcol {
+
+    
+   
    
      private let networkService:ApiServiceProtocol
     
@@ -18,6 +21,11 @@ final class CartRepo:CartRepoProtcol {
         let allCart: CartResponseDto = try await networkService.fetch(endPoint: CartEndPoint.allCart)
         return allCart.toEntities()
     }
-   
+    func getSingleProduct(productId: Int) async throws -> ProductEntity {
+        let product : ProductResponseDTO = try await networkService.fetch(
+            endPoint: CartEndPoint.singleProduct(productId: productId)
+        )
+        return product.product.toEntity()
+    }
     
 }

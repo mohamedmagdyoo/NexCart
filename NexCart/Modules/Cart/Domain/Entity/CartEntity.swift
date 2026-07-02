@@ -3,7 +3,7 @@ import Foundation
 struct BagEntity: Identifiable {
     let id: Int
     let itemCount: Int
-    let items: [BagItemEntity]
+    var items: [BagItemEntity]
     let subtotal: Double
     let shipping: Double
     let total: Double
@@ -16,6 +16,8 @@ struct BagItemEntity: Identifiable {
     let brand: String
     let title: String
     let size: String
+    let productId: Int?
+
     let price: Double
     var quantity: Int
 }
@@ -52,8 +54,9 @@ extension DraftOrderLineItem {
             brand: vendor ?? "",
             title: title,
             size: variantTitle ?? "One size",
+            productId: productId ?? 0,
             price: Double(price) ?? 0,
-            quantity: quantity
+            quantity: quantity,
         )
     }
 }

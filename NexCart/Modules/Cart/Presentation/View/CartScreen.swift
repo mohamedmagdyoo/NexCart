@@ -8,17 +8,18 @@
 import Foundation
 import SwiftUI
 
-
-
 struct BagView: View {
     @State private var promoCode: String = ""
     @StateObject private var cartViewModel: CartViewModel =
-    DIContainer.shared.container.resolve(CartViewModelProtocol.self) as! CartViewModel
-  
+    DIContainer.shared.container.resolve(CartViewModel.self)!
+
+
+    private var allItems: [BagItemEntity] {
+        cartViewModel.cartData.flatMap { $0.items }
+    }
+
     private var subtotal: Double {
-        cartViewModel.cartData.reduce(into:0.0) {
-            $0 + ($1.price * Double($1.quantity))
-        }
+        allItems.reduce(0.0) { $0 + ($1.price * Double($1.quantity)) }
     }
 
     private let shipping = 12
@@ -34,30 +35,119 @@ struct BagView: View {
             VStack(spacing: 0) {
                 header
 
-                ScrollView {
-                    
-                    VStack(spacing: 16) {
-                        ForEach($items) { $item in
-                            BagItemRow(item: $item) {
-                                withAnimation {
-                                    items.removeAll { $0.id == item.id }
-                                }
-                            }
-                        }
+                content
+            }
+        }
+        .task {
+            await cartViewModel.getAllCart()
+        }
+    }
 
-                        promoField
 
-                        summaryCard
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.top, 20)
-                    .padding(.bottom, 24)
-                }
+    @ViewBuilder
+    private var content: some View {
+        switch cartViewModel.cartState {
+        case .loading:
+            loadingView
 
-                checkoutButton
+        case .error(let message):
+            errorView(message: message)
+
+        case .success:
+            if allItems.isEmpty {
+                emptyView
+            } else {
+                cartContent
             }
         }
     }
+
+    private var loadingView: some View {
+        VStack {
+            Spacer()
+            ProgressView()
+                .progressViewStyle(.circular)
+                .tint(AppColor.textPrim)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    private func errorView(message: String) -> some View {
+        VStack {
+            Spacer()
+            VStack(spacing: 14) {
+                Image(systemName: "exclamationmark.triangle")
+                    .font(.system(size: 32))
+                    .foregroundColor(AppColor.textSec)
+
+                Text(message)
+                    .font(AppColor.sans(15))
+                    .foregroundColor(AppColor.textSec)
+                    .multilineTextAlignment(.center)
+
+                Button(action: {
+                    Task { await cartViewModel.getAllCart() }
+                }) {
+                    Text("Retry")
+                        .font(AppColor.sans(15, .medium))
+                        .foregroundColor(AppColor.white)
+                        .padding(.horizontal, 24)
+                        .padding(.vertical, 12)
+                        .background(AppColor.pillSel)
+                        .clipShape(Capsule())
+                }
+            }
+            .padding(.horizontal, 32)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    private var emptyView: some View {
+        VStack {
+            Spacer()
+            VStack(spacing: 14) {
+                Image(systemName: "bag")
+                    .font(.system(size: 32))
+                    .foregroundColor(AppColor.textSec)
+
+                Text("Your bag is empty")
+                    .font(AppColor.sans(15))
+                    .foregroundColor(AppColor.textSec)
+            }
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    private var cartContent: some View {
+        VStack(spacing: 0) {
+            ScrollView {
+                VStack(spacing: 16) {
+                    ForEach($cartViewModel.cartData) { $bag in
+                        ForEach($bag.items) { $item in
+                            BagItemRow(item: $item,image: cartViewModel.images[item.productId ?? 0] ?? "") {
+                                withAnimation {
+                                    bag.items.removeAll { $0.id == item.id }
+                                }
+                            }
+                        }
+                    }
+
+                    promoField
+
+                    summaryCard
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 20)
+                .padding(.bottom, 24)
+            }
+
+            checkoutButton
+        }
+    }
+
 
     private var header: some View {
         HStack(alignment: .firstTextBaseline) {
@@ -67,7 +157,7 @@ struct BagView: View {
 
             Spacer()
 
-            Text("\(items.count) items")
+            Text("\(allItems.count) items")
                 .font(AppColor.sans(14))
                 .foregroundColor(AppColor.textSec)
         }
@@ -144,7 +234,7 @@ struct BagView: View {
 
     private var checkoutButton: some View {
         Button(action: {}) {
-            Text("Checkout · $\(total)")
+            Text("Checkout · $\(Int(total))")
                 .font(AppColor.sans(16, .medium))
                 .foregroundColor(AppColor.white)
                 .frame(maxWidth: .infinity)
@@ -160,6 +250,7 @@ struct BagView: View {
 
 struct BagItemRow: View {
     @Binding var item: BagItemEntity
+     var image:String
     var onDelete: () -> Void
 
     var body: some View {
@@ -169,11 +260,15 @@ struct BagItemRow: View {
                     .fill(AppColor.surface)
                     .frame(width: 68, height: 84)
                     .overlay(
-                        Image(item.brand)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 68, height: 84)
-                            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                        AsyncImage(url: URL(string: image)) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        .frame(width: 68, height: 84)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
                     )
 
                 VStack(alignment: .leading, spacing: 4) {
@@ -203,7 +298,6 @@ struct BagItemRow: View {
             HStack {
                 HStack(spacing: 0) {
                     stepperButton(icon: "minus") {
-                        var q=item.quantity
                         if item.quantity > 1 {
                             item.quantity -= 1
                         }
@@ -246,4 +340,3 @@ struct BagItemRow: View {
         }
     }
 }
-

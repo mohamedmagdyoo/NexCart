@@ -8,6 +8,10 @@
 import Foundation
 protocol CartUseCaseProtocol{
     func getAllCart() async throws -> [BagEntity]
+    
+    func getSingleProduct(productId:Int) async throws ->ProductEntity
+    
+    
 }
 
 final class CartUseCase:CartUseCaseProtocol{
@@ -20,6 +24,10 @@ final class CartUseCase:CartUseCaseProtocol{
     }
     func getAllCart() async throws -> [BagEntity] {
       try await cartRepo.getAllProduct()
+    }
+    
+    func getSingleProduct(productId:Int) async throws ->ProductEntity{
+        try await cartRepo.getSingleProduct(productId : productId)
     }
     
 }
