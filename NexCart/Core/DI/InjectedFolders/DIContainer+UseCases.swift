@@ -63,6 +63,14 @@ extension DIContainer {
         container.register(RemoveFavProductUseCaseProtocol.self){ r in
             RemoveFavProduct(repo: r.resolve(ProductsRepoProtocol.self)!)
         }
+        container.register(FetchCollectionsUseCaseProtocol.self) { r in
+                   FetchCollectionsUseCase(repo: r.resolve(CollectionsRepoProtocol.self)!)
+               }
+
+        container.register(FetchCollectionProductsUseCaseProtocol.self) { r in
+            FetchCollectionProductsUseCase(repo: r.resolve(CollectionsRepoProtocol.self)!)
+        }
+
         container.register(AddCartUseCase.self) { r in
             AddCartUseCase(
                 productDetailsRepo: r.resolve(ProductDetailsRepo.self)!

@@ -14,6 +14,8 @@ enum ProductEndPoint: EndPoint {
     case shopMetafields
     case allBrands
     case addCart
+    case customCollections
+    case productsByCollection(collectionId: String)
     
     var baseUrl: String {
         "https://mad46-ios-team9.myshopify.com/admin/api/2024-01"
@@ -30,13 +32,17 @@ enum ProductEndPoint: EndPoint {
         case .productByID(let id):
             return "/products/\(id).json"
         case .products(let limit):
-            return "/products.json?limit=\(limit)"
+            return "/products.json?limit=\(limit)&status=active"
         case .shopMetafields:
             return "/shop/metafields.json"
         case .allBrands:
             return "/smart_collections.json"
         case .addCart:
             return "/draft_orders.json"
+        case .customCollections:
+            return "/custom_collections.json"
+        case .productsByCollection(let collectionId):
+            return "/products.json?collection_id=\(collectionId)"
         }
     }
     

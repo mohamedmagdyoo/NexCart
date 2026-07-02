@@ -27,9 +27,17 @@ struct HomeBrandsSection: View {
                 .tracking(3)
                 .foregroundColor(AppColor.textSec)
             Spacer()
-            Button("See all") {}
-                .font(AppColor.sans(13))
-                .foregroundColor(AppColor.gold)
+
+            // "See all" الآن بيودّي لصفحة الـ Brands كاملة
+            NavigationLink {
+                BrandsListView(
+                    viewModel: DIContainer.shared.container.resolve(BrandsListViewModel.self)!
+                )
+            } label: {
+                Text("See all")
+                    .font(AppColor.sans(13))
+                    .foregroundColor(AppColor.gold)
+            }
         }
         .padding(.horizontal, 20)
         .padding(.top, 24)

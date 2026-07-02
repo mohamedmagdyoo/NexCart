@@ -41,6 +41,7 @@ struct BrandProductsView: View {
             }
         }
         .background(AppColor.bg.ignoresSafeArea())
+        .goldBackButton()
         .task { await viewModel.loadProducts() }
         .refreshable { await viewModel.loadProducts() }
     }
