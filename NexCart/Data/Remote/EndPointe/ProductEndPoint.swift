@@ -23,7 +23,8 @@ enum ProductEndPoint: EndPoint {
         case .allProducts:
             return "/products.json"
         case .productsByBrand(let brand):
-            let encoded = brand.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? brand
+            let trimmed = brand.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+            let encoded = trimmed.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? trimmed
             return "/products.json?vendor=\(encoded)"
         case .productByID(let id):
             return "/products/\(id).json"

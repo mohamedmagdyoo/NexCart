@@ -18,12 +18,6 @@ enum ProductTag: Hashable {
     case soldOut
 }
 
-struct BrandEntity: Identifiable, Hashable {
-    let id: String
-    let name: String
-    let imageURL: String
-    var isSelected: Bool = false
-}
 
 struct HeroSlideEntity: Identifiable, Hashable {
     let id: String
