@@ -142,7 +142,7 @@ struct CollectionCardView: View {
         }
     }
 
-    // Elegant dedicated look for the "All" tile — no external image dependency.
+    
     private var allCardBackground: some View {
         ZStack {
             LinearGradient(
