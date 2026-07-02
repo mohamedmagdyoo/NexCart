@@ -37,7 +37,7 @@ final class FavProductsDAO: FavProductsDaoProtocol {
 
     let container: NSPersistentContainer
 
-    private init() {
+     init() {
         container = NSPersistentContainer(name: "NexCart")
         container.loadPersistentStores { _, error in
             if let error = error {

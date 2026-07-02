@@ -38,13 +38,21 @@ extension DIContainer {
         container.register(FetchHomeProductsUseCaseProtocol.self) { r in
             FetchHomeProductsUseCase(repo: r.resolve(HomeRepoProtocol.self)!)
         }
-        
+       
         container.register(FetchHomeBrandsUseCaseProtocol.self) { r in
             FetchHomeBrandsUseCase(repo: r.resolve(HomeRepoProtocol.self)!)
         }
-        
+       
         container.register(FetchHeroSlidesUseCaseProtocol.self) { _ in
             FetchHeroSlidesUseCase()
+        }
+        
+        container.register(FetchBrandsUseCaseProtocol.self) { r in
+            FetchBrandsUseCase(repo: r.resolve(BrandsRepoProtocol.self)!)
+        }
+         
+        container.register(FetchBrandProductsUseCaseProtocol.self) { r in
+            FetchBrandProductsUseCase(repo: r.resolve(BrandsRepoProtocol.self)!)
         }
         
         //FavUseCases
@@ -57,5 +65,3 @@ extension DIContainer {
         }
     }
 }
-
-
