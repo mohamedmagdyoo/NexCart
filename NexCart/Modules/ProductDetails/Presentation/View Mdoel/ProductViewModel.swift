@@ -42,6 +42,7 @@ final class ProductDetailViewModel: ObservableObject, ProductDetailsViewModelPro
             screenState = .success
 
         } catch {
+            print("erorrr \(error)")
             screenState = .error(data: error)
         }
     }
