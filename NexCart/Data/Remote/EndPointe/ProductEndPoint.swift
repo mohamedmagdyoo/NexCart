@@ -49,4 +49,7 @@ enum ProductEndPoint: EndPoint {
             return "GET"
         }
     }
+    var body: Data?{
+        return nil
+    }
 }

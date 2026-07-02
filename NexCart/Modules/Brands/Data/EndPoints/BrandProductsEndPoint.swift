@@ -29,4 +29,7 @@ enum BrandProductsEndPoint: EndPoint {
     var method: String {
         "GET"
     }
+    var body: Data?{
+        return nil
+    }
 }

@@ -18,6 +18,10 @@ final class SignInViewModel: ObservableObject {
     @Published var shouldNavigateToHome: Bool = false
     @Published var screenState: SignInScreenState = .idle
     @Published var alert: AlertModel?
+    
+    //FieldStates
+    @Published  var email: String = ""
+    @Published  var password: String = ""
 
     // MARK: - Use Cases
     private let loginWithEmailPassUC: LoginWithEmailUseCaseProtocol
