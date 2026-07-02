@@ -48,8 +48,10 @@ struct CollectionProductsView: View {
             FilterSheetView(
                 brands: viewModel.availableBrands,
                 types: viewModel.availableTypes,
+                priceRanges: viewModel.availablePriceRanges,
                 selectedBrand: $viewModel.selectedBrand,
-                selectedType: $viewModel.selectedType
+                selectedType: $viewModel.selectedType,
+                selectedPriceRange: $viewModel.selectedPriceRange
             )
         }
     }

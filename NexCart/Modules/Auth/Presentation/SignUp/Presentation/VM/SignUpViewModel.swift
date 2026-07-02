@@ -11,6 +11,24 @@ final class SignUpViewModel: ObservableObject {
     @Published var shouldNavigateToHome: Bool = false
     @Published var screenState: ScreenState = .idle
     @Published var alert: AlertModel?
+    
+    //
+    @Published var firstName: String = ""
+    @Published var lastName: String = ""
+    @Published var phone: String = ""
+    @Published var email: String = ""
+    @Published var password: String = ""
+    @Published var passwordConfirmation: String = ""
+    
+    func credentials() -> SignUpCredentials {
+        SignUpCredentials(
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            phone: phone,
+            password: password,
+            passwordConfirmation: passwordConfirmation)
+    }
 
     // MARK: - Use Cases
     private let signUpUseCase: CreatNewAccountUseCaseProtocol

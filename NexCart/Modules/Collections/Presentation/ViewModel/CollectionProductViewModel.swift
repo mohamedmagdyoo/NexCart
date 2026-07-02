@@ -7,6 +7,26 @@
 
 import Foundation
 
+enum PriceRange: String, CaseIterable, Identifiable {
+    case all       = "All"
+    case under50   = "Under $50"
+    case r50to100  = "$50 - $100"
+    case r100to200 = "$100 - $200"
+    case over200   = "Over $200"
+
+    var id: String { rawValue }
+
+    func contains(_ price: Double) -> Bool {
+        switch self {
+        case .all:       return true
+        case .under50:   return price < 50
+        case .r50to100:  return price >= 50 && price <= 100
+        case .r100to200: return price > 100 && price <= 200
+        case .over200:   return price > 200
+        }
+    }
+}
+
 @MainActor
 final class CollectionProductsViewModel: ObservableObject {
  
@@ -16,6 +36,7 @@ final class CollectionProductsViewModel: ObservableObject {
 
     @Published var selectedBrand: String = "All"
     @Published var selectedType: String = "All"
+    @Published var selectedPriceRange: PriceRange = .all
  
     let collection: CustomCollectionEntity
     private let fetchCollectionProductsUseCase: FetchCollectionProductsUseCaseProtocol
@@ -25,7 +46,6 @@ final class CollectionProductsViewModel: ObservableObject {
         self.collection = collection
         self.fetchCollectionProductsUseCase = fetchCollectionProductsUseCase
     }
-
 
     var availableBrands: [String] {
         let names = Set(products.map { $0.brand }).filter { !$0.isEmpty }
@@ -37,15 +57,20 @@ final class CollectionProductsViewModel: ObservableObject {
         return ["All"] + names.sorted()
     }
 
+    var availablePriceRanges: [PriceRange] {
+        PriceRange.allCases
+    }
+
     var filteredProducts: [ProductEntity] {
         products.filter { product in
             (selectedBrand == "All" || product.brand == selectedBrand) &&
-            (selectedType == "All" || product.productType == selectedType)
+            (selectedType == "All" || product.productType == selectedType) &&
+            selectedPriceRange.contains(product.price)
         }
     }
 
     var isFilterActive: Bool {
-        selectedBrand != "All" || selectedType != "All"
+        selectedBrand != "All" || selectedType != "All" || selectedPriceRange != .all
     }
 
     func selectBrand(_ brand: String) {

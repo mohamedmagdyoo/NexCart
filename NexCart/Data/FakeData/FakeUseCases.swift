@@ -13,7 +13,10 @@ private let mockUser = UserEntity(
     email: "test@nexcart.com",
     displayName: "Magdy",
     authProvider: .email,
-    isGuest: false
+    isGuest: false,
+    shopifyCustomerId: "7592731234567",
+    phone: "+201012345678",
+    acceptsMarketing: true
 )
 
 private let mockGuestUser = UserEntity(
@@ -21,9 +24,11 @@ private let mockGuestUser = UserEntity(
     email: "",
     displayName: "Guest",
     authProvider: .guest,
-    isGuest: true
+    isGuest: true,
+    shopifyCustomerId: nil,
+    phone: nil,
+    acceptsMarketing: false
 )
-
 // MARK: - Login With Email
 final class MockLoginWithEmailUseCase: LoginWithEmailUseCaseProtocol {
     var shouldFail = false

@@ -12,7 +12,8 @@ import Swinject
 extension DIContainer {
     func registerRepositories() {
         container.register(AuthRepositoryProtocol.self) { r in
-            FirebaseAuthRepository(service: r.resolve(FirebaseAuthService.self)!)
+            AuthRepository(service: r.resolve(FirebaseAuthService.self)!,
+                           shopifyService: r.resolve(AuthShopifyServiceProtocol.self)!)
         }.inObjectScope(.container) // to make it singltone
         
         
