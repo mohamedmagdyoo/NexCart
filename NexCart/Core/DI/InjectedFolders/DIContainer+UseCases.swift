@@ -68,6 +68,11 @@ extension DIContainer {
                 productDetailsRepo: r.resolve(ProductDetailsRepo.self)!
             )
         }
+        
+        container.register(CartUseCaseProtocol.self){
+            r in
+            CartUseCase(cartRepo: r.resolve(CartRepoProtcol.self)!)
+        }
 
         
     }

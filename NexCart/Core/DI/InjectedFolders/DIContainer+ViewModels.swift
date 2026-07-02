@@ -55,5 +55,13 @@ extension DIContainer {
                 addCartUseCase: r.resolve(AddCartUseCase.self)!
             )
         }
+        
+        container.register(CartViewModel.self){
+            r in
+            CartViewModel(
+                cartUseCase: r.resolve(CartUseCaseProtocol.self)!,
+           )
+            
+        }
     }
 }

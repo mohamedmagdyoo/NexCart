@@ -101,10 +101,10 @@
 		F51C98B62FF5A12600A9C2EE /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C98AF2FF5A12600A9C2EE /* Components.swift */; };
 		F51C98B72FF5A12600A9C2EE /* ProductViewModelPorotocl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C98AC2FF5A12600A9C2EE /* ProductViewModelPorotocl.swift */; };
 		F51C98B82FF5A12600A9C2EE /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C98AB2FF5A12600A9C2EE /* ProductViewModel.swift */; };
+		F59DB2152FF699DA007BB715 /* CartRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53ADE2FF60643009F9F87 /* CartRepo.swift */; };
+		F59DB2172FF6A852007BB715 /* CartRepoProtcol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59DB2162FF6A852007BB715 /* CartRepoProtcol.swift */; };
 		F5B53ADA2FF5F40F009F9F87 /* CartScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AD92FF5F40F009F9F87 /* CartScreen.swift */; };
-		F5B53ADF2FF60643009F9F87 /* CartRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53ADE2FF60643009F9F87 /* CartRepo.swift */; };
 		F5B53AE12FF6065F009F9F87 /* GetAllCartEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AE02FF6065F009F9F87 /* GetAllCartEndPoint.swift */; };
-		F5B53AE62FF606B3009F9F87 /* CartRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AE52FF606B3009F9F87 /* CartRepo.swift */; };
 		F5B53AE82FF60829009F9F87 /* CartEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AE72FF60829009F9F87 /* CartEntity.swift */; };
 		F5B53AEB2FF60BFB009F9F87 /* CartEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AEA2FF60BFB009F9F87 /* CartEndPoint.swift */; };
 		F5B53AED2FF610C3009F9F87 /* CartUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AEC2FF610C3009F9F87 /* CartUseCase.swift */; };
@@ -228,10 +228,10 @@
 		F51C98AF2FF5A12600A9C2EE /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		F51C98B02FF5A12600A9C2EE /* QuantitySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantitySelector.swift; sourceTree = "<group>"; };
 		F51C98B12FF5A12600A9C2EE /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		F59DB2162FF6A852007BB715 /* CartRepoProtcol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRepoProtcol.swift; sourceTree = "<group>"; };
 		F5B53AD92FF5F40F009F9F87 /* CartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartScreen.swift; sourceTree = "<group>"; };
 		F5B53ADE2FF60643009F9F87 /* CartRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRepo.swift; sourceTree = "<group>"; };
 		F5B53AE02FF6065F009F9F87 /* GetAllCartEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GetAllCartEndPoint.swift; path = NexCart/Modules/Cart/Data/Repository/GetAllCartEndPoint.swift; sourceTree = SOURCE_ROOT; };
-		F5B53AE52FF606B3009F9F87 /* CartRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRepo.swift; sourceTree = "<group>"; };
 		F5B53AE72FF60829009F9F87 /* CartEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartEntity.swift; sourceTree = "<group>"; };
 		F5B53AEA2FF60BFB009F9F87 /* CartEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartEndPoint.swift; sourceTree = "<group>"; };
 		F5B53AEC2FF610C3009F9F87 /* CartUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartUseCase.swift; sourceTree = "<group>"; };
@@ -1128,7 +1128,7 @@
 		F5B53AE32FF60689009F9F87 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				F5B53AE52FF606B3009F9F87 /* CartRepo.swift */,
+				F59DB2162FF6A852007BB715 /* CartRepoProtcol.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1290,6 +1290,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F59DB2152FF699DA007BB715 /* CartRepo.swift in Sources */,
 				D960C1EE2FF120A500FFF4D9 /* ApiServiceProtocol.swift in Sources */,
 				9F92BF4F2FF47B5800E090B7 /* BrandsRepository.swift in Sources */,
 				9F92BF592FF47DF100E090B7 /* BrandProductView.swift in Sources */,
@@ -1322,7 +1323,6 @@
 				9F8F1E582FF3898D0016B844 /* HomeProtocol.swift in Sources */,
 				9F92BF472FF479D300E090B7 /* BrandUseCase.swift in Sources */,
 				9F0C0DC42FF5C71D007E7E8C /* ProductsRepo.swift in Sources */,
-				F5B53AE62FF606B3009F9F87 /* CartRepo.swift in Sources */,
 				9F8F1E592FF3898D0016B844 /* HomeHeroSection.swift in Sources */,
 				9F8F1E5A2FF3898D0016B844 /* HomenewSection.swift in Sources */,
 				9F9498132FF57881000CEB5A /* NexCart.xcdatamodeld in Sources */,
@@ -1336,7 +1336,6 @@
 				D93C26022FF5294400486A11 /* FavProduct.swift in Sources */,
 				F5B53AE12FF6065F009F9F87 /* GetAllCartEndPoint.swift in Sources */,
 				D93C25FF2FF5294400486A11 /* ProductsRepoProtocol.swift in Sources */,
-				F5B53ADF2FF60643009F9F87 /* CartRepo.swift in Sources */,
 				D93C26002FF5294400486A11 /* FetchFavProducts.swift in Sources */,
 				D9CFF5882FF4126200B7B8DE /* (null) in Sources */,
 				D960C21B2FF17B3600FFF4D9 /* LoginWithSocialProvider.swift in Sources */,
@@ -1350,6 +1349,7 @@
 				D93C25FE2FF5294400486A11 /* FavProductsDaoProtocol.swift in Sources */,
 				D960C1F42FF1243400FFF4D9 /* LaunchScreen.swift in Sources */,
 				D960C2162FF1778200FFF4D9 /* AuthError.swift in Sources */,
+				F59DB2172FF6A852007BB715 /* CartRepoProtcol.swift in Sources */,
 				D960C2192FF17AF700FFF4D9 /* LoginWithEmail.swift in Sources */,
 				D960C2452FF1B40300FFF4D9 /* SignUpViewModel.swift in Sources */,
 				D91E749A2FF5193F00D941C4 /* FakeProduct.swift in Sources */,

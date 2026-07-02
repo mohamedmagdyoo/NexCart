@@ -35,6 +35,11 @@ extension DIContainer {
             )
         }
 
-
+        
+        container.register(CartRepoProtcol.self) { r in
+            CartRepo(
+                apiService: r.resolve(ApiServiceProtocol.self)!
+            )
+        }
     }
 }
