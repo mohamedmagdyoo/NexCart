@@ -6,18 +6,19 @@
 import Foundation
 
 enum ProductEndPoint: EndPoint {
-
+    
     case allProducts
     case productsByBrand(brandName: String)
     case productByID(productID: Int)
     case products(limit: Int)
     case shopMetafields
     case allBrands
+    case addCart
     
     var baseUrl: String {
         "https://mad46-ios-team9.myshopify.com/admin/api/2024-01"
     }
-
+    
     var path: String {
         switch self {
         case .allProducts:
@@ -34,9 +35,20 @@ enum ProductEndPoint: EndPoint {
             return "/shop/metafields.json"
         case .allBrands:
             return "/smart_collections.json"
+        case .addCart:
+            return "/draft_orders.json"
         }
     }
-
+    
+    var method: String {
+        switch self {
+        case .addCart:
+            return "POST"
+            
+        default:
+            return "GET"
+        }
+    }
     var method: String { "GET" }
     var body: Data?{
         return nil
