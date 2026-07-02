@@ -62,7 +62,9 @@ final class FavProductsViewModel: ObservableObject {
         screenStates = favProducts.isEmpty ? .empty : .succes
 
         do {
-            try removeFavProductUseCase.execute(productId: product.id)
+            Task{
+                try await removeFavProductUseCase.execute(productId: product.id)
+            }
         } catch {
             favProducts = previousProducts
             screenStates = previousState

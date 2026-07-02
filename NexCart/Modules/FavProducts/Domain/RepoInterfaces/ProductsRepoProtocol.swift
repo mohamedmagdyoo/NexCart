@@ -9,6 +9,8 @@ import Foundation
 
 protocol ProductsRepoProtocol {
     func fetchFavProducts() throws -> [FavProduct]
-    func removeFavProduct(productId: Int) throws
-    func removeAllFav() throws
+    func addFavProduct(product: FavProduct) async throws
+    func removeFavProduct(productId: Int) async throws
+    func isFavProduct(productId: Int) -> Bool
+    func syncData() async throws
 }
