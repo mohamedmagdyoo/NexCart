@@ -39,4 +39,45 @@ class ApiService : ApiServiceProtocol{
               return try JSONDecoder().decode(T.self, from: data)
           }
     
+    func post<Response: Decodable, Body: Encodable>(
+        endPoint: EndPoint,
+        body: Body
+    ) async throws -> Response {
+
+        guard let url = URL(string: endPoint.baseUrl + endPoint.path) else {
+            throw URLError(.badURL)
+        }
+
+        #if DEBUG
+        print("🌐 API Request: \(url.absoluteString)")
+        #endif
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(endPoint.ApiToken, forHTTPHeaderField: "X-Shopify-Access-Token")
+
+        request.httpBody = try JSONEncoder().encode(body)
+
+        let (data, response) = try await URLSession.shared.data(for: request)
+
+        guard let http = response as? HTTPURLResponse,
+              (200...299).contains(http.statusCode) else {
+
+            let code = (response as? HTTPURLResponse)?.statusCode ?? -1
+            throw URLError(
+                .badServerResponse,
+                userInfo: [NSLocalizedDescriptionKey: "HTTP \(code)"]
+            )
+        }
+
+        #if DEBUG
+        if let jsonStr = String(data: data, encoding: .utf8) {
+            print("📦 Response: \(jsonStr)")
+        }
+        #endif
+
+        return try JSONDecoder().decode(Response.self, from: data)
+    }
+    
 }

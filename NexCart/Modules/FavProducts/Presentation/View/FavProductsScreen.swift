@@ -39,14 +39,18 @@ struct FavProductsScreen: View {
             }
         }
         .background(
-                    Group {
-                        if let product = selectedProduct {
-                            NavigationLink(
-                                destination: ProductDetailView(viewModel: ProductDetailViewModel(product: nil), productId: product.id),
-                                isActive: Binding(
-                                    get: { selectedProduct != nil },
-                                    set: { if !$0 { selectedProduct = nil } }
-                                )                    ) {
+            Group {
+                if let product = selectedProduct {
+                    NavigationLink(
+                        destination: ProductDetailView(
+                            product: product,
+                            productViewModel: DIContainer.shared.container.resolve(ProductDetailViewModel.self)!
+                        ),
+                        isActive: Binding(
+                            get: { selectedProduct != nil },
+                            set: { if !$0 { selectedProduct = nil } }
+                        )
+                    ) {
                         EmptyView()
                     }
                 }
@@ -182,7 +186,23 @@ private extension FavProduct {
             originalPrice: nil,
             imageURL: imageURL,
             tag: nil,
-            isFavorited: true
+            isFavorited: true,
+
+            bodyHtml: nil,
+            vendor: brand,
+            productType: "",
+            createdAt: "",
+            handle: "",
+            updatedAt: "",
+            publishedAt: nil,
+            publishedScope: "",
+            tags: nil,
+            status: "",
+
+            variants: [],
+            options: [],
+            images: [],
+            image: nil
         )
     }
 }
