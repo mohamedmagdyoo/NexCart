@@ -10,11 +10,11 @@ import SwiftUI
 struct HomeNewInSection: View {
 
     let products: [ProductEntity]
-    let isLoading:Bool
-    let errorMessage:String?
+    let isLoading: Bool
+    let errorMessage: String?
     let onToggleFavorite: (Int) -> Void
     let onProductSelected: (ProductEntity) -> Void
-    let onRetry:() async -> Void
+    let onRetry: () async -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -177,6 +177,7 @@ struct HomeProductCard: View {
         .padding(.horizontal, 10)
     }
 }
+
 struct HomeSkeletonGrid: View {
     var body: some View {
         LazyVGrid(
@@ -203,6 +204,7 @@ struct HomeSkeletonGrid: View {
         .overlay(RoundedRectangle(cornerRadius: 12).stroke(AppColor.border, lineWidth: 0.5))
     }
 }
+
 struct HomeErrorView: View {
     let message: String
     let onRetry: () async -> Void
@@ -238,9 +240,9 @@ struct ShimmerModifier: ViewModifier {
             .overlay(
                 LinearGradient(
                     gradient: Gradient(stops: [
-                        .init(color: .clear,location: phase - 0.3),
+                        .init(color: .clear, location: phase - 0.3),
                         .init(color: .black.opacity(0.04), location: phase),
-                        .init(color: .clear,location: phase + 0.3),
+                        .init(color: .clear, location: phase + 0.3),
                     ]),
                     startPoint: .leading, endPoint: .trailing
                 )
