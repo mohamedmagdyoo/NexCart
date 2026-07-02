@@ -72,16 +72,14 @@ final class FavProductsRepository: FavProductRepoInterface {
     }
 
     // MARK: - Sync: clear CoreData, pull full favorites from Firestore, reinsert
-    func syncFromRemote() async throws {
-        guard let userId = getCurrentUserId() else { return }
+    func syncFromRemote(userId: String) async throws {
 
         // 1. Clear local cache
-        try favDao.cleanFavTable()
+        favDao.cleanFavTable()
 
         // 2. Fetch full favorite products from Firestore (no need to re-fetch from Products API,
-        //    since Firestore now stores brand/name/price/imageURL directly)
         let remoteFavProducts = try await favService.fetchFavoriteProducts(userId: userId)
-
+        
         // 3. Insert them into CoreData
         for remoteFavProduct in remoteFavProducts {
             try favDao.addToFav(product: remoteFavProduct)

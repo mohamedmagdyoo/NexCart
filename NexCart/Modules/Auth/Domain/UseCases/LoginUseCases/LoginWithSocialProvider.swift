@@ -22,7 +22,8 @@ final class LoginWithSocialProvider: LoginWithSocialProviderUseCaseProtocol{
     }
     
     func excute(socialProvider: SocialAuthProvider) async throws -> UserEntity {
-        try await productsRepository.syncData()
-        return try await authRepo.loginWithSocialProvider(socialProvider)
+        let userEntity = try await authRepo.loginWithSocialProvider(socialProvider)
+        try await productsRepository.syncData(userId: userEntity.id)
+        return userEntity
     }
 }

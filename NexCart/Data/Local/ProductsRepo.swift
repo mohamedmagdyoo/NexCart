@@ -32,8 +32,9 @@ final class ProductsRepo: ProductsRepoProtocol {
         favProductReopo.isFav(productId: productId)
     }
 
-    func syncData() async throws {
-        try await favProductReopo.syncFromRemote()
+    func syncData(userId: String) async throws {
+        print("Sync2")
+        try await favProductReopo.syncFromRemote(userId: userId)
     }
     
     func cleanFavTabel() {

@@ -30,9 +30,12 @@ final class LoginWithEmailUseCase: LoginWithEmailUseCaseProtocol {
             throw AuthError.weakPassword
         }
         
-        //sycnData
-        try await productsRepository.syncData()
+        let userEntity = try await repository.loginWithEmail(credentials)
         
-        return try await repository.loginWithEmail(credentials)
+        //sycnData
+        print("Try To Sync data")
+        try await productsRepository.syncData(userId: userEntity.id)
+        
+        return userEntity
     }
 }
