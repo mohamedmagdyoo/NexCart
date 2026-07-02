@@ -28,5 +28,13 @@ extension DIContainer {
         container.register(ProductsRepoProtocol.self){ _ in
             ProductsRepo()
         }
+        
+        container.register(ProductDetailsRepo.self) { r in
+            ProductDetailRepoImpl(
+                productDetailsService: r.resolve(ProductDetailsService.self)!
+            )
+        }
+
+
     }
 }

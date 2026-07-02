@@ -9,4 +9,10 @@ import Foundation
 
 protocol ApiServiceProtocol{
     func fetch<T: Decodable>(endPoint: EndPoint) async throws -> T
+    
+    func post<Response: Decodable, Body: Encodable>(
+            endPoint: EndPoint,
+            body: Body
+        ) async throws -> Response
+    
 }

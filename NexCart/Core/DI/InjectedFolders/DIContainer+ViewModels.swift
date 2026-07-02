@@ -50,5 +50,10 @@ extension DIContainer {
         container.register(FavProductsViewModel.self){ r in
             FavProductsViewModel(fetchFavProductsUseCase: r.resolve(FetchFavProductsUseCaseProtocol.self)!, removeFavProductUseCase: r.resolve(RemoveFavProductUseCaseProtocol.self)!)
         }
+        container.register(ProductDetailViewModel.self) { r in
+            ProductDetailViewModel(
+                addCartUseCase: r.resolve(AddCartUseCase.self)!
+            )
+        }
     }
 }

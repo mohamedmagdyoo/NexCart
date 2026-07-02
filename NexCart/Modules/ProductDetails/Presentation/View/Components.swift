@@ -2,8 +2,9 @@
 //  Components.swift
 //  NexCart
 //
-//  Created by Mohamed Magdy on 01/07/2026.
+//  Created by Antoneos Philip on 27/06/2026.
 //
+
 import Foundation
 import SwiftUI
 
@@ -105,9 +106,10 @@ struct InfoRow: View {
 
 struct AddToBagButton: View {
     var action: () -> Void = {}
-
+ 
     var body: some View {
         Button(action: action) {
+           
             HStack(spacing: 8) {
                 Image(systemName: "bag")
                     .font(.system(size: 16, weight: .semibold))
