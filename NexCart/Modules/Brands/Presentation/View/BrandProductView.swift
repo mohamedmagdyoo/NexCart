@@ -46,7 +46,7 @@ struct BrandProductsView: View {
             Group {
                 if let product = selectedProduct {
                     NavigationLink(
-                        destination: ProductDetailView(productEntity: product),
+                        destination: ProductDetailView(viewModel: ProductDetailViewModel(product: nil), productId: product.id),
                         isActive: Binding(
                             get: { selectedProduct != nil },
                             set: { if !$0 { selectedProduct = nil } }

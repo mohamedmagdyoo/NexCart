@@ -39,15 +39,14 @@ struct FavProductsScreen: View {
             }
         }
         .background(
-            Group {
-                if let product = selectedProduct {
-                    NavigationLink(
-                        destination: ProductDetailView(productEntity: product),
-                        isActive: Binding(
-                            get: { selectedProduct != nil },
-                            set: { if !$0 { selectedProduct = nil } }
-                        )
-                    ) {
+                    Group {
+                        if let product = selectedProduct {
+                            NavigationLink(
+                                destination: ProductDetailView(viewModel: ProductDetailViewModel(product: nil), productId: product.id),
+                                isActive: Binding(
+                                    get: { selectedProduct != nil },
+                                    set: { if !$0 { selectedProduct = nil } }
+                                )                    ) {
                         EmptyView()
                     }
                 }
