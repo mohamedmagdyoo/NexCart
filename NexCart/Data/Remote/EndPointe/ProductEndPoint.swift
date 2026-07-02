@@ -49,7 +49,6 @@ enum ProductEndPoint: EndPoint {
             return "GET"
         }
     }
-    var method: String { "GET" }
     var body: Data?{
         return nil
     }
