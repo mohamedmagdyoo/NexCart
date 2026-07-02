@@ -10,10 +10,12 @@ struct ProductDetailView: View {
     @State private var currentImageIndex: Int = 0
     @State private var quantity: Int = 1
     @State private var navigateToCart: Bool = false
+    @State private var showToast: Bool = false
     @StateObject private var productDetailsViewModel: ProductDetailViewModel
 
     init(product: ProductEntity, productViewModel: ProductDetailViewModel) {
         _product = State(initialValue: product)
+        _isFavorited = State(initialValue: product.isFavorited)
         _productDetailsViewModel = StateObject(wrappedValue: productViewModel)
     }
 
@@ -84,20 +86,30 @@ struct ProductDetailView: View {
 
             bottomBar
 
-            if success {
+            if showToast {
                 VStack {
                     Spacer()
                     ToastView(message: "Added to bag")
                         .padding(.bottom, 120)
                 }
                 .transition(.move(edge: .bottom).combined(with: .opacity))
-                .animation(.spring(), value: success)
+                .animation(.spring(), value: showToast)
             }
         }
         .toolbar(.hidden, for: .tabBar)
         .navigationBarHidden(true)
         .onChange(of: selectedVariant?.id) { _ in
             quantity = 1
+        }
+        .onChange(of: success) { newValue in
+            if newValue {
+                showToast = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    withAnimation {
+                        showToast = false
+                    }
+                }
+            }
         }
     }
 
@@ -136,12 +148,16 @@ struct ProductDetailView: View {
                         navigateToCart = true
                     }
 
-                    CircleNavButton(systemName: isFavorited ? "heart.fill" : "heart") {
+                    CircleNavButton(
+                        systemName: isFavorited ? "heart.fill" : "heart",
+                        iconColor: isFavorited ? AppColor.gold : AppColor.textSec
+                    ) {
                         withAnimation(.spring()) {
                             isFavorited.toggle()
+                            product.isFavorited = isFavorited
+                            productDetailsViewModel.toggleFavorite(product: product)
                         }
                     }
-                    .foregroundColor(isFavorited ? AppColor.gold : AppColor.textPrim)
                 }
             }
             .padding(.horizontal, 20)
@@ -227,10 +243,10 @@ struct ProductDetailView: View {
                                 .font(AppColor.serif(18))
                                 .foregroundColor(AppColor.textPrim)
                             Spacer()
-                            Text("Size Guide")
-                                .font(AppColor.sans(14, .medium))
-                                .foregroundColor(AppColor.textPrim)
-                                .underline()
+//                            Text("Size Guide")
+//                                .font(AppColor.sans(14, .medium))
+//                                .foregroundColor(AppColor.textPrim)
+//                                .underline()
                         }
 
                         ScrollView(.horizontal, showsIndicators: false) {
@@ -375,13 +391,14 @@ struct ProductDetailView: View {
 
 private struct CircleNavButton: View {
     let systemName: String
+    var iconColor: Color = AppColor.textPrim
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
             Image(systemName: systemName)
                 .font(.system(size: 16, weight: .semibold))
-                .foregroundColor(AppColor.textPrim)
+                .foregroundColor(iconColor)
                 .frame(width: 44, height: 44)
                 .background(AppColor.white)
                 .clipShape(Circle())
