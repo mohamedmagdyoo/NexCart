@@ -112,11 +112,7 @@ struct HomeView: View {
 
     private var cartTab: some View {
         NavigationView {
-            Text("Cart View")
-                .font(AppColor.sans(16, .medium))
-                .foregroundColor(AppColor.textPrim)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding(.bottom, 90)
+            BagView()    .padding(.bottom, 75)
         }
         .navigationViewStyle(.stack)
         .tag(3)
