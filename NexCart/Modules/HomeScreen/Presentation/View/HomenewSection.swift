@@ -31,7 +31,7 @@ struct HomeNewInSection: View {
 
     private var sectionHeader: some View {
         HStack {
-            Text("New In")
+            Text("Availbale Now")
                 .font(AppColor.serif(28))
                 .foregroundColor(AppColor.textPrim)
             Spacer()

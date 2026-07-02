@@ -92,8 +92,9 @@ struct HomeView: View {
 
     private var shopTab: some View {
         NavigationView {
-            BrandsListView(
-                viewModel: DIContainer.shared.container.resolve(BrandsListViewModel.self)!
+            // 4️⃣ Shop tab بقى بيودّي للـ Custom Collections (Men/Women/...) بدل الـ Brands
+            CollectionsListView(
+                viewModel: DIContainer.shared.container.resolve(CollectionsListViewModel.self)!
             )
             .padding(.bottom, 90)
         }
