@@ -8,6 +8,8 @@
 import Foundation
 import Foundation
 
+struct EmptyCartResponse: Codable {}
+
 struct CartResponseDto: Codable {
     let draftOrders: [CartOrderDto]
 

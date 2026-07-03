@@ -51,10 +51,16 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
         }
     }
 
-    // MARK: - Merging across all of the customer's draft orders
+    func deleteFromCart(draftOrderId: String) async -> Bool {
+        do {
+            try await cartUseCase.deleteFromCart(draftOrderId: draftOrderId)
+            return true
+        } catch {
+            return false
+        }
+    }
 
-    /// Flattens every draft order's line items into one list and combines
-    /// items that share the same product + variant (size/color), summing quantity.
+    
     private func mergeBagsIntoSingleCart(_ bags: [BagEntity]) -> [BagEntity] {
         guard !bags.isEmpty else { return [] }
 
@@ -81,7 +87,7 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
 
     private func mergeDuplicateItems(_ items: [BagItemEntity]) -> [BagItemEntity] {
         var merged: [String: BagItemEntity] = [:]
-        var order: [String] = []   // preserves first-seen ordering
+        var order: [String] = []
 
         for item in items {
             let key = mergeKey(for: item)
@@ -96,9 +102,7 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
         return order.compactMap { merged[$0] }
     }
 
-    /// Note: `size` already stores the full variant string (e.g. "OS / black",
-    /// "4 / burgandy") which encodes both size AND color, so this single key
-    /// naturally merges on product + size + color without a separate field.
+ 
     private func mergeKey(for item: BagItemEntity) -> String {
         "\(item.productId ?? 0)-\(item.size)"
     }

@@ -11,7 +11,7 @@ protocol CartUseCaseProtocol{
     
     func getSingleProduct(productId:Int) async throws ->ProductEntity
     
-    
+    func deleteFromCart(draftOrderId: String) async throws
 }
 
 final class CartUseCase:CartUseCaseProtocol{
@@ -28,6 +28,10 @@ final class CartUseCase:CartUseCaseProtocol{
     
     func getSingleProduct(productId:Int) async throws ->ProductEntity{
         try await cartRepo.getSingleProduct(productId : productId)
+    }
+    
+    func deleteFromCart(draftOrderId: String) async throws {
+        try await cartRepo.deleteFromCart(draftOrderId: draftOrderId)
     }
     
 }
