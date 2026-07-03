@@ -4,7 +4,6 @@
 //
 //  Created by shady ramadan on 28/06/2026.
 
-
 import SwiftUI
 
 struct HomeNewInSection: View {
@@ -15,6 +14,7 @@ struct HomeNewInSection: View {
     let onToggleFavorite: (Int) -> Void
     let onProductSelected: (ProductEntity) -> Void
     let onRetry: () async -> Void
+    let onSeeAll: () -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -31,13 +31,15 @@ struct HomeNewInSection: View {
 
     private var sectionHeader: some View {
         HStack {
-            Text("Availbale Now")
+            Text("New Arrivals")
                 .font(AppColor.serif(28))
                 .foregroundColor(AppColor.textPrim)
             Spacer()
-            Button("See all") {}
-                .font(AppColor.sans(13))
-                .foregroundColor(AppColor.gold)
+            Button("See all") {
+                onSeeAll()
+            }
+            .font(AppColor.sans(13))
+            .foregroundColor(AppColor.gold)
         }
         .padding(.horizontal, 20)
         .padding(.top, 28)

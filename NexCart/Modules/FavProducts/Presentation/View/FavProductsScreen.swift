@@ -16,10 +16,9 @@ private extension Color {
 }
 
 struct FavProductsScreen: View {
-
     @StateObject private var viewModel: FavProductsViewModel = DIContainer.shared.container.resolve(FavProductsViewModel.self)!
+    @EnvironmentObject var tabBarManager: TabBarManager
     @State private var selectedProduct: ProductEntity?
-    
 
     var body: some View {
         ZStack {
@@ -56,7 +55,13 @@ struct FavProductsScreen: View {
                 }
             }
         )
-        .onAppear { viewModel.onAppear() }
+        .onAppear {
+            viewModel.onAppear()
+            tabBarManager.isHidden = false
+        }
+        .onChange(of: selectedProduct) { newValue in
+            tabBarManager.isHidden = (newValue != nil)
+        }
         .alert(item: $viewModel.alert) { alert in
             Alert(
                 title: Text(alert.title),
@@ -84,7 +89,6 @@ struct FavProductsScreen: View {
     }
 }
 
-// MARK: - Success State
 struct FavScreenSuccesState: View {
     @ObservedObject var viewModel: FavProductsViewModel
     @Binding var selectedProduct: ProductEntity?
@@ -95,7 +99,7 @@ struct FavScreenSuccesState: View {
                 ForEach(viewModel.favProducts) { product in
                     FavProductRow(
                         product: product,
-                        onTap: { 
+                        onTap: {
                             selectedProduct = product.toProductEntity()
                         },
                         onRemove: {
@@ -105,11 +109,13 @@ struct FavScreenSuccesState: View {
                         }
                     )
                 }
+                
+                Color.clear
+                    .frame(height: 100)
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 24)
         }
-        
     }
 }
 
@@ -187,7 +193,6 @@ private extension FavProduct {
             imageURL: imageURL,
             tag: nil,
             isFavorited: true,
-
             bodyHtml: nil,
             vendor: brand,
             productType: "",
@@ -198,7 +203,6 @@ private extension FavProduct {
             publishedScope: "",
             tags: nil,
             status: "",
-
             variants: [],
             options: [],
             images: [],
@@ -206,8 +210,6 @@ private extension FavProduct {
         )
     }
 }
-
-// MARK: - Loading State
 
 struct FavScreenLoadingState: View {
     var body: some View {
@@ -220,8 +222,6 @@ struct FavScreenLoadingState: View {
         }
     }
 }
-
-// MARK: - Empty State
 
 struct FavScreenEmptyState: View {
     var body: some View {
@@ -243,8 +243,6 @@ struct FavScreenEmptyState: View {
     }
 }
 
-// MARK: - Preview
-
 struct FavProductsScreen_Previews: PreviewProvider {
     final class PreviewFetchUseCase: FetchFavProductsUseCaseProtocol {
         func execute() throws -> [FavProduct] {
@@ -259,7 +257,6 @@ struct FavProductsScreen_Previews: PreviewProvider {
     final class PreviewRemoveUseCase: RemoveFavProductUseCaseProtocol {
         func execute(productId: Int) throws {}
     }
-
 
     static var previews: some View {
         FavProductsScreen()

@@ -4,12 +4,13 @@
 //
 //  Created by shady ramadan on 30/06/2026.
 //
-
 import Foundation
 import SwiftUI
 
 struct BrandProductsView: View {
     @StateObject var viewModel: BrandProductsViewModel
+    @State private var selectedProductId: Int?
+    @State private var isNavigatingToProduct: Bool = false
 
     private let columns = [
         GridItem(.flexible(), spacing: 16),
@@ -41,7 +42,23 @@ struct BrandProductsView: View {
             }
         }
         .background(AppColor.bg.ignoresSafeArea())
+        .navigationBarBackButtonHidden(true)
         .goldBackButton()
+        .background {
+            if let productId = selectedProductId, let product = viewModel.filteredProducts.first(where: { $0.id == productId }) {
+                NavigationLink(
+                    destination: ProductDetailView(
+                        product: product,
+                        productViewModel: DIContainer.shared.container.resolve(ProductDetailViewModel.self)!
+                    ),
+                    isActive: $isNavigatingToProduct
+                ) {
+                    EmptyView()
+                }
+            } else {
+                EmptyView()
+            }
+        }
         .task { await viewModel.loadProducts() }
         .refreshable { await viewModel.loadProducts() }
     }
@@ -93,12 +110,10 @@ struct BrandProductsView: View {
     private var productGrid: some View {
         LazyVGrid(columns: columns, spacing: 20) {
             ForEach(viewModel.filteredProducts) { product in
-                NavigationLink(
-                    destination: ProductDetailView(
-                        product: product,
-                        productViewModel: DIContainer.shared.container.resolve(ProductDetailViewModel.self)!
-                    )
-                ) {
+                Button(action: {
+                    selectedProductId = product.id
+                    isNavigatingToProduct = true
+                }) {
                     ProductCardView(
                         product: product,
                         isFavorited: product.isFavorited,
@@ -160,7 +175,7 @@ struct ProductCardView: View {
                     }
                 }
                 
-                               Button(action: onFavoriteToggle) {
+                Button(action: onFavoriteToggle) {
                     Image(systemName: isFavorited ? "heart.fill" : "heart")
                         .foregroundColor(isFavorited ? AppColor.tagSold : AppColor.textPrim)
                         .padding(10)
@@ -172,11 +187,20 @@ struct ProductCardView: View {
             .frame(maxWidth: .infinity)
             .clipShape(RoundedRectangle(cornerRadius: 16))
 
-            Text(product.name)
-                .font(AppColor.serif(17, .medium))
-                .foregroundColor(AppColor.textPrim)
-                .lineLimit(1)
-                .multilineTextAlignment(.leading)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(product.brand.uppercased())
+                    .font(AppColor.sans(10, .semibold))
+                    .tracking(1)
+                    .foregroundColor(AppColor.textSec)
+                    .lineLimit(1)
+
+                Text(product.name)
+                    .font(AppColor.serif(15, .medium))
+                    .foregroundColor(AppColor.textPrim)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(2)
+            }
+            .frame(height: 55, alignment: .topLeading)
 
             HStack(spacing: 6) {
                 Text("$\(Int(product.price))")
@@ -189,6 +213,8 @@ struct ProductCardView: View {
                         .strikethrough()
                 }
             }
+            .frame(height: 20, alignment: .leading)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 }

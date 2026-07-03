@@ -3,26 +3,26 @@
 //  NexCart
 //
 //  Created by shady ramadan on 02/07/2026.
-//
 
 import Foundation
 import SwiftUI
- 
+
 struct CollectionProductsView: View {
     @StateObject var viewModel: CollectionProductsViewModel
+    @EnvironmentObject var tabBarManager: TabBarManager
     @State private var showFilterSheet = false
- 
+
     private let columns = [
         GridItem(.flexible(), spacing: 16),
         GridItem(.flexible(), spacing: 16)
     ]
- 
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 header
                 countRow
- 
+
                 if viewModel.isLoading {
                     ProgressView()
                         .frame(maxWidth: .infinity)
@@ -39,11 +39,17 @@ struct CollectionProductsView: View {
                     productGrid
                 }
             }
+            .padding(.bottom, 60)
         }
-        .background(AppColor.bg.ignoresSafeArea())
+        .background(AppColor.bg)
+        .ignoresSafeArea(.all, edges: .bottom)
+        .toolbar(.hidden, for: .tabBar)
         .goldBackButton()
         .task { await viewModel.loadProducts() }
         .refreshable { await viewModel.loadProducts() }
+        .onAppear {
+            tabBarManager.isHidden = true
+        }
         .sheet(isPresented: $showFilterSheet) {
             FilterSheetView(
                 brands: viewModel.availableBrands,
@@ -55,7 +61,7 @@ struct CollectionProductsView: View {
             )
         }
     }
- 
+
     private var header: some View {
         HStack {
             Text(viewModel.collection.title)
@@ -66,7 +72,7 @@ struct CollectionProductsView: View {
         .padding(.horizontal, 20)
         .padding(.top, 10)
     }
- 
+
     private var countRow: some View {
         HStack {
             Text("\(viewModel.filteredProducts.count) Items")
@@ -87,7 +93,7 @@ struct CollectionProductsView: View {
         }
         .padding(.horizontal, 20)
     }
- 
+
     private var productGrid: some View {
         LazyVGrid(columns: columns, spacing: 20) {
             ForEach(viewModel.filteredProducts) { product in
@@ -110,17 +116,17 @@ struct CollectionProductsView: View {
         }
         .padding(.horizontal, 20)
     }
- 
+
     private var emptyStatePlaceholder: some View {
         VStack(spacing: 20) {
             Image(systemName: "magnifyingglass")
                 .font(.system(size: 40))
                 .foregroundColor(AppColor.textSec)
- 
+
             Text("No Products Found")
                 .font(AppColor.serif(20, .medium))
                 .foregroundColor(AppColor.textPrim)
- 
+
             Text("We couldn't find any products in \(viewModel.collection.title).")
                 .font(AppColor.sans(14))
                 .foregroundColor(AppColor.textSec)
