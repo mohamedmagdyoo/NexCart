@@ -39,8 +39,7 @@ struct SignInScreen: View {
 struct SignInIdleState: View {
     @ObservedObject var viewModel: SignInViewModel
     
-    @State private var email: String = ""
-    @State private var password: String = ""
+
     
     @State private var navToSignUp: Bool = false
     
@@ -59,10 +58,10 @@ struct SignInIdleState: View {
                 .padding(.bottom, 36)
             
             // MARK: Fields
-            ObsidianField(label: "EMAIL", placeholder: "hello@maison.co", text: $email)
+            ObsidianField(label: "EMAIL", placeholder: "hello@maison.co", text: $viewModel.email)
                 .keyboardType(.emailAddress)
             
-            ObsidianField(label: "PASSWORD", placeholder: "••••••••", text: $password, isSecure: true)
+            ObsidianField(label: "PASSWORD", placeholder: "••••••••", text: $viewModel.password, isSecure: true)
                 .padding(.top, 16)
             
             // MARK: Forgot Password
@@ -77,7 +76,7 @@ struct SignInIdleState: View {
             // MARK: Sign In Button
             Button {
                 viewModel.loginWithEmailAndPass(
-                    credentials: EmailCredentials(email: email, password: password)
+                    credentials: EmailCredentials(email: viewModel.email, password: viewModel.password)
                 )
             } label: {
                 Text("Sign in")
@@ -173,12 +172,7 @@ struct SignInSuccessState: View {
     @State private var opacity: Double = 0
     @State var navToHomeScreen: Bool = false
     @ObservedObject var vm: SignInViewModel
-
-    // فلاج جديد: بنستخدمه عشان نضمن إن saveUser() يتنفذ مرة واحدة بس.
-    // السبب: .task ممكن يتعمل له re-trigger لو الـ view اتعملها
-    // re-render (مثلاً بسبب onAppear أو أي state تغيرت)، وده كان
-    // يأدي لاستدعاء saveUser() أكتر من مرة، أو في توقيت غلط بيتعارض
-    // مع حالة الـ fullScreenCover.
+    
     @State private var didTriggerNavigation: Bool = false
 
     var body: some View {
@@ -190,7 +184,7 @@ struct SignInSuccessState: View {
                 .scaleEffect(scale)
                 .opacity(opacity)
             
-            Text("Welcome back.")
+            Text("Welcome \(vm.userEntity?.displayName ?? "back").")
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(.authTitle)
@@ -203,9 +197,6 @@ struct SignInSuccessState: View {
             }
         }
         .task {
-            // بنتأكد إن ده أول مرة بس قبل ما ننفذ أي حاجة.
-            // ده بيمنع استدعاء saveUser() أكتر من مرة لو الـ .task
-            // اتعمل له re-trigger بسبب re-render في الشجرة.
             guard !didTriggerNavigation else { return }
 
             do{

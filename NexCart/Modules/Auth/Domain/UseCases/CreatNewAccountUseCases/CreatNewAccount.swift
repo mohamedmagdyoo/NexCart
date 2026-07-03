@@ -14,9 +14,11 @@ protocol CreatNewAccountUseCaseProtocol: AnyObject{
 
 final class CreatNewAccountUseCase: CreatNewAccountUseCaseProtocol{
     private var authRepo: AuthRepositoryProtocol
-    
-    init(authRepo: AuthRepositoryProtocol) {
+    private let productsRepository: ProductsRepoProtocol
+
+    init(authRepo: AuthRepositoryProtocol, productsRepository: ProductsRepoProtocol) {
         self.authRepo = authRepo
+        self.productsRepository = productsRepository
     }
     
     func excute(credentials: SignUpCredentials) async throws -> UserEntity {
@@ -26,6 +28,12 @@ final class CreatNewAccountUseCase: CreatNewAccountUseCaseProtocol{
         if credentials.password.count < 8 {
             throw AuthError.weakPassword
         }
+        
+        if credentials.password != credentials.passwordConfirmation{
+            throw AuthError.passwordsDidNotMatchConfirmedPass
+        }
+        
+        productsRepository.cleanFavTabel()
         return try await authRepo.createAccount(with: credentials)
     }
 }

@@ -3,12 +3,12 @@ import SwiftUI
 struct HomeView: View {
 
     @StateObject private var viewModel = DIContainer.shared.container.resolve(HomeViewModel.self)!
+    @StateObject private var tabBarManager = TabBarManager()
     @State private var heroIndex: Int = 0
     @State private var selectedTab: Int = 0
-    
-    // 1️⃣ التعديل هنا: فصلنا الـ State عشان الـ Navigation ميهنجش
     @State private var selectedProductId: Int = 0
     @State private var isNavigatingToProduct: Bool = false
+    @State private var isNavigatingToAllProducts: Bool = false
 
     init() {
         UITabBar.appearance().isHidden = true
@@ -25,14 +25,24 @@ struct HomeView: View {
                 cartTab
                 profileTab
             }
+            .background(AppColor.bg.ignoresSafeArea())
+            .ignoresSafeArea(.all, edges: .bottom)
 
-            if !isNavigatingToProduct {
+            if !tabBarManager.isHidden {
                 HomeTabBar(selectedTab: $selectedTab)
-                    .transition(.move(edge: .bottom))
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .zIndex(1)
             }
         }
-        .animation(.easeInOut, value: isNavigatingToProduct)
+        .environmentObject(tabBarManager)
+        .animation(.easeInOut(duration: 0.3), value: tabBarManager.isHidden)
         .preferredColorScheme(.light)
+        .onChange(of: isNavigatingToProduct) { newValue in
+            if newValue { tabBarManager.isHidden = true }
+        }
+        .onChange(of: isNavigatingToAllProducts) { newValue in
+            if newValue { tabBarManager.isHidden = true }
+        }
     }
 
     private var homeTab: some View {
@@ -55,21 +65,19 @@ struct HomeView: View {
                         errorMessage: viewModel.errorMessage,
                         onToggleFavorite: { viewModel.toggleFavorite(at: $0) },
                         onProductSelected: { product in
-                            // 2️⃣ هنا بنباصي الـ ID ونفعل الـ Navigation فوراً
                             selectedProductId = product.id
                             isNavigatingToProduct = true
                         },
-                        onRetry: { await viewModel.fetchHomeData() }
+                        onRetry: { await viewModel.fetchHomeData() },
+                        onSeeAll: { isNavigatingToAllProducts = true }
                     )
 
                     Spacer().frame(height: 100)
                 }
             }
             .ignoresSafeArea(edges: .top)
-            // 3️⃣ الـ NavigationLink مخفي في الخلفية ومربوط بالـ Bool
             .background {
                 if let product = viewModel.products.first(where: { $0.id == selectedProductId }) {
-
                     NavigationLink(
                         destination: ProductDetailView(
                             product: product,
@@ -79,12 +87,28 @@ struct HomeView: View {
                     ) {
                         EmptyView()
                     }
-
                 } else {
+                    EmptyView()
+                }
+
+                NavigationLink(
+                    destination: Group {
+                        if let collectionViewModel = DIContainer.shared.container.resolve(
+                            CollectionProductsViewModel.self,
+                            argument: CustomCollectionEntity(id: "all", title: "All Products", imageURL: "")
+                        ) {
+                            CollectionProductsView(viewModel: collectionViewModel)
+                        } else {
+                            EmptyView()
+                        }
+                    },
+                    isActive: $isNavigatingToAllProducts
+                ) {
                     EmptyView()
                 }
             }
             .task { await viewModel.fetchHomeData() }
+            .onAppear { tabBarManager.isHidden = false }
         }
         .navigationViewStyle(.stack)
         .tag(0)
@@ -92,10 +116,10 @@ struct HomeView: View {
 
     private var shopTab: some View {
         NavigationView {
-            BrandsListView(
-                viewModel: DIContainer.shared.container.resolve(BrandsListViewModel.self)!
+            CollectionsListView(
+                viewModel: DIContainer.shared.container.resolve(CollectionsListViewModel.self)!
             )
-            .padding(.bottom, 90)
+            .onAppear { tabBarManager.isHidden = false }
         }
         .navigationViewStyle(.stack)
         .tag(1)
@@ -104,15 +128,44 @@ struct HomeView: View {
     private var favoritesTab: some View {
         NavigationView {
             FavProductsScreen()
-                .padding(.bottom, 90)
+                .onAppear { tabBarManager.isHidden = false }
         }
         .navigationViewStyle(.stack)
         .tag(2)
     }
 
+    @State var couponTextField: String = ""
+    
     private var cartTab: some View {
         NavigationView {
-            BagView()    .padding(.bottom, 75)
+            VStack {
+                BagView()
+                    .padding(.bottom, 75)
+                
+                TextField("Enter You Coupon", text: $couponTextField)
+
+                Button {
+                    print("The Coupon is: \(couponTextField)")
+
+                    let couponUseCase: ApplyCouponUseCaseProtocol = DIContainer.shared.container.resolve(ApplyCouponUseCaseProtocol.self)!
+
+                    Task {
+                        let couponResult = await couponUseCase.execute(code: couponTextField, currentTotal: 100)
+                        print(" \(couponResult.isValid)")
+                        print(" \(couponResult.discountAmount)")
+                        print(" \(couponResult.originalTotal)")
+                        print(" \(couponResult.finalTotal)")
+                        print(" \(couponResult.message)")
+                    }
+
+                } label: {
+                    Text("Aplay")
+                        .font(AppColor.sans(16, .medium))
+                        .foregroundColor(AppColor.textPrim)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .padding(.bottom, 90)
+                }
+            }
         }
         .navigationViewStyle(.stack)
         .tag(3)
@@ -120,11 +173,24 @@ struct HomeView: View {
 
     private var profileTab: some View {
         NavigationView {
-            Text("Profile View")
-                .font(AppColor.sans(16, .medium))
-                .foregroundColor(AppColor.textPrim)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding(.bottom, 90)
+            VStack {
+                Text("Profile View")
+                    .font(AppColor.sans(16, .medium))
+                    .foregroundColor(AppColor.textPrim)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.bottom, 90)
+                    .onTapGesture {
+                        UserDefaults.standard.removeObject(forKey: "userEntity")
+                    }
+                
+                Button {
+                    UserDefaults.standard.removeObject(forKey: "userEntity")
+                } label: {
+                    Text("LogOut")
+                        .foregroundColor(.black)
+                }
+            }
+            .onAppear { tabBarManager.isHidden = false }
         }
         .navigationViewStyle(.stack)
         .tag(4)
@@ -187,12 +253,5 @@ struct HomeTabBar: View {
             .frame(maxWidth: .infinity)
             .animation(.easeInOut(duration: 0.15), value: selectedTab)
         }
-    }
-}
-
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
-            .preferredColorScheme(.light)
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol RemoveFavProductUseCaseProtocol {
-    func execute(productId: Int) throws
+    func execute(productId: Int) async throws
 }
 
 final class RemoveFavProduct: RemoveFavProductUseCaseProtocol {
@@ -18,7 +18,7 @@ final class RemoveFavProduct: RemoveFavProductUseCaseProtocol {
         self.repo = repo
     }
 
-    func execute(productId: Int) throws {
-        try repo.removeFavProduct(productId: productId)
+    func execute(productId: Int) async throws {
+        try await repo.removeFavProduct(productId: productId)
     }
 }

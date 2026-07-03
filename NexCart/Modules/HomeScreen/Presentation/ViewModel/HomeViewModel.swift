@@ -16,7 +16,7 @@ final class HomeViewModel: ObservableObject {
     private let fetchProductsUseCase: FetchHomeProductsUseCaseProtocol
     private let fetchBrandsUseCase: FetchHomeBrandsUseCaseProtocol
     private let fetchSlidesUseCase: FetchHeroSlidesUseCaseProtocol
-    private let coreDataService = CoreDataService.shared
+    private let coreDataService: ProductsRepoProtocol! // later will make for it a use case
 
     init(
         fetchProductsUseCase: FetchHomeProductsUseCaseProtocol = FetchHomeProductsUseCase(),
@@ -26,13 +26,13 @@ final class HomeViewModel: ObservableObject {
         self.fetchProductsUseCase = fetchProductsUseCase
         self.fetchBrandsUseCase = fetchBrandsUseCase
         self.fetchSlidesUseCase = fetchSlidesUseCase
+        coreDataService = DIContainer.shared.container.resolve(ProductsRepoProtocol.self)!
     }
 
     func fetchHomeData() async {
         print("🟡 [HomeViewModel] Started fetching all home data...")
         errorMessage = nil
         
-        // استخدام async let بيخلي الطلبين يشتغلوا مع بعض في نفس الوقت بشكل آمن جداً
         async let fetchProducts: () = loadProducts()
         async let fetchBrands: () = loadBrandsAndSlides()
         
@@ -46,9 +46,13 @@ final class HomeViewModel: ObservableObject {
         
         let product = products[index]
         if product.isFavorited {
-            coreDataService.saveProductToDatabase(product: product)
+            Task{
+                try await coreDataService.addFavProduct(product: product.mapToFavProduct())
+            }
         } else {
-            coreDataService.deleteProductFromDatabase(id: product.id)
+            Task{
+                try await coreDataService.removeFavProduct(productId: product.id)
+            }
         }
     }
 
@@ -71,7 +75,7 @@ final class HomeViewModel: ObservableObject {
             print("📦 [HomeViewModel] Fetched \(fetchedProducts.count) products successfully")
             
             for i in fetchedProducts.indices {
-                fetchedProducts[i].isFavorited = coreDataService.isFavorite(id: fetchedProducts[i].id)
+                fetchedProducts[i].isFavorited = coreDataService.isFavProduct(productId: fetchedProducts[i].id)
             }
             
             products = fetchedProducts

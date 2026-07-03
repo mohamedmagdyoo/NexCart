@@ -11,6 +11,8 @@ struct HomeBrandsSection: View {
 
     let brands: [BrandEntity]
     let onBrandSelected: (Int) -> Void
+    
+    @EnvironmentObject var tabBarManager: TabBarManager
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -27,9 +29,20 @@ struct HomeBrandsSection: View {
                 .tracking(3)
                 .foregroundColor(AppColor.textSec)
             Spacer()
-            Button("See all") {}
-                .font(AppColor.sans(13))
-                .foregroundColor(AppColor.gold)
+
+            NavigationLink {
+                BrandsListView(
+                    viewModel: DIContainer.shared.container.resolve(BrandsListViewModel.self)!
+                )
+                .onAppear { tabBarManager.isHidden = true }
+            } label: {
+                Text("See all")
+                    .font(AppColor.sans(13))
+                    .foregroundColor(AppColor.gold)
+            }
+            .simultaneousGesture(TapGesture().onEnded {
+                tabBarManager.isHidden = true
+            })
         }
         .padding(.horizontal, 20)
         .padding(.top, 24)
@@ -59,6 +72,7 @@ struct HomeBrandsSection: View {
                     argument: brand
                 )!
             )
+            .onAppear { tabBarManager.isHidden = true }
         } label: {
             VStack(spacing: 8) {
                 ZStack {
@@ -103,6 +117,7 @@ struct HomeBrandsSection: View {
         }
         .simultaneousGesture(TapGesture().onEnded {
             onBrandSelected(index)
+            tabBarManager.isHidden = true
         })
         .buttonStyle(PlainButtonStyle())
     }

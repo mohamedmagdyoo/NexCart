@@ -14,12 +14,16 @@ protocol LoginWithSocialProviderUseCaseProtocol: AnyObject{
 
 final class LoginWithSocialProvider: LoginWithSocialProviderUseCaseProtocol{
     private var authRepo: AuthRepositoryProtocol
-    
-    init(authRepo: AuthRepositoryProtocol) {
+    private let productsRepository: ProductsRepoProtocol
+
+    init(authRepo: AuthRepositoryProtocol, productsRepository: ProductsRepoProtocol) {
         self.authRepo = authRepo
+        self.productsRepository = productsRepository
     }
     
     func excute(socialProvider: SocialAuthProvider) async throws -> UserEntity {
-        try await authRepo.loginWithSocialProvider(socialProvider)
+        let userEntity = try await authRepo.loginWithSocialProvider(socialProvider)
+        try await productsRepository.syncData(userId: userEntity.id)
+        return userEntity
     }
 }

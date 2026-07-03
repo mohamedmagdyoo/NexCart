@@ -14,13 +14,17 @@ protocol LoginAsGuestUseCaseProtocol: AnyObject{
 
 final class LoginAsGuestUseCase: LoginAsGuestUseCaseProtocol{
     private var authRepo: AuthRepositoryProtocol
+    private let productsRepository: ProductsRepoProtocol
+
     
-    init(authRepo: AuthRepositoryProtocol) {
+    init(authRepo: AuthRepositoryProtocol, productsRepository: ProductsRepoProtocol) {
         self.authRepo = authRepo
+        self.productsRepository = productsRepository
     }
     
     func excute() -> UserEntity {
-        authRepo.continueAsGuest()
+        productsRepository.cleanFavTabel()
+        return authRepo.continueAsGuest()
     }
 }
 
