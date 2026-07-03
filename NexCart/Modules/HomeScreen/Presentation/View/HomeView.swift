@@ -10,6 +10,8 @@ struct HomeView: View {
     @State private var isNavigatingToProduct: Bool = false
     @State private var isNavigatingToAllProducts: Bool = false
     
+    @State private var userEntity: UserEntity?
+    
     init() {
         UITabBar.appearance().isHidden = true
     }
@@ -107,7 +109,10 @@ struct HomeView: View {
                     EmptyView()
                 }
             }
-            .task { await viewModel.fetchHomeData() }
+            .task {
+                await viewModel.fetchHomeData()
+                userEntity = await AppConstants.shared.getUserEntity()
+            }
             .onAppear { tabBarManager.isHidden = false }
         }
         .navigationViewStyle(.stack)
@@ -199,14 +204,20 @@ struct HomeView: View {
                     Text("LogOut")
                         .foregroundColor(.black)
                 }
-                
+
                 NavigationLink{
-                    AddressListView(viewModel: DIContainer.shared.container.resolve(AddressViewModel.self)!, ownerUserId: "ME")
+                    AddressListView(viewModel: DIContainer.shared.container.resolve(AddressViewModel.self)!, ownerUserId: userEntity?.id ?? "Me" )
                 }label: {
                     Text("NavToAddress")
                         .foregroundColor(.black)
                 }
                 
+                
+                Text("Profile View")
+                    .font(AppColor.sans(16, .medium))
+                    .foregroundColor(AppColor.textPrim)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.bottom, 90)
             }
             .onAppear { tabBarManager.isHidden = false }
         }

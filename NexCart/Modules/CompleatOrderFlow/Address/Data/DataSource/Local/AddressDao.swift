@@ -11,8 +11,8 @@ import Foundation
 protocol AddressDao {
     func insert(_ address: AddressEntity) throws
     func update(_ address: AddressEntity) throws
-    func fetchAll() throws -> [AddressEntity]
-    func fetchDefault() throws -> AddressEntity?
+    func fetchAll(ownerID: String) throws -> [AddressEntity]
+    func fetchDefault(ownerID: String) throws -> AddressEntity?
     func fetchById(_ id: String) throws -> AddressEntity?
     func delete(id: String) throws
     func deleteAll() throws
@@ -57,24 +57,35 @@ final class CoreDataAddressDao: AddressDao {
         try saveContext()
     }
 
-    func fetchAll() throws -> [AddressEntity] {
+    func fetchAll(ownerID: String) throws -> [AddressEntity] {
         let context = container.viewContext
 
         let request: NSFetchRequest<AddressMO> = AddressMO.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "updatedAt", ascending: false)]
+        
+        request.predicate = NSPredicate(format: "ownerUserId == %@", ownerID)
+        
+        request.sortDescriptors = [
+            NSSortDescriptor(key: "updatedAt", ascending: false)
+        ]
 
         do {
             return try context.fetch(request).map(map)
         } catch {
-            throw AddressError.localStorageFailed(underlying: error.localizedDescription)
+            throw AddressError.localStorageFailed(
+                underlying: error.localizedDescription
+            )
         }
     }
-
-    func fetchDefault() throws -> AddressEntity? {
+    func fetchDefault(ownerID: String) throws -> AddressEntity? {
         let context = container.viewContext
 
         let request: NSFetchRequest<AddressMO> = AddressMO.fetchRequest()
-        request.predicate = NSPredicate(format: "isDefault == YES")
+        
+        request.predicate = NSPredicate(
+            format: "isDefault == YES AND ownerUserId == %@",
+            ownerID
+        )
+        
         request.fetchLimit = 1
 
         do {
