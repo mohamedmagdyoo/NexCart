@@ -35,12 +35,6 @@ class ApiService : ApiServiceProtocol{
                            userInfo: [NSLocalizedDescriptionKey: "HTTP \(code)"])
         }
 
-        #if DEBUG
-        if let jsonStr = String(data: data, encoding: .utf8) {
-            let preview = String(jsonStr.prefix(500))
-            print("📦 Response (\(data.count) bytes): \(preview)...")
-        }
-        #endif
 
         return try JSONDecoder().decode(T.self, from: data)
     }
@@ -53,11 +47,7 @@ class ApiService : ApiServiceProtocol{
         guard let url = URL(string: endPoint.baseUrl + endPoint.path) else {
             throw URLError(.badURL)
         }
-
-        #if DEBUG
-        print("🌐 API Request: \(url.absoluteString)")
-        #endif
-
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -77,11 +67,6 @@ class ApiService : ApiServiceProtocol{
             )
         }
 
-        #if DEBUG
-        if let jsonStr = String(data: data, encoding: .utf8) {
-            print("📦 Response: \(jsonStr)")
-        }
-        #endif
 
         return try JSONDecoder().decode(Response.self, from: data)
     }

@@ -8,7 +8,7 @@
 import Foundation
 
 final class MockAuthRepository: AuthRepositoryProtocol {
-
+    
     // MARK: - Control Flags (set these in your ViewController/Preview to simulate scenarios)
     var shouldFail = false
     var fakeUser = UserEntity(
@@ -21,22 +21,22 @@ final class MockAuthRepository: AuthRepositoryProtocol {
         phone: "+201012345678",
         acceptsMarketing: true
     )
-
+    
     func loginWithEmail(_ credentials: EmailCredentials) async throws -> UserEntity {
         if shouldFail { throw AuthError.wrongPassword }
         return fakeUser
     }
-
+    
     func createAccount(with credentials: SignUpCredentials) async throws -> UserEntity {
         if shouldFail { throw AuthError.emailAlreadyInUse }
         return fakeUser
     }
-
+    
     func loginWithSocialProvider(_ provider: SocialAuthProvider) async throws -> UserEntity {
         if shouldFail { throw AuthError.socialLoginCancelled }
         return fakeUser
     }
-
+    
     func continueAsGuest() -> UserEntity {
         UserEntity(
             id: "guest-000",
@@ -49,14 +49,24 @@ final class MockAuthRepository: AuthRepositoryProtocol {
             acceptsMarketing: false
         )
     }
-
+    
     func resetPassword(email: String) async throws {
         if shouldFail { throw AuthError.userNotFound }
     }
-
+    
     func logout() {}
-
+    
     func getCurrentUser() -> UserEntity? {
         return shouldFail ? nil : fakeUser
+    }
+}
+
+final class MockCouponRepository: CouponRepository {
+    var shouldFail = false
+    var stubbedCoupon = CouponEntity(code: "SUMMER20", isActive: true, discountType: .percentage,
+                                     value: 20, currencyCode: nil, startsAt: nil, endsAt: nil)
+    func fetchCoupon(code: String) async throws -> CouponEntity {
+        if shouldFail { throw CouponError.couponNotFound }
+        return stubbedCoupon
     }
 }
