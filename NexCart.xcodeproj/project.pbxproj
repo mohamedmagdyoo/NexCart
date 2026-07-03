@@ -100,6 +100,15 @@
 		D960C23F2FF1B28E00FFF4D9 /* SignUpScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C23E2FF1B28E00FFF4D9 /* SignUpScreen.swift */; };
 		D960C2452FF1B40300FFF4D9 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C2442FF1B40300FFF4D9 /* SignUpViewModel.swift */; };
 		D960C2472FF1B6CA00FFF4D9 /* ShardViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C2462FF1B6CA00FFF4D9 /* ShardViews.swift */; };
+		D9906F9C2FF7F57C00B9474E /* CouponEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906F9B2FF7F57C00B9474E /* CouponEntity.swift */; };
+		D9906F9E2FF7F5E000B9474E /* CouponError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906F9D2FF7F5E000B9474E /* CouponError.swift */; };
+		D9906FA02FF7F5F200B9474E /* CouponRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906F9F2FF7F5F200B9474E /* CouponRepository.swift */; };
+		D9906FA22FF7F62A00B9474E /* ApplyCouponUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FA12FF7F62A00B9474E /* ApplyCouponUseCase.swift */; };
+		D9906FA82FF7F75A00B9474E /* GraphQLCouponResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FA72FF7F75A00B9474E /* GraphQLCouponResponseDTO.swift */; };
+		D9906FAA2FF7F77900B9474E /* GraphQLService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FA92FF7F77900B9474E /* GraphQLService.swift */; };
+		D9906FAC2FF7F79C00B9474E /* CouponGraphQLQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FAB2FF7F79C00B9474E /* CouponGraphQLQuery.swift */; };
+		D9906FB02FF7F89400B9474E /* CouponRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FAF2FF7F89400B9474E /* CouponRemoteDataSource.swift */; };
+		D9906FB22FF7F92B00B9474E /* CouponRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FB12FF7F92B00B9474E /* CouponRepositoryImpl.swift */; };
 		D9CFF5882FF4126200B7B8DE /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D9EAA1272FF274410097C038 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D9EAA1262FF274410097C038 /* FirebaseAuth */; };
 		D9EAA12C2FF275690097C038 /* FirebaseAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EAA12B2FF275690097C038 /* FirebaseAuthService.swift */; };
@@ -240,6 +249,15 @@
 		D960C23E2FF1B28E00FFF4D9 /* SignUpScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpScreen.swift; sourceTree = "<group>"; };
 		D960C2442FF1B40300FFF4D9 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		D960C2462FF1B6CA00FFF4D9 /* ShardViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShardViews.swift; sourceTree = "<group>"; };
+		D9906F9B2FF7F57C00B9474E /* CouponEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponEntity.swift; sourceTree = "<group>"; };
+		D9906F9D2FF7F5E000B9474E /* CouponError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponError.swift; sourceTree = "<group>"; };
+		D9906F9F2FF7F5F200B9474E /* CouponRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponRepository.swift; sourceTree = "<group>"; };
+		D9906FA12FF7F62A00B9474E /* ApplyCouponUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyCouponUseCase.swift; sourceTree = "<group>"; };
+		D9906FA72FF7F75A00B9474E /* GraphQLCouponResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLCouponResponseDTO.swift; sourceTree = "<group>"; };
+		D9906FA92FF7F77900B9474E /* GraphQLService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLService.swift; sourceTree = "<group>"; };
+		D9906FAB2FF7F79C00B9474E /* CouponGraphQLQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponGraphQLQuery.swift; sourceTree = "<group>"; };
+		D9906FAF2FF7F89400B9474E /* CouponRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponRemoteDataSource.swift; sourceTree = "<group>"; };
+		D9906FB12FF7F92B00B9474E /* CouponRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponRepositoryImpl.swift; sourceTree = "<group>"; };
 		D9CFF5822FF400C100B7B8DE /* ProductsRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsRepo.swift; sourceTree = "<group>"; };
 		D9EAA12B2FF275690097C038 /* FirebaseAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthService.swift; sourceTree = "<group>"; };
 		D9EAA1322FF27A3F0097C038 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
@@ -874,6 +892,7 @@
 		D960C1CC2FF1178000FFF4D9 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				D9906F942FF7F4C200B9474E /* CompleatOrderFlow */,
 				9F90031B2FF6ED3100B4B745 /* Collections */,
 				9F92BF3B2FF4774900E090B7 /* Brands */,
 				D93C25E12FF5294400486A11 /* FavProducts */,
@@ -1154,6 +1173,110 @@
 			path = FakeData;
 			sourceTree = "<group>";
 		};
+		D9906F942FF7F4C200B9474E /* CompleatOrderFlow */ = {
+			isa = PBXGroup;
+			children = (
+				D9906F952FF7F4E100B9474E /* CouponCode */,
+			);
+			path = CompleatOrderFlow;
+			sourceTree = "<group>";
+		};
+		D9906F952FF7F4E100B9474E /* CouponCode */ = {
+			isa = PBXGroup;
+			children = (
+				D9906F962FF7F4E800B9474E /* Domain */,
+				D9906F972FF7F4ED00B9474E /* Data */,
+			);
+			path = CouponCode;
+			sourceTree = "<group>";
+		};
+		D9906F962FF7F4E800B9474E /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				D9906F982FF7F4F700B9474E /* Entity */,
+				D9906F9A2FF7F50700B9474E /* RepoInterface */,
+				D9906F992FF7F4FE00B9474E /* UseCase */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		D9906F972FF7F4ED00B9474E /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				D9906FA32FF7F71500B9474E /* Network */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		D9906F982FF7F4F700B9474E /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				D9906F9B2FF7F57C00B9474E /* CouponEntity.swift */,
+				D9906F9D2FF7F5E000B9474E /* CouponError.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		D9906F992FF7F4FE00B9474E /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				D9906FA12FF7F62A00B9474E /* ApplyCouponUseCase.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		D9906F9A2FF7F50700B9474E /* RepoInterface */ = {
+			isa = PBXGroup;
+			children = (
+				D9906F9F2FF7F5F200B9474E /* CouponRepository.swift */,
+			);
+			path = RepoInterface;
+			sourceTree = "<group>";
+		};
+		D9906FA32FF7F71500B9474E /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				D9906FAD2FF7F88A00B9474E /* DataSource */,
+				D9906FA62FF7F72900B9474E /* Service */,
+				D9906FA42FF7F71900B9474E /* Dtos */,
+				D9906FB12FF7F92B00B9474E /* CouponRepositoryImpl.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		D9906FA42FF7F71900B9474E /* Dtos */ = {
+			isa = PBXGroup;
+			children = (
+				D9906FA72FF7F75A00B9474E /* GraphQLCouponResponseDTO.swift */,
+			);
+			path = Dtos;
+			sourceTree = "<group>";
+		};
+		D9906FA62FF7F72900B9474E /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				D9906FAB2FF7F79C00B9474E /* CouponGraphQLQuery.swift */,
+				D9906FA92FF7F77900B9474E /* GraphQLService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		D9906FAD2FF7F88A00B9474E /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				D9906FAE2FF7F88F00B9474E /* Remote */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
+		D9906FAE2FF7F88F00B9474E /* Remote */ = {
+			isa = PBXGroup;
+			children = (
+				D9906FAF2FF7F89400B9474E /* CouponRemoteDataSource.swift */,
+			);
+			path = Remote;
+			sourceTree = "<group>";
+		};
 		D9EAA1282FF2750D0097C038 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1387,9 +1510,11 @@
 				D9EAA13D2FF28FC70097C038 /* AuthMappers.swift in Sources */,
 				9F8F1E512FF3898D0016B844 /* FetchHomeProductsUseCaseProtocol.swift in Sources */,
 				9F92BF4C2FF47AD900E090B7 /* BrandProductsEndPoint.swift in Sources */,
+				D9906FA02FF7F5F200B9474E /* CouponRepository.swift in Sources */,
 				F51C989D2FF5A0A800A9C2EE /* ProductBody.swift in Sources */,
 				F51C98A62FF5A0E000A9C2EE /* ProductService.swift in Sources */,
 				F51C98A72FF5A0E000A9C2EE /* AddCartResponseMapper.swift in Sources */,
+				D9906F9C2FF7F57C00B9474E /* CouponEntity.swift in Sources */,
 				F51C98A82FF5A0E000A9C2EE /* ProductBodyMapper.swift in Sources */,
 				9F9003382FF6F23C00B4B745 /* CollectionProductsView.swift in Sources */,
 				F51C98A92FF5A0E000A9C2EE /* AddCartResponse.swift in Sources */,
@@ -1425,6 +1550,7 @@
 				9F92BF412FF478C300E090B7 /* BrandEntity.swift in Sources */,
 				D918C1202FF6BC6400FDAED6 /* FavProductsService.swift in Sources */,
 				D93C26022FF5294400486A11 /* FavProduct.swift in Sources */,
+				D9906FAC2FF7F79C00B9474E /* CouponGraphQLQuery.swift in Sources */,
 				D93C25FF2FF5294400486A11 /* ProductsRepoProtocol.swift in Sources */,
 				F5A68BBA2FF6567A002E41FD /* AddCart.swift in Sources */,
 				D93C26002FF5294400486A11 /* FetchFavProducts.swift in Sources */,
@@ -1439,19 +1565,23 @@
 				D960C21D2FF17B6100FFF4D9 /* LoginAsGuest.swift in Sources */,
 				D93C25FE2FF5294400486A11 /* FavProductsDaoProtocol.swift in Sources */,
 				D960C1F42FF1243400FFF4D9 /* LaunchScreen.swift in Sources */,
+				D9906FB02FF7F89400B9474E /* CouponRemoteDataSource.swift in Sources */,
 				D960C2162FF1778200FFF4D9 /* AuthError.swift in Sources */,
 				D960C2192FF17AF700FFF4D9 /* LoginWithEmail.swift in Sources */,
 				D960C2452FF1B40300FFF4D9 /* SignUpViewModel.swift in Sources */,
 				D91E749A2FF5193F00D941C4 /* FakeProduct.swift in Sources */,
 				D91E748B2FF5152E00D941C4 /* OnBoardingView.swift in Sources */,
 				D960C2312FF1981D00FFF4D9 /* DIContainer.swift in Sources */,
+				D9906FAA2FF7F77900B9474E /* GraphQLService.swift in Sources */,
 				9F8F1E622FF38A6E0016B844 /* ProductDto.swift in Sources */,
 				9F92BF4A2FF47AA500E090B7 /* BrandsEndPoint.swift in Sources */,
 				9F8F1E632FF38A6E0016B844 /* BrandDto.swift in Sources */,
 				D960C22A2FF18C6500FFF4D9 /* FakeAuthRepo.swift in Sources */,
 				D9EAA12C2FF275690097C038 /* FirebaseAuthService.swift in Sources */,
+				D9906FB22FF7F92B00B9474E /* CouponRepositoryImpl.swift in Sources */,
 				D960C2382FF1990900FFF4D9 /* DIContainer+ViewModels.swift in Sources */,
 				D960C1A02FF1167A00FFF4D9 /* ContentView.swift in Sources */,
+				D9906FA82FF7F75A00B9474E /* GraphQLCouponResponseDTO.swift in Sources */,
 				9F9003322FF6F16500B4B745 /* CollectionListViewModel.swift in Sources */,
 				D960C2202FF17BE800FFF4D9 /* CreatNewAccount.swift in Sources */,
 				9F94981A2FF578BE000CEB5A /* EndPoint.swift in Sources */,
@@ -1476,9 +1606,11 @@
 				D960C1E52FF11ACE00FFF4D9 /* AppTheme.swift in Sources */,
 				9F9003342FF6F1A800B4B745 /* CollectionProductViewModel.swift in Sources */,
 				D960C2262FF17D6D00FFF4D9 /* LogOut.swift in Sources */,
+				D9906F9E2FF7F5E000B9474E /* CouponError.swift in Sources */,
 				9F92BF442FF4796C00E090B7 /* BrandsRepoProtocol.swift in Sources */,
 				D960C2112FF174C100FFF4D9 /* AuthRepoInterface.swift in Sources */,
 				D918C11E2FF6BC3600FDAED6 /* FavProductDTO.swift in Sources */,
+				D9906FA22FF7F62A00B9474E /* ApplyCouponUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
