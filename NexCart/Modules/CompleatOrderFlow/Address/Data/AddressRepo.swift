@@ -16,9 +16,9 @@ protocol AddressRepository {
 
     func deleteAllAddresses() async throws
 
-    func getAllAddresses() async throws -> [AddressEntity]
+    func getAllAddresses(ownerID: String) async throws -> [AddressEntity]
 
-    func getDefaultAddress() async throws -> AddressEntity?
+    func getDefaultAddress(ownerID: String) async throws -> AddressEntity?
 }
 
 
@@ -49,12 +49,12 @@ final class AddressRepositoryImpl: AddressRepository {
         try localDataSource.deleteAll()
     }
     
-    func getAllAddresses() async throws -> [AddressEntity] {
-        try localDataSource.fetchAll()
+    func getAllAddresses(ownerID: String) async throws -> [AddressEntity] {
+        try localDataSource.fetchAll(ownerID: ownerID)
     }
     
-    func getDefaultAddress() async throws -> AddressEntity? {
-        try localDataSource.fetchDefault()
+    func getDefaultAddress(ownerID: String) async throws -> AddressEntity? {
+        try localDataSource.fetchDefault(ownerID: ownerID)
     }
     
 }

@@ -92,7 +92,7 @@ struct AddressListView: View {
                 AddNewAddressView(viewModel: viewModel, ownerUserId: ownerUserId, isPresented: $showingAddAddress)
             }
             .task {
-                await viewModel.loadAddresses()
+                await viewModel.loadAddresses(ownerID: ownerUserId)
             }
         }
     }

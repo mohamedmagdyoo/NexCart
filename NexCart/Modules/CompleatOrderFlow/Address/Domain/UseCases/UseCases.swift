@@ -52,8 +52,8 @@ struct GetAllAddressesUseCase {
         self.repository = repository
     }
  
-    func execute() async throws -> [AddressEntity] {
-        try await repository.getAllAddresses()
+    func execute(ownerID: String) async throws -> [AddressEntity] {
+        try await repository.getAllAddresses(ownerID: ownerID)
     }
 }
     
@@ -64,7 +64,7 @@ struct GetDefaultAddressUseCase {
         self.repository = repository
     }
 
-    func execute() async throws -> AddressEntity? {
-        try await repository.getDefaultAddress()
+    func execute(ownerID: String) async throws -> AddressEntity? {
+        try await repository.getDefaultAddress(ownerID: ownerID)
     }
 }

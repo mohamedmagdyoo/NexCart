@@ -49,10 +49,10 @@ final class AddressViewModel: ObservableObject {
         self.getDefaultAddressUseCase = getDefaultAddressUseCase
     }
 
-    func loadAddresses() async {
+    func loadAddresses(ownerID: String) async {
         listState = .loading
         do {
-            let addresses = try await getAllAddressesUseCase.execute()
+            let addresses = try await getAllAddressesUseCase.execute(ownerID: ownerID)
             listState = addresses.isEmpty ? .empty : .success(addresses)
         } catch let error as AddressError {
             listState = .error(error)
@@ -63,6 +63,7 @@ final class AddressViewModel: ObservableObject {
 
 
     func submitNewAddress(ownerUserId: String) async -> Bool {
+        print("Add New Addres with owner\(ownerUserId)")
         formState = .loading
 
         guard !fullName.trimmingCharacters(in: .whitespaces).isEmpty else {
@@ -101,7 +102,7 @@ final class AddressViewModel: ObservableObject {
             try await addAddressUseCase.execute(newAddress)
             formState = .success(newAddress)
             clearForm()
-            await loadAddresses()
+            await loadAddresses(ownerID: ownerUserId)
             return true
         } catch let error as AddressError {
             formState = .error(error)
@@ -115,18 +116,7 @@ final class AddressViewModel: ObservableObject {
     func delete(_ address: AddressEntity) async {
         do {
             try await deleteAddressUseCase.execute(id: address.id)
-            await loadAddresses()
-        } catch let error as AddressError {
-            listState = .error(error)
-        } catch {
-            listState = .error(.unknown(underlying: error.localizedDescription))
-        }
-    }
-
-    func deleteAll() async {
-        do {
-            try await deleteAllAddressesUseCase.execute()
-            await loadAddresses()
+            await loadAddresses(ownerID: address.ownerUserId)
         } catch let error as AddressError {
             listState = .error(error)
         } catch {
@@ -150,7 +140,7 @@ final class AddressViewModel: ObservableObject {
             promoted.isDefault = true
             try await addAddressUseCase.execute(promoted)
 
-            await loadAddresses()
+            await loadAddresses(ownerID: address.ownerUserId)
         } catch let error as AddressError {
             listState = .error(error)
         } catch {
