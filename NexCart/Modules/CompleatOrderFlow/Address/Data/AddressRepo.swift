@@ -1,0 +1,60 @@
+//
+//  AddressRepo.swift
+//  NexCart
+//
+//  Created by Mohamed Magdy on 03/07/2026.
+//
+
+import Foundation
+
+protocol AddressRepository {
+
+
+    func addAddress(_ address: AddressEntity) async throws
+
+    func deleteAddress(id: String) async throws
+
+    func deleteAllAddresses() async throws
+
+    func getAllAddresses() async throws -> [AddressEntity]
+
+    func getDefaultAddress() async throws -> AddressEntity?
+}
+
+
+
+final class AddressRepositoryImpl: AddressRepository {
+    
+    private let localDataSource: AddressDao
+    
+    init(
+        localDataSource: AddressDao
+    ) {
+        self.localDataSource = localDataSource
+        
+    }
+    
+    func addAddress(_ address: AddressEntity) async throws {
+        var addressToSave = address
+        try localDataSource.insert(addressToSave)
+    }
+    
+    func deleteAddress(id: String) async throws {
+        
+        try localDataSource.delete(id: id)
+    }
+    
+    func deleteAllAddresses() async throws {
+        
+        try localDataSource.deleteAll()
+    }
+    
+    func getAllAddresses() async throws -> [AddressEntity] {
+        try localDataSource.fetchAll()
+    }
+    
+    func getDefaultAddress() async throws -> AddressEntity? {
+        try localDataSource.fetchDefault()
+    }
+    
+}
