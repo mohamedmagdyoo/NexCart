@@ -12,4 +12,6 @@ protocol CartRepoProtcol
     func getAllProduct() async throws ->[BagEntity]
     
     func getSingleProduct(productId:Int) async throws ->ProductEntity
+    
+    func deleteFromCart(draftOrderId: String) async throws
 }
