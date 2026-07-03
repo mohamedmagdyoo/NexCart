@@ -47,13 +47,17 @@ struct DeleteAllAddressesUseCase {
 
 struct GetAllAddressesUseCase {
     private let repository: AddressRepository
- 
+
     init(repository: AddressRepository) {
         self.repository = repository
     }
- 
+
     func execute(ownerID: String) async throws -> [AddressEntity] {
-        try await repository.getAllAddresses(ownerID: ownerID)
+        let addresses = try await repository.getAllAddresses(ownerID: ownerID)
+
+        return addresses.sorted { lhs, rhs in
+            lhs.isDefault && !rhs.isDefault
+        }
     }
 }
     
