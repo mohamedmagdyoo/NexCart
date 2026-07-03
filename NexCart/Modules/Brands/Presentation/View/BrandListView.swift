@@ -4,7 +4,6 @@
 //
 //  Created by shady ramadan on 30/06/2026.
 //
-
 import Foundation
 import SwiftUI
 
@@ -17,36 +16,36 @@ struct BrandsListView: View {
     ]
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                if viewModel.isLoading {
-                    ProgressView().padding(.top, 60)
-                } else if let error = viewModel.errorMessage {
-                    Text(error)
-                        .font(AppColor.sans(14))
-                        .foregroundColor(AppColor.textSec)
-                        .padding(.top, 60)
-                } else if viewModel.brands.isEmpty {
-                    emptyBrandsPlaceholder
-                } else {
-                    LazyVGrid(columns: columns, spacing: 16) {
-                        ForEach(viewModel.brands) { brand in
-                            NavigationLink {
-                                BrandDestinationView(brand: brand)
-                            } label: {
-                                BrandCardView(brand: brand)
-                            }
+        ScrollView {
+            if viewModel.isLoading {
+                ProgressView().padding(.top, 60)
+            } else if let error = viewModel.errorMessage {
+                Text(error)
+                    .font(AppColor.sans(14))
+                    .foregroundColor(AppColor.textSec)
+                    .padding(.top, 60)
+            } else if viewModel.brands.isEmpty {
+                emptyBrandsPlaceholder
+            } else {
+                LazyVGrid(columns: columns, spacing: 16) {
+                    ForEach(viewModel.brands) { brand in
+                        NavigationLink {
+                            BrandDestinationView(brand: brand)
+                        } label: {
+                            BrandCardView(brand: brand)
                         }
                     }
-                    .padding(20)
-                    .buttonStyle(PlainButtonStyle())
                 }
+                .padding(20)
+                .buttonStyle(PlainButtonStyle())
             }
-            .background(AppColor.bg.ignoresSafeArea())
-            .navigationTitle("Brands")
-            .task { await viewModel.loadBrands() }
-            .refreshable { await viewModel.loadBrands() }
         }
+        .background(AppColor.bg.ignoresSafeArea())
+        .navigationTitle("Brands")
+        .navigationBarBackButtonHidden(true)
+        .goldBackButton()
+        .task { await viewModel.loadBrands() }
+        .refreshable { await viewModel.loadBrands() }
     }
 
     private var emptyBrandsPlaceholder: some View {
@@ -69,7 +68,6 @@ struct BrandsListView: View {
         .padding(.top, 80)
     }
 }
-
 
 private struct BrandDestinationView: View {
     let brand: BrandEntity

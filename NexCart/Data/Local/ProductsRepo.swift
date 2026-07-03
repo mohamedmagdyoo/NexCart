@@ -7,24 +7,37 @@
 
 import Foundation
 
+
 final class ProductsRepo: ProductsRepoProtocol {
 
-    private let dao: FavProductsDaoProtocol
+    private let favProductReopo: FavProductRepoInterface
 
-    init(dao: FavProductsDaoProtocol = FavProductsDAO.shared) {
-        self.dao = dao
+    init(favProductReopo: FavProductRepoInterface) {
+        self.favProductReopo = favProductReopo
     }
 
     func fetchFavProducts() throws -> [FavProduct] {
-        try dao.getAllFav()
+        try favProductReopo.getAllFavorites()
     }
 
-    func removeFavProduct(productId: Int) throws {
-        try dao.removeFromFav(productId: productId)
+    func addFavProduct(product: FavProduct) async throws {
+        try await favProductReopo.addFavorite(product: product)
+    }
+
+    func removeFavProduct(productId: Int) async throws {
+        try await favProductReopo.removeFavorite(productId: productId)
+    }
+
+    func isFavProduct(productId: Int) -> Bool {
+        favProductReopo.isFav(productId: productId)
+    }
+
+    func syncData(userId: String) async throws {
+        print("Sync2")
+        try await favProductReopo.syncFromRemote(userId: userId)
     }
     
-    func removeAllFav() throws {
-        try dao.cleanFavTable()
+    func cleanFavTabel() {
+        favProductReopo.cleanFavTabel()
     }
-    
 }

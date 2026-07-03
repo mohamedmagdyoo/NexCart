@@ -12,19 +12,20 @@ import Swinject
 extension DIContainer {
     func registerUseCases() {
         container.register(LoginWithEmailUseCaseProtocol.self) { r in
-            LoginWithEmailUseCase(repository: r.resolve(AuthRepositoryProtocol.self)!)
+            LoginWithEmailUseCase(repository: r.resolve(AuthRepositoryProtocol.self)!,
+                                  productsRepository: r.resolve(ProductsRepoProtocol.self)!)
         }
         
         container.register(LoginWithSocialProviderUseCaseProtocol.self) { r in
-            LoginWithSocialProvider(authRepo: r.resolve(AuthRepositoryProtocol.self)!)
+            LoginWithSocialProvider(authRepo: r.resolve(AuthRepositoryProtocol.self)!,productsRepository: r.resolve(ProductsRepoProtocol.self)!)
         }
         
         container.register(LoginAsGuestUseCaseProtocol.self) { r in
-            LoginAsGuestUseCase(authRepo: r.resolve(AuthRepositoryProtocol.self)!)
+            LoginAsGuestUseCase(authRepo: r.resolve(AuthRepositoryProtocol.self)!,productsRepository: r.resolve(ProductsRepoProtocol.self)!)
         }
         
         container.register(CreatNewAccountUseCaseProtocol.self) { r in
-            CreatNewAccountUseCase(authRepo: r.resolve(AuthRepositoryProtocol.self)!)
+            CreatNewAccountUseCase(authRepo: r.resolve(AuthRepositoryProtocol.self)!,productsRepository: r.resolve(ProductsRepoProtocol.self)!)
         }
         
         container.register(LogOutUseCaseProtocol.self) { r in
@@ -63,6 +64,14 @@ extension DIContainer {
         container.register(RemoveFavProductUseCaseProtocol.self){ r in
             RemoveFavProduct(repo: r.resolve(ProductsRepoProtocol.self)!)
         }
+        container.register(FetchCollectionsUseCaseProtocol.self) { r in
+                   FetchCollectionsUseCase(repo: r.resolve(CollectionsRepoProtocol.self)!)
+               }
+
+        container.register(FetchCollectionProductsUseCaseProtocol.self) { r in
+            FetchCollectionProductsUseCase(repo: r.resolve(CollectionsRepoProtocol.self)!)
+        }
+
         container.register(AddCartUseCase.self) { r in
             AddCartUseCase(
                 productDetailsRepo: r.resolve(ProductDetailsRepo.self)!
@@ -74,6 +83,10 @@ extension DIContainer {
             CartUseCase(cartRepo: r.resolve(CartRepoProtcol.self)!)
         }
 
+        // Coupon
+        container.register(ApplyCouponUseCaseProtocol.self) { r in
+            ApplyCouponUseCase(repository: r.resolve(CouponRepository.self)!)
+        }
         
     }
 }

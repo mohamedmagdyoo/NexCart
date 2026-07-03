@@ -18,13 +18,17 @@ final class SignInViewModel: ObservableObject {
     @Published var shouldNavigateToHome: Bool = false
     @Published var screenState: SignInScreenState = .idle
     @Published var alert: AlertModel?
+    
+    //FieldStates
+    @Published  var email: String = ""
+    @Published  var password: String = ""
 
     // MARK: - Use Cases
     private let loginWithEmailPassUC: LoginWithEmailUseCaseProtocol
     private let loginWithProviderUC: LoginWithSocialProviderUseCaseProtocol
     private let loginAsGuestUC: LoginAsGuestUseCaseProtocol
     
-    private var userEntity: UserEntity?
+    var userEntity: UserEntity?
 
     init(
         loginWithEmailPassUC: LoginWithEmailUseCaseProtocol,
@@ -69,7 +73,7 @@ final class SignInViewModel: ObservableObject {
     func loginAsGuest() {
         userEntity = loginAsGuestUC.excute()
         screenState = .success
-        self.shouldNavigateToHome = true
+//        self.shouldNavigateToHome = true
     }
     
     // To emity that there a new user loged in and restate the content view to nav to home screen direct

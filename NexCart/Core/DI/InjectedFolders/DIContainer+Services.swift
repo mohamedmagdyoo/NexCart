@@ -22,13 +22,20 @@ extension DIContainer{
         container.register(FavProductsDAO.self){ _ in
             FavProductsDAO()
         }
+        container.register(AuthShopifyServiceProtocol.self){ _ in
+            AuthShopifyService()
+        }
         
         container.register(ProductDetailsService.self) { r in
             ProductDetailsService(
                 networkClient: r.resolve(ApiServiceProtocol.self)!
             )
         }
-       
+        
+        //FavProductsRemoteServiceProtocol
+        container.register(FavProductsRemoteServiceProtocol.self){_ in
+            FavProductsFirestoreService()
+        }
     }
 }
 
