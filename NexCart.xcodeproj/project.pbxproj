@@ -31,6 +31,7 @@
 		9F9003382FF6F23C00B4B745 /* CollectionProductsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9003372FF6F23C00B4B745 /* CollectionProductsView.swift */; };
 		9F90033A2FF7043000B4B745 /* GoldBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9003392FF7043000B4B745 /* GoldBackButton.swift */; };
 		9F90033C2FF705C700B4B745 /* FilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F90033B2FF705C700B4B745 /* FilterSheet.swift */; };
+		9F9013832FF746A1003B74D9 /* TabBarManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9013822FF746A1003B74D9 /* TabBarManger.swift */; };
 		9F92BF412FF478C300E090B7 /* BrandEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F92BF402FF478C300E090B7 /* BrandEntity.swift */; };
 		9F92BF442FF4796C00E090B7 /* BrandsRepoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F92BF432FF4796C00E090B7 /* BrandsRepoProtocol.swift */; };
 		9F92BF472FF479D300E090B7 /* BrandUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F92BF462FF479D300E090B7 /* BrandUseCase.swift */; };
@@ -161,6 +162,7 @@
 		9F9003372FF6F23C00B4B745 /* CollectionProductsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionProductsView.swift; sourceTree = "<group>"; };
 		9F9003392FF7043000B4B745 /* GoldBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoldBackButton.swift; sourceTree = "<group>"; };
 		9F90033B2FF705C700B4B745 /* FilterSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheet.swift; sourceTree = "<group>"; };
+		9F9013822FF746A1003B74D9 /* TabBarManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarManger.swift; sourceTree = "<group>"; };
 		9F92BF402FF478C300E090B7 /* BrandEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandEntity.swift; sourceTree = "<group>"; };
 		9F92BF432FF4796C00E090B7 /* BrandsRepoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsRepoProtocol.swift; sourceTree = "<group>"; };
 		9F92BF462FF479D300E090B7 /* BrandUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandUseCase.swift; sourceTree = "<group>"; };
@@ -936,6 +938,7 @@
 				D960C19D2FF1167A00FFF4D9 /* NexCartApp.swift */,
 				D960C19F2FF1167A00FFF4D9 /* ContentView.swift */,
 				D960C1A12FF1167C00FFF4D9 /* Assets.xcassets */,
+				9F9013822FF746A1003B74D9 /* TabBarManger.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -1332,11 +1335,8 @@
 				F51C989E2FF5A0A800A9C2EE /* ProductDetailsRepo.swift in Sources */,
 				F51C98A02FF5A0A800A9C2EE /* AddCartUseCase.swift in Sources */,
 				9F8F1E522FF3898D0016B844 /* HomeRepository.swift in Sources */,
-
 				9F90032E2FF6EFEB00B4B745 /* FetchCollectionUseCase.swift in Sources */,
-
 				D9259B0F2FF57BAD00A3A9D8 /* AuthShopifyService.swift in Sources */,
-
 				9F92BF5B2FF4803E00E090B7 /* BrandProductUseCase.swift in Sources */,
 				9F8F1E532FF3898D0016B844 /* HomeView.swift in Sources */,
 				9F8F1E542FF3898D0016B844 /* HomeEntity.swift in Sources */,
@@ -1344,6 +1344,7 @@
 				9F9003362FF6F1FA00B4B745 /* CollectionListView.swift in Sources */,
 				D93C25FD2FF5294400486A11 /* FavProductsDAO.swift in Sources */,
 				9F90032C2FF6EFAC00B4B745 /* CollectionsRepository.swift in Sources */,
+				9F9013832FF746A1003B74D9 /* TabBarManger.swift in Sources */,
 				9F8F1E572FF3898D0016B844 /* HomeBrandSection.swift in Sources */,
 				9F90033C2FF705C700B4B745 /* FilterSheet.swift in Sources */,
 				9F8F1E582FF3898D0016B844 /* HomeProtocol.swift in Sources */,

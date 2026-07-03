@@ -4,12 +4,12 @@
 //
 //  Created by Shady Ramadan on 02/07/2026.
 //
-
 import Foundation
 import SwiftUI
 
 struct CollectionsListView: View {
     @StateObject var viewModel: CollectionsListViewModel
+    @EnvironmentObject var tabBarManager: TabBarManager
 
     private let columns = [
         GridItem(.flexible(), spacing: 16),
@@ -17,7 +17,9 @@ struct CollectionsListView: View {
     ]
 
     var body: some View {
-        NavigationStack {
+        ZStack {
+            AppColor.bg.ignoresSafeArea()
+
             ScrollView {
                 if viewModel.isLoading {
                     ProgressView().padding(.top, 60)
@@ -40,12 +42,17 @@ struct CollectionsListView: View {
                     }
                     .padding(20)
                     .buttonStyle(PlainButtonStyle())
+                    
+                    Color.clear
+                        .frame(height: 100)
                 }
             }
-            .background(AppColor.bg.ignoresSafeArea())
-            .navigationTitle("Shop")
-            .task { await viewModel.loadCollections() }
-            .refreshable { await viewModel.loadCollections() }
+        }
+        .navigationTitle("Shop")
+        .task { await viewModel.loadCollections() }
+        .refreshable { await viewModel.loadCollections() }
+        .onAppear {
+            tabBarManager.isHidden = false
         }
     }
 
@@ -89,11 +96,6 @@ private struct CollectionDestinationView: View {
                     .foregroundColor(AppColor.textSec)
             }
             .padding(.top, 80)
-            .onAppear {
-                #if DEBUG
-                print("DI resolution failed for CollectionProductsViewModel with collection: \(collection.title)")
-                #endif
-            }
         }
     }
 }
@@ -142,7 +144,6 @@ struct CollectionCardView: View {
         }
     }
 
-    
     private var allCardBackground: some View {
         ZStack {
             LinearGradient(
@@ -162,8 +163,6 @@ struct CollectionCardView: View {
         }
     }
 
-    // Softer, on-brand fallback for a broken/missing product image
-    // (used for real collections, not the "All" tile).
     private var imageFallback: some View {
         ZStack {
             LinearGradient(
