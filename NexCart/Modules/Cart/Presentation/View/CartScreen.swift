@@ -13,6 +13,12 @@ struct BagView: View {
     @StateObject private var cartViewModel: CartViewModel =
     DIContainer.shared.container.resolve(CartViewModel.self)!
 
+    @State private var itemToDelete: BagItemEntity?
+    @State private var bagIdForDeletion: Int?
+    @State private var showDeleteAlert = false
+    @State private var showToast = false
+    @State private var toastMessage = ""
+
 
     private var allItems: [BagItemEntity] {
         cartViewModel.cartData.flatMap { $0.items }
@@ -22,10 +28,8 @@ struct BagView: View {
         allItems.reduce(0.0) { $0 + ($1.price * Double($1.quantity)) }
     }
 
-    private let shipping = 12
-
     private var total: Double {
-        subtotal + Double(shipping)
+        subtotal
     }
 
     var body: some View {
@@ -40,6 +44,67 @@ struct BagView: View {
         }
         .task {
             await cartViewModel.getAllCart()
+        }
+        .alert("Are you sure to delete?", isPresented: $showDeleteAlert) {
+            Button("Delete", role: .destructive) {
+                if let item = itemToDelete, let bagId = bagIdForDeletion {
+                    deleteItem(item, fromBagId: bagId)
+                }
+            }
+            Button("Cancel", role: .cancel) {}
+        }
+        .overlay(
+            toastView
+        )
+    }
+
+    @ViewBuilder
+    private var toastView: some View {
+        if showToast {
+            VStack {
+                Spacer()
+                Text(toastMessage)
+                    .font(AppColor.sans(14, .medium))
+                    .foregroundColor(AppColor.white)
+                    .padding(.horizontal, 24)
+                    .padding(.vertical, 12)
+                    .background(Color.black.opacity(0.8))
+                    .clipShape(Capsule())
+                    .padding(.bottom, 100)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+            }
+            .animation(.easeInOut, value: showToast)
+        }
+    }
+
+    private func deleteItem(_ item: BagItemEntity, fromBagId bagId: Int) {
+        guard let bagIndex = cartViewModel.cartData.firstIndex(where: { $0.id == bagId }),
+              let itemIndex = cartViewModel.cartData[bagIndex].items.firstIndex(where: { $0.id == item.id }) else { return }
+
+        let removedItem = cartViewModel.cartData[bagIndex].items.remove(at: itemIndex)
+
+        Task {
+            let success = await cartViewModel.deleteFromCart(draftOrderId: String(bagId))
+            if success {
+                showToastMessage("Item deleted successfully")
+            } else {
+                withAnimation {
+                    cartViewModel.cartData[bagIndex].items.insert(removedItem, at: itemIndex)
+                }
+                showToastMessage("Failed to delete item")
+            }
+        }
+    }
+
+    private func showToastMessage(_ message: String) {
+        toastMessage = message
+        withAnimation {
+            showToast = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            withAnimation {
+                showToast = false
+            }
         }
     }
 
@@ -108,11 +173,11 @@ struct BagView: View {
         VStack {
             Spacer()
             VStack(spacing: 14) {
-                Image(systemName: "bag")
+                Image(systemName: "cart")
                     .font(.system(size: 32))
                     .foregroundColor(AppColor.textSec)
 
-                Text("Your bag is empty")
+                Text("Your cart is empty")
                     .font(AppColor.sans(15))
                     .foregroundColor(AppColor.textSec)
             }
@@ -128,9 +193,9 @@ struct BagView: View {
                     ForEach($cartViewModel.cartData) { $bag in
                         ForEach($bag.items) { $item in
                             BagItemRow(item: $item,image: cartViewModel.images[item.productId ?? 0] ?? "") {
-                                withAnimation {
-                                    bag.items.removeAll { $0.id == item.id }
-                                }
+                                itemToDelete = item
+                                bagIdForDeletion = bag.id
+                                showDeleteAlert = true
                             }
                         }
                     }
@@ -151,7 +216,7 @@ struct BagView: View {
 
     private var header: some View {
         HStack(alignment: .firstTextBaseline) {
-            Text("Your bag")
+            Text("Your cart")
                 .font(AppColor.serif(30, .medium))
                 .foregroundColor(AppColor.textPrim)
 
@@ -201,7 +266,6 @@ struct BagView: View {
     private var summaryCard: some View {
         VStack(spacing: 12) {
             summaryRow(label: "Subtotal", value: Int(subtotal), secondary: true)
-            summaryRow(label: "Shipping", value: shipping, secondary: true)
 
             Divider()
                 .background(AppColor.border)
@@ -253,6 +317,14 @@ struct BagItemRow: View {
      var image:String
     var onDelete: () -> Void
 
+    private var displayName: String {
+        let parts = item.title.components(separatedBy: "|")
+        if parts.count > 1 {
+            return parts[1].trimmingCharacters(in: .whitespaces)
+        }
+        return item.title.trimmingCharacters(in: .whitespaces)
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack(alignment: .top, spacing: 14) {
@@ -277,7 +349,7 @@ struct BagItemRow: View {
                         .tracking(1)
                         .foregroundColor(AppColor.textSec)
 
-                    Text(item.title)
+                    Text(displayName)
                         .font(AppColor.serif(18, .medium))
                         .foregroundColor(AppColor.textPrim)
 
@@ -317,9 +389,15 @@ struct BagItemRow: View {
 
                 Spacer()
 
-                Text("$\(item.price, specifier: "%.2f")")
-                    .font(AppColor.serif(19, .medium))
-                    .foregroundColor(AppColor.textPrim)
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text("$\(item.price, specifier: "%.2f")")
+                        .font(AppColor.serif(19, .medium))
+                        .foregroundColor(AppColor.textPrim)
+
+                    Text("per piece")
+                        .font(AppColor.sans(12))
+                        .foregroundColor(AppColor.textSec)
+                }
             }
         }
         .padding(16)

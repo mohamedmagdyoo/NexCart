@@ -8,6 +8,8 @@
 import Foundation
 import Foundation
 
+struct EmptyCartResponse: Codable {}
+
 struct CartResponseDto: Codable {
     let draftOrders: [CartOrderDto]
 
@@ -249,19 +251,19 @@ struct MarketingConsent: Codable {
     }
 }
 
-struct SmsMarketingConsent: Codable {
-    let state: String
-    let optInLevel: String?
-    let consentUpdatedAt: String?
-    let consentCollectedFrom: String?
-
-    enum CodingKeys: String, CodingKey {
-        case state
-        case optInLevel = "opt_in_level"
-        case consentUpdatedAt = "consent_updated_at"
-        case consentCollectedFrom = "consent_collected_from"
-    }
-}
+//struct SmsMarketingConsent: Codable {
+//    let state: String
+//    let optInLevel: String?
+//    let consentUpdatedAt: String?
+//    let consentCollectedFrom: String?
+//
+//    enum CodingKeys: String, CodingKey {
+//        case state
+//        case optInLevel = "opt_in_level"
+//        case consentUpdatedAt = "consent_updated_at"
+//        case consentCollectedFrom = "consent_collected_from"
+//    }
+//}
 
 struct CustomerDefaultAddress: Codable, Identifiable {
     let id: Int

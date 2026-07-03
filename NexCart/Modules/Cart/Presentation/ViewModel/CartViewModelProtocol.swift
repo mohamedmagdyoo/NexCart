@@ -10,4 +10,6 @@ protocol CartViewModelProtocol{
     func getAllCart() async
     
     func getSingleProdut() async
+    
+    func deleteFromCart(draftOrderId: String) async -> Bool
 }

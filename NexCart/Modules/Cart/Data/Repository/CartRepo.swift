@@ -28,4 +28,8 @@ final class CartRepo:CartRepoProtcol {
         return product.product.toEntity()
     }
     
+    func deleteFromCart(draftOrderId: String) async throws {
+        let _: EmptyCartResponse = try await networkService.fetch(endPoint: CartEndPoint.deleteFromCart(draftOrderId: draftOrderId))
+    }
+    
 }
