@@ -19,6 +19,9 @@ final class FavProductsViewModel: ObservableObject {
     @Published var favProducts: [FavProduct] = [FavProduct]()
     @Published var screenStates: FavProductsScreenStates = .loading
     @Published var alert: AlertModel?
+    @Published var selectedProductToRemove: FavProduct?
+    @Published var showRemoveAlert: Bool = false
+    
 
     // MARK: - UseCases
     private let fetchFavProductsUseCase: FetchFavProductsUseCaseProtocol
@@ -52,6 +55,15 @@ final class FavProductsViewModel: ObservableObject {
             )
         }
     }
+    
+    func didTapToDelete(product: FavProduct){
+        selectedProductToRemove = product
+        showRemoveAlert = true
+    }
+    
+    func confirmRemoveProduct(){
+        removeFromFav(selectedProductToRemove!)
+    }
 
     func removeFromFav(_ product: FavProduct) {
         // Optimistic update so the "x" feels instant; rolled back on failure.
@@ -62,7 +74,9 @@ final class FavProductsViewModel: ObservableObject {
         screenStates = favProducts.isEmpty ? .empty : .succes
 
         do {
-            try removeFavProductUseCase.execute(productId: product.id)
+            Task{
+                try await removeFavProductUseCase.execute(productId: product.id)
+            }
         } catch {
             favProducts = previousProducts
             screenStates = previousState

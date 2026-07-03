@@ -9,9 +9,9 @@ import Foundation
 
 // MARK: - Protocol
 protocol FavProductsDaoProtocol {
-    func addToFav(product: ProductEntity) throws
+    func addToFav(product: FavProduct) throws
     func removeFromFav(productId: Int) throws
     func getAllFav() throws -> [FavProduct]
     func isFav(productId: Int) -> Bool
-    func cleanFavTable() throws
+    func cleanFavTable() 
 }

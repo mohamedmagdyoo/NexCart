@@ -12,19 +12,20 @@ import Swinject
 extension DIContainer {
     func registerUseCases() {
         container.register(LoginWithEmailUseCaseProtocol.self) { r in
-            LoginWithEmailUseCase(repository: r.resolve(AuthRepositoryProtocol.self)!)
+            LoginWithEmailUseCase(repository: r.resolve(AuthRepositoryProtocol.self)!,
+                                  productsRepository: r.resolve(ProductsRepoProtocol.self)!)
         }
         
         container.register(LoginWithSocialProviderUseCaseProtocol.self) { r in
-            LoginWithSocialProvider(authRepo: r.resolve(AuthRepositoryProtocol.self)!)
+            LoginWithSocialProvider(authRepo: r.resolve(AuthRepositoryProtocol.self)!,productsRepository: r.resolve(ProductsRepoProtocol.self)!)
         }
         
         container.register(LoginAsGuestUseCaseProtocol.self) { r in
-            LoginAsGuestUseCase(authRepo: r.resolve(AuthRepositoryProtocol.self)!)
+            LoginAsGuestUseCase(authRepo: r.resolve(AuthRepositoryProtocol.self)!,productsRepository: r.resolve(ProductsRepoProtocol.self)!)
         }
         
         container.register(CreatNewAccountUseCaseProtocol.self) { r in
-            CreatNewAccountUseCase(authRepo: r.resolve(AuthRepositoryProtocol.self)!)
+            CreatNewAccountUseCase(authRepo: r.resolve(AuthRepositoryProtocol.self)!,productsRepository: r.resolve(ProductsRepoProtocol.self)!)
         }
         
         container.register(LogOutUseCaseProtocol.self) { r in
