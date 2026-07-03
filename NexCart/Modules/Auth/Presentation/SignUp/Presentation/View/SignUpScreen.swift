@@ -26,6 +26,7 @@ struct SignUpScreen: View {
                 Text("\(error)")
             }
         }
+        .navigationBarBackButtonHidden()
         .fullScreenCover(isPresented: $viewModel.shouldNavigateToHome) {
             HomeView()
                 .interactiveDismissDisabled(true)
@@ -38,13 +39,6 @@ struct SignUpScreen: View {
 // MARK: - Idle State
 struct SignUpIdleState: View {
     @ObservedObject var viewModel: SignUpViewModel
-
-//    @State private var firstName: String = ""
-//    @State private var lastName: String = ""
-//    @State private var phone: String = ""
-//    @State private var email: String = ""
-//    @State private var password: String = ""
-//    @State private var passwordConfirmation: String = ""
     
     @Environment(\.dismiss) private var dismiss
 
@@ -194,11 +188,12 @@ struct SignUpSuccessState: View {
                 .scaleEffect(scale)
                 .opacity(opacity)
 
-            Text("Welcome to NexCart.")
+            Text("SignUp Done Succesfully.")
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(.authTitle)
                 .opacity(opacity)
+
         }
         .onAppear {
             withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {

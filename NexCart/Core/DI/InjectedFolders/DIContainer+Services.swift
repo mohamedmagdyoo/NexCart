@@ -31,6 +31,11 @@ extension DIContainer{
                 networkClient: r.resolve(ApiServiceProtocol.self)!
             )
         }
+        
+        //FavProductsRemoteServiceProtocol
+        container.register(FavProductsRemoteServiceProtocol.self){_ in
+            FavProductsFirestoreService()
+        }
     }
 }
 
