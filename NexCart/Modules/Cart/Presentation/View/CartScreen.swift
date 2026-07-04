@@ -29,7 +29,10 @@ struct BagView: View {
     }
 
     private var total: Double {
-        subtotal
+        if let result = cartViewModel.couponResult, result.isValid {
+            return result.finalTotal
+        }
+        return subtotal
     }
 
     var body: some View {
@@ -251,27 +254,47 @@ struct BagView: View {
                     .stroke(AppColor.border, lineWidth: 1)
             )
 
-            Button(action: {}) {
-                Text("Apply")
-                    .font(AppColor.sans(15, .medium))
-                    .foregroundColor(AppColor.white)
-                    .padding(.horizontal, 22)
-                    .padding(.vertical, 14)
-                    .background(AppColor.pillSel)
-                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+            Button(action: {
+                Task {
+                    await cartViewModel.applyCoupon(code: promoCode)
+                    if let result = cartViewModel.couponResult {
+                        showToastMessage(result.message)
+                    }
+                }
+            }) {
+                if cartViewModel.isApplyingCoupon {
+                    ProgressView()
+                        .tint(AppColor.white)
+                        .padding(.horizontal, 22)
+                        .padding(.vertical, 14)
+                        .background(AppColor.pillSel)
+                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                } else {
+                    Text("Apply")
+                        .font(AppColor.sans(15, .medium))
+                        .foregroundColor(AppColor.white)
+                        .padding(.horizontal, 22)
+                        .padding(.vertical, 14)
+                        .background(AppColor.pillSel)
+                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                }
             }
         }
     }
 
     private var summaryCard: some View {
         VStack(spacing: 12) {
-            summaryRow(label: "Subtotal", value: Int(subtotal), secondary: true)
+            summaryRow(label: "Subtotal", value: subtotal, secondary: true)
+            
+            if let result = cartViewModel.couponResult, result.isValid {
+                summaryRow(label: "Discount", value: result.discountAmount, secondary: true, isDiscount: true)
+            }
 
             Divider()
                 .background(AppColor.border)
                 .padding(.vertical, 4)
 
-            summaryRow(label: "Total", value: Int(total), secondary: false)
+            summaryRow(label: "Total", value: total, secondary: false)
         }
         .padding(20)
         .background(AppColor.card)
@@ -282,7 +305,7 @@ struct BagView: View {
         )
     }
 
-    private func summaryRow(label: String, value: Int, secondary: Bool) -> some View {
+    private func summaryRow(label: String, value: Double, secondary: Bool, isDiscount: Bool = false) -> some View {
         HStack {
             Text(label)
                 .font(secondary ? AppColor.sans(15) : AppColor.serif(19, .medium))
@@ -290,15 +313,15 @@ struct BagView: View {
 
             Spacer()
 
-            Text("$\(value)")
+            Text(isDiscount ? "-$\(value, specifier: "%.2f")" : "$\(value, specifier: "%.2f")")
                 .font(secondary ? AppColor.sans(15) : AppColor.serif(19, .medium))
-                .foregroundColor(secondary ? AppColor.textPrim : AppColor.textPrim)
+                .foregroundColor(isDiscount ? .green : (secondary ? AppColor.textPrim : AppColor.textPrim))
         }
     }
 
     private var checkoutButton: some View {
         Button(action: {}) {
-            Text("Checkout · $\(Int(total))")
+            Text("Checkout · $\(total, specifier: "%.2f")")
                 .font(AppColor.sans(16, .medium))
                 .foregroundColor(AppColor.white)
                 .frame(maxWidth: .infinity)

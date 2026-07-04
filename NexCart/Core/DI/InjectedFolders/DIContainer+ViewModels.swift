@@ -71,6 +71,7 @@ extension DIContainer {
             r in
             CartViewModel(
                 cartUseCase: r.resolve(CartUseCaseProtocol.self)!,
+                applyCouponUseCase: r.resolve(ApplyCouponUseCaseProtocol.self)!
            )
             
         }
