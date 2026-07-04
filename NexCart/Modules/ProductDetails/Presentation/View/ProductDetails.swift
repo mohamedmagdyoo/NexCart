@@ -9,10 +9,13 @@ struct ProductDetailView: View {
     @State private var isFavorited: Bool = false
     @State private var currentImageIndex: Int = 0
     @State private var quantity: Int = 1
+    @State private var navigateToCart: Bool = false
+    @State private var showToast: Bool = false
     @StateObject private var productDetailsViewModel: ProductDetailViewModel
 
     init(product: ProductEntity, productViewModel: ProductDetailViewModel) {
         _product = State(initialValue: product)
+        _isFavorited = State(initialValue: product.isFavorited)
         _productDetailsViewModel = StateObject(wrappedValue: productViewModel)
     }
 
@@ -53,9 +56,25 @@ struct ProductDetailView: View {
         (Double(selectedVariant?.price ?? product.variants.first?.price ?? "0") ?? 0) * Double(quantity)
     }
 
+    private var displayName: String {
+        if let range = product.name.range(of: "|") {
+            return product.name[range.upperBound...].trimmingCharacters(in: .whitespaces)
+        }
+        return product.name
+    }
+
+    private var isSelectionIncomplete: Bool {
+        (!sizes.isEmpty && selectedSize.isEmpty) || (!colors.isEmpty && selectedColor.isEmpty)
+    }
+
     var body: some View {
         ZStack(alignment: .bottom) {
             AppColor.bg.ignoresSafeArea()
+
+            NavigationLink(destination: BagView(), isActive: $navigateToCart) {
+                EmptyView()
+            }
+            .hidden()
 
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
@@ -67,24 +86,30 @@ struct ProductDetailView: View {
 
             bottomBar
 
-            if success {
+            if showToast {
                 VStack {
                     Spacer()
                     ToastView(message: "Added to bag")
                         .padding(.bottom, 120)
                 }
                 .transition(.move(edge: .bottom).combined(with: .opacity))
-                .animation(.spring(), value: success)
+                .animation(.spring(), value: showToast)
             }
         }
         .toolbar(.hidden, for: .tabBar)
         .navigationBarHidden(true)
-        .onAppear {
-            selectedSize = sizes.first ?? ""
-            selectedColor = colors.first ?? ""
-        }
         .onChange(of: selectedVariant?.id) { _ in
             quantity = 1
+        }
+        .onChange(of: success) { newValue in
+            if newValue {
+                showToast = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    withAnimation {
+                        showToast = false
+                    }
+                }
+            }
         }
     }
 
@@ -119,14 +144,20 @@ struct ProductDetailView: View {
                 Spacer()
 
                 HStack(spacing: 12) {
-                    CircleNavButton(systemName: "square.and.arrow.up") {}
+                    CircleNavButton(systemName: "square.and.arrow.up") {
+                        navigateToCart = true
+                    }
 
-                    CircleNavButton(systemName: isFavorited ? "heart.fill" : "heart") {
+                    CircleNavButton(
+                        systemName: isFavorited ? "heart.fill" : "heart",
+                        iconColor: isFavorited ? AppColor.gold : AppColor.textSec
+                    ) {
                         withAnimation(.spring()) {
                             isFavorited.toggle()
+                            product.isFavorited = isFavorited
+                            productDetailsViewModel.toggleFavorite(product: product)
                         }
                     }
-                    .foregroundColor(isFavorited ? AppColor.gold : AppColor.textPrim)
                 }
             }
             .padding(.horizontal, 20)
@@ -140,12 +171,7 @@ struct ProductDetailView: View {
             VStack(alignment: .leading, spacing: 24) {
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(product.vendor.uppercased())
-                            .font(AppColor.sans(14, .bold))
-                            .foregroundColor(AppColor.textSec)
-                            .tracking(2.0)
-
-                        Text(product.name)
+                        Text(displayName)
                             .font(AppColor.serif(28))
                             .foregroundColor(AppColor.textPrim)
                             .lineSpacing(4)
@@ -217,10 +243,10 @@ struct ProductDetailView: View {
                                 .font(AppColor.serif(18))
                                 .foregroundColor(AppColor.textPrim)
                             Spacer()
-                            Text("Size Guide")
-                                .font(AppColor.sans(14, .medium))
-                                .foregroundColor(AppColor.textPrim)
-                                .underline()
+//                            Text("Size Guide")
+//                                .font(AppColor.sans(14, .medium))
+//                                .foregroundColor(AppColor.textPrim)
+//                                .underline()
                         }
 
                         ScrollView(.horizontal, showsIndicators: false) {
@@ -250,14 +276,6 @@ struct ProductDetailView: View {
                     }
                 }
 
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("Quantity")
-                        .font(AppColor.serif(18))
-                        .foregroundColor(AppColor.textPrim)
-
-                    QuantitySelector(quantity: $quantity, maxQuantity: nil)
-                }
-
                 if let errorMessage {
                     Text(errorMessage)
                         .font(AppColor.sans(14, .medium))
@@ -279,26 +297,57 @@ struct ProductDetailView: View {
         VStack(spacing: 0) {
             Divider().background(AppColor.border)
 
-            HStack(spacing: 0) {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Total Price")
-                        .font(AppColor.sans(12, .medium))
-                        .foregroundColor(AppColor.textSec)
-                        .tracking(1)
-                    Text(String(format: "$%.2f", displayPrice))
-                        .font(AppColor.sans(24, .bold))
-                        .foregroundColor(AppColor.textPrim)
-                }
-                .padding(.leading, 24)
+            VStack(spacing: 14) {
+                HStack(alignment: .center) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Total Price")
+                            .font(AppColor.sans(12, .medium))
+                            .foregroundColor(AppColor.textSec)
+                            .tracking(1)
+                        Text(String(format: "$%.2f", displayPrice))
+                            .font(AppColor.sans(24, .bold))
+                            .foregroundColor(AppColor.textPrim)
+                    }
 
-                Spacer()
+                    Spacer()
+
+                    HStack(spacing: 0) {
+                        Button {
+                            if quantity > 1 { quantity -= 1 }
+                        } label: {
+                            Image(systemName: "minus")
+                                .font(.system(size: 13, weight: .semibold))
+                                .foregroundColor(AppColor.textPrim)
+                                .frame(width: 36, height: 40)
+                        }
+
+                        Text("\(quantity)")
+                            .font(AppColor.sans(15, .bold))
+                            .foregroundColor(AppColor.textPrim)
+                            .frame(width: 28)
+
+                        Button {
+                            quantity += 1
+                        } label: {
+                            Image(systemName: "plus")
+                                .font(.system(size: 13, weight: .semibold))
+                                .foregroundColor(AppColor.textPrim)
+                                .frame(width: 36, height: 40)
+                        }
+                    }
+                    .background(AppColor.pill)
+                    .clipShape(Capsule())
+                    .overlay(
+                        Capsule().stroke(AppColor.border, lineWidth: 1)
+                    )
+                }
 
                 Button {
                     guard let variantID = selectedVariant?.id else { return }
                     Task {
                         await productDetailsViewModel.addToCart(
                             variantID: variantID,
-                            customerID: 111,
+                            customerID: 10880560562482,
                             quantity: quantity
                         )
                     }
@@ -315,17 +364,17 @@ struct ProductDetailView: View {
                                 .foregroundColor(AppColor.white)
                         }
                     }
+                    .frame(maxWidth: .infinity)
                     .frame(height: 56)
-                    .padding(.horizontal, 32)
-                    .background(AppColor.textPrim)
+                    .background(isSelectionIncomplete ? AppColor.textPrim.opacity(0.4) : AppColor.textPrim)
                     .clipShape(Capsule())
                     .shadow(color: AppColor.textPrim.opacity(0.25), radius: 12, x: 0, y: 6)
                 }
-                .disabled(isAddingToCart)
+                .disabled(isAddingToCart || isSelectionIncomplete)
                 .opacity(isAddingToCart ? 0.6 : 1)
-                .padding(.trailing, 24)
             }
-            .padding(.vertical, 16)
+            .padding(.horizontal, 24)
+            .padding(.top, 16)
             .background(AppColor.bg)
             .padding(.bottom, bottomSafeArea())
         }
@@ -342,13 +391,14 @@ struct ProductDetailView: View {
 
 private struct CircleNavButton: View {
     let systemName: String
+    var iconColor: Color = AppColor.textPrim
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
             Image(systemName: systemName)
                 .font(.system(size: 16, weight: .semibold))
-                .foregroundColor(AppColor.textPrim)
+                .foregroundColor(iconColor)
                 .frame(width: 44, height: 44)
                 .background(AppColor.white)
                 .clipShape(Circle())
@@ -382,7 +432,7 @@ private struct ColorCircle: View {
                 .frame(width: 44, height: 44)
                 .overlay(
                     Circle()
-                        .stroke(isSelected ? AppColor.textPrim : AppColor.border, lineWidth: isSelected ? 2.5 : 1)
+                        .stroke(isSelected ? AppColor.gold : AppColor.border, lineWidth: isSelected ? 2.5 : 1)
                         .padding(isSelected ? -4 : 0)
                 )
         }
@@ -400,13 +450,13 @@ private struct SizeCircle: View {
                 .font(AppColor.sans(15, isSelected ? .bold : .medium))
                 .foregroundColor(isSelected ? AppColor.white : AppColor.textPrim)
                 .frame(width: 56, height: 56)
-                .background(isSelected ? AppColor.textPrim : AppColor.bg)
+                .background(isSelected ? AppColor.gold : AppColor.bg)
                 .clipShape(Circle())
                 .overlay(
                     Circle()
-                        .stroke(isSelected ? Color.clear : AppColor.border, lineWidth: 1.5)
+                        .stroke(isSelected ? AppColor.gold : AppColor.border, lineWidth: isSelected ? 2.5 : 1)
+                        .padding(isSelected ? -4 : 0)
                 )
-                .shadow(color: isSelected ? AppColor.textPrim.opacity(0.3) : Color.clear, radius: 8, x: 0, y: 4)
         }
     }
 }

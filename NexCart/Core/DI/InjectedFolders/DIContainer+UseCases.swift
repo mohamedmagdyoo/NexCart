@@ -78,6 +78,12 @@ extension DIContainer {
             )
         }
         
+        container.register(CartUseCaseProtocol.self){
+            r in
+            CartUseCase(cartRepo: r.resolve(CartRepoProtcol.self)!)
+        }
+
+
         // Coupon
         container.register(ApplyCouponUseCaseProtocol.self) { r in
             ApplyCouponUseCase(repository: r.resolve(CouponRepository.self)!)

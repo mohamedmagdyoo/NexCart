@@ -24,7 +24,7 @@ class ProductDetailRepoImpl:ProductDetailsRepo{
             customerID: customerID,
             quantity: quantity
         )
-
+        print("Request Body: \(request)")
         let response = try await productDetailsService.addToCart(body: request)
 
         return DraftOrderMapper.map(from: response)

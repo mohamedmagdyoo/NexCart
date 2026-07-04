@@ -22,7 +22,7 @@ struct DraftOrderRequestMapper {
                         quantity: quantity
                     )
                 ],
-                customerID: customerID,
+                customer: CustomerRef(id: customerID),
                 useCustomerDefaultAddress: true
             )
         )
