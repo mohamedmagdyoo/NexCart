@@ -56,6 +56,7 @@
 		D918C1272FF6BD4600FDAED6 /* FavProductRepoInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D918C1262FF6BD4600FDAED6 /* FavProductRepoInterface.swift */; };
 		D918C12A2FF6BF5000FDAED6 /* FavProductRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D918C1292FF6BF5000FDAED6 /* FavProductRepo.swift */; };
 		D918C12C2FF6C81800FDAED6 /* FavMappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D918C12B2FF6C81800FDAED6 /* FavMappers.swift */; };
+		D91D00842FF84804002C8E1E /* AppConstantes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91D00832FF84804002C8E1E /* AppConstantes.swift */; };
 		D91E748B2FF5152E00D941C4 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91E748A2FF5152E00D941C4 /* OnBoardingView.swift */; };
 		D91E749A2FF5193F00D941C4 /* FakeProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91E74992FF5193F00D941C4 /* FakeProduct.swift */; };
 		D9259B0F2FF57BAD00A3A9D8 /* AuthShopifyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9259B0E2FF57BAD00A3A9D8 /* AuthShopifyService.swift */; };
@@ -109,6 +110,15 @@
 		D9906FAC2FF7F79C00B9474E /* CouponGraphQLQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FAB2FF7F79C00B9474E /* CouponGraphQLQuery.swift */; };
 		D9906FB02FF7F89400B9474E /* CouponRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FAF2FF7F89400B9474E /* CouponRemoteDataSource.swift */; };
 		D9906FB22FF7F92B00B9474E /* CouponRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FB12FF7F92B00B9474E /* CouponRepositoryImpl.swift */; };
+		D9906FBA2FF8187900B9474E /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FB92FF8187900B9474E /* AddressView.swift */; };
+		D9906FBC2FF8188C00B9474E /* AddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FBB2FF8188C00B9474E /* AddressViewModel.swift */; };
+		D9906FBE2FF818AB00B9474E /* UseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FBD2FF818AB00B9474E /* UseCases.swift */; };
+		D9906FC32FF818E700B9474E /* AddressRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FC22FF818E700B9474E /* AddressRepo.swift */; };
+		D9906FC72FF8190500B9474E /* AddressRepoInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FC62FF8190500B9474E /* AddressRepoInterface.swift */; };
+		D9906FC92FF8191E00B9474E /* AddressError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FC82FF8191E00B9474E /* AddressError.swift */; };
+		D9906FCB2FF8221D00B9474E /* AddressEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FCA2FF8221D00B9474E /* AddressEntity.swift */; };
+		D9906FCD2FF825F900B9474E /* AddressDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FCC2FF825F900B9474E /* AddressDao.swift */; };
+		D9906FCF2FF82C5B00B9474E /* AddNewAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FCE2FF82C5B00B9474E /* AddNewAddressView.swift */; };
 		D9CFF5882FF4126200B7B8DE /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D9EAA1272FF274410097C038 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D9EAA1262FF274410097C038 /* FirebaseAuth */; };
 		D9EAA12C2FF275690097C038 /* FirebaseAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EAA12B2FF275690097C038 /* FirebaseAuthService.swift */; };
@@ -201,6 +211,7 @@
 		D918C1262FF6BD4600FDAED6 /* FavProductRepoInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavProductRepoInterface.swift; sourceTree = "<group>"; };
 		D918C1292FF6BF5000FDAED6 /* FavProductRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavProductRepo.swift; sourceTree = "<group>"; };
 		D918C12B2FF6C81800FDAED6 /* FavMappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavMappers.swift; sourceTree = "<group>"; };
+		D91D00832FF84804002C8E1E /* AppConstantes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstantes.swift; sourceTree = "<group>"; };
 		D91E748A2FF5152E00D941C4 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		D91E74992FF5193F00D941C4 /* FakeProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeProduct.swift; sourceTree = "<group>"; };
 		D9259B0E2FF57BAD00A3A9D8 /* AuthShopifyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthShopifyService.swift; sourceTree = "<group>"; };
@@ -258,6 +269,15 @@
 		D9906FAB2FF7F79C00B9474E /* CouponGraphQLQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponGraphQLQuery.swift; sourceTree = "<group>"; };
 		D9906FAF2FF7F89400B9474E /* CouponRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponRemoteDataSource.swift; sourceTree = "<group>"; };
 		D9906FB12FF7F92B00B9474E /* CouponRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponRepositoryImpl.swift; sourceTree = "<group>"; };
+		D9906FB92FF8187900B9474E /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
+		D9906FBB2FF8188C00B9474E /* AddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewModel.swift; sourceTree = "<group>"; };
+		D9906FBD2FF818AB00B9474E /* UseCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCases.swift; sourceTree = "<group>"; };
+		D9906FC22FF818E700B9474E /* AddressRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressRepo.swift; sourceTree = "<group>"; };
+		D9906FC62FF8190500B9474E /* AddressRepoInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressRepoInterface.swift; sourceTree = "<group>"; };
+		D9906FC82FF8191E00B9474E /* AddressError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressError.swift; sourceTree = "<group>"; };
+		D9906FCA2FF8221D00B9474E /* AddressEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressEntity.swift; sourceTree = "<group>"; };
+		D9906FCC2FF825F900B9474E /* AddressDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDao.swift; sourceTree = "<group>"; };
+		D9906FCE2FF82C5B00B9474E /* AddNewAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAddressView.swift; sourceTree = "<group>"; };
 		D9CFF5822FF400C100B7B8DE /* ProductsRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsRepo.swift; sourceTree = "<group>"; };
 		D9EAA12B2FF275690097C038 /* FirebaseAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthService.swift; sourceTree = "<group>"; };
 		D9EAA1322FF27A3F0097C038 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
@@ -679,6 +699,14 @@
 				D93C25EF2FF5294400486A11 /* ProductsRepoProtocol.swift */,
 			);
 			path = RepoInterfaces;
+			sourceTree = "<group>";
+		};
+		D91D00822FF847F5002C8E1E /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				D91D00832FF84804002C8E1E /* AppConstantes.swift */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 		D91E74892FF5150E00D941C4 /* OnBoarding */ = {
@@ -1138,6 +1166,7 @@
 		D960C22E2FF1980C00FFF4D9 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				D91D00822FF847F5002C8E1E /* Util */,
 				D960C22F2FF1981100FFF4D9 /* DI */,
 			);
 			path = Core;
@@ -1146,8 +1175,8 @@
 		D960C22F2FF1981100FFF4D9 /* DI */ = {
 			isa = PBXGroup;
 			children = (
-				D960C2322FF1986000FFF4D9 /* InjectedFolders */,
 				D960C2302FF1981D00FFF4D9 /* DIContainer.swift */,
+				D960C2322FF1986000FFF4D9 /* InjectedFolders */,
 			);
 			path = DI;
 			sourceTree = "<group>";
@@ -1176,6 +1205,7 @@
 		D9906F942FF7F4C200B9474E /* CompleatOrderFlow */ = {
 			isa = PBXGroup;
 			children = (
+				D9906FB32FF8181C00B9474E /* Address */,
 				D9906F952FF7F4E100B9474E /* CouponCode */,
 			);
 			path = CompleatOrderFlow;
@@ -1275,6 +1305,102 @@
 				D9906FAF2FF7F89400B9474E /* CouponRemoteDataSource.swift */,
 			);
 			path = Remote;
+			sourceTree = "<group>";
+		};
+		D9906FB32FF8181C00B9474E /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				D9906FB42FF8183200B9474E /* Presentation */,
+				D9906FB52FF8184000B9474E /* Domain */,
+				D9906FB62FF8184600B9474E /* Data */,
+			);
+			path = Address;
+			sourceTree = "<group>";
+		};
+		D9906FB42FF8183200B9474E /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				D9906FB72FF8185200B9474E /* View */,
+				D9906FB82FF8185600B9474E /* VM */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		D9906FB52FF8184000B9474E /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				D9906FC82FF8191E00B9474E /* AddressError.swift */,
+				D9906FC42FF818F000B9474E /* Entity */,
+				D9906FC52FF818F500B9474E /* UseCases */,
+				D9906FC62FF8190500B9474E /* AddressRepoInterface.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		D9906FB62FF8184600B9474E /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				D9906FBF2FF818C500B9474E /* DataSource */,
+				D9906FC22FF818E700B9474E /* AddressRepo.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		D9906FB72FF8185200B9474E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D9906FB92FF8187900B9474E /* AddressView.swift */,
+				D9906FCE2FF82C5B00B9474E /* AddNewAddressView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D9906FB82FF8185600B9474E /* VM */ = {
+			isa = PBXGroup;
+			children = (
+				D9906FBB2FF8188C00B9474E /* AddressViewModel.swift */,
+			);
+			path = VM;
+			sourceTree = "<group>";
+		};
+		D9906FBF2FF818C500B9474E /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				D9906FC12FF818D500B9474E /* Local */,
+				D9906FC02FF818CF00B9474E /* Remote */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
+		D9906FC02FF818CF00B9474E /* Remote */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Remote;
+			sourceTree = "<group>";
+		};
+		D9906FC12FF818D500B9474E /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				D9906FCC2FF825F900B9474E /* AddressDao.swift */,
+			);
+			path = Local;
+			sourceTree = "<group>";
+		};
+		D9906FC42FF818F000B9474E /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				D9906FCA2FF8221D00B9474E /* AddressEntity.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		D9906FC52FF818F500B9474E /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				D9906FBD2FF818AB00B9474E /* UseCases.swift */,
+			);
+			path = UseCases;
 			sourceTree = "<group>";
 		};
 		D9EAA1282FF2750D0097C038 /* Presentation */ = {
@@ -1497,9 +1623,11 @@
 			files = (
 				D960C1EE2FF120A500FFF4D9 /* ApiServiceProtocol.swift in Sources */,
 				9F92BF4F2FF47B5800E090B7 /* BrandsRepository.swift in Sources */,
+				D9906FCB2FF8221D00B9474E /* AddressEntity.swift in Sources */,
 				9F9003262FF6EEB800B4B745 /* CollectionEntity.swift in Sources */,
 				9F92BF592FF47DF100E090B7 /* BrandProductView.swift in Sources */,
 				9F92BF572FF47DCF00E090B7 /* BrandProductViewModel.swift in Sources */,
+				D9906FBE2FF818AB00B9474E /* UseCases.swift in Sources */,
 				9F9003292FF6EF7600B4B745 /* CollectionsRepoProtocol.swift in Sources */,
 				D960C1F62FF12A1500FFF4D9 /* SignInScreen.swift in Sources */,
 				D960C20F2FF1734B00FFF4D9 /* AuthEntities.swift in Sources */,
@@ -1523,6 +1651,8 @@
 				F51C98A02FF5A0A800A9C2EE /* AddCartUseCase.swift in Sources */,
 				9F8F1E522FF3898D0016B844 /* HomeRepository.swift in Sources */,
 				9F90032E2FF6EFEB00B4B745 /* FetchCollectionUseCase.swift in Sources */,
+				D9906FC92FF8191E00B9474E /* AddressError.swift in Sources */,
+				D91D00842FF84804002C8E1E /* AppConstantes.swift in Sources */,
 				D9259B0F2FF57BAD00A3A9D8 /* AuthShopifyService.swift in Sources */,
 				9F92BF5B2FF4803E00E090B7 /* BrandProductUseCase.swift in Sources */,
 				9F8F1E532FF3898D0016B844 /* HomeView.swift in Sources */,
@@ -1547,6 +1677,7 @@
 				9F9498152FF57881000CEB5A /* ProductsRepo.swift in Sources */,
 				9F9498162FF57881000CEB5A /* Persistence.swift in Sources */,
 				D960C2362FF1989F00FFF4D9 /* DIContainer+UseCases.swift in Sources */,
+				D9906FCF2FF82C5B00B9474E /* AddNewAddressView.swift in Sources */,
 				9F92BF412FF478C300E090B7 /* BrandEntity.swift in Sources */,
 				D918C1202FF6BC6400FDAED6 /* FavProductsService.swift in Sources */,
 				D93C26022FF5294400486A11 /* FavProduct.swift in Sources */,
@@ -1582,16 +1713,20 @@
 				D960C2382FF1990900FFF4D9 /* DIContainer+ViewModels.swift in Sources */,
 				D960C1A02FF1167A00FFF4D9 /* ContentView.swift in Sources */,
 				D9906FA82FF7F75A00B9474E /* GraphQLCouponResponseDTO.swift in Sources */,
+				D9906FC32FF818E700B9474E /* AddressRepo.swift in Sources */,
 				9F9003322FF6F16500B4B745 /* CollectionListViewModel.swift in Sources */,
 				D960C2202FF17BE800FFF4D9 /* CreatNewAccount.swift in Sources */,
 				9F94981A2FF578BE000CEB5A /* EndPoint.swift in Sources */,
 				9F94981B2FF578BE000CEB5A /* ProductEndPoint.swift in Sources */,
 				F51C98B32FF5A12600A9C2EE /* Toast.swift in Sources */,
 				F51C98B42FF5A12600A9C2EE /* QuantitySelector.swift in Sources */,
+				D9906FCD2FF825F900B9474E /* AddressDao.swift in Sources */,
 				F51C98B52FF5A12600A9C2EE /* ProductDetails.swift in Sources */,
 				F51C98B62FF5A12600A9C2EE /* Components.swift in Sources */,
+				D9906FBC2FF8188C00B9474E /* AddressViewModel.swift in Sources */,
 				F51C98B72FF5A12600A9C2EE /* ProductViewModelPorotocl.swift in Sources */,
 				F51C98B82FF5A12600A9C2EE /* ProductViewModel.swift in Sources */,
+				D9906FC72FF8190500B9474E /* AddressRepoInterface.swift in Sources */,
 				D960C19E2FF1167A00FFF4D9 /* NexCartApp.swift in Sources */,
 				D9259B122FF582DC00A3A9D8 /* AuthDTOs.swift in Sources */,
 				D960C1ED2FF120A500FFF4D9 /* ApiService.swift in Sources */,
@@ -1599,6 +1734,7 @@
 				D93C26032FF5294400486A11 /* FavProductViewModel.swift in Sources */,
 				D9259B142FF5838000A3A9D8 /* AuthEndpointes.swift in Sources */,
 				D960C23F2FF1B28E00FFF4D9 /* SignUpScreen.swift in Sources */,
+				D9906FBA2FF8187900B9474E /* AddressView.swift in Sources */,
 				9F92BF552FF47D9E00E090B7 /* BrandListView.swift in Sources */,
 				9F9003232FF6EE8A00B4B745 /* CollectionDto.swift in Sources */,
 				D960C2232FF17C8200FFF4D9 /* ForgotPass.swift in Sources */,
