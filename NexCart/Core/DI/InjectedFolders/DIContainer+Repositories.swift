@@ -65,6 +65,11 @@ extension DIContainer {
         container.register(CouponRepository.self) { r in
             CouponRepositoryImpl(remoteDataSource: r.resolve(CouponRemoteDataSource.self)!)
         }.inObjectScope(.container)
+        
+        //For Address
+        container.register(AddressRepository.self) { r in
+            AddressRepositoryImpl(localDataSource: r.resolve(AddressDao.self)!)
+        }
 
     }
 }
