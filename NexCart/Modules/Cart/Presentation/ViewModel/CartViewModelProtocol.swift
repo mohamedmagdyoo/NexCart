@@ -6,10 +6,12 @@
 //
 
 import Foundation
-protocol CartViewModelProtocol{
+protocol CartViewModelProtocol {
     func getAllCart() async
     
     func getSingleProdut() async
     
     func deleteFromCart(draftOrderId: String) async -> Bool
+    
+    func applyCoupon(code: String) async
 }

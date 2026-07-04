@@ -19,10 +19,14 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
     @Published var cartData: [BagEntity] = []
     private let currentCustomerId = 10880560562482
     private let cartUseCase: CartUseCaseProtocol
+    private let applyCouponUseCase: ApplyCouponUseCaseProtocol
     @Published var images: [Int: String] = [:]
+    @Published var couponResult: CouponApplicationResult?
+    @Published var isApplyingCoupon: Bool = false
 
-    init(cartUseCase: CartUseCaseProtocol) {
+    init(cartUseCase: CartUseCaseProtocol, applyCouponUseCase: ApplyCouponUseCaseProtocol) {
         self.cartUseCase = cartUseCase
+        self.applyCouponUseCase = applyCouponUseCase
     }
 
     func getAllCart() async {
@@ -58,6 +62,15 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
         } catch {
             return false
         }
+    }
+
+    @MainActor
+    func applyCoupon(code: String) async {
+        isApplyingCoupon = true
+        let currentTotal = cartData.first?.total ?? 0.0
+        let result = await applyCouponUseCase.execute(code: code, currentTotal: currentTotal)
+        couponResult = result
+        isApplyingCoupon = false
     }
 
     
