@@ -22,9 +22,7 @@ final class BrandsListViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
         do {
-            var fetchedBrands = try await fetchBrandsUseCase.execute()
-            let allBrand = BrandEntity(id: "all", name: "All", imageURL: "https://cdn-icons-png.flaticon.com/512/565/565547.png")
-            fetchedBrands.insert(allBrand, at: 0)
+            let fetchedBrands = try await fetchBrandsUseCase.execute()
             brands = fetchedBrands
         } catch {
             #if DEBUG
