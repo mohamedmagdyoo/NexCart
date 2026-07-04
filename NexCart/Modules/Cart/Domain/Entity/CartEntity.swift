@@ -64,7 +64,7 @@ extension DraftOrderLineItem {
             size: variantTitle ?? "One size",
             productId: productId ?? 0,
             price: Double(price) ?? 0,
-            quantity: quantity,
+            quantity: quantity
         )
     }
 }
