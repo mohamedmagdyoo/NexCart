@@ -36,6 +36,10 @@ extension DIContainer{
         container.register(FavProductsRemoteServiceProtocol.self){_ in
             FavProductsFirestoreService()
         }
+        
+        container.register(ProductRemoteDataSource.self) { r in
+                  ProductRemoteDataSource(apiService: r.resolve(ApiServiceProtocol.self)!)
+              }.inObjectScope(.container)
     }
 }
 
