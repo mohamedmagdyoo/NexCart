@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct HomeView: View {
-
+    
     @StateObject private var viewModel = DIContainer.shared.container.resolve(HomeViewModel.self)!
     @StateObject private var tabBarManager = TabBarManager()
     @State private var heroIndex: Int = 0
@@ -9,15 +9,17 @@ struct HomeView: View {
     @State private var selectedProductId: Int = 0
     @State private var isNavigatingToProduct: Bool = false
     @State private var isNavigatingToAllProducts: Bool = false
-
+    
+    @State private var userEntity: UserEntity?
+    
     init() {
         UITabBar.appearance().isHidden = true
     }
-
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             AppColor.bg.ignoresSafeArea()
-
+            
             TabView(selection: $selectedTab) {
                 homeTab
                 shopTab
@@ -27,7 +29,7 @@ struct HomeView: View {
             }
             .background(AppColor.bg.ignoresSafeArea())
             .ignoresSafeArea(.all, edges: .bottom)
-
+            
             if !tabBarManager.isHidden {
                 HomeTabBar(selectedTab: $selectedTab)
                     .transition(.move(edge: .bottom).combined(with: .opacity))
@@ -44,7 +46,7 @@ struct HomeView: View {
             if newValue { tabBarManager.isHidden = true }
         }
     }
-
+    
     private var homeTab: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
@@ -53,12 +55,12 @@ struct HomeView: View {
                         slides: viewModel.slides,
                         heroIndex: $heroIndex
                     )
-
+                    
                     HomeBrandsSection(
                         brands: viewModel.brands,
                         onBrandSelected: { viewModel.selectBrand(at: $0) }
                     )
-
+                    
                     HomeNewInSection(
                         products: viewModel.products,
                         isLoading: viewModel.isLoading,
@@ -71,7 +73,7 @@ struct HomeView: View {
                         onRetry: { await viewModel.fetchHomeData() },
                         onSeeAll: { isNavigatingToAllProducts = true }
                     )
-
+                    
                     Spacer().frame(height: 100)
                 }
             }
@@ -90,7 +92,7 @@ struct HomeView: View {
                 } else {
                     EmptyView()
                 }
-
+                
                 NavigationLink(
                     destination: Group {
                         if let collectionViewModel = DIContainer.shared.container.resolve(
@@ -107,13 +109,16 @@ struct HomeView: View {
                     EmptyView()
                 }
             }
-            .task { await viewModel.fetchHomeData() }
+            .task {
+                await viewModel.fetchHomeData()
+                userEntity = await AppConstants.shared.getUserEntity()
+            }
             .onAppear { tabBarManager.isHidden = false }
         }
         .navigationViewStyle(.stack)
         .tag(0)
     }
-
+    
     private var shopTab: some View {
         NavigationView {
             CollectionsListView(
@@ -124,7 +129,7 @@ struct HomeView: View {
         .navigationViewStyle(.stack)
         .tag(1)
     }
-
+    
     private var favoritesTab: some View {
         NavigationView {
             FavProductsScreen()
@@ -133,7 +138,7 @@ struct HomeView: View {
         .navigationViewStyle(.stack)
         .tag(2)
     }
-
+    
     @State var couponTextField: String = ""
     
     private var cartTab: some View {
@@ -144,7 +149,7 @@ struct HomeView: View {
         .navigationViewStyle(.stack)
         .tag(3)
     }
-
+    
     private var profileTab: some View {
         NavigationView {
             VStack {
@@ -153,9 +158,6 @@ struct HomeView: View {
                     .foregroundColor(AppColor.textPrim)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.bottom, 90)
-                    .onTapGesture {
-                        UserDefaults.standard.removeObject(forKey: "userEntity")
-                    }
                 
                 Button {
                     UserDefaults.standard.removeObject(forKey: "userEntity")
@@ -163,6 +165,20 @@ struct HomeView: View {
                     Text("LogOut")
                         .foregroundColor(.black)
                 }
+
+                NavigationLink{
+                    AddressListView(viewModel: DIContainer.shared.container.resolve(AddressViewModel.self)!, ownerUserId: userEntity?.id ?? "Me" )
+                }label: {
+                    Text("NavToAddress")
+                        .foregroundColor(.black)
+                }
+                
+                
+                Text("Profile View")
+                    .font(AppColor.sans(16, .medium))
+                    .foregroundColor(AppColor.textPrim)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.bottom, 90)
             }
             .onAppear { tabBarManager.isHidden = false }
         }
@@ -186,13 +202,13 @@ struct HomeTabBar: View {
         TabItemModel(icon: "cart", label: "Cart"),
         TabItemModel(icon: "person", label: "Profile")
     ]
-
+    
     var body: some View {
         VStack(spacing: 0) {
             Divider()
                 .background(AppColor.border)
                 .frame(height: 0.5)
-
+            
             HStack(spacing: 0) {
                 ForEach(tabs.indices, id: \.self) { i in
                     tabItem(icon: tabs[i].icon, label: tabs[i].label, index: i)
@@ -204,7 +220,7 @@ struct HomeTabBar: View {
         }
         .background(AppColor.card)
     }
-
+    
     private func tabItem(icon: String, label: String, index: Int) -> some View {
         let active = selectedTab == index
         return Button { selectedTab = index } label: {

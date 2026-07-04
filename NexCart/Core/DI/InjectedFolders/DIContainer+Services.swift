@@ -36,6 +36,11 @@ extension DIContainer{
         container.register(FavProductsRemoteServiceProtocol.self){_ in
             FavProductsFirestoreService()
         }
+        
+        //For Address
+        container.register(AddressDao.self){ _ in
+            CoreDataAddressDao()
+        }
     }
 }
 
