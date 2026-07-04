@@ -86,6 +86,9 @@ extension DIContainer {
         container.register(ApplyCouponUseCaseProtocol.self) { r in
             ApplyCouponUseCase(repository: r.resolve(CouponRepository.self)!)
         }
+        container.register(FetchProductByIDUseCaseProtocol.self) { r in
+            FetchProductByIdUseCase(repo: r.resolve(ProductsRepoProtocol.self)!)
+                }
         
     }
 }

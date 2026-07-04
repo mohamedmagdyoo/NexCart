@@ -16,6 +16,7 @@ enum FavProductsScreenStates {
 
 @MainActor
 final class FavProductsViewModel: ObservableObject {
+    @Published var isLoadingProduct: Bool = false
     @Published var favProducts: [FavProduct] = [FavProduct]()
     @Published var screenStates: FavProductsScreenStates = .loading
     @Published var alert: AlertModel?
@@ -26,19 +27,24 @@ final class FavProductsViewModel: ObservableObject {
     // MARK: - UseCases
     private let fetchFavProductsUseCase: FetchFavProductsUseCaseProtocol
     private let removeFavProductUseCase: RemoveFavProductUseCaseProtocol
+    private let fetchProductByIdUseCase: FetchProductByIDUseCaseProtocol
 
     init(
         fetchFavProductsUseCase: FetchFavProductsUseCaseProtocol,
-        removeFavProductUseCase: RemoveFavProductUseCaseProtocol
+        removeFavProductUseCase: RemoveFavProductUseCaseProtocol,
+        fetchProductByIdUseCase:
+            FetchProductByIDUseCaseProtocol
     ) {
         
         self.fetchFavProductsUseCase = fetchFavProductsUseCase
         self.removeFavProductUseCase = removeFavProductUseCase
+        self.fetchProductByIdUseCase = fetchProductByIdUseCase
     }
 
     func onAppear() {
         loadFavProducts()
     }
+    
 
     func loadFavProducts() {
         screenStates = .loading
@@ -55,7 +61,19 @@ final class FavProductsViewModel: ObservableObject {
             )
         }
     }
-    
+    func fetchAndNavigate(to product: FavProduct) async -> ProductEntity? {
+        isLoadingProduct = true
+        defer { isLoadingProduct = false }
+        do {
+            return try await fetchProductByIdUseCase.execute(productID: product.id)
+        } catch {
+            alert = AlertModel(
+                title: "Couldn't Load Product",
+                description: error.localizedDescription
+            )
+            return nil
+        }
+    }
     func didTapToDelete(product: FavProduct){
         selectedProductToRemove = product
         showRemoveAlert = true
@@ -66,7 +84,6 @@ final class FavProductsViewModel: ObservableObject {
     }
 
     func removeFromFav(_ product: FavProduct) {
-        // Optimistic update so the "x" feels instant; rolled back on failure.
         let previousProducts = favProducts
         let previousState = screenStates
 

@@ -103,11 +103,14 @@ struct FavScreenSuccesState: View {
                     FavProductRow(
                         product: product,
                         onTap: {
-                            selectedProduct = product.toProductEntity()
+                            Task {
+                                if let entity = await viewModel.fetchAndNavigate(to: product) {
+                                    selectedProduct = entity
+                                }
+                            }
                         },
                         onRemove: {
                             withAnimation(.easeInOut(duration: 0.2)) {
-                                //Show Alert
                                 viewModel.didTapToDelete(product: product)
                             }
                         }
