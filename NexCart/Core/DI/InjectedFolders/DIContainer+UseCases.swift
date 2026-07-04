@@ -55,6 +55,10 @@ extension DIContainer {
         container.register(FetchBrandProductsUseCaseProtocol.self) { r in
             FetchBrandProductsUseCase(repo: r.resolve(BrandsRepoProtocol.self)!)
         }
+        //SearchUseCase
+        container.register(SearchUseCaseProtocol.self) { r in
+                    SearchUseCase(repo: r.resolve(SearchRepoProtocol.self)!)
+                }
         
         //FavUseCases
         container.register(FetchFavProductsUseCaseProtocol.self){ r in

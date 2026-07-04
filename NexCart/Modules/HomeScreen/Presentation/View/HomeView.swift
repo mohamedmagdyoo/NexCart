@@ -30,7 +30,6 @@ struct HomeView: View {
 
             if !tabBarManager.isHidden {
                 HomeTabBar(selectedTab: $selectedTab)
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
                     .zIndex(1)
             }
         }
@@ -227,7 +226,6 @@ struct HomeTabBar: View {
                     .foregroundColor(active ? AppColor.gold : AppColor.textSec)
             }
             .frame(maxWidth: .infinity)
-            .animation(.easeInOut(duration: 0.15), value: selectedTab)
         }
     }
 }
