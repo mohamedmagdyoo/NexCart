@@ -1,0 +1,17 @@
+//
+//  CartViewModelProtocol.swift
+//  NexCart
+//
+//  Created by Antoneos Philip on 01/07/2026.
+//
+
+import Foundation
+protocol CartViewModelProtocol {
+    func getAllCart() async
+    
+    func getSingleProdut() async
+    
+    func deleteFromCart(draftOrderId: String) async -> Bool
+    
+    func applyCoupon(code: String) async
+}

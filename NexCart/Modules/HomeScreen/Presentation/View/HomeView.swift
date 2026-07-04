@@ -142,47 +142,8 @@ struct HomeView: View {
     
     private var cartTab: some View {
         NavigationView {
-            VStack{
-                Text("Cart View")
-                    .font(AppColor.sans(16, .medium))
-                    .foregroundColor(AppColor.textPrim)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(.bottom, 90)
-                    .onAppear { tabBarManager.isHidden = false }
-                
-                
-                TextField("Enter You Coupon", text: $couponTextField)
-                
-                Button {
-                    print("The Coupon is: \(couponTextField)")
-                    
-                    let couponUseCase: ApplyCouponUseCaseProtocol = DIContainer.shared.container.resolve(ApplyCouponUseCaseProtocol.self)!
-                    
-                    Task {
-                        let couponResult = await couponUseCase.execute(code: couponTextField, currentTotal: 100)
-                        print(" \(couponResult.isValid)")
-                        print(" \(couponResult.discountAmount)")
-                        print(" \(couponResult.originalTotal)")
-                        print(" \(couponResult.finalTotal)")
-                        print(" \(couponResult.message)")
-                    }
-                    
-                } label: {
-                    Text("Aplay")
-                        .font(AppColor.sans(16, .medium))
-                        .foregroundColor(AppColor.textPrim)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .padding(.bottom, 90)
-                }
-                
-                Text("Cart View")
-                    .font(AppColor.sans(16, .medium))
-                    .foregroundColor(AppColor.textPrim)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(.bottom, 90)
-                    .onAppear { tabBarManager.isHidden = false }
-            }
-            
+            BagView()
+                .padding(.bottom, 75)
         }
         .navigationViewStyle(.stack)
         .tag(3)
