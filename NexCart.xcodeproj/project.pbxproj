@@ -144,6 +144,7 @@
 		F51C98B82FF5A12600A9C2EE /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C98AB2FF5A12600A9C2EE /* ProductViewModel.swift */; };
 		F59DB2152FF699DA007BB715 /* CartRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53ADE2FF60643009F9F87 /* CartRepo.swift */; };
 		F59DB2172FF6A852007BB715 /* CartRepoProtcol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59DB2162FF6A852007BB715 /* CartRepoProtcol.swift */; };
+		F5A68BBA2FF6567A002E41FD /* AddCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A68BB92FF6567A002E41FD /* AddCart.swift */; };
 		F5B53ADA2FF5F40F009F9F87 /* CartScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AD92FF5F40F009F9F87 /* CartScreen.swift */; };
 		F5B53AE12FF6065F009F9F87 /* GetAllCartEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AE02FF6065F009F9F87 /* GetAllCartEndPoint.swift */; };
 		F5B53AE82FF60829009F9F87 /* CartEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AE72FF60829009F9F87 /* CartEntity.swift */; };
@@ -151,7 +152,6 @@
 		F5B53AED2FF610C3009F9F87 /* CartUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AEC2FF610C3009F9F87 /* CartUseCase.swift */; };
 		F5B53AEF2FF61223009F9F87 /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AEE2FF61223009F9F87 /* CartViewModel.swift */; };
 		F5B53AF12FF6124F009F9F87 /* CartViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AF02FF6124F009F9F87 /* CartViewModelProtocol.swift */; };
-		F5A68BBA2FF6567A002E41FD /* AddCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A68BB92FF6567A002E41FD /* AddCart.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -310,6 +310,7 @@
 		F51C98B02FF5A12600A9C2EE /* QuantitySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantitySelector.swift; sourceTree = "<group>"; };
 		F51C98B12FF5A12600A9C2EE /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		F59DB2162FF6A852007BB715 /* CartRepoProtcol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRepoProtcol.swift; sourceTree = "<group>"; };
+		F5A68BB92FF6567A002E41FD /* AddCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCart.swift; sourceTree = "<group>"; };
 		F5B53AD92FF5F40F009F9F87 /* CartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartScreen.swift; sourceTree = "<group>"; };
 		F5B53ADE2FF60643009F9F87 /* CartRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRepo.swift; sourceTree = "<group>"; };
 		F5B53AE02FF6065F009F9F87 /* GetAllCartEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GetAllCartEndPoint.swift; path = NexCart/Modules/Cart/Data/Repository/GetAllCartEndPoint.swift; sourceTree = SOURCE_ROOT; };
@@ -318,7 +319,6 @@
 		F5B53AEC2FF610C3009F9F87 /* CartUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartUseCase.swift; sourceTree = "<group>"; };
 		F5B53AEE2FF61223009F9F87 /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		F5B53AF02FF6124F009F9F87 /* CartViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModelProtocol.swift; sourceTree = "<group>"; };
-		F5A68BB92FF6567A002E41FD /* AddCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCart.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2037,7 +2037,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2068,7 +2068,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2208,8 +2208,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.28.0;
+				kind = upToNextMinorVersion;
+				minimumVersion = 9.6.0;
 			};
 		};
 		D9EAA12D2FF278000097C038 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
