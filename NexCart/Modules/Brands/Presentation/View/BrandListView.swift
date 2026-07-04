@@ -88,11 +88,6 @@ private struct BrandDestinationView: View {
                     .foregroundColor(AppColor.textSec)
             }
             .padding(.top, 80)
-            .onAppear {
-                #if DEBUG
-                print("DI resolution failed for BrandProductsViewModel with brand: \(brand.name)")
-                #endif
-            }
         }
     }
 }
@@ -105,23 +100,27 @@ struct BrandCardView: View {
             ZStack {
                 AppColor.surface
 
-                AsyncImage(url: URL(string: brand.imageURL)) { phase in
-                    switch phase {
-                    case .success(let image):
-                        Color.clear
-                            .overlay(
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                            )
-                            .clipped()
-                    case .empty:
-                        ProgressView()
-                    case .failure:
-                        Image(systemName: "photo").foregroundColor(.gray)
-                    @unknown default:
-                        EmptyView()
+                if let url = URL(string: brand.imageURL), !brand.imageURL.isEmpty {
+                    AsyncImage(url: url) { phase in
+                        switch phase {
+                        case .success(let image):
+                            Color.clear
+                                .overlay(
+                                    image
+                                        .resizable()
+                                        .scaledToFill()
+                                )
+                                .clipped()
+                        case .empty:
+                            ProgressView().tint(AppColor.gold)
+                        case .failure:
+                            coolPlaceholder
+                        @unknown default:
+                            coolPlaceholder
+                        }
                     }
+                } else {
+                    coolPlaceholder
                 }
             }
             .frame(height: 140)
@@ -132,6 +131,26 @@ struct BrandCardView: View {
                 .font(AppColor.sans(15, .medium))
                 .foregroundColor(AppColor.textPrim)
                 .lineLimit(1)
+        }
+    }
+    
+    private var coolPlaceholder: some View {
+        ZStack {
+            LinearGradient(
+                colors: [AppColor.surface, AppColor.border.opacity(0.6)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            
+            VStack(spacing: 10) {
+                Image(systemName: "bag.circle")
+                    .font(.system(size: 36, weight: .light))
+                    .foregroundColor(AppColor.gold.opacity(0.8))
+                
+                Text(String(brand.name.prefix(1)).uppercased())
+                    .font(AppColor.serif(20, .bold))
+                    .foregroundColor(AppColor.textSec)
+            }
         }
     }
 }

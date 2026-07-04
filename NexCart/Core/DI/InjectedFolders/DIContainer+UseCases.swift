@@ -55,6 +55,10 @@ extension DIContainer {
         container.register(FetchBrandProductsUseCaseProtocol.self) { r in
             FetchBrandProductsUseCase(repo: r.resolve(BrandsRepoProtocol.self)!)
         }
+        //SearchUseCase
+        container.register(SearchUseCaseProtocol.self) { r in
+                    SearchUseCase(repo: r.resolve(SearchRepoProtocol.self)!)
+                }
         
         //FavUseCases
         container.register(FetchFavProductsUseCaseProtocol.self){ r in
@@ -88,6 +92,9 @@ extension DIContainer {
         container.register(ApplyCouponUseCaseProtocol.self) { r in
             ApplyCouponUseCase(repository: r.resolve(CouponRepository.self)!)
         }
+        container.register(FetchProductByIDUseCaseProtocol.self) { r in
+            FetchProductByIdUseCase(repo: r.resolve(ProductsRepoProtocol.self)!)
+                }
         
         //For Address
         container.register(AddAddressUseCase.self) { r in
