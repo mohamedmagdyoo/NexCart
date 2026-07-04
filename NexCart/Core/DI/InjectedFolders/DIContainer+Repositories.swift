@@ -50,5 +50,23 @@ extension DIContainer {
                 productDetailsService: r.resolve(ProductDetailsService.self)!
             )
         }
+
+        // Coupone
+        container.register(GraphQLServiceProtocol.self) { _ in
+            ShopifyGraphQLService(
+                baseURL: URL(string: "https://mad46-ios-team9.myshopify.com/admin/api/2026-01/")!,
+                accessToken: "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"
+            )
+        }.inObjectScope(.container)
+
+        container.register(CouponRemoteDataSource.self) { r in
+            ShopifyCouponGraphQLDataSource(graphQLService: r.resolve(GraphQLServiceProtocol.self)!)
+        }.inObjectScope(.container)
+
+        container.register(CouponRepository.self) { r in
+            CouponRepositoryImpl(remoteDataSource: r.resolve(CouponRemoteDataSource.self)!)
+        }.inObjectScope(.container)
+
+
     }
 }
