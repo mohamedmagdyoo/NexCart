@@ -7,7 +7,6 @@
 
 import Foundation
 
-// ApplePayToken.swift
 struct ApplePayToken {
     let paymentData: Data
     let transactionIdentifier: String

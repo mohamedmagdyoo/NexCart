@@ -150,6 +150,7 @@ struct HomeView: View {
     }
     
     private var profileTab: some View {
+<<<<<<< HEAD
         NavigationView {
             VStack(spacing: 16) {
                 
@@ -170,6 +171,15 @@ struct HomeView: View {
                     .padding(.horizontal)
                 }
                 .foregroundColor(AppColor.textPrim)
+=======
+        NavigationStack {
+            VStack {
+                Text("Profile View")
+                    .font(AppColor.sans(16, .medium))
+                    .foregroundColor(AppColor.textPrim)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.bottom, 90)
+>>>>>>> faef90c (Last touches of finishing apple pay feature)
                 
                 Button {
                     UserDefaults.standard.removeObject(forKey: "userEntity")

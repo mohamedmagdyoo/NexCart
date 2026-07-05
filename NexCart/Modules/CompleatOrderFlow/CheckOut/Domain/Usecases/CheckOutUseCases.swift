@@ -12,10 +12,9 @@
 
 import Foundation
 
+
 // MARK: - Address
-//Will use the GetAllAddressesUseCase
-
-
+//another use case will use it from AddressUsecase in the other module
 protocol SelectAddressUseCaseProtocol {
     func execute(ownerID: String, selected: AddressEntity) async throws -> [AddressEntity]
 }
@@ -35,7 +34,6 @@ final class SelectAddressUseCase: SelectAddressUseCaseProtocol {
 }
 
 // MARK: - Payment method selection
-
 protocol GetPaymentMethodsUseCaseProtocol {
     func execute() -> [PaymentMethod]
 }
