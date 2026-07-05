@@ -20,6 +20,8 @@ struct AddressListView: View {
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
+                        GoldBackButton()
+                        
                         HStack(spacing: 8) {
                             Image(systemName: "mappin.and.ellipse")
                             Text("Saved addresses")
@@ -87,6 +89,7 @@ struct AddressListView: View {
                     }
                 }
             }
+            .navigationBarBackButtonHidden()
             .sheet(isPresented: $showingAddAddress) {
                 AddNewAddressView(viewModel: viewModel, isPresented: $showingAddAddress)
             }
