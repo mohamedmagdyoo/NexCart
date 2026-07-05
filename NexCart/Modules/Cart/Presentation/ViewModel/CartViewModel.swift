@@ -74,10 +74,10 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
             try await cartUseCase.deleteFromCart(draftOrderId: draftOrderId)
             return true
         } catch {
+            cartState = .error(message: "Failed to delete item")
             return false
         }
     }
-
     @MainActor
     func applyCoupon(code: String) async {
         isApplyingCoupon = true
