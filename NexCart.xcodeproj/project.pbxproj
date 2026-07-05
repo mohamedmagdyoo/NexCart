@@ -152,6 +152,11 @@
 		F51C98B82FF5A12600A9C2EE /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C98AB2FF5A12600A9C2EE /* ProductViewModel.swift */; };
 		F59DB2152FF699DA007BB715 /* CartRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53ADE2FF60643009F9F87 /* CartRepo.swift */; };
 		F59DB2172FF6A852007BB715 /* CartRepoProtcol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59DB2162FF6A852007BB715 /* CartRepoProtcol.swift */; };
+		F5A0ABA62FF9E9CA00329316 /* ProfileRepoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A0AB9B2FF9E9CA00329316 /* ProfileRepoProtocol.swift */; };
+		F5A0ABA72FF9E9CA00329316 /* ProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A0AB9D2FF9E9CA00329316 /* ProfileUseCase.swift */; };
+		F5A0ABA82FF9E9CA00329316 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A0ABA22FF9E9CA00329316 /* ProfileViewModel.swift */; };
+		F5A0ABA92FF9E9CA00329316 /* ProfileRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A0AB982FF9E9CA00329316 /* ProfileRepo.swift */; };
+		F5A0ABAA2FF9E9CA00329316 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A0ABA02FF9E9CA00329316 /* ProfileView.swift */; };
 		F5A68BBA2FF6567A002E41FD /* AddCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A68BB92FF6567A002E41FD /* AddCart.swift */; };
 		F5B53ADA2FF5F40F009F9F87 /* CartScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AD92FF5F40F009F9F87 /* CartScreen.swift */; };
 		F5B53AE12FF6065F009F9F87 /* GetAllCartEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AE02FF6065F009F9F87 /* GetAllCartEndPoint.swift */; };
@@ -326,6 +331,11 @@
 		F51C98B02FF5A12600A9C2EE /* QuantitySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantitySelector.swift; sourceTree = "<group>"; };
 		F51C98B12FF5A12600A9C2EE /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		F59DB2162FF6A852007BB715 /* CartRepoProtcol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRepoProtcol.swift; sourceTree = "<group>"; };
+		F5A0AB982FF9E9CA00329316 /* ProfileRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRepo.swift; sourceTree = "<group>"; };
+		F5A0AB9B2FF9E9CA00329316 /* ProfileRepoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRepoProtocol.swift; sourceTree = "<group>"; };
+		F5A0AB9D2FF9E9CA00329316 /* ProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUseCase.swift; sourceTree = "<group>"; };
+		F5A0ABA02FF9E9CA00329316 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		F5A0ABA22FF9E9CA00329316 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		F5A68BB92FF6567A002E41FD /* AddCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCart.swift; sourceTree = "<group>"; };
 		F5B53AD92FF5F40F009F9F87 /* CartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartScreen.swift; sourceTree = "<group>"; };
 		F5B53ADE2FF60643009F9F87 /* CartRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRepo.swift; sourceTree = "<group>"; };
@@ -1051,6 +1061,7 @@
 				9F8F1E502FF3898D0016B844 /* HomeScreen */,
 				D960C1F22FF1241B00FFF4D9 /* Launch */,
 				D960C1CD2FF1178800FFF4D9 /* Auth */,
+				F5A0ABA52FF9E9CA00329316 /* Profile */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -1601,6 +1612,82 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		F5A0AB992FF9E9CA00329316 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				F5A0AB982FF9E9CA00329316 /* ProfileRepo.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		F5A0AB9A2FF9E9CA00329316 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				F5A0AB992FF9E9CA00329316 /* Repository */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		F5A0AB9C2FF9E9CA00329316 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				F5A0AB9B2FF9E9CA00329316 /* ProfileRepoProtocol.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		F5A0AB9E2FF9E9CA00329316 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				F5A0AB9D2FF9E9CA00329316 /* ProfileUseCase.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		F5A0AB9F2FF9E9CA00329316 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				F5A0AB9C2FF9E9CA00329316 /* Repository */,
+				F5A0AB9E2FF9E9CA00329316 /* UseCase */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		F5A0ABA12FF9E9CA00329316 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F5A0ABA02FF9E9CA00329316 /* ProfileView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F5A0ABA32FF9E9CA00329316 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				F5A0ABA22FF9E9CA00329316 /* ProfileViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		F5A0ABA42FF9E9CA00329316 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				F5A0ABA12FF9E9CA00329316 /* View */,
+				F5A0ABA32FF9E9CA00329316 /* ViewModel */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		F5A0ABA52FF9E9CA00329316 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				F5A0AB9A2FF9E9CA00329316 /* Data */,
+				F5A0AB9F2FF9E9CA00329316 /* Domain */,
+				F5A0ABA42FF9E9CA00329316 /* Presentation */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		F5B53AD32FF5F243009F9F87 /* Cart */ = {
 			isa = PBXGroup;
 			children = (
@@ -1943,6 +2030,11 @@
 				D91E749A2FF5193F00D941C4 /* FakeProduct.swift in Sources */,
 				D91E748B2FF5152E00D941C4 /* OnBoardingView.swift in Sources */,
 				D960C2312FF1981D00FFF4D9 /* DIContainer.swift in Sources */,
+				F5A0ABA62FF9E9CA00329316 /* ProfileRepoProtocol.swift in Sources */,
+				F5A0ABA72FF9E9CA00329316 /* ProfileUseCase.swift in Sources */,
+				F5A0ABA82FF9E9CA00329316 /* ProfileViewModel.swift in Sources */,
+				F5A0ABA92FF9E9CA00329316 /* ProfileRepo.swift in Sources */,
+				F5A0ABAA2FF9E9CA00329316 /* ProfileView.swift in Sources */,
 				D9906FAA2FF7F77900B9474E /* GraphQLService.swift in Sources */,
 				9F8F1E622FF38A6E0016B844 /* ProductDto.swift in Sources */,
 				9F92BF4A2FF47AA500E090B7 /* BrandsEndPoint.swift in Sources */,

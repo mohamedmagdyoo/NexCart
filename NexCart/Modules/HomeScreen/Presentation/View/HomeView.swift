@@ -142,7 +142,7 @@ struct HomeView: View {
     
     private var cartTab: some View {
         NavigationView {
-            BagView()
+            ProfileView()
                 .padding(.bottom, 75)
         }
         .navigationViewStyle(.stack)
@@ -151,38 +151,11 @@ struct HomeView: View {
     
     private var profileTab: some View {
         NavigationView {
-            VStack {
-                Text("Profile View")
-                    .font(AppColor.sans(16, .medium))
-                    .foregroundColor(AppColor.textPrim)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(.bottom, 90)
-                
-                Button {
-                    UserDefaults.standard.removeObject(forKey: "userEntity")
-                } label: {
-                    Text("LogOut")
-                        .foregroundColor(.black)
-                }
-
-                NavigationLink{
-                    AddressListView(viewModel: DIContainer.shared.container.resolve(AddressViewModel.self)!, ownerUserId: userEntity?.id ?? "Me" )
-                }label: {
-                    Text("NavToAddress")
-                        .foregroundColor(.black)
-                }
-                
-                
-                Text("Profile View")
-                    .font(AppColor.sans(16, .medium))
-                    .foregroundColor(AppColor.textPrim)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(.bottom, 90)
-            }
-            .onAppear { tabBarManager.isHidden = false }
+            ProfileView()
+                .padding(.bottom, 75)
         }
         .navigationViewStyle(.stack)
-        .tag(4)
+        .tag(3)
     }
 }
 
