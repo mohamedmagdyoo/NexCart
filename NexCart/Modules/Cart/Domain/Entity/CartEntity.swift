@@ -17,6 +17,7 @@ struct BagEntity: Identifiable {
     let total: Double
     let currency: String
     let customer: CustomerEntity?
+    
 }
 
 struct BagItemEntity: Identifiable {
@@ -28,6 +29,7 @@ struct BagItemEntity: Identifiable {
 
     let price: Double
     var quantity: Int
+    let drafOrderId : Int
 }
 
 struct CustomerEntity: Identifiable {
@@ -40,8 +42,7 @@ struct CustomerEntity: Identifiable {
 
 extension CartOrderDto {
     func toEntity() -> BagEntity {
-        let items = lineItems.map { $0.toEntity() }
-
+        let items = lineItems.map { $0.toEntity(draftOrderId: id) }
         return BagEntity(
             id: id,
             itemCount: items.reduce(0) { $0 + $1.quantity },
@@ -56,7 +57,7 @@ extension CartOrderDto {
 }
 
 extension DraftOrderLineItem {
-    func toEntity() -> BagItemEntity {
+    func toEntity(draftOrderId : Int) -> BagItemEntity {
         BagItemEntity(
             id: id,
             brand: vendor ?? "",
@@ -64,7 +65,8 @@ extension DraftOrderLineItem {
             size: variantTitle ?? "One size",
             productId: productId ?? 0,
             price: Double(price) ?? 0,
-            quantity: quantity
+            quantity: quantity,
+            drafOrderId: draftOrderId
         )
     }
 }

@@ -12,12 +12,11 @@ enum CartState{
     case error(message:String)
     
 }
-
+@MainActor
 class CartViewModel: CartViewModelProtocol, ObservableObject {
 
     @Published var cartState: CartState = .loading
     @Published var cartData: [BagEntity] = []
-    private let currentCustomerId = 10880560562482
     private let cartUseCase: CartUseCaseProtocol
     private let applyCouponUseCase: ApplyCouponUseCaseProtocol
     @Published var images: [Int: String] = [:]
@@ -28,20 +27,35 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
         self.cartUseCase = cartUseCase
         self.applyCouponUseCase = applyCouponUseCase
     }
-
+    private var currentCustomerId: Int {
+        guard let userData = UserDefaults.standard.data(forKey: "userEntity"),
+              let user = try? JSONDecoder().decode(UserEntity.self, from: userData) else {
+            print("❌ No user found in UserDefaults")
+            return 0
+        }
+        print("👤 User: \(user.email) | shopifyId: \(user.shopifyCustomerId ?? "nil") | isGuest: \(user.isGuest)")
+        guard let shopifyIdStr = user.shopifyCustomerId,
+              let id = Int(shopifyIdStr) else {
+            print("❌ shopifyCustomerId is nil or not Int")
+            return 0
+        }
+        print("✅ currentCustomerId = \(id)")
+        return id
+    }
     func getAllCart() async {
         cartState = .loading
         do {
-            let allCarts = try await cartUseCase.getAllCart()
-            let customerBags = allCarts.filter { $0.customer?.id == currentCustomerId }
+            let allCarts = try await cartUseCase.getAllCart(currentCustomerId: currentCustomerId)
+            let customerBags = allCarts.filter {
+                $0.customer?.id == currentCustomerId
+            }
             cartData = mergeBagsIntoSingleCart(customerBags)
             try await getSingleProdut()
             cartState = .success(bagData: cartData)
         } catch {
-            cartState = .error(message: "Failed to load cart")
+            cartState = .error(message: "Failed to load cart \(error)")
         }
     }
-
     func getSingleProdut() async {
         do {
             guard let items = cartData.first?.items else { return }
@@ -60,10 +74,10 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
             try await cartUseCase.deleteFromCart(draftOrderId: draftOrderId)
             return true
         } catch {
+            cartState = .error(message: "Failed to delete item")
             return false
         }
     }
-
     @MainActor
     func applyCoupon(code: String) async {
         isApplyingCoupon = true
