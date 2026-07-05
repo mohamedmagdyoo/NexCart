@@ -17,6 +17,8 @@ class ProfileViewModel: ObservableObject {
         self.profileUseCase = profileUseCase
     }
     
+    
+    
     func fetchProfile() {
         Task {
             self.user = await profileUseCase.execute()
