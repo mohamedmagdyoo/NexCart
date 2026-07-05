@@ -68,6 +68,17 @@ struct CollectionProductsView: View {
                 .font(AppColor.serif(34, .medium))
                 .foregroundColor(AppColor.textPrim)
             Spacer()
+            NavigationLink(
+                destination: SearchView(
+                    viewModel: SearchViewModel(
+                        sourceProducts: viewModel.filteredProducts
+                    )
+                )
+            ) {
+                Image(systemName: "magnifyingglass")
+                    .font(.system(size: 18, weight: .medium))
+                    .foregroundColor(AppColor.textPrim)
+            }
         }
         .padding(.horizontal, 20)
         .padding(.top, 10)
@@ -83,12 +94,21 @@ struct CollectionProductsView: View {
                 showFilterSheet = true
             } label: {
                 HStack(spacing: 6) {
-                    Image(systemName: "slider.horizontal.3")
-                        .font(.system(size: 13, weight: .semibold))
+                    ZStack(alignment: .topTrailing) {
+                        Image(systemName: "slider.horizontal.3")
+                            .font(.system(size: 13, weight: .semibold))
+                        
+                        if viewModel.isFilterActive {
+                            Circle()
+                                .fill(Color.red)
+                                .frame(width: 8, height: 8)
+                                .offset(x: 4, y: -4)
+                        }
+                    }
                     Text(viewModel.isFilterActive ? "Filtered" : "Filter")
                         .font(AppColor.sans(14, .medium))
                 }
-                .foregroundColor(viewModel.isFilterActive ? AppColor.gold : AppColor.textPrim)
+                .foregroundColor(viewModel.isFilterActive ? Color.red : AppColor.textPrim)
             }
         }
         .padding(.horizontal, 20)
