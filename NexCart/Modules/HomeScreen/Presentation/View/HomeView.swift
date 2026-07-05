@@ -142,7 +142,7 @@ struct HomeView: View {
     
     private var cartTab: some View {
         NavigationView {
-            ProfileView()
+        BagView()
                 .padding(.bottom, 75)
         }
         .navigationViewStyle(.stack)
@@ -155,7 +155,7 @@ struct HomeView: View {
                 .padding(.bottom, 75)
         }
         .navigationViewStyle(.stack)
-        .tag(3)
+        .tag(4)
     }
 }
 
