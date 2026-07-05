@@ -8,7 +8,7 @@
 import Foundation
 
 
-actor AppConstants {
+class AppConstants {
     static let shared = AppConstants()
     
     private init() {}

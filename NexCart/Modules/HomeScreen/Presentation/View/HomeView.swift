@@ -187,6 +187,15 @@ struct HomeView: View {
                     Text("NavToAddress")
                         .foregroundColor(.black)
                 }
+
+                NavigationLink{
+                    
+                    CheckoutView(viewModel: DIContainer.shared.container.resolve(CheckoutViewModel.self)!, total: 1005)
+                }label: {
+                    Text("CheckOut")
+                        .foregroundColor(.black)
+                }
+
                 
                 Spacer()
             }
