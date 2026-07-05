@@ -52,74 +52,58 @@ struct HomeBrandsSection: View {
     private var brandsAvatarRow: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 16) {
-                ForEach(brands.indices, id: \.self) { i in
-                    brandAvatarItem(at: i)
+                ForEach(Array(brands.enumerated()), id: \.element.id) { index, brand in
+                    if brand.name.lowercased() != "all" {
+                        Button {
+                            onBrandSelected(index)
+                            tabBarManager.isHidden = true
+                        } label: {
+                            VStack(spacing: 8) {
+                                ZStack {
+                                    Circle()
+                                        .fill(AppColor.surface)
+                                        .frame(width: 66, height: 66)
+                                    
+                                    if let url = URL(string: brand.imageURL), !brand.imageURL.isEmpty {
+                                        AsyncImage(url: url) { phase in
+                                            switch phase {
+                                            case .success(let image):
+                                                image
+                                                    .resizable()
+                                                    .scaledToFill()
+                                                    .frame(width: 66, height: 66)
+                                                    .clipShape(Circle())
+                                            case .empty:
+                                                Circle()
+                                                    .strokeBorder(AppColor.border.opacity(0.4))
+                                                    .frame(width: 66, height: 66)
+                                                    .overlay(ProgressView().tint(AppColor.gold))
+                                            case .failure:
+                                                fallbackBrandImage(name: brand.name)
+                                            @unknown default:
+                                                fallbackBrandImage(name: brand.name)
+                                            }
+                                        }
+                                    } else {
+                                        fallbackBrandImage(name: brand.name)
+                                    }
+                                }
+                                .shadow(color: Color.black.opacity(0.02), radius: 4, x: 0, y: 2)
+                                
+                                Text(brand.name)
+                                    .font(AppColor.sans(11, .medium))
+                                    .tracking(0.5)
+                                    .foregroundColor(AppColor.textPrim)
+                                    .lineLimit(1)
+                                    .frame(width: 76)
+                            }
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
                 }
             }
             .padding(.horizontal, 20)
-            .padding(.bottom, 4)
         }
-    }
-
-    private func brandAvatarItem(at index: Int) -> some View {
-        let brand = brands[index]
-        let isSelected = brand.isSelected
-
-        return NavigationLink {
-            BrandProductsView(
-                viewModel: DIContainer.shared.container.resolve(
-                    BrandProductsViewModel.self,
-                    argument: brand
-                )!
-            )
-            .onAppear { tabBarManager.isHidden = true }
-        } label: {
-            VStack(spacing: 8) {
-                ZStack {
-                    Circle()
-                        .stroke(isSelected ? AppColor.gold : Color.clear, lineWidth: 2)
-                        .frame(width: 74, height: 74)
-                    
-                    if brand.imageURL.isEmpty {
-                        fallbackBrandImage(name: brand.name)
-                    } else {
-                        AsyncImage(url: URL(string: brand.imageURL)) { phase in
-                            switch phase {
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 66, height: 66)
-                                    .clipShape(Circle())
-                                    .contentShape(Circle())
-                            case .empty:
-                                Circle()
-                                    .fill(AppColor.border.opacity(0.4))
-                                    .frame(width: 66, height: 66)
-                                    .overlay(ProgressView().tint(AppColor.gold))
-                            case .failure:
-                                fallbackBrandImage(name: brand.name)
-                            @unknown default:
-                                fallbackBrandImage(name: brand.name)
-                            }
-                        }
-                    }
-                }
-                .shadow(color: Color.black.opacity(isSelected ? 0.08 : 0.02), radius: 4, x: 0, y: 2)
-                
-                Text(brand.name)
-                    .font(AppColor.sans(11, isSelected ? .bold : .medium))
-                    .tracking(0.5)
-                    .foregroundColor(isSelected ? AppColor.gold : AppColor.textPrim)
-                    .lineLimit(1)
-                    .frame(width: 76)
-            }
-        }
-        .simultaneousGesture(TapGesture().onEnded {
-            onBrandSelected(index)
-            tabBarManager.isHidden = true
-        })
-        .buttonStyle(PlainButtonStyle())
     }
     
     private func fallbackBrandImage(name: String) -> some View {
@@ -127,7 +111,7 @@ struct HomeBrandsSection: View {
             .fill(AppColor.border.opacity(0.4))
             .frame(width: 66, height: 66)
             .overlay(
-                Text(name.prefix(1).uppercased())
+                Text(String(name.prefix(1)).uppercased())
                     .font(AppColor.sans(16, .bold))
                     .foregroundColor(AppColor.textSec)
             )

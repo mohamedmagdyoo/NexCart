@@ -11,9 +11,11 @@ import Foundation
 final class ProductsRepo: ProductsRepoProtocol {
 
     private let favProductReopo: FavProductRepoInterface
+    private let ProductRemoteData : ProductRemoteDataSourceProtocol
 
-    init(favProductReopo: FavProductRepoInterface) {
+    init(favProductReopo: FavProductRepoInterface,ProductRemoteData : ProductRemoteDataSourceProtocol) {
         self.favProductReopo = favProductReopo
+        self.ProductRemoteData = ProductRemoteData
     }
 
     func fetchFavProducts() throws -> [FavProduct] {
@@ -40,4 +42,7 @@ final class ProductsRepo: ProductsRepoProtocol {
     func cleanFavTabel() {
         favProductReopo.cleanFavTabel()
     }
+    func fetchProductById(productId: Int) async throws -> ProductEntity {
+        try await ProductRemoteData.fetchProductById(productId: productId)
+      }
 }
