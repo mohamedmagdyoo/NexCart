@@ -11,6 +11,8 @@ struct ProductDetailView: View {
     @State private var quantity: Int = 1
     @State private var navigateToCart: Bool = false
     @State private var showToast: Bool = false
+    @State private var showGuestAlert: Bool = false
+    @State private var navigateToSignIn: Bool = false
     @StateObject private var productDetailsViewModel: ProductDetailViewModel
 
     init(product: ProductEntity, productViewModel: ProductDetailViewModel) {
@@ -27,6 +29,13 @@ struct ProductDetailView: View {
         }
         return id
     }
+    private var isGuest: Bool {
+        guard let data = UserDefaults.standard.data(forKey: "userEntity"),
+              let user = try? JSONDecoder().decode(UserEntity.self, from: data)
+        else { return true }
+        return user.isGuest
+    }
+
     private var sizes: [String] {
         product.options.first(where: { $0.name.caseInsensitiveCompare("Size") == .orderedSame })?.values ?? []
     }
@@ -106,6 +115,7 @@ struct ProductDetailView: View {
         }
         .toolbar(.hidden, for: .tabBar)
         .navigationBarHidden(true)
+        .guestAlert(isPresented: $showGuestAlert, navigateToSignIn: $navigateToSignIn)
         .onChange(of: selectedVariant?.id) { _ in
             quantity = 1
         }
@@ -122,58 +132,66 @@ struct ProductDetailView: View {
     }
 
     private var imageSection: some View {
-        ZStack(alignment: .top) {
-            TabView(selection: $currentImageIndex) {
-                ForEach(images.indices, id: \.self) { index in
-                    AsyncImage(url: URL(string: images[index].src)) { image in
-                        image.resizable().scaledToFill()
-                    } placeholder: {
-                        AppColor.surface
+            ZStack(alignment: .top) {
+                TabView(selection: $currentImageIndex) {
+                    ForEach(images.indices, id: \.self) { index in
+                        AsyncImage(url: URL(string: images[index].src)) { image in
+                            image.resizable().scaledToFill()
+                        } placeholder: {
+                            AppColor.surface
+                        }
+                        .tag(index)
                     }
-                    .tag(index)
                 }
-            }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.55)
-            .clipped()
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
+                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.55)
+                .clipped()
 
-            LinearGradient(
-                gradient: Gradient(colors: [Color.black.opacity(0.3), Color.clear]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .frame(height: 120)
+                LinearGradient(
+                    gradient: Gradient(colors: [Color.black.opacity(0.3), Color.clear]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .frame(height: 120)
 
-            HStack {
-                CircleNavButton(systemName: "chevron.left") {
-                    presentationMode.wrappedValue.dismiss()
-                }
-
-                Spacer()
-
-                HStack(spacing: 12) {
-                    CircleNavButton(systemName: "square.and.arrow.up") {
-                        navigateToCart = true
+                HStack {
+                    CircleNavButton(systemName: "chevron.left") {
+                        presentationMode.wrappedValue.dismiss()
                     }
 
-                    CircleNavButton(
-                        systemName: isFavorited ? "heart.fill" : "heart",
-                        iconColor: isFavorited ? AppColor.gold : AppColor.textSec
-                    ) {
-                        withAnimation(.spring()) {
-                            isFavorited.toggle()
-                            product.isFavorited = isFavorited
-                            productDetailsViewModel.toggleFavorite(product: product)
+                    Spacer()
+
+                    HStack(spacing: 12) {
+                        // Update: Added guest check here
+                        CircleNavButton(systemName: "square.and.arrow.up") {
+                            if isGuest {
+                                showGuestAlert = true
+                            } else {
+                                navigateToCart = true
+                            }
+                        }
+
+                        CircleNavButton(
+                            systemName: isFavorited ? "heart.fill" : "heart",
+                            iconColor: isFavorited ? AppColor.gold : AppColor.textSec
+                        ) {
+                            if isGuest {
+                                showGuestAlert = true
+                            } else {
+                                withAnimation(.spring()) {
+                                    isFavorited.toggle()
+                                    product.isFavorited = isFavorited
+                                    productDetailsViewModel.toggleFavorite(product: product)
+                                }
+                            }
                         }
                     }
                 }
+                .padding(.horizontal, 20)
+                .padding(.top, 60)
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 60)
+            .frame(height: UIScreen.main.bounds.height * 0.55)
         }
-        .frame(height: UIScreen.main.bounds.height * 0.55)
-    }
-
     private var contentCard: some View {
         VStack(alignment: .leading, spacing: 0) {
             VStack(alignment: .leading, spacing: 24) {
@@ -351,13 +369,17 @@ struct ProductDetailView: View {
                 }
 
                 Button {
-                    guard let variantID = selectedVariant?.id else { return }
-                    Task {
-                        await productDetailsViewModel.addToCart(
-                            variantID: variantID,
-                            customerID: currentCustomerId,
-                            quantity: quantity
-                        )
+                    if isGuest {
+                        showGuestAlert = true
+                    } else {
+                        guard let variantID = selectedVariant?.id else { return }
+                        Task {
+                            await productDetailsViewModel.addToCart(
+                                variantID: variantID,
+                                customerID: currentCustomerId,
+                                quantity: quantity
+                            )
+                        }
                     }
                 } label: {
                     HStack(spacing: 12) {
