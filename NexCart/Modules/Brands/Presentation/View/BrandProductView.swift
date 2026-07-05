@@ -11,6 +11,15 @@ struct BrandProductsView: View {
     @StateObject var viewModel: BrandProductsViewModel
     @State private var selectedProductId: Int?
     @State private var isNavigatingToProduct: Bool = false
+    @State private var showGuestAlert = false
+    @State private var navigateToSignIn = false
+
+    private var isGuest: Bool {
+        guard let data = UserDefaults.standard.data(forKey: "userEntity"),
+              let user = try? JSONDecoder().decode(UserEntity.self, from: data)
+        else { return true }
+        return user.isGuest
+    }
 
     private let columns = [
         GridItem(.flexible(), spacing: 16),
@@ -45,7 +54,8 @@ struct BrandProductsView: View {
         .navigationBarBackButtonHidden(true)
         .goldBackButton()
         .background {
-            if let productId = selectedProductId, let product = viewModel.filteredProducts.first(where: { $0.id == productId }) {
+            if let productId = selectedProductId,
+               let product = viewModel.filteredProducts.first(where: { $0.id == productId }) {
                 NavigationLink(
                     destination: ProductDetailView(
                         product: product,
@@ -61,6 +71,7 @@ struct BrandProductsView: View {
         }
         .task { await viewModel.loadProducts() }
         .refreshable { await viewModel.loadProducts() }
+        .guestAlert(isPresented: $showGuestAlert, navigateToSignIn: $navigateToSignIn)
     }
 
     private var header: some View {
@@ -118,7 +129,11 @@ struct BrandProductsView: View {
                         product: product,
                         isFavorited: product.isFavorited,
                         onFavoriteToggle: {
-                            viewModel.toggleFavorite(productId: product.id)
+                            if isGuest {
+                                showGuestAlert = true
+                            } else {
+                                viewModel.toggleFavorite(productId: product.id)
+                            }
                         }
                     )
                 }
@@ -149,6 +164,7 @@ struct BrandProductsView: View {
     }
 }
 
+// MARK: - ProductCardView (unchanged)
 struct ProductCardView: View {
     let product: ProductEntity
     let isFavorited: Bool
