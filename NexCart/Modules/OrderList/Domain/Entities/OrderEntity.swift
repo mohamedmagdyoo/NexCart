@@ -26,6 +26,7 @@ struct OrderEntity: Identifiable {
     let fulfillmentStatus: String?
     let createdAt: String
     let lineItems: [OrderLineItemEntity]
+    let currency: String
     
     var statusDisplay: String {
         switch financialStatus {
