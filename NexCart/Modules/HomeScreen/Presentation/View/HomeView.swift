@@ -11,6 +11,7 @@ struct HomeView: View {
     @State private var isNavigatingToAllProducts: Bool = false
     
     @State private var userEntity: UserEntity?
+    @ObservedObject private var appSettings = AppSettings.shared
     
     init() {
         UITabBar.appearance().isHidden = true
@@ -37,7 +38,7 @@ struct HomeView: View {
         }
         .environmentObject(tabBarManager)
         .animation(.easeInOut(duration: 0.3), value: tabBarManager.isHidden)
-        .preferredColorScheme(.light)
+        .preferredColorScheme(appSettings.isDarkMode ? .dark : .light)
         .onChange(of: isNavigatingToProduct) { newValue in
             if newValue { tabBarManager.isHidden = true }
         }
