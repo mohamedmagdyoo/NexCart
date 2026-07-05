@@ -9,7 +9,6 @@ import SwiftUI
 
 struct AddNewAddressView: View {
     @ObservedObject var viewModel: AddressViewModel
-    let ownerUserId: String
     @Binding var isPresented: Bool
 
     var body: some View {
@@ -43,7 +42,7 @@ struct AddNewAddressView: View {
 
                         Button {
                             Task {
-                                let success = await viewModel.submitNewAddress(ownerUserId: ownerUserId)
+                                let success = await viewModel.submitNewAddress()
                                 if success {
                                     isPresented = false
                                 }

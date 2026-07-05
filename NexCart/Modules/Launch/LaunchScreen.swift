@@ -13,7 +13,7 @@ struct LaunchScreen: View {
             Color.white
                 .ignoresSafeArea()
 
-            Image("logo_splash")
+            Image("app_logo")
                 .resizable()
                 .scaledToFit()
                 .padding()

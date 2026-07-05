@@ -48,7 +48,6 @@
 		9F92BF572FF47DCF00E090B7 /* BrandProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F92BF562FF47DCF00E090B7 /* BrandProductViewModel.swift */; };
 		9F92BF592FF47DF100E090B7 /* BrandProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F92BF582FF47DF100E090B7 /* BrandProductView.swift */; };
 		9F92BF5B2FF4803E00E090B7 /* BrandProductUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F92BF5A2FF4803E00E090B7 /* BrandProductUseCase.swift */; };
-
 		9F9474D12FFAFF8200F0A912 /* GuestCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9474D02FFAFF8200F0A912 /* GuestCard.swift */; };
 		9F9498132FF57881000CEB5A /* NexCart.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F94980C2FF57881000CEB5A /* NexCart.xcdatamodeld */; };
 		9F9498142FF57881000CEB5A /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F94980F2FF57881000CEB5A /* CoreData.swift */; };
@@ -1903,7 +1902,6 @@
 			children = (
 				9F28C7082FF9EDF40000940B /* Dto */,
 				F5B53ADC2FF6061B009F9F87 /* EndPoints */,
-				F5B53ADB2FF6060C009F9F87 /* Repository */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -2138,7 +2136,6 @@
 				F51C98A72FF5A0E000A9C2EE /* AddCartResponseMapper.swift in Sources */,
 				D9906F9C2FF7F57C00B9474E /* CouponEntity.swift in Sources */,
 				F51C98A82FF5A0E000A9C2EE /* ProductBodyMapper.swift in Sources */,
-
 				9F9003382FF6F23C00B4B745 /* CollectionProductsView.swift in Sources */,
 				F51C98A92FF5A0E000A9C2EE /* AddCartResponse.swift in Sources */,
 				9FA0580E2FF8547600DB93BB /* SearchRepoProtocol.swift in Sources */,

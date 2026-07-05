@@ -214,8 +214,7 @@ struct HomeView: View {
                         
                         NavigationLink {
                             AddressListView(
-                                viewModel: DIContainer.shared.container.resolve(AddressViewModel.self)!,
-                                ownerUserId: "Me"
+                                viewModel: DIContainer.shared.container.resolve(AddressViewModel.self)!
                             )
                         } label: {
                             profileRow(icon: "map", title: "Shipping Addresses")

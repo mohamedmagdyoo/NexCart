@@ -37,6 +37,14 @@ final class CoreDataAddressDao: AddressDao {
     func insert(_ address: AddressEntity) throws {
         let context = container.viewContext
 
+        var address = address
+
+        let defaultAddress = try fetchDefault(ownerID: address.ownerUserId)
+
+        if defaultAddress == nil {
+            address.isDefault = true
+        }
+
         let managedObject = AddressMO(context: context)
         map(address, into: managedObject)
         try saveContext()
@@ -58,6 +66,7 @@ final class CoreDataAddressDao: AddressDao {
     }
 
     func fetchAll(ownerID: String) throws -> [AddressEntity] {
+        print("try to fetch All address")
         let context = container.viewContext
 
         let request: NSFetchRequest<AddressMO> = AddressMO.fetchRequest()
@@ -69,8 +78,11 @@ final class CoreDataAddressDao: AddressDao {
         ]
 
         do {
+            print("Address fethc with userID \(ownerID)")
+
             return try context.fetch(request).map(map)
         } catch {
+            print("Can't fetch address cause \(error.localizedDescription)")
             throw AddressError.localStorageFailed(
                 underlying: error.localizedDescription
             )
