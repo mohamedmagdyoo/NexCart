@@ -87,7 +87,7 @@ struct BagView: View {
         let removedItem = cartViewModel.cartData[bagIndex].items.remove(at: itemIndex)
 
         Task {
-            let success = await cartViewModel.deleteFromCart(draftOrderId: String(bagId))
+            let success = await cartViewModel.deleteFromCart(draftOrderId: String(item.drafOrderId))
             if success {
                 showToastMessage("Item deleted successfully")
             } else {
