@@ -67,6 +67,7 @@ final class OrderRemoteDataSource: OrderRemoteDataSourceProtocol {
                             imageURL: cachedUrl,
                             vendor: entity.vendor,
                             variantTitle: entity.variantTitle
+                            
                         )
                     }
                     return entity
@@ -81,7 +82,8 @@ final class OrderRemoteDataSource: OrderRemoteDataSourceProtocol {
                     financialStatus: orderEntity.financialStatus,
                     fulfillmentStatus: orderEntity.fulfillmentStatus,
                     createdAt: orderEntity.createdAt,
-                    lineItems: lineItems
+                    lineItems: lineItems,
+                    currency: orderEntity.currency
                 )
             }
         }
