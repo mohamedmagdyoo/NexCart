@@ -150,28 +150,6 @@ struct HomeView: View {
     }
     
     private var profileTab: some View {
-<<<<<<< HEAD
-        NavigationView {
-            VStack(spacing: 16) {
-                
-                NavigationLink {
-                    OrdersView(
-                        viewModel: DIContainer.shared.container.resolve(OrdersViewModel.self)!
-                    )
-                } label: {
-                    HStack {
-                        Image(systemName: "bag")
-                        Text("My Orders")
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                    }
-                    .padding()
-                    .background(AppColor.surface)
-                    .cornerRadius(12)
-                    .padding(.horizontal)
-                }
-                .foregroundColor(AppColor.textPrim)
-=======
         NavigationStack {
             VStack {
                 Text("Profile View")
@@ -179,7 +157,6 @@ struct HomeView: View {
                     .foregroundColor(AppColor.textPrim)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.bottom, 90)
->>>>>>> faef90c (Last touches of finishing apple pay feature)
                 
                 Button {
                     UserDefaults.standard.removeObject(forKey: "userEntity")
@@ -197,7 +174,7 @@ struct HomeView: View {
                     Text("NavToAddress")
                         .foregroundColor(.black)
                 }
-
+                
                 NavigationLink{
                     
                     CheckoutView(viewModel: DIContainer.shared.container.resolve(CheckoutViewModel.self)!, total: 1005)
@@ -205,7 +182,7 @@ struct HomeView: View {
                     Text("CheckOut")
                         .foregroundColor(.black)
                 }
-
+                
                 
                 Spacer()
             }
