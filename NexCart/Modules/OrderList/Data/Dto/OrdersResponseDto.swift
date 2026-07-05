@@ -19,8 +19,10 @@ struct OrderDTO: Codable {
     let fulfillmentStatus: String?
     let createdAt: String
     let lineItems: [LineItemDTO]
+    let currency: String
     
     enum CodingKeys: String, CodingKey {
+        case currency
         case id
         case orderNumber     = "order_number"
         case name
@@ -40,7 +42,8 @@ struct OrderDTO: Codable {
             financialStatus:   financialStatus,
             fulfillmentStatus: fulfillmentStatus,
             createdAt:         createdAt,
-            lineItems:         lineItems.map { $0.toEntity() }
+            lineItems:         lineItems.map { $0.toEntity() },
+            currency:           currency
         )
     }
 }
