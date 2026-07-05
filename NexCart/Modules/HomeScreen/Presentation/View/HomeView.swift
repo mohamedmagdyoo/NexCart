@@ -152,12 +152,25 @@ struct HomeView: View {
     
     private var profileTab: some View {
         NavigationView {
-            VStack {
-                Text("Profile View")
-                    .font(AppColor.sans(16, .medium))
-                    .foregroundColor(AppColor.textPrim)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(.bottom, 90)
+            VStack(spacing: 16) {
+                
+                NavigationLink {
+                    OrdersView(
+                        viewModel: DIContainer.shared.container.resolve(OrdersViewModel.self)!
+                    )
+                } label: {
+                    HStack {
+                        Image(systemName: "bag")
+                        Text("My Orders")
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                    }
+                    .padding()
+                    .background(AppColor.surface)
+                    .cornerRadius(12)
+                    .padding(.horizontal)
+                }
+                .foregroundColor(AppColor.textPrim)
                 
                 Button {
                     UserDefaults.standard.removeObject(forKey: "userEntity")
@@ -165,21 +178,21 @@ struct HomeView: View {
                     Text("LogOut")
                         .foregroundColor(.black)
                 }
-
-                NavigationLink{
-                    AddressListView(viewModel: DIContainer.shared.container.resolve(AddressViewModel.self)!, ownerUserId: userEntity?.id ?? "Me" )
-                }label: {
+                
+                NavigationLink {
+                    AddressListView(
+                        viewModel: DIContainer.shared.container.resolve(AddressViewModel.self)!,
+                        ownerUserId: userEntity?.id ?? "Me"
+                    )
+                } label: {
                     Text("NavToAddress")
                         .foregroundColor(.black)
                 }
                 
-                
-                Text("Profile View")
-                    .font(AppColor.sans(16, .medium))
-                    .foregroundColor(AppColor.textPrim)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(.bottom, 90)
+                Spacer()
             }
+            .padding(.top, 20)
+            .padding(.bottom, 90)
             .onAppear { tabBarManager.isHidden = false }
         }
         .navigationViewStyle(.stack)

@@ -17,8 +17,15 @@ final class CartRepo:CartRepoProtcol {
     init(apiService:ApiServiceProtocol) {
         networkService=apiService
     }
-    func getAllProduct() async throws -> [BagEntity] {
-        let allCart: CartResponseDto = try await networkService.fetch(endPoint: CartEndPoint.allCart)
+    func getAllProduct(customerId: Int) async throws -> [BagEntity] {
+        print("🛒 Fetching cart for customer: \(customerId)")
+        let allCart: CartResponseDto = try await networkService.fetch(
+            endPoint: CartEndPoint.allCart(customerId: customerId)
+        )
+        print("🛒 Got \(allCart.draftOrders.count) draft orders")
+        allCart.draftOrders.forEach {
+            print("🛒 Draft order \($0.id) - customer: \($0.customer?.id ?? 0)")
+        }
         return allCart.toEntities()
     }
     func getSingleProduct(productId: Int) async throws -> ProductEntity {

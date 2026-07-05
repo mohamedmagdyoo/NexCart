@@ -18,7 +18,15 @@ struct ProductDetailView: View {
         _isFavorited = State(initialValue: product.isFavorited)
         _productDetailsViewModel = StateObject(wrappedValue: productViewModel)
     }
-
+    private var currentCustomerId: Int {
+        guard let userData = UserDefaults.standard.data(forKey: "userEntity"),
+              let user = try? JSONDecoder().decode(UserEntity.self, from: userData),
+              let shopifyIdStr = user.shopifyCustomerId,
+              let id = Int(shopifyIdStr) else {
+            return 0
+        }
+        return id
+    }
     private var sizes: [String] {
         product.options.first(where: { $0.name.caseInsensitiveCompare("Size") == .orderedSame })?.values ?? []
     }
@@ -347,7 +355,7 @@ struct ProductDetailView: View {
                     Task {
                         await productDetailsViewModel.addToCart(
                             variantID: variantID,
-                            customerID: 10880560562482,
+                            customerID: currentCustomerId,
                             quantity: quantity
                         )
                     }
