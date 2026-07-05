@@ -105,6 +105,9 @@ extension DIContainer {
         container.register(GetDefaultAddressUseCase.self) { r in
             GetDefaultAddressUseCase(repository: r.resolve(AddressRepository.self)!)
         }
-        
+        //orderList
+        container.register(FetchOrdersUseCaseProtocol.self) { r in
+            FetchOrdersUseCase(repo: r.resolve(OrderRepoProtocol.self)!)
+        }
     }
 }

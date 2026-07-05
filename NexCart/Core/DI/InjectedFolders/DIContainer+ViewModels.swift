@@ -80,6 +80,10 @@ extension DIContainer {
         container.register(AddressViewModel.self) { r in
             AddressViewModel(addAddressUseCase: r.resolve(AddAddressUseCase.self)!, deleteAddressUseCase: r.resolve(DeleteAddressUseCase.self)!, deleteAllAddressesUseCase: r.resolve(DeleteAllAddressesUseCase.self)!, getAllAddressesUseCase: r.resolve(GetAllAddressesUseCase.self)!, getDefaultAddressUseCase: r.resolve(GetDefaultAddressUseCase.self)!)
         }
+        //orderList
+        container.register(OrdersViewModel.self) { r in
+            OrdersViewModel(fetchOrdersUseCase: r.resolve(FetchOrdersUseCaseProtocol.self)!)
+        }
         
         
     }

@@ -41,6 +41,9 @@ extension DIContainer{
         container.register(AddressDao.self){ _ in
             CoreDataAddressDao()
         }
+        container.register(OrderRemoteDataSourceProtocol.self) { r in
+            OrderRemoteDataSource(apiService: r.resolve(ApiServiceProtocol.self)!)
+        }.inObjectScope(.container)
     }
 }
 
