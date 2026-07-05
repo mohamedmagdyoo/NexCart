@@ -19,7 +19,7 @@ struct CheckoutView: View {
         .navigationDestination(isPresented: $viewModel.navToNextScreen){
             VStack{
                 //Here have to call the next actule screen
-                Text("Let's Confierme the order")
+                Text("Let's Confierm the order")
             }
         }
         .navigationTitle("Checkout")
@@ -50,7 +50,7 @@ struct CheckoutView: View {
 //                    viewModel.testPay(total: 1000)
                     viewModel.didConfirmeButtonCliked()
                 }) {
-                    Text("Confirme Order · $\(total, specifier: "%.2f")")
+                    Text("Confirm Order · $\(total, specifier: "%.2f")")
                         .font(AppColor.sans(16, .medium))
                         .foregroundColor(AppColor.white)
                         .frame(maxWidth: .infinity)

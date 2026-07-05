@@ -48,8 +48,12 @@ final class AddressViewModel: ObservableObject {
         self.getAllAddressesUseCase = getAllAddressesUseCase
         self.getDefaultAddressUseCase = getDefaultAddressUseCase
     }
+    
+    private var ownerID: String{
+        return AppConstants.shared.getUserEntity()?.id ?? "0"
+    }
 
-    func loadAddresses(ownerID: String) async {
+    func loadAddresses() async {
         listState = .loading
         do {
             let addresses = try await getAllAddressesUseCase.execute(ownerID: ownerID)
@@ -62,8 +66,8 @@ final class AddressViewModel: ObservableObject {
     }
 
 
-    func submitNewAddress(ownerUserId: String) async -> Bool {
-        print("Add New Addres with owner\(ownerUserId)")
+    func submitNewAddress() async -> Bool {
+        print("Add New Addres with owner\(ownerID)")
         formState = .loading
 
         guard !fullName.trimmingCharacters(in: .whitespaces).isEmpty else {
@@ -95,14 +99,14 @@ final class AddressViewModel: ObservableObject {
             zip: zip,
             label: label.isEmpty ? nil : label,
             isDefault: false,
-            ownerUserId: ownerUserId
+            ownerUserId: ownerID
         )
 
         do {
             try await addAddressUseCase.execute(newAddress)
             formState = .success(newAddress)
             clearForm()
-            await loadAddresses(ownerID: ownerUserId)
+            await loadAddresses()
             return true
         } catch let error as AddressError {
             formState = .error(error)
@@ -116,7 +120,7 @@ final class AddressViewModel: ObservableObject {
     func delete(_ address: AddressEntity) async {
         do {
             try await deleteAddressUseCase.execute(id: address.id)
-            await loadAddresses(ownerID: address.ownerUserId)
+            await loadAddresses()
         } catch let error as AddressError {
             listState = .error(error)
         } catch {
@@ -140,7 +144,7 @@ final class AddressViewModel: ObservableObject {
             promoted.isDefault = true
             try await addAddressUseCase.execute(promoted)
 
-            await loadAddresses(ownerID: address.ownerUserId)
+            await loadAddresses()
         } catch let error as AddressError {
             listState = .error(error)
         } catch {
