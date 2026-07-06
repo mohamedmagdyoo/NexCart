@@ -11,7 +11,6 @@ import SwiftUI
 struct AddressListView: View {
     @ObservedObject var viewModel: AddressViewModel
     @State private var showingAddAddress = false
-    let ownerUserId: String
 
     var body: some View {
         NavigationStack {
@@ -21,6 +20,8 @@ struct AddressListView: View {
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
+                        GoldBackButton()
+                        
                         HStack(spacing: 8) {
                             Image(systemName: "mappin.and.ellipse")
                             Text("Saved addresses")
@@ -88,11 +89,12 @@ struct AddressListView: View {
                     }
                 }
             }
+            .navigationBarBackButtonHidden()
             .sheet(isPresented: $showingAddAddress) {
-                AddNewAddressView(viewModel: viewModel, ownerUserId: ownerUserId, isPresented: $showingAddAddress)
+                AddNewAddressView(viewModel: viewModel, isPresented: $showingAddAddress)
             }
             .task {
-                await viewModel.loadAddresses(ownerID: ownerUserId)
+                await viewModel.loadAddresses()
             }
         }
     }

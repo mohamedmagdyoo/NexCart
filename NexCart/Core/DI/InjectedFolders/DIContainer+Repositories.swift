@@ -81,7 +81,15 @@ extension DIContainer {
         container.register(AddressRepository.self) { r in
             AddressRepositoryImpl(localDataSource: r.resolve(AddressDao.self)!)
         }
+        //orderList
+        container.register(OrderRepoProtocol.self) { r in
+            OrderRepository(remoteDataSource: r.resolve(OrderRemoteDataSourceProtocol.self)!)
+        }.inObjectScope(.container)
 
 
+        //For Payment
+        container.register(PaymentRepositoryProtocol.self) { r in
+            PaymentRepositoryImpl(applePayService: r.resolve(ApplePayServiceProtocol.self)!)
+        }
     }
 }

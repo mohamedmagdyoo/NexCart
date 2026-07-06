@@ -25,3 +25,26 @@ final class DIContainer {
         registerViewModels()
     }
 }
+
+
+/**
+ 
+ container.register(ApiServiceProtocol.self) { _ in ApiService() }
+     .inObjectScope(.container)
+
+ container.register(ApplePayServiceProtocol.self) { _ in ApplePayService() }
+     .inObjectScope(.container)
+
+ container.register(ShopifyOrderServiceProtocol.self) { r in
+     ShopifyOrderService(apiService: r.resolve(ApiServiceProtocol.self)!)
+ }.inObjectScope(.container)
+
+ container.register(CheckoutRepositoryProtocol.self) { r in
+     CheckoutRepositoryImpl(
+         applePayService: r.resolve(ApplePayServiceProtocol.self)!,
+         shopifyOrderService: r.resolve(ShopifyOrderServiceProtocol.self)!,
+         merchantIdentifier: "merchant.com.yourteam.nexcart"
+     )
+ }.inObjectScope(.container)
+ 
+ */

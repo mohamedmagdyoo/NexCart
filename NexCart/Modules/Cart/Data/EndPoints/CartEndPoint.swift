@@ -11,9 +11,9 @@ enum CartEndPoint: EndPoint {
         nil
     }
     
-    case allCart
     case singleProduct(productId:Int)
     case deleteFromCart(draftOrderId: String)
+    case allCart(customerId: Int)
 
     var baseUrl: String {
         "https://mad46-ios-team9.myshopify.com/admin/api/2024-01"
@@ -21,8 +21,8 @@ enum CartEndPoint: EndPoint {
 
     var path: String {
         switch self {
-        case .allCart:
-            return "/draft_orders.json"
+        case .allCart(let customerId):
+            return "/draft_orders.json?customer_id=\(customerId)&status=open&limit=250"
 
         case .singleProduct(let productId):
                     return "/products/\(productId).json"

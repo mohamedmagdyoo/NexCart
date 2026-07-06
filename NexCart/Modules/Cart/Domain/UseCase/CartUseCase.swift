@@ -7,7 +7,7 @@
 
 import Foundation
 protocol CartUseCaseProtocol{
-    func getAllCart() async throws -> [BagEntity]
+    func getAllCart(currentCustomerId : Int) async throws -> [BagEntity]
     
     func getSingleProduct(productId:Int) async throws ->ProductEntity
     
@@ -22,8 +22,8 @@ final class CartUseCase:CartUseCaseProtocol{
     init(cartRepo: CartRepoProtcol) {
         self.cartRepo = cartRepo
     }
-    func getAllCart() async throws -> [BagEntity] {
-      try await cartRepo.getAllProduct()
+    func getAllCart( currentCustomerId : Int) async throws -> [BagEntity] {
+        try await cartRepo.getAllProduct(customerId: currentCustomerId)
     }
     
     func getSingleProduct(productId:Int) async throws ->ProductEntity{
