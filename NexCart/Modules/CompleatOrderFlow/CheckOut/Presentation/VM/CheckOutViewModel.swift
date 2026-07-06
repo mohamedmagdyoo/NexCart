@@ -52,14 +52,17 @@ final class CheckoutViewModel: ObservableObject {
     func onAppear() {
         paymentMethods = getPaymentMethodsUseCase.execute()
         Task { await loadAddresses() }
+        
     }
     
     private func loadAddresses() async {
         do {
             addresses = try await getAllAddressesUseCase.execute(ownerID: ownerID )
             selectedAddress = addresses.first
+            print("\(selectedAddress?.city)")
         } catch {
             screenError = "Couldn't load your addresses."
+            
         }
     }
     
