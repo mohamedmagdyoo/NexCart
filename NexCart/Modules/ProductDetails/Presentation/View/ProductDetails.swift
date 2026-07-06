@@ -3,7 +3,7 @@ import SwiftUI
 struct ProductDetailView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var product: ProductEntity
-
+    
     @State private var selectedSize: String = ""
     @State private var selectedColor: String = ""
     @State private var isFavorited: Bool = false
@@ -14,7 +14,7 @@ struct ProductDetailView: View {
     @State private var showGuestAlert: Bool = false
     @State private var navigateToSignIn: Bool = false
     @StateObject private var productDetailsViewModel: ProductDetailViewModel
-
+    
     init(product: ProductEntity, productViewModel: ProductDetailViewModel) {
         _product = State(initialValue: product)
         _isFavorited = State(initialValue: product.isFavorited)
@@ -35,17 +35,17 @@ struct ProductDetailView: View {
         else { return true }
         return user.isGuest
     }
-
+    
     private var sizes: [String] {
         product.options.first(where: { $0.name.caseInsensitiveCompare("Size") == .orderedSame })?.values ?? []
     }
-
+    
     private var colors: [String] {
         product.options.first(where: { $0.name.caseInsensitiveCompare("Color") == .orderedSame })?.values ?? []
     }
-
+    
     private var images: [ProductImageEntity] { product.images }
-
+    
     private var selectedVariant: VariantEntity? {
         product.variants.first { variant in
             let matchesSize = selectedSize.isEmpty || variant.option1 == selectedSize || variant.option2 == selectedSize || variant.option3 == selectedSize
@@ -53,46 +53,46 @@ struct ProductDetailView: View {
             return matchesSize && matchesColor
         }
     }
-
+    
     private var isAddingToCart: Bool {
         if case .loading = productDetailsViewModel.screenState { return true }
         return false
     }
-
+    
     private var errorMessage: String? {
         if case .error(let error) = productDetailsViewModel.screenState { return error.localizedDescription }
         return nil
     }
-
+    
     private var success: Bool {
         if case .success = productDetailsViewModel.screenState { return true }
         return false
     }
-
+    
     private var displayPrice: Double {
         (Double(selectedVariant?.price ?? product.variants.first?.price ?? "0") ?? 0) * Double(quantity)
     }
-
+    
     private var displayName: String {
         if let range = product.name.range(of: "|") {
             return product.name[range.upperBound...].trimmingCharacters(in: .whitespaces)
         }
         return product.name
     }
-
+    
     private var isSelectionIncomplete: Bool {
         (!sizes.isEmpty && selectedSize.isEmpty) || (!colors.isEmpty && selectedColor.isEmpty)
     }
-
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             AppColor.bg.ignoresSafeArea()
-
+            
             NavigationLink(destination: BagView(), isActive: $navigateToCart) {
                 EmptyView()
             }
             .hidden()
-
+            
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     imageSection
@@ -100,24 +100,39 @@ struct ProductDetailView: View {
                 }
             }
             .ignoresSafeArea(edges: .top)
-
+            
             bottomBar
-
+            
             if showToast {
                 VStack {
                     Spacer()
-                    ToastView(message: "Added to bag")
+                    ToastView(message: productDetailsViewModel.toastMessage)
                         .padding(.bottom, 120)
                 }
                 .transition(.move(edge: .bottom).combined(with: .opacity))
                 .animation(.spring(), value: showToast)
             }
         }
+        .onAppear{
+            productDetailsViewModel.getStudioProductsCount()
+        }
         .toolbar(.hidden, for: .tabBar)
         .navigationBarHidden(true)
         .guestAlert(isPresented: $showGuestAlert, navigateToSignIn: $navigateToSignIn)
         .onChange(of: selectedVariant?.id) { _ in
             quantity = 1
+        }
+        .onChange(of: productDetailsViewModel.toastMessage){ _ in
+            if productDetailsViewModel.toastMessage.isEmpty == true{
+                return
+            }
+            showToast  = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                withAnimation {
+                    showToast = false
+                    productDetailsViewModel.toastMessage = ""
+                }
+            }
         }
         .onChange(of: success) { newValue in
             if newValue {
@@ -130,68 +145,92 @@ struct ProductDetailView: View {
             }
         }
     }
-
+    
     private var imageSection: some View {
-            ZStack(alignment: .top) {
-                TabView(selection: $currentImageIndex) {
-                    ForEach(images.indices, id: \.self) { index in
-                        AsyncImage(url: URL(string: images[index].src)) { image in
-                            image.resizable().scaledToFill()
-                        } placeholder: {
-                            AppColor.surface
-                        }
-                        .tag(index)
+        ZStack(alignment: .top) {
+            TabView(selection: $currentImageIndex) {
+                ForEach(images.indices, id: \.self) { index in
+                    AsyncImage(url: URL(string: images[index].src)) { image in
+                        image.resizable().scaledToFill()
+                    } placeholder: {
+                        AppColor.surface
                     }
+                    .tag(index)
                 }
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.55)
-                .clipped()
-
-                LinearGradient(
-                    gradient: Gradient(colors: [Color.black.opacity(0.3), Color.clear]),
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-                .frame(height: 120)
-
-                HStack {
-                    CircleNavButton(systemName: "chevron.left") {
-                        presentationMode.wrappedValue.dismiss()
-                    }
-
-                    Spacer()
-
-                    HStack(spacing: 12) {
-                        // Update: Added guest check here
-                        CircleNavButton(systemName: "square.and.arrow.up") {
-                            if isGuest {
-                                showGuestAlert = true
-                            } else {
-                                navigateToCart = true
-                            }
-                        }
-
-                        CircleNavButton(
-                            systemName: isFavorited ? "heart.fill" : "heart",
-                            iconColor: isFavorited ? AppColor.gold : AppColor.textSec
-                        ) {
-                            if isGuest {
-                                showGuestAlert = true
-                            } else {
-                                withAnimation(.spring()) {
-                                    isFavorited.toggle()
-                                    product.isFavorited = isFavorited
-                                    productDetailsViewModel.toggleFavorite(product: product)
-                                }
-                            }
-                        }
-                    }
-                }
-                .padding(.horizontal, 20)
-                .padding(.top, 60)
             }
-            .frame(height: UIScreen.main.bounds.height * 0.55)
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
+            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.55)
+            .clipped()
+            
+            LinearGradient(
+                gradient: Gradient(colors: [Color.black.opacity(0.3), Color.clear]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .frame(height: 120)
+            
+            HStack {
+                CircleNavButton(systemName: "chevron.left") {
+                    presentationMode.wrappedValue.dismiss()
+                }
+                
+                Spacer()
+                
+                HStack(spacing: 12) {
+                    // Update: Added guest check here
+                    CircleNavButton(systemName: "cart") {
+                        if isGuest {
+                            showGuestAlert = true
+                        } else {
+                            navigateToCart = true
+                        }
+                    }
+                    
+                    CircleNavButton(
+                        systemName: isFavorited ? "heart.fill" : "heart",
+                        iconColor: isFavorited ? AppColor.gold : AppColor.textSec
+                    ) {
+                        if isGuest {
+                            showGuestAlert = true
+                        } else {
+                            withAnimation(.spring()) {
+                                isFavorited.toggle()
+                                product.isFavorited = isFavorited
+                                productDetailsViewModel.toggleFavorite(product: product)
+                            }
+                        }
+                    }
+                    
+                    //For adding the product to AiStudio
+                    Button(action: {
+                        productDetailsViewModel.addToAiStudio(prodcut: product)
+                    }) {
+                        Image(systemName: "wand.and.stars")
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundColor(.black)
+                            .frame(width: 44, height: 44)
+                            .background(AppColor.white)
+                            .clipShape(Circle())
+                            .shadow(color: Color.black.opacity(0.12), radius: 8, x: 0, y: 4)
+                            .overlay(alignment: .topTrailing) {
+                                Circle()
+                                    .foregroundStyle(.red)
+                                    .frame(width: 18, height: 18)
+                                    .overlay {
+                                        Text("\(productDetailsViewModel.numberOfStudioProducts)")
+                                            .font(.system(size: 10, weight: .bold))
+                                            .foregroundColor(.white)
+                                    }
+                                    .offset(x: 4, y: -4)
+                            }
+                    }
+                }
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 60)
         }
+        .frame(height: UIScreen.main.bounds.height * 0.55)
+    }
     private var contentCard: some View {
         VStack(alignment: .leading, spacing: 0) {
             VStack(alignment: .leading, spacing: 24) {
@@ -202,16 +241,16 @@ struct ProductDetailView: View {
                             .foregroundColor(AppColor.textPrim)
                             .lineSpacing(4)
                     }
-
+                    
                     Spacer()
                 }
-
+                
                 HStack(alignment: .bottom) {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(String(format: "$%.2f", displayPrice))
                             .font(AppColor.sans(32, .bold))
                             .foregroundColor(AppColor.textPrim)
-
+                        
                         if let compareAt = selectedVariant?.compareAtPrice ?? product.variants.first?.compareAtPrice {
                             Text("$\(compareAt)")
                                 .font(AppColor.sans(16))
@@ -219,9 +258,9 @@ struct ProductDetailView: View {
                                 .strikethrough(true, color: AppColor.textSec)
                         }
                     }
-
+                    
                     Spacer()
-
+                    
                     HStack(spacing: 4) {
                         Image(systemName: "star.fill")
                             .font(.system(size: 16))
@@ -238,16 +277,16 @@ struct ProductDetailView: View {
                     .background(AppColor.surface)
                     .clipShape(Capsule())
                 }
-
+                
                 Divider()
                     .background(AppColor.border)
-
+                
                 if !colors.isEmpty {
                     VStack(alignment: .leading, spacing: 16) {
                         Text("Color")
                             .font(AppColor.serif(18))
                             .foregroundColor(AppColor.textPrim)
-
+                        
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 16) {
                                 ForEach(colors, id: \.self) { color in
@@ -261,7 +300,7 @@ struct ProductDetailView: View {
                         }
                     }
                 }
-
+                
                 if !sizes.isEmpty {
                     VStack(alignment: .leading, spacing: 16) {
                         HStack {
@@ -269,12 +308,12 @@ struct ProductDetailView: View {
                                 .font(AppColor.serif(18))
                                 .foregroundColor(AppColor.textPrim)
                             Spacer()
-//                            Text("Size Guide")
-//                                .font(AppColor.sans(14, .medium))
-//                                .foregroundColor(AppColor.textPrim)
-//                                .underline()
+                            //                            Text("Size Guide")
+                            //                                .font(AppColor.sans(14, .medium))
+                            //                                .foregroundColor(AppColor.textPrim)
+                            //                                .underline()
                         }
-
+                        
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 12) {
                                 ForEach(sizes, id: \.self) { size in
@@ -288,20 +327,20 @@ struct ProductDetailView: View {
                         }
                     }
                 }
-
+                
                 if let bodyHtml = product.bodyHtml {
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Description")
                             .font(AppColor.serif(18))
                             .foregroundColor(AppColor.textPrim)
-
+                        
                         Text(bodyHtml)
                             .font(AppColor.sans(15))
                             .foregroundColor(AppColor.textSec)
                             .lineSpacing(6)
                     }
                 }
-
+                
                 if let errorMessage {
                     Text(errorMessage)
                         .font(AppColor.sans(14, .medium))
@@ -318,11 +357,11 @@ struct ProductDetailView: View {
         .offset(y: -40)
         .shadow(color: Color.black.opacity(0.06), radius: 24, x: 0, y: -8)
     }
-
+    
     private var bottomBar: some View {
         VStack(spacing: 0) {
             Divider().background(AppColor.border)
-
+            
             VStack(spacing: 14) {
                 HStack(alignment: .center) {
                     VStack(alignment: .leading, spacing: 4) {
@@ -334,9 +373,9 @@ struct ProductDetailView: View {
                             .font(AppColor.sans(24, .bold))
                             .foregroundColor(AppColor.textPrim)
                     }
-
+                    
                     Spacer()
-
+                    
                     HStack(spacing: 0) {
                         Button {
                             if quantity > 1 { quantity -= 1 }
@@ -346,12 +385,12 @@ struct ProductDetailView: View {
                                 .foregroundColor(AppColor.textPrim)
                                 .frame(width: 36, height: 40)
                         }
-
+                        
                         Text("\(quantity)")
                             .font(AppColor.sans(15, .bold))
                             .foregroundColor(AppColor.textPrim)
                             .frame(width: 28)
-
+                        
                         Button {
                             quantity += 1
                         } label: {
@@ -367,7 +406,7 @@ struct ProductDetailView: View {
                         Capsule().stroke(AppColor.border, lineWidth: 1)
                     )
                 }
-
+                
                 Button {
                     if isGuest {
                         showGuestAlert = true
@@ -411,7 +450,7 @@ struct ProductDetailView: View {
         .background(AppColor.bg)
         .shadow(color: Color.black.opacity(0.04), radius: 16, x: 0, y: -4)
     }
-
+    
     private func bottomSafeArea() -> CGFloat {
         UIApplication.shared.connectedScenes
             .compactMap { $0 as? UIWindowScene }
@@ -423,7 +462,7 @@ private struct CircleNavButton: View {
     let systemName: String
     var iconColor: Color = AppColor.textPrim
     let action: () -> Void
-
+    
     var body: some View {
         Button(action: action) {
             Image(systemName: systemName)
@@ -441,7 +480,7 @@ private struct ColorCircle: View {
     let colorName: String
     let isSelected: Bool
     let onSelect: () -> Void
-
+    
     private var swatchColor: Color {
         switch colorName.lowercased() {
         case "white": return Color(hex: "#F5F0E8")
@@ -454,7 +493,7 @@ private struct ColorCircle: View {
         default: return AppColor.surface
         }
     }
-
+    
     var body: some View {
         Button(action: onSelect) {
             Circle()
@@ -473,7 +512,7 @@ private struct SizeCircle: View {
     let size: String
     let isSelected: Bool
     let onSelect: () -> Void
-
+    
     var body: some View {
         Button(action: onSelect) {
             Text(size)

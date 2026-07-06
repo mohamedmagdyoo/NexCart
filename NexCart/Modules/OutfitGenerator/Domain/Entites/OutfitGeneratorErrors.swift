@@ -9,6 +9,7 @@ import Foundation
 
 enum SelectionError: Error, Equatable {
     case maximumReached
+    case alreadyAdded
 }
 
 enum AIError: Error, Equatable {

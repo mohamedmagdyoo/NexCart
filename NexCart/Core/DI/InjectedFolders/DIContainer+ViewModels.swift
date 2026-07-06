@@ -63,9 +63,12 @@ extension DIContainer {
         }
         
         container.register(ProductDetailViewModel.self) { r in
+            
             ProductDetailViewModel(
-                addCartUseCase: r.resolve(AddCartUseCase.self)!
-            )
+                addCartUseCase: r.resolve(AddCartUseCase.self)!,
+                addProductToStudioUseCase: r.resolve(AddProductToSelectionUseCaseProtocol.self)!, getSelectedProductsUseCase: r.resolve(GetSelectedProductsUseCaseProtocol.self)!)
+            
+            
         }
         
         container.register(CartViewModel.self){
@@ -93,6 +96,24 @@ extension DIContainer {
                 selectAddressUseCase: r.resolve(SelectAddressUseCaseProtocol.self)!,
                 getPaymentMethodsUseCase: r.resolve(GetPaymentMethodsUseCaseProtocol.self)!,
                 selectPaymentMethodUseCase: r.resolve(SelectPaymentMethodUseCaseProtocol.self)!
+            )
+        }
+        
+        // For OutfiteGenrator
+        container.register(OutfitGeneratorViewModel.self) { r in
+            OutfitGeneratorViewModel(
+                getSelectedProductsUseCase: r.resolve(GetSelectedProductsUseCaseProtocol.self)!,
+                removeProductUseCase: r.resolve(RemoveProductFromSelectionUseCaseProtocol.self)!,
+                generateOutfitUseCase: r.resolve(GenerateOutfitUseCaseProtocol.self)!,
+                saveGeneratedOutfitUseCase: r.resolve(SaveGeneratedOutfitUseCaseProtocol.self)!
+            )
+        }
+        
+        //For SavedOutfitsViewModel
+        container.register(SavedOutfitsViewModel.self) { r in
+            SavedOutfitsViewModel(
+                getSavedOutfitsUseCase: r.resolve(GetSavedOutfitsUseCaseProtocol.self)!,
+                deleteSavedOutfitUseCase: r.resolve(DeleteSavedOutfitUseCaseProtocol.self)!
             )
         }
     }

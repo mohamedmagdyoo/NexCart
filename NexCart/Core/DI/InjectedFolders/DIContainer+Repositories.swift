@@ -91,5 +91,18 @@ extension DIContainer {
         container.register(PaymentRepositoryProtocol.self) { r in
             PaymentRepositoryImpl(applePayService: r.resolve(ApplePayServiceProtocol.self)!)
         }
+        
+        //For Ai
+        container.register(OutfitSelectionRepositoryProtocol.self) { r in
+            OutfitSelectionRepositoryImpl(dao: r.resolve(SelectedProductDAOProtocol.self)!)
+        }
+
+        container.register(AIOutfitRepositoryProtocol.self) { r in
+            AIOutfitRepositoryImpl(provider: r.resolve(HuggingFaceProvider.self)!)
+        }
+
+        container.register(SavedOutfitRepositoryProtocol.self) { r in
+            SavedOutfitRepositoryImpl(dao: r.resolve(GeneratedOutfitDAOProtocol.self)!)
+        }
     }
 }

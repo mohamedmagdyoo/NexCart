@@ -8,7 +8,7 @@
 import Foundation
 
 enum HuggingFaceEndPoint: EndPoint {
-    case generateImage(prompt: String, model: String, apiToken: String)
+    case generateImage(prompt: String, model: String)
 
     var baseUrl: String {
         "https://router.huggingface.co/hf-inference/models"
@@ -16,7 +16,7 @@ enum HuggingFaceEndPoint: EndPoint {
 
     var path: String {
         switch self {
-        case .generateImage(_, let model, _):
+        case .generateImage(_, let model):
             return "/\(model)"
         }
     }
@@ -30,14 +30,14 @@ enum HuggingFaceEndPoint: EndPoint {
 
     var ApiToken: String {
         switch self {
-        case .generateImage(_, _, let apiToken):
-            return apiToken
+        case .generateImage(_, _):
+            return ""
         }
     }
 
     var body: Data? {
         switch self {
-        case .generateImage(let prompt, _, _):
+        case .generateImage(let prompt, _):
             return try? JSONEncoder().encode(["inputs": prompt])
         }
     }

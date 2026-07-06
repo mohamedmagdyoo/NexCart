@@ -32,6 +32,13 @@ final class SelectedProductDAO: SelectedProductDAOProtocol {
     }
 
     func insert(_ product: SelectedProduct) throws {
+        
+        if isHere(productId: product.id){
+            print("It's allready here")
+            throw SelectionError.alreadyAdded
+        }
+        print("procucID: \(product.id)")
+        
         let entity = SelectedProductEntity(context: context)
         entity.id = Int64(product.id)
         entity.title = product.title
@@ -41,6 +48,16 @@ final class SelectedProductDAO: SelectedProductDAOProtocol {
         entity.brand = product.brand
 
         try context.save()
+    }
+    
+    private func isHere(productId: Int) -> Bool {
+        let context = container.viewContext
+        let request = NSFetchRequest<NSManagedObject>(entityName: "SelectedProductEntity")
+        request.predicate = NSPredicate(format: "id == %@", NSNumber(value: productId))
+        request.fetchLimit = 1
+
+        let count = (try? context.count(for: request)) ?? 0
+        return count > 0
     }
 
     func delete(productID: Int) throws {

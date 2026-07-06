@@ -37,7 +37,8 @@ extension GeneratedOutfitEntity {
         GeneratedOutfit(
             id: id!,
             imageData: imageData!,
-            generatedAt: generatedAt!
+            generatedAt: generatedAt!,
+            name: name
         )
     }
 }

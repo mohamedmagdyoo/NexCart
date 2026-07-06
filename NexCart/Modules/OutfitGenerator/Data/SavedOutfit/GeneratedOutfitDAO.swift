@@ -35,6 +35,7 @@ final class GeneratedOutfitDAO: GeneratedOutfitDAOProtocol {
         entity.id = outfit.id
         entity.imageData = outfit.imageData
         entity.generatedAt = outfit.generatedAt
+        entity.name = outfit.name
 
         try context.save()
     }

@@ -12,16 +12,16 @@ protocol HuggingFaceServiceProtocol {
 }
 
 final class HuggingFaceService: HuggingFaceServiceProtocol {
-    private let apiToken: String
     private let modelEndpoint = "https://router.huggingface.co/hf-inference/models/black-forest-labs/FLUX.1-schnell"
     private let session: URLSession
 
-    init(apiToken: String, session: URLSession = .shared) {
-        self.apiToken = apiToken
+    init( session: URLSession = .shared) {
         self.session = session
     }
 
-    func generateImage(prompt: String) async throws -> Data {
+    func generateImage(prompt: String ) async throws -> Data {
+        let apiToken: String = ""
+        
         guard let url = URL(string: modelEndpoint) else {
             throw HuggingFaceServiceError.invalidResponse
         }
