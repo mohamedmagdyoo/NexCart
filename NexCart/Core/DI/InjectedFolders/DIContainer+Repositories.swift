@@ -87,5 +87,9 @@ extension DIContainer {
         }.inObjectScope(.container)
 
 
+        //For Payment
+        container.register(PaymentRepositoryProtocol.self) { r in
+            PaymentRepositoryImpl(applePayService: r.resolve(ApplePayServiceProtocol.self)!)
+        }
     }
 }

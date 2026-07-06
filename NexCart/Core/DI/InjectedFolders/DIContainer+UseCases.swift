@@ -57,8 +57,8 @@ extension DIContainer {
         }
         //SearchUseCase
         container.register(SearchUseCaseProtocol.self) { r in
-                    SearchUseCase(repo: r.resolve(SearchRepoProtocol.self)!)
-                }
+            SearchUseCase(repo: r.resolve(SearchRepoProtocol.self)!)
+        }
         
         //FavUseCases
         container.register(FetchFavProductsUseCaseProtocol.self){ r in
@@ -86,15 +86,15 @@ extension DIContainer {
             r in
             CartUseCase(cartRepo: r.resolve(CartRepoProtcol.self)!)
         }
-
-
+        
+        
         // Coupon
         container.register(ApplyCouponUseCaseProtocol.self) { r in
             ApplyCouponUseCase(repository: r.resolve(CouponRepository.self)!)
         }
         container.register(FetchProductByIDUseCaseProtocol.self) { r in
             FetchProductByIdUseCase(repo: r.resolve(ProductsRepoProtocol.self)!)
-                }
+        }
         
         //For Address
         container.register(AddAddressUseCase.self) { r in
@@ -115,6 +115,26 @@ extension DIContainer {
         //orderList
         container.register(FetchOrdersUseCaseProtocol.self) { r in
             FetchOrdersUseCase(repo: r.resolve(OrderRepoProtocol.self)!)
+            
+        }
+        //For Payment
+        container.register(SelectAddressUseCaseProtocol.self) { r in
+            SelectAddressUseCase(addressRepository: r.resolve(AddressRepository.self)!)
+        }
+        
+        //For Payment
+        container.register(GetPaymentMethodsUseCaseProtocol.self) { _ in
+            GetPaymentMethodsUseCase()
+        }
+        
+        //For Payment
+        container.register(SelectPaymentMethodUseCaseProtocol.self) { _ in
+            SelectPaymentMethodUseCase()
+        }
+        
+        container.register(SelectAddressUseCaseProtocol.self) { r in
+            SelectAddressUseCase(addressRepository: r.resolve(AddressRepository.self)!)
         }
     }
 }
+
