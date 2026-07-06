@@ -39,10 +39,12 @@ struct BagView: View {
         ZStack {
             AppColor.bg.ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                header
+            ScrollView{
+                VStack(spacing: 0) {
+                    header
 
-                content
+                    content
+                }
             }
         }
         .task {
@@ -125,7 +127,9 @@ struct BagView: View {
             if allItems.isEmpty {
                 emptyView
             } else {
-                cartContent
+                Group {
+                    cartContent
+                }
             }
         }
     }

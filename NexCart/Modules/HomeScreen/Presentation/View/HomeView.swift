@@ -61,7 +61,7 @@ struct HomeView: View {
     }
     
     private var homeTab: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     HomeHeroSection(
@@ -160,7 +160,7 @@ struct HomeView: View {
     }
     
     private var shopTab: some View {
-        NavigationView {
+        NavigationStack {
             CollectionsListView(
                 viewModel: DIContainer.shared.container.resolve(CollectionsListViewModel.self)!
             )
@@ -182,7 +182,7 @@ struct HomeView: View {
     }
     
     private var cartTab: some View {
-        NavigationView {
+        NavigationStack {
             GuestGuard {
                 BagView()
             }
