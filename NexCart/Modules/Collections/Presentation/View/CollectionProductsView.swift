@@ -125,31 +125,32 @@ struct CollectionProductsView: View {
     }
 
     private var productGrid: some View {
-        LazyVGrid(columns: columns, spacing: 20) {
-            ForEach(viewModel.filteredProducts) { product in
-                NavigationLink(
-                    destination: ProductDetailView(
-                        product: product,
-                        productViewModel: DIContainer.shared.container.resolve(ProductDetailViewModel.self)!
-                    )
-                ) {
-                    ProductCardView(
-                        product: product,
-                        isFavorited: product.isFavorited,
-                        onFavoriteToggle: {
-                            if isGuest {
-                                showGuestAlert = true
-                            } else {
-                                viewModel.toggleFavorite(productId: product.id)
+            LazyVGrid(columns: columns, spacing: 20) {
+                ForEach(viewModel.filteredProducts) { product in
+                    NavigationLink(
+                        destination: ProductDetailView(
+                            product: product,
+                            productViewModel: DIContainer.shared.container.resolve(ProductDetailViewModel.self)!
+                        )
+                        .navigationBarBackButtonHidden(true) 
+                    ) {
+                        ProductCardView(
+                            product: product,
+                            isFavorited: product.isFavorited,
+                            onFavoriteToggle: {
+                                if isGuest {
+                                    showGuestAlert = true
+                                } else {
+                                    viewModel.toggleFavorite(productId: product.id)
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
+                    .buttonStyle(PlainButtonStyle())
                 }
-                .buttonStyle(PlainButtonStyle())
             }
+            .padding(.horizontal, 20)
         }
-        .padding(.horizontal, 20)
-    }
 
     private var emptyStatePlaceholder: some View {
         VStack(spacing: 20) {
