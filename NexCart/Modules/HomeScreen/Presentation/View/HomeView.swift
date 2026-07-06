@@ -175,11 +175,7 @@ struct HomeView: View {
     private var cartTab: some View {
         NavigationView {
             GuestGuard {
-                Text("Cart View")
-                    .font(AppColor.sans(16, .medium))
-                    .foregroundColor(AppColor.textPrim)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(.bottom, 90)
+                BagView()
             }
             .onAppear { tabBarManager.isHidden = false }
         }
@@ -188,7 +184,7 @@ struct HomeView: View {
     }
     
     private var profileTab: some View {
-        NavigationView {
+        NavigationStack{
             GuestGuard {
                 VStack(spacing: 24) {
                     VStack(spacing: 8) {
