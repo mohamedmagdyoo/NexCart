@@ -68,14 +68,14 @@ struct ProfileView: View {
                     }
                 }
                 
-                Section(header: Text("Security")) {
-                    NavigationLink(destination: Text("Change Password")) {
-                        SettingsRowView(icon: "lock.fill", iconColor: .gray, title: "Change Password")
-                    }
-                    NavigationLink(destination: Text("Verify Email")) {
-                        SettingsRowView(icon: "checkmark.shield.fill", iconColor: .blue, title: "Verify Email")
-                    }
-                }
+//                Section(header: Text("Security")) {
+//                    NavigationLink(destination: Text("Change Password")) {
+//                        SettingsRowView(icon: "lock.fill", iconColor: .gray, title: "Change Password")
+//                    }
+//                    NavigationLink(destination: Text("Verify Email")) {
+//                        SettingsRowView(icon: "checkmark.shield.fill", iconColor: .blue, title: "Verify Email")
+//                    }
+//                }
                 
                 Section {
                     Button(action: {
