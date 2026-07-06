@@ -5073,6 +5073,19 @@
 		9FA344892FF9D2BB00718518 /* OrdersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA344882FF9D2BB00718518 /* OrdersViewModel.swift */; };
 		9FA3448B2FF9D2DE00718518 /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA3448A2FF9D2DE00718518 /* OrdersView.swift */; };
 		9FE8713D2FFB27B900B1844B /* GuestAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE8713C2FFB27B900B1844B /* GuestAlert.swift */; };
+		D904315A2FFBBA8300E84300 /* SelectedProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90431592FFBBA8300E84300 /* SelectedProduct.swift */; };
+		D904315C2FFBBADE00E84300 /* OutfitGeneratorErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D904315B2FFBBADE00E84300 /* OutfitGeneratorErrors.swift */; };
+		D904315E2FFBBB0100E84300 /* OutfitSelectionRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D904315D2FFBBB0100E84300 /* OutfitSelectionRepositoryProtocol.swift */; };
+		D90431602FFBBB1D00E84300 /* AIOutfitRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D904315F2FFBBB1D00E84300 /* AIOutfitRepositoryProtocol.swift */; };
+		D90431622FFBBB2D00E84300 /* SavedOutfitRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90431612FFBBB2D00E84300 /* SavedOutfitRepositoryProtocol.swift */; };
+		D90431642FFBBB4600E84300 /* AddProductToSelectionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90431632FFBBB4600E84300 /* AddProductToSelectionUseCase.swift */; };
+		D90431662FFBBB5800E84300 /* RemoveProductFromSelectionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90431652FFBBB5800E84300 /* RemoveProductFromSelectionUseCase.swift */; };
+		D90431682FFBBB6600E84300 /* GetSelectedProductsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90431672FFBBB6600E84300 /* GetSelectedProductsUseCase.swift */; };
+		D904316C2FFBBBB000E84300 /* GenerateOutfitUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D904316B2FFBBBB000E84300 /* GenerateOutfitUseCase.swift */; };
+		D904316F2FFBBBCE00E84300 /* SaveGeneratedOutfitUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D904316E2FFBBBCE00E84300 /* SaveGeneratedOutfitUseCase.swift */; };
+		D90431712FFBBC9000E84300 /* GetSavedOutfitsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90431702FFBBC9000E84300 /* GetSavedOutfitsUseCase.swift */; };
+		D90431732FFBBC9F00E84300 /* DeleteSavedOutfitUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90431722FFBBC9F00E84300 /* DeleteSavedOutfitUseCase.swift */; };
+		D90431752FFBBCCD00E84300 /* ClearSelectionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90431742FFBBCCD00E84300 /* ClearSelectionUseCase.swift */; };
 		D918C11E2FF6BC3600FDAED6 /* FavProductDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D918C11D2FF6BC3600FDAED6 /* FavProductDTO.swift */; };
 		D918C1202FF6BC6400FDAED6 /* FavProductsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D918C11F2FF6BC6400FDAED6 /* FavProductsService.swift */; };
 		D918C1232FF6BC9900FDAED6 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D918C1222FF6BC9900FDAED6 /* FirebaseFirestore */; };
@@ -5278,6 +5291,19 @@
 		9FA344882FF9D2BB00718518 /* OrdersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersViewModel.swift; sourceTree = "<group>"; };
 		9FA3448A2FF9D2DE00718518 /* OrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
 		9FE8713C2FFB27B900B1844B /* GuestAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestAlert.swift; sourceTree = "<group>"; };
+		D90431592FFBBA8300E84300 /* SelectedProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedProduct.swift; sourceTree = "<group>"; };
+		D904315B2FFBBADE00E84300 /* OutfitGeneratorErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitGeneratorErrors.swift; sourceTree = "<group>"; };
+		D904315D2FFBBB0100E84300 /* OutfitSelectionRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitSelectionRepositoryProtocol.swift; sourceTree = "<group>"; };
+		D904315F2FFBBB1D00E84300 /* AIOutfitRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIOutfitRepositoryProtocol.swift; sourceTree = "<group>"; };
+		D90431612FFBBB2D00E84300 /* SavedOutfitRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedOutfitRepositoryProtocol.swift; sourceTree = "<group>"; };
+		D90431632FFBBB4600E84300 /* AddProductToSelectionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductToSelectionUseCase.swift; sourceTree = "<group>"; };
+		D90431652FFBBB5800E84300 /* RemoveProductFromSelectionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveProductFromSelectionUseCase.swift; sourceTree = "<group>"; };
+		D90431672FFBBB6600E84300 /* GetSelectedProductsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSelectedProductsUseCase.swift; sourceTree = "<group>"; };
+		D904316B2FFBBBB000E84300 /* GenerateOutfitUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateOutfitUseCase.swift; sourceTree = "<group>"; };
+		D904316E2FFBBBCE00E84300 /* SaveGeneratedOutfitUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveGeneratedOutfitUseCase.swift; sourceTree = "<group>"; };
+		D90431702FFBBC9000E84300 /* GetSavedOutfitsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSavedOutfitsUseCase.swift; sourceTree = "<group>"; };
+		D90431722FFBBC9F00E84300 /* DeleteSavedOutfitUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteSavedOutfitUseCase.swift; sourceTree = "<group>"; };
+		D90431742FFBBCCD00E84300 /* ClearSelectionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearSelectionUseCase.swift; sourceTree = "<group>"; };
 		D918C11D2FF6BC3600FDAED6 /* FavProductDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavProductDTO.swift; sourceTree = "<group>"; };
 		D918C11F2FF6BC6400FDAED6 /* FavProductsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavProductsService.swift; sourceTree = "<group>"; };
 		D918C1262FF6BD4600FDAED6 /* FavProductRepoInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavProductRepoInterface.swift; sourceTree = "<group>"; };
@@ -5969,6 +5995,130 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		D904314D2FFBB9B600E84300 /* OutfitGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				D90431502FFBB9CE00E84300 /* Presentation */,
+				D904314F2FFBB9CB00E84300 /* Domain */,
+				D904314E2FFBB9C700E84300 /* Data */,
+			);
+			path = OutfitGenerator;
+			sourceTree = "<group>";
+		};
+		D904314E2FFBB9C700E84300 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				D90431572FFBBA3700E84300 /* Services */,
+				D90431562FFBBA2A00E84300 /* RepoIMP */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		D904314F2FFBB9CB00E84300 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				D90431552FFBB9F900E84300 /* Entites */,
+				D90431542FFBB9F200E84300 /* UseCases */,
+				D90431532FFBB9E200E84300 /* RepoInterfaces */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		D90431502FFBB9CE00E84300 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				D90431522FFBB9DD00E84300 /* View */,
+				D90431512FFBB9D800E84300 /* VM */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		D90431512FFBB9D800E84300 /* VM */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = VM;
+			sourceTree = "<group>";
+		};
+		D90431522FFBB9DD00E84300 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D90431532FFBB9E200E84300 /* RepoInterfaces */ = {
+			isa = PBXGroup;
+			children = (
+				D904315D2FFBBB0100E84300 /* OutfitSelectionRepositoryProtocol.swift */,
+				D904315F2FFBBB1D00E84300 /* AIOutfitRepositoryProtocol.swift */,
+				D90431612FFBBB2D00E84300 /* SavedOutfitRepositoryProtocol.swift */,
+			);
+			path = RepoInterfaces;
+			sourceTree = "<group>";
+		};
+		D90431542FFBB9F200E84300 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				D904316D2FFBBBC300E84300 /* SaveOutfites */,
+				D904316A2FFBBB8200E84300 /* GenerateOutfitWithAi */,
+				D90431692FFBBB7300E84300 /* SelectdProducts */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		D90431552FFBB9F900E84300 /* Entites */ = {
+			isa = PBXGroup;
+			children = (
+				D90431592FFBBA8300E84300 /* SelectedProduct.swift */,
+				D904315B2FFBBADE00E84300 /* OutfitGeneratorErrors.swift */,
+			);
+			path = Entites;
+			sourceTree = "<group>";
+		};
+		D90431562FFBBA2A00E84300 /* RepoIMP */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RepoIMP;
+			sourceTree = "<group>";
+		};
+		D90431572FFBBA3700E84300 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		D90431692FFBBB7300E84300 /* SelectdProducts */ = {
+			isa = PBXGroup;
+			children = (
+				D90431632FFBBB4600E84300 /* AddProductToSelectionUseCase.swift */,
+				D90431652FFBBB5800E84300 /* RemoveProductFromSelectionUseCase.swift */,
+				D90431672FFBBB6600E84300 /* GetSelectedProductsUseCase.swift */,
+				D90431742FFBBCCD00E84300 /* ClearSelectionUseCase.swift */,
+			);
+			path = SelectdProducts;
+			sourceTree = "<group>";
+		};
+		D904316A2FFBBB8200E84300 /* GenerateOutfitWithAi */ = {
+			isa = PBXGroup;
+			children = (
+				D904316B2FFBBBB000E84300 /* GenerateOutfitUseCase.swift */,
+			);
+			path = GenerateOutfitWithAi;
+			sourceTree = "<group>";
+		};
+		D904316D2FFBBBC300E84300 /* SaveOutfites */ = {
+			isa = PBXGroup;
+			children = (
+				D904316E2FFBBBCE00E84300 /* SaveGeneratedOutfitUseCase.swift */,
+				D90431702FFBBC9000E84300 /* GetSavedOutfitsUseCase.swift */,
+				D90431722FFBBC9F00E84300 /* DeleteSavedOutfitUseCase.swift */,
+			);
+			path = SaveOutfites;
+			sourceTree = "<group>";
+		};
 		D918C11A2FF6BBCB00FDAED6 /* Remote */ = {
 			isa = PBXGroup;
 			children = (
@@ -6329,6 +6479,7 @@
 		D960C1CC2FF1178000FFF4D9 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				D904314D2FFBB9B600E84300 /* OutfitGenerator */,
 				9FA344692FF9CF4100718518 /* OrderList */,
 				9FA058032FF853C400DB93BB /* Search */,
 				F5B53AD32FF5F243009F9F87 /* Cart */,
@@ -7214,13 +7365,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D90431642FFBBB4600E84300 /* AddProductToSelectionUseCase.swift in Sources */,
 				F59DB2152FF699DA007BB715 /* CartRepo.swift in Sources */,
 				D960C1EE2FF120A500FFF4D9 /* ApiServiceProtocol.swift in Sources */,
 				9F92BF4F2FF47B5800E090B7 /* BrandsRepository.swift in Sources */,
 				D9906FCB2FF8221D00B9474E /* AddressEntity.swift in Sources */,
+				D90431622FFBBB2D00E84300 /* SavedOutfitRepositoryProtocol.swift in Sources */,
 				9F9003262FF6EEB800B4B745 /* CollectionEntity.swift in Sources */,
 				9F28C70A2FF9EE0A0000940B /* CartDto.swift in Sources */,
 				9F9D968E2FF89D9700A650B9 /* ProductRemoteDataSource.swift in Sources */,
+				D90431602FFBBB1D00E84300 /* AIOutfitRepositoryProtocol.swift in Sources */,
 				9F92BF592FF47DF100E090B7 /* BrandProductView.swift in Sources */,
 				9F92BF572FF47DCF00E090B7 /* BrandProductViewModel.swift in Sources */,
 				D9906FBE2FF818AB00B9474E /* UseCases.swift in Sources */,
@@ -7269,6 +7423,7 @@
 				D9259B0F2FF57BAD00A3A9D8 /* AuthShopifyService.swift in Sources */,
 				9F92BF5B2FF4803E00E090B7 /* BrandProductUseCase.swift in Sources */,
 				9F8F1E532FF3898D0016B844 /* HomeView.swift in Sources */,
+				D90431752FFBBCCD00E84300 /* ClearSelectionUseCase.swift in Sources */,
 				9F8F1E542FF3898D0016B844 /* HomeEntity.swift in Sources */,
 				9F8F1E562FF3898D0016B844 /* HomeViewModel.swift in Sources */,
 				9F9003362FF6F1FA00B4B745 /* CollectionListView.swift in Sources */,
@@ -7278,11 +7433,13 @@
 				9F8F1E572FF3898D0016B844 /* HomeBrandSection.swift in Sources */,
 				F5B53AED2FF610C3009F9F87 /* CartUseCase.swift in Sources */,
 				D95A37212FFA88B4000C8A90 /* ApplePayErrors.swift in Sources */,
+				D90431682FFBBB6600E84300 /* GetSelectedProductsUseCase.swift in Sources */,
 				9F90033C2FF705C700B4B745 /* FilterSheet.swift in Sources */,
 				9F8F1E582FF3898D0016B844 /* HomeProtocol.swift in Sources */,
 				9F92BF472FF479D300E090B7 /* BrandUseCase.swift in Sources */,
 				9F28C6FF2FF9E2400000940B /* FetchOrderUseCase.swift in Sources */,
 				9F90033A2FF7043000B4B745 /* GoldBackButton.swift in Sources */,
+				D904315E2FFBBB0100E84300 /* OutfitSelectionRepositoryProtocol.swift in Sources */,
 				9F8F1E592FF3898D0016B844 /* HomeHeroSection.swift in Sources */,
 				9F8F1E5A2FF3898D0016B844 /* HomenewSection.swift in Sources */,
 				9FA3448B2FF9D2DE00718518 /* OrdersView.swift in Sources */,
@@ -7313,6 +7470,8 @@
 				D960C21B2FF17B3600FFF4D9 /* LoginWithSocialProvider.swift in Sources */,
 				D960C23A2FF1A0AB00FFF4D9 /* AuthDesignSystem.swift in Sources */,
 				9F28C7052FF9E3770000940B /* OrderRepo.swift in Sources */,
+				D90431732FFBBC9F00E84300 /* DeleteSavedOutfitUseCase.swift in Sources */,
+				D904315A2FFBBA8300E84300 /* SelectedProduct.swift in Sources */,
 				D95A37202FFA88B4000C8A90 /* ApplePayToken.swift in Sources */,
 				D93C26012FF5294400486A11 /* RemoveFavProduct.swift in Sources */,
 				9F28C7012FF9E2D10000940B /* OrderEntity.swift in Sources */,
@@ -7320,6 +7479,7 @@
 				D960C2282FF1813900FFF4D9 /* SignInViweModel.swift in Sources */,
 				D960C2472FF1B6CA00FFF4D9 /* ShardViews.swift in Sources */,
 				D9EAA1332FF27A3F0097C038 /* AuthRepository.swift in Sources */,
+				D904316C2FFBBBB000E84300 /* GenerateOutfitUseCase.swift in Sources */,
 				D960C21D2FF17B6100FFF4D9 /* LoginAsGuest.swift in Sources */,
 				D93C25FE2FF5294400486A11 /* FavProductsDaoProtocol.swift in Sources */,
 				D960C1F42FF1243400FFF4D9 /* LaunchScreen.swift in Sources */,
@@ -7330,6 +7490,7 @@
 				F59DB2172FF6A852007BB715 /* CartRepoProtcol.swift in Sources */,
 				D960C2192FF17AF700FFF4D9 /* LoginWithEmail.swift in Sources */,
 				D960C2452FF1B40300FFF4D9 /* SignUpViewModel.swift in Sources */,
+				D90431662FFBBB5800E84300 /* RemoveProductFromSelectionUseCase.swift in Sources */,
 				D91E749A2FF5193F00D941C4 /* FakeProduct.swift in Sources */,
 				9FA344722FF9D01600718518 /* OrdersResponseDto.swift in Sources */,
 				D91E748B2FF5152E00D941C4 /* OnBoardingView.swift in Sources */,
@@ -7341,6 +7502,7 @@
 				F5A0ABAA2FF9E9CA00329316 /* ProfileView.swift in Sources */,
 				D9906FAA2FF7F77900B9474E /* GraphQLService.swift in Sources */,
 				9F8F1E622FF38A6E0016B844 /* ProductDto.swift in Sources */,
+				D90431712FFBBC9000E84300 /* GetSavedOutfitsUseCase.swift in Sources */,
 				9F92BF4A2FF47AA500E090B7 /* BrandsEndPoint.swift in Sources */,
 				9F8F1E632FF38A6E0016B844 /* BrandDto.swift in Sources */,
 				D960C22A2FF18C6500FFF4D9 /* FakeAuthRepo.swift in Sources */,
@@ -7363,6 +7525,7 @@
 				F51C98B62FF5A12600A9C2EE /* Components.swift in Sources */,
 				D9906FBC2FF8188C00B9474E /* AddressViewModel.swift in Sources */,
 				F51C98B72FF5A12600A9C2EE /* ProductViewModelPorotocl.swift in Sources */,
+				D904316F2FFBBBCE00E84300 /* SaveGeneratedOutfitUseCase.swift in Sources */,
 				F51C98B82FF5A12600A9C2EE /* ProductViewModel.swift in Sources */,
 				D9906FC72FF8190500B9474E /* AddressRepoInterface.swift in Sources */,
 				D960C19E2FF1167A00FFF4D9 /* NexCartApp.swift in Sources */,
@@ -7391,6 +7554,7 @@
 				9F92BF442FF4796C00E090B7 /* BrandsRepoProtocol.swift in Sources */,
 				9F9D96902FF8A11500A650B9 /* FetchProductByID.swift in Sources */,
 				D960C2112FF174C100FFF4D9 /* AuthRepoInterface.swift in Sources */,
+				D904315C2FFBBADE00E84300 /* OutfitGeneratorErrors.swift in Sources */,
 				D918C11E2FF6BC3600FDAED6 /* FavProductDTO.swift in Sources */,
 				D9906FA22FF7F62A00B9474E /* ApplyCouponUseCase.swift in Sources */,
 				C8E241268AE83F747B6B76EF /* SettingsView.swift in Sources */,
