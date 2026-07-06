@@ -263,6 +263,44 @@ struct HomeView: View {
                 .background(AppColor.bg.ignoresSafeArea())
                 .navigationTitle("Profile")
                 .navigationBarHidden(true)
+                .foregroundColor(AppColor.textPrim)
+
+        NavigationStack {
+            VStack {
+                Text("Profile View")
+                    .font(AppColor.sans(16, .medium))
+                    .foregroundColor(AppColor.textPrim)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.bottom, 90)
+ (Last touches of finishing apple pay feature)
+                
+                Button {
+                    UserDefaults.standard.removeObject(forKey: "userEntity")
+                } label: {
+                    Text("LogOut")
+                        .foregroundColor(.black)
+                }
+                
+                NavigationLink {
+                    AddressListView(
+                        viewModel: DIContainer.shared.container.resolve(AddressViewModel.self)!,
+                        ownerUserId: userEntity?.id ?? "Me"
+                    )
+                } label: {
+                    Text("NavToAddress")
+                        .foregroundColor(.black)
+                }
+
+                NavigationLink{
+                    
+                    CheckoutView(viewModel: DIContainer.shared.container.resolve(CheckoutViewModel.self)!, total: 1005)
+                }label: {
+                    Text("CheckOut")
+                        .foregroundColor(.black)
+                }
+
+                
+                Spacer()
             }
             .onAppear { tabBarManager.isHidden = false }
         }

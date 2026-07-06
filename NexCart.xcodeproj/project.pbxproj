@@ -49,6 +49,7 @@
 		9F92BF572FF47DCF00E090B7 /* BrandProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F92BF562FF47DCF00E090B7 /* BrandProductViewModel.swift */; };
 		9F92BF592FF47DF100E090B7 /* BrandProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F92BF582FF47DF100E090B7 /* BrandProductView.swift */; };
 		9F92BF5B2FF4803E00E090B7 /* BrandProductUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F92BF5A2FF4803E00E090B7 /* BrandProductUseCase.swift */; };
+
 		9F9474D12FFAFF8200F0A912 /* GuestCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9474D02FFAFF8200F0A912 /* GuestCard.swift */; };
 		9F9498132FF57881000CEB5A /* NexCart.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F94980C2FF57881000CEB5A /* NexCart.xcdatamodeld */; };
 		9F9498142FF57881000CEB5A /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F94980F2FF57881000CEB5A /* CoreData.swift */; };
@@ -91,6 +92,17 @@
 		D93C26022FF5294400486A11 /* FavProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93C25F42FF5294400486A11 /* FavProduct.swift */; };
 		D93C26032FF5294400486A11 /* FavProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93C25F72FF5294400486A11 /* FavProductViewModel.swift */; };
 		D93C26042FF5294400486A11 /* FavProductsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93C25F92FF5294400486A11 /* FavProductsScreen.swift */; };
+		D95A371F2FFA88B4000C8A90 /* ApplePayService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95A370E2FFA88B4000C8A90 /* ApplePayService.swift */; };
+		D95A37202FFA88B4000C8A90 /* ApplePayToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95A370F2FFA88B4000C8A90 /* ApplePayToken.swift */; };
+		D95A37212FFA88B4000C8A90 /* ApplePayErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95A37102FFA88B4000C8A90 /* ApplePayErrors.swift */; };
+		D95A37222FFA88B4000C8A90 /* CheckoutRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95A37112FFA88B4000C8A90 /* CheckoutRepositoryImpl.swift */; };
+		D95A37232FFA88B4000C8A90 /* CheckOutEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95A37142FFA88B4000C8A90 /* CheckOutEntities.swift */; };
+		D95A37242FFA88B4000C8A90 /* PaymentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95A37152FFA88B4000C8A90 /* PaymentError.swift */; };
+		D95A37252FFA88B4000C8A90 /* PaymentRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95A37162FFA88B4000C8A90 /* PaymentRepositoryProtocol.swift */; };
+		D95A37262FFA88B4000C8A90 /* PaymentUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95A37182FFA88B4000C8A90 /* PaymentUseCases.swift */; };
+		D95A37272FFA88B4000C8A90 /* CheckOutUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95A37192FFA88B4000C8A90 /* CheckOutUseCases.swift */; };
+		D95A37282FFA88B4000C8A90 /* CheckOutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95A371C2FFA88B4000C8A90 /* CheckOutViewModel.swift */; };
+		D95A37292FFA88B4000C8A90 /* CheckOutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95A371E2FFA88B4000C8A90 /* CheckOutView.swift */; };
 		D960C19E2FF1167A00FFF4D9 /* NexCartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C19D2FF1167A00FFF4D9 /* NexCartApp.swift */; };
 		D960C1A02FF1167A00FFF4D9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D960C19F2FF1167A00FFF4D9 /* ContentView.swift */; };
 		D960C1A22FF1167C00FFF4D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D960C1A12FF1167C00FFF4D9 /* Assets.xcassets */; };
@@ -274,6 +286,17 @@
 		D93C25F42FF5294400486A11 /* FavProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavProduct.swift; sourceTree = "<group>"; };
 		D93C25F72FF5294400486A11 /* FavProductViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavProductViewModel.swift; sourceTree = "<group>"; };
 		D93C25F92FF5294400486A11 /* FavProductsScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavProductsScreen.swift; sourceTree = "<group>"; };
+		D95A370E2FFA88B4000C8A90 /* ApplePayService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplePayService.swift; sourceTree = "<group>"; };
+		D95A370F2FFA88B4000C8A90 /* ApplePayToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplePayToken.swift; sourceTree = "<group>"; };
+		D95A37102FFA88B4000C8A90 /* ApplePayErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplePayErrors.swift; sourceTree = "<group>"; };
+		D95A37112FFA88B4000C8A90 /* CheckoutRepositoryImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutRepositoryImpl.swift; sourceTree = "<group>"; };
+		D95A37142FFA88B4000C8A90 /* CheckOutEntities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckOutEntities.swift; sourceTree = "<group>"; };
+		D95A37152FFA88B4000C8A90 /* PaymentError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentError.swift; sourceTree = "<group>"; };
+		D95A37162FFA88B4000C8A90 /* PaymentRepositoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentRepositoryProtocol.swift; sourceTree = "<group>"; };
+		D95A37182FFA88B4000C8A90 /* PaymentUseCases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentUseCases.swift; sourceTree = "<group>"; };
+		D95A37192FFA88B4000C8A90 /* CheckOutUseCases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckOutUseCases.swift; sourceTree = "<group>"; };
+		D95A371C2FFA88B4000C8A90 /* CheckOutViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckOutViewModel.swift; sourceTree = "<group>"; };
+		D95A371E2FFA88B4000C8A90 /* CheckOutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckOutView.swift; sourceTree = "<group>"; };
 		D960C19A2FF1167A00FFF4D9 /* NexCart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NexCart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D960C19D2FF1167A00FFF4D9 /* NexCartApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NexCartApp.swift; sourceTree = "<group>"; };
 		D960C19F2FF1167A00FFF4D9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -1118,6 +1141,104 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		D95A37092FFA88B4000C8A90 /* CheckOut */ = {
+			isa = PBXGroup;
+			children = (
+				D95A370A2FFA88B4000C8A90 /* Data */,
+				D95A37122FFA88B4000C8A90 /* Domain */,
+				D95A371A2FFA88B4000C8A90 /* Presentation */,
+			);
+			path = CheckOut;
+			sourceTree = "<group>";
+		};
+		D95A370A2FFA88B4000C8A90 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				D95A370B2FFA88B4000C8A90 /* DataSource */,
+				D95A37112FFA88B4000C8A90 /* CheckoutRepositoryImpl.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		D95A370B2FFA88B4000C8A90 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				D95A370C2FFA88B4000C8A90 /* Remote */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
+		D95A370C2FFA88B4000C8A90 /* Remote */ = {
+			isa = PBXGroup;
+			children = (
+				D95A370D2FFA88B4000C8A90 /* ApplePay */,
+			);
+			path = Remote;
+			sourceTree = "<group>";
+		};
+		D95A370D2FFA88B4000C8A90 /* ApplePay */ = {
+			isa = PBXGroup;
+			children = (
+				D95A370E2FFA88B4000C8A90 /* ApplePayService.swift */,
+				D95A370F2FFA88B4000C8A90 /* ApplePayToken.swift */,
+				D95A37102FFA88B4000C8A90 /* ApplePayErrors.swift */,
+			);
+			path = ApplePay;
+			sourceTree = "<group>";
+		};
+		D95A37122FFA88B4000C8A90 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				D95A37132FFA88B4000C8A90 /* Entity */,
+				D95A37162FFA88B4000C8A90 /* PaymentRepositoryProtocol.swift */,
+				D95A37172FFA88B4000C8A90 /* Usecases */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		D95A37132FFA88B4000C8A90 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				D95A37142FFA88B4000C8A90 /* CheckOutEntities.swift */,
+				D95A37152FFA88B4000C8A90 /* PaymentError.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		D95A37172FFA88B4000C8A90 /* Usecases */ = {
+			isa = PBXGroup;
+			children = (
+				D95A37182FFA88B4000C8A90 /* PaymentUseCases.swift */,
+				D95A37192FFA88B4000C8A90 /* CheckOutUseCases.swift */,
+			);
+			path = Usecases;
+			sourceTree = "<group>";
+		};
+		D95A371A2FFA88B4000C8A90 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				D95A371B2FFA88B4000C8A90 /* VM */,
+				D95A371D2FFA88B4000C8A90 /* View */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		D95A371B2FFA88B4000C8A90 /* VM */ = {
+			isa = PBXGroup;
+			children = (
+				D95A371C2FFA88B4000C8A90 /* CheckOutViewModel.swift */,
+			);
+			path = VM;
+			sourceTree = "<group>";
+		};
+		D95A371D2FFA88B4000C8A90 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D95A371E2FFA88B4000C8A90 /* CheckOutView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		D960C1912FF1167A00FFF4D9 = {
 			isa = PBXGroup;
 			children = (
@@ -1475,6 +1596,7 @@
 		D9906F942FF7F4C200B9474E /* CompleatOrderFlow */ = {
 			isa = PBXGroup;
 			children = (
+				D95A37092FFA88B4000C8A90 /* CheckOut */,
 				D9906FB32FF8181C00B9474E /* Address */,
 				D9906F952FF7F4E100B9474E /* CouponCode */,
 			);
@@ -1782,6 +1904,7 @@
 			children = (
 				9F28C7082FF9EDF40000940B /* Dto */,
 				F5B53ADC2FF6061B009F9F87 /* EndPoints */,
+				F5B53ADB2FF6060C009F9F87 /* Repository */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -2000,6 +2123,7 @@
 				9F9003292FF6EF7600B4B745 /* CollectionsRepoProtocol.swift in Sources */,
 				D960C1F62FF12A1500FFF4D9 /* SignInScreen.swift in Sources */,
 				D960C20F2FF1734B00FFF4D9 /* AuthEntities.swift in Sources */,
+				D95A37292FFA88B4000C8A90 /* CheckOutView.swift in Sources */,
 				D93C26042FF5294400486A11 /* FavProductsScreen.swift in Sources */,
 				D918C12A2FF6BF5000FDAED6 /* FavProductRepo.swift in Sources */,
 				D960C2342FF1987600FFF4D9 /* DIContainer+Repositories.swift in Sources */,
@@ -2015,6 +2139,7 @@
 				F51C98A72FF5A0E000A9C2EE /* AddCartResponseMapper.swift in Sources */,
 				D9906F9C2FF7F57C00B9474E /* CouponEntity.swift in Sources */,
 				F51C98A82FF5A0E000A9C2EE /* ProductBodyMapper.swift in Sources */,
+
 				9F9003382FF6F23C00B4B745 /* CollectionProductsView.swift in Sources */,
 				F51C98A92FF5A0E000A9C2EE /* AddCartResponse.swift in Sources */,
 				9FA0580E2FF8547600DB93BB /* SearchRepoProtocol.swift in Sources */,
@@ -2025,6 +2150,18 @@
 				9F90032E2FF6EFEB00B4B745 /* FetchCollectionUseCase.swift in Sources */,
 				D9906FC92FF8191E00B9474E /* AddressError.swift in Sources */,
 				9FE8713D2FFB27B900B1844B /* GuestAlert.swift in Sources */,
+				D95A37272FFA88B4000C8A90 /* CheckOutUseCases.swift in Sources */,
+				9F9003382FF6F23C00B4B745 /* CollectionProductsView.swift in Sources */,
+				F51C98A92FF5A0E000A9C2EE /* AddCartResponse.swift in Sources */,
+				9FA0580E2FF8547600DB93BB /* SearchRepoProtocol.swift in Sources */,
+				D95A37222FFA88B4000C8A90 /* CheckoutRepositoryImpl.swift in Sources */,
+				F51C98AA2FF5A0E000A9C2EE /* ProductRepoImpl.swift in Sources */,
+				F51C989E2FF5A0A800A9C2EE /* ProductDetailsRepo.swift in Sources */,
+				F51C98A02FF5A0A800A9C2EE /* AddCartUseCase.swift in Sources */,
+				D95A37252FFA88B4000C8A90 /* PaymentRepositoryProtocol.swift in Sources */,
+				9F8F1E522FF3898D0016B844 /* HomeRepository.swift in Sources */,
+				9F90032E2FF6EFEB00B4B745 /* FetchCollectionUseCase.swift in Sources */,
+				D9906FC92FF8191E00B9474E /* AddressError.swift in Sources */,
 				D91D00842FF84804002C8E1E /* AppConstantes.swift in Sources */,
 				D9259B0F2FF57BAD00A3A9D8 /* AuthShopifyService.swift in Sources */,
 				9F92BF5B2FF4803E00E090B7 /* BrandProductUseCase.swift in Sources */,
@@ -2037,6 +2174,7 @@
 				9F9013832FF746A1003B74D9 /* TabBarManger.swift in Sources */,
 				9F8F1E572FF3898D0016B844 /* HomeBrandSection.swift in Sources */,
 				F5B53AED2FF610C3009F9F87 /* CartUseCase.swift in Sources */,
+				D95A37212FFA88B4000C8A90 /* ApplePayErrors.swift in Sources */,
 				9F90033C2FF705C700B4B745 /* FilterSheet.swift in Sources */,
 				9F8F1E582FF3898D0016B844 /* HomeProtocol.swift in Sources */,
 				9F92BF472FF479D300E090B7 /* BrandUseCase.swift in Sources */,
@@ -2062,6 +2200,7 @@
 				D918C1202FF6BC6400FDAED6 /* FavProductsService.swift in Sources */,
 				D93C26022FF5294400486A11 /* FavProduct.swift in Sources */,
 				9F28C7072FF9E4D70000940B /* OrderDetailsView.swift in Sources */,
+				D95A37282FFA88B4000C8A90 /* CheckOutViewModel.swift in Sources */,
 				D9906FAC2FF7F79C00B9474E /* CouponGraphQLQuery.swift in Sources */,
 				D93C25FF2FF5294400486A11 /* ProductsRepoProtocol.swift in Sources */,
 				9FA0580B2FF8543000DB93BB /* SearchEndPoint.swift in Sources */,
@@ -2071,6 +2210,7 @@
 				D960C21B2FF17B3600FFF4D9 /* LoginWithSocialProvider.swift in Sources */,
 				D960C23A2FF1A0AB00FFF4D9 /* AuthDesignSystem.swift in Sources */,
 				9F28C7052FF9E3770000940B /* OrderRepo.swift in Sources */,
+				D95A37202FFA88B4000C8A90 /* ApplePayToken.swift in Sources */,
 				D93C26012FF5294400486A11 /* RemoveFavProduct.swift in Sources */,
 				9F28C7012FF9E2D10000940B /* OrderEntity.swift in Sources */,
 				D960C23D2FF1A1D500FFF4D9 /* FakeUseCases.swift in Sources */,
@@ -2083,6 +2223,7 @@
 				D9906FB02FF7F89400B9474E /* CouponRemoteDataSource.swift in Sources */,
 				D960C2162FF1778200FFF4D9 /* AuthError.swift in Sources */,
 				9F9474D12FFAFF8200F0A912 /* GuestCard.swift in Sources */,
+				D95A371F2FFA88B4000C8A90 /* ApplePayService.swift in Sources */,
 				F59DB2172FF6A852007BB715 /* CartRepoProtcol.swift in Sources */,
 				D960C2192FF17AF700FFF4D9 /* LoginWithEmail.swift in Sources */,
 				D960C2452FF1B40300FFF4D9 /* SignUpViewModel.swift in Sources */,
@@ -2100,6 +2241,7 @@
 				D960C2382FF1990900FFF4D9 /* DIContainer+ViewModels.swift in Sources */,
 				D960C1A02FF1167A00FFF4D9 /* ContentView.swift in Sources */,
 				D9906FA82FF7F75A00B9474E /* GraphQLCouponResponseDTO.swift in Sources */,
+				D95A37232FFA88B4000C8A90 /* CheckOutEntities.swift in Sources */,
 				D9906FC32FF818E700B9474E /* AddressRepo.swift in Sources */,
 				9F9003322FF6F16500B4B745 /* CollectionListViewModel.swift in Sources */,
 				D960C2202FF17BE800FFF4D9 /* CreatNewAccount.swift in Sources */,
@@ -2121,6 +2263,7 @@
 				D960C1ED2FF120A500FFF4D9 /* ApiService.swift in Sources */,
 				9F92BF532FF47D7900E090B7 /* BrandListViewModel.swift in Sources */,
 				D93C26032FF5294400486A11 /* FavProductViewModel.swift in Sources */,
+				D95A37262FFA88B4000C8A90 /* PaymentUseCases.swift in Sources */,
 				9F28C7032FF9E3280000940B /* OrderRepoProtocol.swift in Sources */,
 				D9259B142FF5838000A3A9D8 /* AuthEndpointes.swift in Sources */,
 				D960C23F2FF1B28E00FFF4D9 /* SignUpScreen.swift in Sources */,
@@ -2135,6 +2278,7 @@
 				D960C2262FF17D6D00FFF4D9 /* LogOut.swift in Sources */,
 				9FA058162FF855BC00DB93BB /* SearchView.swift in Sources */,
 				D9906F9E2FF7F5E000B9474E /* CouponError.swift in Sources */,
+				D95A37242FFA88B4000C8A90 /* PaymentError.swift in Sources */,
 				9FA3447A2FF9D15200718518 /* OrderRemoteDataSourceProtocol.swift in Sources */,
 				9F92BF442FF4796C00E090B7 /* BrandsRepoProtocol.swift in Sources */,
 				9F9D96902FF8A11500A650B9 /* FetchProductByID.swift in Sources */,
@@ -2293,6 +2437,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"NexCart/Preview Content\"";
+				DEVELOPMENT_TEAM = 9YWQZ5JYLT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NexCart/Info.plist;
@@ -2324,6 +2469,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"NexCart/Preview Content\"";
+				DEVELOPMENT_TEAM = 9YWQZ5JYLT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NexCart/Info.plist;
