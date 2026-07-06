@@ -54,7 +54,6 @@ struct GetAllAddressesUseCase {
 
     func execute(ownerID: String) async throws -> [AddressEntity] {
         let addresses = try await repository.getAllAddresses(ownerID: ownerID)
-
         return addresses.sorted { lhs, rhs in
             lhs.isDefault && !rhs.isDefault
         }

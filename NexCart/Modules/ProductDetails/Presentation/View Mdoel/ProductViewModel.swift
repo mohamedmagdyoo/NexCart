@@ -33,25 +33,19 @@ final class ProductDetailViewModel: ObservableObject, ProductDetailsViewModelPro
         }
     }
 
-    func addToCart(
-        variantID: Int,
-        customerID: Int,
-        quantity: Int
-    ) async {
-
+    func addToCart(variantID: Int, customerID: Int, quantity: Int) async {
         screenState = .loading
-
+        print("🛒 Adding to cart - variantID: \(variantID), customerID: \(customerID)")
         do {
-            let _ = try await addCartUseCase.addToCart(
+            let result = try await addCartUseCase.addToCart(
                 variantID: variantID,
                 customerID: customerID,
                 quantity: quantity
             )
-
+            print("✅ Added to cart - draftOrderId: \(result.id)")
             screenState = .success
-
         } catch {
-            print("erorrr \(error)")
+            print("❌ Add to cart failed: \(error)")
             screenState = .error(data: error)
         }
     }

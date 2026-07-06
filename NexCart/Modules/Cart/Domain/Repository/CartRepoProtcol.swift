@@ -9,7 +9,7 @@ import Foundation
 protocol CartRepoProtcol
 {
 
-    func getAllProduct() async throws ->[BagEntity]
+    func getAllProduct(customerId: Int) async throws ->[BagEntity]
     
     func getSingleProduct(productId:Int) async throws ->ProductEntity
     
