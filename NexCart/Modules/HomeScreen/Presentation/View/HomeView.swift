@@ -51,7 +51,6 @@ struct HomeView: View {
         .guestAlert(isPresented: $showGuestAlert, navigateToSignIn: $navigateToSignIn)
     }
     
-    // MARK: - Home Tab
     private var homeTab: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
@@ -189,93 +188,93 @@ struct HomeView: View {
     }
     
     private var profileTab: some View {
-            NavigationView {
-                GuestGuard {
-                    VStack(spacing: 24) {
-                        VStack(spacing: 8) {
-                            ZStack {
-                                Circle()
-                                    .fill(AppColor.surface)
-                                    .frame(width: 80, height: 80)
-                                Image(systemName: "person.crop.circle.fill")
-                                    .font(.system(size: 76))
-                                    .foregroundColor(AppColor.gold.opacity(0.5))
-                            }
+        NavigationView {
+            GuestGuard {
+                VStack(spacing: 24) {
+                    VStack(spacing: 8) {
+                        ZStack {
+                            Circle()
+                                .fill(AppColor.surface)
+                                .frame(width: 80, height: 80)
+                            Image(systemName: "person.crop.circle.fill")
+                                .font(.system(size: 76))
+                                .foregroundColor(AppColor.gold.opacity(0.5))
                         }
-                        .padding(.top, 20)
-                        
-                        VStack(spacing: 0) {
-                            NavigationLink {
-                                if let ordersViewModel = DIContainer.shared.container.resolve(OrdersViewModel.self) {
-                                    OrdersView(viewModel: ordersViewModel)
-                                } else {
-                                    Text("Orders ViewModel not registered").foregroundColor(.red)
-                                }
-                            } label: {
-                                profileRow(icon: "box.truck", title: "My Orders")
-                            }
-                            
-                            Divider().background(AppColor.border).padding(.leading, 56)
-                            
-                            NavigationLink {
-                                AddressListView(
-                                    viewModel: DIContainer.shared.container.resolve(AddressViewModel.self)!,
-                                    ownerUserId: "Me"                        )
-                            } label: {
-                                profileRow(icon: "map", title: "Shipping Addresses")
-                            }
-                            
-                            Divider().background(AppColor.border).padding(.leading, 56)
-                            
-                            NavigationLink {
-                                CheckoutView(viewModel: DIContainer.shared.container.resolve(CheckoutViewModel.self)!, total: 1005)
-                            } label: {
-                                profileRow(icon: "creditcard", title: "Checkout")
-                            }
-                            
-                            Divider().background(AppColor.border).padding(.leading, 56)
-                            
-                            NavigationLink {
-                                Text("Settings View")
-                            } label: {
-                                profileRow(icon: "gearshape", title: "Settings")
-                            }
-                        }
-                        .background(AppColor.card)
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
-                        .shadow(color: Color.black.opacity(0.03), radius: 8, x: 0, y: 4)
-                        .padding(.horizontal, 20)
-                        
-                        Spacer()
-                        
-                        Button {
-                            UserDefaults.standard.removeObject(forKey: "userEntity")
-                        } label: {
-                            HStack {
-                                Image(systemName: "rectangle.portrait.and.arrow.right")
-                                Text("Log Out")
-                            }
-                            .font(AppColor.sans(16, .bold))
-                            .foregroundColor(AppColor.white)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 54)
-                            .background(Color.red.opacity(0.8))
-                            .clipShape(Capsule())
-                        }
-                        .padding(.horizontal, 20)
-                        .padding(.bottom, 100)
                     }
-                    .background(AppColor.bg.ignoresSafeArea())
-                    .navigationTitle("Profile")
-                    .navigationBarHidden(true)
-                    .foregroundColor(AppColor.textPrim)
+                    .padding(.top, 20)
+                    
+                    VStack(spacing: 0) {
+                        NavigationLink {
+                            if let ordersViewModel = DIContainer.shared.container.resolve(OrdersViewModel.self) {
+                                OrdersView(viewModel: ordersViewModel)
+                            } else {
+                                Text("Orders ViewModel not registered").foregroundColor(.red)
+                            }
+                        } label: {
+                            profileRow(icon: "box.truck", title: "My Orders")
+                        }
+                        
+                        Divider().background(AppColor.border).padding(.leading, 56)
+                        
+                        NavigationLink {
+                            AddressListView(
+                                viewModel: DIContainer.shared.container.resolve(AddressViewModel.self)!,
+                                ownerUserId: "Me"
+                            )
+                        } label: {
+                            profileRow(icon: "map", title: "Shipping Addresses")
+                        }
+                        
+                        Divider().background(AppColor.border).padding(.leading, 56)
+                        
+                        NavigationLink {
+                            CheckoutView(viewModel: DIContainer.shared.container.resolve(CheckoutViewModel.self)!, total: 1005)
+                        } label: {
+                            profileRow(icon: "creditcard", title: "Checkout")
+                        }
+                        
+                        Divider().background(AppColor.border).padding(.leading, 56)
+                        
+                        NavigationLink {
+                            Text("Settings View")
+                        } label: {
+                            profileRow(icon: "gearshape", title: "Settings")
+                        }
+                    }
+                    .background(AppColor.card)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .shadow(color: Color.black.opacity(0.03), radius: 8, x: 0, y: 4)
+                    .padding(.horizontal, 20)
+                    
+                    Spacer()
+                    
+                    Button {
+                        UserDefaults.standard.removeObject(forKey: "userEntity")
+                    } label: {
+                        HStack {
+                            Image(systemName: "rectangle.portrait.and.arrow.right")
+                            Text("Log Out")
+                        }
+                        .font(AppColor.sans(16, .bold))
+                        .foregroundColor(AppColor.white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 54)
+                        .background(Color.red.opacity(0.8))
+                        .clipShape(Capsule())
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 100)
                 }
-                .onAppear { tabBarManager.isHidden = false }
+                .background(AppColor.bg.ignoresSafeArea())
+                .navigationTitle("Profile")
+                .navigationBarHidden(true)
+                .foregroundColor(AppColor.textPrim)
             }
-            .navigationViewStyle(.stack)
-            .tag(4)
+            .onAppear { tabBarManager.isHidden = false }
         }
-    
+        .navigationViewStyle(.stack)
+        .tag(4)
+    }
     
     private func profileRow(icon: String, title: String) -> some View {
         HStack(spacing: 16) {

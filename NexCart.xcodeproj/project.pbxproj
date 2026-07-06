@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9F0C0DC42FF5C71D007E7E8C /* ProductsRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0C0DC32FF5C71D007E7E8C /* ProductsRepo.swift */; };
 		9F28C6FF2FF9E2400000940B /* FetchOrderUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F28C6FE2FF9E2400000940B /* FetchOrderUseCase.swift */; };
 		9F28C7012FF9E2D10000940B /* OrderEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F28C7002FF9E2D10000940B /* OrderEntity.swift */; };
 		9F28C7032FF9E3280000940B /* OrderRepoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F28C7022FF9E3280000940B /* OrderRepoProtocol.swift */; };
@@ -733,7 +732,6 @@
 				9F0C0DC32FF5C71D007E7E8C /* ProductsRepo.swift */,
 				9F94980E2FF57881000CEB5A /* Core */,
 				9F94980F2FF57881000CEB5A /* CoreData.swift */,
-				9F9498102FF57881000CEB5A /* ProductsRepo.swift */,
 			);
 			path = Local;
 			sourceTree = "<group>";
@@ -1421,6 +1419,7 @@
 			children = (
 				9F9498112FF57881000CEB5A /* Local */,
 				D960C1E02FF1196900FFF4D9 /* Remote */,
+				9F9498102FF57881000CEB5A /* ProductsRepo.swift */,
 				D960C23B2FF1A1BB00FFF4D9 /* FakeData */,
 			);
 			path = Data;
@@ -2178,7 +2177,6 @@
 				9F90033C2FF705C700B4B745 /* FilterSheet.swift in Sources */,
 				9F8F1E582FF3898D0016B844 /* HomeProtocol.swift in Sources */,
 				9F92BF472FF479D300E090B7 /* BrandUseCase.swift in Sources */,
-				9F0C0DC42FF5C71D007E7E8C /* ProductsRepo.swift in Sources */,
 				9F28C6FF2FF9E2400000940B /* FetchOrderUseCase.swift in Sources */,
 				9F90033A2FF7043000B4B745 /* GoldBackButton.swift in Sources */,
 				9F8F1E592FF3898D0016B844 /* HomeHeroSection.swift in Sources */,
