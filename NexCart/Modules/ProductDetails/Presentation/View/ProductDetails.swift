@@ -11,6 +11,8 @@ struct ProductDetailView: View {
     @State private var quantity: Int = 1
     @State private var navigateToCart: Bool = false
     @State private var showToast: Bool = false
+    @State private var showGuestAlert: Bool = false
+    @State private var navigateToSignIn: Bool = false
     @StateObject private var productDetailsViewModel: ProductDetailViewModel
 
     init(product: ProductEntity, productViewModel: ProductDetailViewModel) {
@@ -27,6 +29,13 @@ struct ProductDetailView: View {
         }
         return id
     }
+    private var isGuest: Bool {
+        guard let data = UserDefaults.standard.data(forKey: "userEntity"),
+              let user = try? JSONDecoder().decode(UserEntity.self, from: data)
+        else { return true }
+        return user.isGuest
+    }
+
     private var sizes: [String] {
         product.options.first(where: { $0.name.caseInsensitiveCompare("Size") == .orderedSame })?.values ?? []
     }
@@ -106,6 +115,7 @@ struct ProductDetailView: View {
         }
         .toolbar(.hidden, for: .tabBar)
         .navigationBarHidden(true)
+        .guestAlert(isPresented: $showGuestAlert, navigateToSignIn: $navigateToSignIn)
         .onChange(of: selectedVariant?.id) { _ in
             quantity = 1
         }
@@ -160,10 +170,14 @@ struct ProductDetailView: View {
                         systemName: isFavorited ? "heart.fill" : "heart",
                         iconColor: isFavorited ? AppColor.gold : AppColor.textSec
                     ) {
-                        withAnimation(.spring()) {
-                            isFavorited.toggle()
-                            product.isFavorited = isFavorited
-                            productDetailsViewModel.toggleFavorite(product: product)
+                        if isGuest {
+                            showGuestAlert = true
+                        } else {
+                            withAnimation(.spring()) {
+                                isFavorited.toggle()
+                                product.isFavorited = isFavorited
+                                productDetailsViewModel.toggleFavorite(product: product)
+                            }
                         }
                     }
                 }
@@ -351,13 +365,17 @@ struct ProductDetailView: View {
                 }
 
                 Button {
-                    guard let variantID = selectedVariant?.id else { return }
-                    Task {
-                        await productDetailsViewModel.addToCart(
-                            variantID: variantID,
-                            customerID: currentCustomerId,
-                            quantity: quantity
-                        )
+                    if isGuest {
+                        showGuestAlert = true
+                    } else {
+                        guard let variantID = selectedVariant?.id else { return }
+                        Task {
+                            await productDetailsViewModel.addToCart(
+                                variantID: variantID,
+                                customerID: currentCustomerId,
+                                quantity: quantity
+                            )
+                        }
                     }
                 } label: {
                     HStack(spacing: 12) {

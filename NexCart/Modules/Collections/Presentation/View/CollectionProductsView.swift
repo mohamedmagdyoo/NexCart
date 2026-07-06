@@ -11,6 +11,15 @@ struct CollectionProductsView: View {
     @StateObject var viewModel: CollectionProductsViewModel
     @EnvironmentObject var tabBarManager: TabBarManager
     @State private var showFilterSheet = false
+    @State private var showGuestAlert = false
+    @State private var navigateToSignIn = false
+
+    private var isGuest: Bool {
+        guard let data = UserDefaults.standard.data(forKey: "userEntity"),
+              let user = try? JSONDecoder().decode(UserEntity.self, from: data)
+        else { return true }
+        return user.isGuest
+    }
 
     private let columns = [
         GridItem(.flexible(), spacing: 16),
@@ -60,6 +69,7 @@ struct CollectionProductsView: View {
                 selectedPriceRange: $viewModel.selectedPriceRange
             )
         }
+        .guestAlert(isPresented: $showGuestAlert, navigateToSignIn: $navigateToSignIn)
     }
 
     private var header: some View {
@@ -127,7 +137,11 @@ struct CollectionProductsView: View {
                         product: product,
                         isFavorited: product.isFavorited,
                         onFavoriteToggle: {
-                            viewModel.toggleFavorite(productId: product.id)
+                            if isGuest {
+                                showGuestAlert = true
+                            } else {
+                                viewModel.toggleFavorite(productId: product.id)
+                            }
                         }
                     )
                 }
