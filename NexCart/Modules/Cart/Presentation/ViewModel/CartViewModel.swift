@@ -12,10 +12,7 @@ enum CartState{
     case error(message:String)
     
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> faef90c (Last touches of finishing apple pay feature)
 @MainActor
 class CartViewModel: CartViewModelProtocol, ObservableObject {
 

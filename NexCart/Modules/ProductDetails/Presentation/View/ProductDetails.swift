@@ -132,62 +132,66 @@ struct ProductDetailView: View {
     }
 
     private var imageSection: some View {
-        ZStack(alignment: .top) {
-            TabView(selection: $currentImageIndex) {
-                ForEach(images.indices, id: \.self) { index in
-                    AsyncImage(url: URL(string: images[index].src)) { image in
-                        image.resizable().scaledToFill()
-                    } placeholder: {
-                        AppColor.surface
+            ZStack(alignment: .top) {
+                TabView(selection: $currentImageIndex) {
+                    ForEach(images.indices, id: \.self) { index in
+                        AsyncImage(url: URL(string: images[index].src)) { image in
+                            image.resizable().scaledToFill()
+                        } placeholder: {
+                            AppColor.surface
+                        }
+                        .tag(index)
                     }
-                    .tag(index)
                 }
-            }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.55)
-            .clipped()
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
+                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.55)
+                .clipped()
 
-            LinearGradient(
-                gradient: Gradient(colors: [Color.black.opacity(0.3), Color.clear]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .frame(height: 120)
+                LinearGradient(
+                    gradient: Gradient(colors: [Color.black.opacity(0.3), Color.clear]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .frame(height: 120)
 
-            HStack {
-                CircleNavButton(systemName: "chevron.left") {
-                    presentationMode.wrappedValue.dismiss()
-                }
-
-                Spacer()
-
-                HStack(spacing: 12) {
-                    CircleNavButton(systemName: "square.and.arrow.up") {
-                        navigateToCart = true
+                HStack {
+                    CircleNavButton(systemName: "chevron.left") {
+                        presentationMode.wrappedValue.dismiss()
                     }
 
-                    CircleNavButton(
-                        systemName: isFavorited ? "heart.fill" : "heart",
-                        iconColor: isFavorited ? AppColor.gold : AppColor.textSec
-                    ) {
-                        if isGuest {
-                            showGuestAlert = true
-                        } else {
-                            withAnimation(.spring()) {
-                                isFavorited.toggle()
-                                product.isFavorited = isFavorited
-                                productDetailsViewModel.toggleFavorite(product: product)
+                    Spacer()
+
+                    HStack(spacing: 12) {
+                        // Update: Added guest check here
+                        CircleNavButton(systemName: "square.and.arrow.up") {
+                            if isGuest {
+                                showGuestAlert = true
+                            } else {
+                                navigateToCart = true
+                            }
+                        }
+
+                        CircleNavButton(
+                            systemName: isFavorited ? "heart.fill" : "heart",
+                            iconColor: isFavorited ? AppColor.gold : AppColor.textSec
+                        ) {
+                            if isGuest {
+                                showGuestAlert = true
+                            } else {
+                                withAnimation(.spring()) {
+                                    isFavorited.toggle()
+                                    product.isFavorited = isFavorited
+                                    productDetailsViewModel.toggleFavorite(product: product)
+                                }
                             }
                         }
                     }
                 }
+                .padding(.horizontal, 20)
+                .padding(.top, 60)
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 60)
+            .frame(height: UIScreen.main.bounds.height * 0.55)
         }
-        .frame(height: UIScreen.main.bounds.height * 0.55)
-    }
-
     private var contentCard: some View {
         VStack(alignment: .leading, spacing: 0) {
             VStack(alignment: .leading, spacing: 24) {
