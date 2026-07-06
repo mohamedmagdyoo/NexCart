@@ -9,9 +9,17 @@ struct HomeView: View {
     @State private var selectedProductId: Int = 0
     @State private var isNavigatingToProduct: Bool = false
     @State private var isNavigatingToAllProducts: Bool = false
-    
-    @State private var userEntity: UserEntity?
-    
+    @State private var isNavigatingToBrand: Bool = false
+    @State private var showGuestAlert: Bool = false
+    @State private var navigateToSignIn: Bool = false
+
+    private var isGuest: Bool {
+        guard let data = UserDefaults.standard.data(forKey: "userEntity"),
+              let user = try? JSONDecoder().decode(UserEntity.self, from: data)
+        else { return true }
+        return user.isGuest
+    }
+
     init() {
         UITabBar.appearance().isHidden = true
     }
@@ -36,16 +44,14 @@ struct HomeView: View {
             }
         }
         .environmentObject(tabBarManager)
-        .animation(.easeInOut(duration: 0.3), value: tabBarManager.isHidden)
         .preferredColorScheme(.light)
-        .onChange(of: isNavigatingToProduct) { newValue in
-            if newValue { tabBarManager.isHidden = true }
-        }
-        .onChange(of: isNavigatingToAllProducts) { newValue in
-            if newValue { tabBarManager.isHidden = true }
-        }
+        .onChange(of: isNavigatingToProduct) { if $0 { tabBarManager.isHidden = true } }
+        .onChange(of: isNavigatingToAllProducts) { if $0 { tabBarManager.isHidden = true } }
+        .onChange(of: isNavigatingToBrand) { if $0 { tabBarManager.isHidden = true } }
+        .guestAlert(isPresented: $showGuestAlert, navigateToSignIn: $navigateToSignIn)
     }
     
+    // MARK: - Home Tab
     private var homeTab: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
@@ -57,14 +63,23 @@ struct HomeView: View {
                     
                     HomeBrandsSection(
                         brands: viewModel.brands,
-                        onBrandSelected: { viewModel.selectBrand(at: $0) }
+                        onBrandSelected: { index in
+                            viewModel.selectBrand(at: index)
+                            isNavigatingToBrand = true
+                        }
                     )
                     
                     HomeNewInSection(
                         products: viewModel.products,
                         isLoading: viewModel.isLoading,
                         errorMessage: viewModel.errorMessage,
-                        onToggleFavorite: { viewModel.toggleFavorite(at: $0) },
+                        onToggleFavorite: { index in
+                            if isGuest {
+                                showGuestAlert = true
+                            } else {
+                                viewModel.toggleFavorite(at: index)
+                            }
+                        },
                         onProductSelected: { product in
                             selectedProductId = product.id
                             isNavigatingToProduct = true
@@ -83,7 +98,8 @@ struct HomeView: View {
                         destination: ProductDetailView(
                             product: product,
                             productViewModel: DIContainer.shared.container.resolve(ProductDetailViewModel.self)!
-                        ),
+                        )
+                        .navigationBarBackButtonHidden(true),
                         isActive: $isNavigatingToProduct
                     ) {
                         EmptyView()
@@ -102,22 +118,40 @@ struct HomeView: View {
                         } else {
                             EmptyView()
                         }
-                    },
+                    }
+                        .navigationBarBackButtonHidden(true),
                     isActive: $isNavigatingToAllProducts
                 ) {
                     EmptyView()
                 }
+                
+                if let brand = viewModel.selectedBrand {
+                    NavigationLink(
+                        destination: Group {
+                            if let brandViewModel = DIContainer.shared.container.resolve(
+                                BrandProductsViewModel.self,
+                                argument: brand
+                            ) {
+                                BrandProductsView(viewModel: brandViewModel)
+                            } else {
+                                EmptyView()
+                            }
+                        }
+                            .navigationBarBackButtonHidden(true),
+                        isActive: $isNavigatingToBrand
+                    ) {
+                        EmptyView()
+                    }
+                }
             }
-            .task {
-                await viewModel.fetchHomeData()
-                userEntity = await AppConstants.shared.getUserEntity()
-            }
+            .task { await viewModel.fetchHomeData() }
             .onAppear { tabBarManager.isHidden = false }
         }
         .navigationViewStyle(.stack)
         .tag(0)
     }
     
+    // MARK: - Shop Tab
     private var shopTab: some View {
         NavigationView {
             CollectionsListView(
@@ -129,130 +163,196 @@ struct HomeView: View {
         .tag(1)
     }
     
+    // MARK: - Favorites Tab (محمية بـ GuestGuard)
     private var favoritesTab: some View {
         NavigationView {
-            FavProductsScreen()
-                .onAppear { tabBarManager.isHidden = false }
+            GuestGuard {
+                FavProductsScreen()
+            }
+            .onAppear { tabBarManager.isHidden = false }
         }
         .navigationViewStyle(.stack)
         .tag(2)
     }
     
-    @State var couponTextField: String = ""
-    
+    // MARK: - Cart Tab (محمية بـ GuestGuard)
     private var cartTab: some View {
         NavigationView {
-            BagView()
-                .padding(.bottom, 75)
+            GuestGuard {
+                // استبدل بـ CartView() لما تكون جاهزة
+                Text("Cart View")
+                    .font(AppColor.sans(16, .medium))
+                    .foregroundColor(AppColor.textPrim)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.bottom, 90)
+            }
+            .onAppear { tabBarManager.isHidden = false }
         }
         .navigationViewStyle(.stack)
         .tag(3)
     }
     
+    // MARK: - Profile Tab (محمية بـ GuestGuard)
     private var profileTab: some View {
         NavigationView {
-            VStack(spacing: 16) {
-                
-                NavigationLink {
-                    OrdersView(
-                        viewModel: DIContainer.shared.container.resolve(OrdersViewModel.self)!
-                    )
-                } label: {
-                    HStack {
-                        Image(systemName: "bag")
-                        Text("My Orders")
-                        Spacer()
-                        Image(systemName: "chevron.right")
+            GuestGuard {
+                VStack(spacing: 24) {
+                    VStack(spacing: 8) {
+                        ZStack {
+                            Circle()
+                                .fill(AppColor.surface)
+                                .frame(width: 80, height: 80)
+                            Image(systemName: "person.crop.circle.fill")
+                                .font(.system(size: 76))
+                                .foregroundColor(AppColor.gold.opacity(0.5))
+                        }
                     }
-                    .padding()
-                    .background(AppColor.surface)
-                    .cornerRadius(12)
-                    .padding(.horizontal)
+                    .padding(.top, 20)
+                    
+                    VStack(spacing: 0) {
+                        NavigationLink {
+                            if let ordersViewModel = DIContainer.shared.container.resolve(OrdersViewModel.self) {
+                                OrdersView(viewModel: ordersViewModel)
+                            } else {
+                                Text("Orders ViewModel not registered").foregroundColor(.red)
+                            }
+                        } label: {
+                            profileRow(icon: "box.truck", title: "My Orders")
+                        }
+                        
+                        Divider().background(AppColor.border).padding(.leading, 56)
+                        
+                        NavigationLink {
+                            Text("Addresses View")
+                        } label: {
+                            profileRow(icon: "map", title: "Shipping Addresses")
+                        }
+                        
+                        Divider().background(AppColor.border).padding(.leading, 56)
+                        
+                        NavigationLink {
+                            Text("Settings View")
+                        } label: {
+                            profileRow(icon: "gearshape", title: "Settings")
+                        }
+                    }
+                    .background(AppColor.card)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .shadow(color: Color.black.opacity(0.03), radius: 8, x: 0, y: 4)
+                    .padding(.horizontal, 20)
+                    
+                    Spacer()
+                    
+                    Button {
+                        UserDefaults.standard.removeObject(forKey: "userEntity")
+                    } label: {
+                        HStack {
+                            Image(systemName: "rectangle.portrait.and.arrow.right")
+                            Text("Log Out")
+                        }
+                        .font(AppColor.sans(16, .bold))
+                        .foregroundColor(AppColor.white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 54)
+                        .background(Color.red.opacity(0.8))
+                        .clipShape(Capsule())
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 100)
                 }
-                .foregroundColor(AppColor.textPrim)
-                
-                Button {
-                    UserDefaults.standard.removeObject(forKey: "userEntity")
-                } label: {
-                    Text("LogOut")
-                        .foregroundColor(.black)
-                }
-                
-                NavigationLink {
-                    AddressListView(
-                        viewModel: DIContainer.shared.container.resolve(AddressViewModel.self)!,
-                        ownerUserId: userEntity?.id ?? "Me"
-                    )
-                } label: {
-                    Text("NavToAddress")
-                        .foregroundColor(.black)
-                }
-                
-                Spacer()
+                .background(AppColor.bg.ignoresSafeArea())
+                .navigationTitle("Profile")
+                .navigationBarHidden(true)
             }
-            .padding(.top, 20)
-            .padding(.bottom, 90)
             .onAppear { tabBarManager.isHidden = false }
         }
         .navigationViewStyle(.stack)
         .tag(4)
     }
-}
-
-struct TabItemModel {
-    let icon: String
-    let label: String
-}
-
-struct HomeTabBar: View {
-    @Binding var selectedTab: Int
     
-    let tabs = [
-        TabItemModel(icon: "house", label: "Home"),
-        TabItemModel(icon: "bag", label: "Shop"),
-        TabItemModel(icon: "heart", label: "Favorite"),
-        TabItemModel(icon: "cart", label: "Cart"),
-        TabItemModel(icon: "person", label: "Profile")
-    ]
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            Divider()
-                .background(AppColor.border)
-                .frame(height: 0.5)
-            
-            HStack(spacing: 0) {
-                ForEach(tabs.indices, id: \.self) { i in
-                    tabItem(icon: tabs[i].icon, label: tabs[i].label, index: i)
-                }
+    // MARK: - Profile Row Helper
+    private func profileRow(icon: String, title: String) -> some View {
+        HStack(spacing: 16) {
+            ZStack {
+                AppColor.surface
+                Image(systemName: icon)
+                    .foregroundColor(AppColor.gold)
+                    .font(.system(size: 18))
             }
-            .padding(.top, 12)
-            .padding(.bottom, 28)
-            .padding(.horizontal, 8)
+            .frame(width: 40, height: 40)
+            .clipShape(Circle())
+            
+            Text(title)
+                .font(AppColor.sans(16, .medium))
+                .foregroundColor(AppColor.textPrim)
+            
+            Spacer()
+            
+            Image(systemName: "chevron.right")
+                .foregroundColor(AppColor.textSec.opacity(0.5))
+                .font(.system(size: 14, weight: .semibold))
         }
-        .background(AppColor.card)
+        .padding(.vertical, 12)
+        .padding(.horizontal, 16)
     }
     
-    private func tabItem(icon: String, label: String, index: Int) -> some View {
-        let active = selectedTab == index
-        return Button { selectedTab = index } label: {
-            VStack(spacing: 5) {
-                ZStack {
-                    if active {
-                        Circle()
-                            .fill(AppColor.gold.opacity(0.12))
-                            .frame(width: 36, height: 36)
+    // MARK: - Tab Bar
+    struct TabItemModel {
+        let icon: String
+        let label: String
+    }
+    
+    struct HomeTabBar: View {
+        @Binding var selectedTab: Int
+        
+        let tabs = [
+            TabItemModel(icon: "house", label: "Home"),
+            TabItemModel(icon: "bag", label: "Shop"),
+            TabItemModel(icon: "heart", label: "Favorite"),
+            TabItemModel(icon: "cart", label: "Cart"),
+            TabItemModel(icon: "person", label: "Profile")
+        ]
+        
+        var body: some View {
+            VStack(spacing: 0) {
+                Divider()
+                    .background(AppColor.border)
+                    .frame(height: 0.5)
+                
+                HStack(spacing: 0) {
+                    ForEach(tabs.indices, id: \.self) { i in
+                        tabItem(icon: tabs[i].icon, label: tabs[i].label, index: i)
                     }
-                    Image(systemName: active ? "\(icon).fill" : icon)
-                        .font(.system(size: 19, weight: active ? .regular : .light))
+                }
+                .padding(.top, 12)
+                .padding(.bottom, 28)
+                .padding(.horizontal, 8)
+            }
+            .background(AppColor.card)
+        }
+        
+        private func tabItem(icon: String, label: String, index: Int) -> some View {
+            let active = selectedTab == index
+            return Button { selectedTab = index } label: {
+                VStack(spacing: 5) {
+                    ZStack {
+                        if active {
+                            Circle()
+                                .fill(AppColor.gold.opacity(0.12))
+                                .frame(width: 36, height: 36)
+                        }
+                        Image(systemName: active ? "\(icon).fill" : icon)
+                            .font(.system(size: 19, weight: active ? .regular : .light))
+                            .foregroundColor(active ? AppColor.gold : AppColor.textSec)
+                    }
+                    Text(label)
+                        .font(AppColor.sans(9, .medium))
+                        .tracking(0.5)
                         .foregroundColor(active ? AppColor.gold : AppColor.textSec)
                 }
-                Text(label)
-                    .font(AppColor.sans(9, .medium))
-                    .tracking(0.5)
-                    .foregroundColor(active ? AppColor.gold : AppColor.textSec)
+                .frame(maxWidth: .infinity)
             }
-            .frame(maxWidth: .infinity)
+            .buttonStyle(PlainButtonStyle())
         }
     }
 }
