@@ -5086,6 +5086,17 @@
 		D90431712FFBBC9000E84300 /* GetSavedOutfitsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90431702FFBBC9000E84300 /* GetSavedOutfitsUseCase.swift */; };
 		D90431732FFBBC9F00E84300 /* DeleteSavedOutfitUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90431722FFBBC9F00E84300 /* DeleteSavedOutfitUseCase.swift */; };
 		D90431752FFBBCCD00E84300 /* ClearSelectionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90431742FFBBCCD00E84300 /* ClearSelectionUseCase.swift */; };
+		D90431782FFBC80A00E84300 /* HuggingFaceEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90431772FFBC80A00E84300 /* HuggingFaceEndPoint.swift */; };
+		D904317A2FFBC88600E84300 /* HuggingFaceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90431792FFBC88600E84300 /* HuggingFaceService.swift */; };
+		D904317D2FFBCBCC00E84300 /* HuggingFaceDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = D904317C2FFBCBCC00E84300 /* HuggingFaceDTOs.swift */; };
+		D904317F2FFBCBFD00E84300 /* HuggingFaceServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D904317E2FFBCBFD00E84300 /* HuggingFaceServiceError.swift */; };
+		D90431822FFBCC6300E84300 /* AIProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90431812FFBCC6300E84300 /* AIProvider.swift */; };
+		D90431842FFBCCA500E84300 /* HuggingFaceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90431832FFBCCA500E84300 /* HuggingFaceProvider.swift */; };
+		D90431872FFBCD0600E84300 /* AIOutfitRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90431862FFBCD0600E84300 /* AIOutfitRepositoryImpl.swift */; };
+		D904318C2FFBCF5E00E84300 /* OutfitSelectionDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D904318B2FFBCF5E00E84300 /* OutfitSelectionDAO.swift */; };
+		D904318E2FFBCF8400E84300 /* OutfitSelectionRepositoryIMP.swift in Sources */ = {isa = PBXBuildFile; fileRef = D904318D2FFBCF8400E84300 /* OutfitSelectionRepositoryIMP.swift */; };
+		D90431912FFBD67D00E84300 /* GeneratedOutfitDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90431902FFBD67D00E84300 /* GeneratedOutfitDAO.swift */; };
+		D90431942FFBD6AC00E84300 /* SavedOutfitRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90431932FFBD6AC00E84300 /* SavedOutfitRepositoryImpl.swift */; };
 		D918C11E2FF6BC3600FDAED6 /* FavProductDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D918C11D2FF6BC3600FDAED6 /* FavProductDTO.swift */; };
 		D918C1202FF6BC6400FDAED6 /* FavProductsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D918C11F2FF6BC6400FDAED6 /* FavProductsService.swift */; };
 		D918C1232FF6BC9900FDAED6 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D918C1222FF6BC9900FDAED6 /* FirebaseFirestore */; };
@@ -5304,6 +5315,17 @@
 		D90431702FFBBC9000E84300 /* GetSavedOutfitsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSavedOutfitsUseCase.swift; sourceTree = "<group>"; };
 		D90431722FFBBC9F00E84300 /* DeleteSavedOutfitUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteSavedOutfitUseCase.swift; sourceTree = "<group>"; };
 		D90431742FFBBCCD00E84300 /* ClearSelectionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearSelectionUseCase.swift; sourceTree = "<group>"; };
+		D90431772FFBC80A00E84300 /* HuggingFaceEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HuggingFaceEndPoint.swift; sourceTree = "<group>"; };
+		D90431792FFBC88600E84300 /* HuggingFaceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HuggingFaceService.swift; sourceTree = "<group>"; };
+		D904317C2FFBCBCC00E84300 /* HuggingFaceDTOs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HuggingFaceDTOs.swift; sourceTree = "<group>"; };
+		D904317E2FFBCBFD00E84300 /* HuggingFaceServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HuggingFaceServiceError.swift; sourceTree = "<group>"; };
+		D90431812FFBCC6300E84300 /* AIProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIProvider.swift; sourceTree = "<group>"; };
+		D90431832FFBCCA500E84300 /* HuggingFaceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HuggingFaceProvider.swift; sourceTree = "<group>"; };
+		D90431862FFBCD0600E84300 /* AIOutfitRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIOutfitRepositoryImpl.swift; sourceTree = "<group>"; };
+		D904318B2FFBCF5E00E84300 /* OutfitSelectionDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitSelectionDAO.swift; sourceTree = "<group>"; };
+		D904318D2FFBCF8400E84300 /* OutfitSelectionRepositoryIMP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitSelectionRepositoryIMP.swift; sourceTree = "<group>"; };
+		D90431902FFBD67D00E84300 /* GeneratedOutfitDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneratedOutfitDAO.swift; sourceTree = "<group>"; };
+		D90431932FFBD6AC00E84300 /* SavedOutfitRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedOutfitRepositoryImpl.swift; sourceTree = "<group>"; };
 		D918C11D2FF6BC3600FDAED6 /* FavProductDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavProductDTO.swift; sourceTree = "<group>"; };
 		D918C11F2FF6BC6400FDAED6 /* FavProductsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavProductsService.swift; sourceTree = "<group>"; };
 		D918C1262FF6BD4600FDAED6 /* FavProductRepoInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavProductRepoInterface.swift; sourceTree = "<group>"; };
@@ -6008,7 +6030,9 @@
 		D904314E2FFBB9C700E84300 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				D90431572FFBBA3700E84300 /* Services */,
+				D904318F2FFBD66900E84300 /* SavedOutfit */,
+				D904318A2FFBCF4C00E84300 /* OutfitSelection */,
+				D90431882FFBCF0D00E84300 /* OutfitGeneration */,
 				D90431562FFBBA2A00E84300 /* RepoIMP */,
 			);
 			path = Data;
@@ -6079,15 +6103,11 @@
 		D90431562FFBBA2A00E84300 /* RepoIMP */ = {
 			isa = PBXGroup;
 			children = (
+				D90431922FFBD6A100E84300 /* SavedOutfitRepository */,
+				D90431892FFBCF3000E84300 /* OutfitSelectionRepository */,
+				D90431852FFBCCFB00E84300 /* AIOutfitRepository */,
 			);
 			path = RepoIMP;
-			sourceTree = "<group>";
-		};
-		D90431572FFBBA3700E84300 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Services;
 			sourceTree = "<group>";
 		};
 		D90431692FFBBB7300E84300 /* SelectdProducts */ = {
@@ -6117,6 +6137,83 @@
 				D90431722FFBBC9F00E84300 /* DeleteSavedOutfitUseCase.swift */,
 			);
 			path = SaveOutfites;
+			sourceTree = "<group>";
+		};
+		D90431762FFBC7F400E84300 /* HuggingFace */ = {
+			isa = PBXGroup;
+			children = (
+				D904317B2FFBCBBC00E84300 /* DTOs */,
+				D904317E2FFBCBFD00E84300 /* HuggingFaceServiceError.swift */,
+				D90431772FFBC80A00E84300 /* HuggingFaceEndPoint.swift */,
+				D90431792FFBC88600E84300 /* HuggingFaceService.swift */,
+				D90431832FFBCCA500E84300 /* HuggingFaceProvider.swift */,
+			);
+			path = HuggingFace;
+			sourceTree = "<group>";
+		};
+		D904317B2FFBCBBC00E84300 /* DTOs */ = {
+			isa = PBXGroup;
+			children = (
+				D904317C2FFBCBCC00E84300 /* HuggingFaceDTOs.swift */,
+			);
+			path = DTOs;
+			sourceTree = "<group>";
+		};
+		D90431802FFBCC5300E84300 /* AI_Providers */ = {
+			isa = PBXGroup;
+			children = (
+				D90431812FFBCC6300E84300 /* AIProvider.swift */,
+				D90431762FFBC7F400E84300 /* HuggingFace */,
+			);
+			path = AI_Providers;
+			sourceTree = "<group>";
+		};
+		D90431852FFBCCFB00E84300 /* AIOutfitRepository */ = {
+			isa = PBXGroup;
+			children = (
+				D90431862FFBCD0600E84300 /* AIOutfitRepositoryImpl.swift */,
+			);
+			path = AIOutfitRepository;
+			sourceTree = "<group>";
+		};
+		D90431882FFBCF0D00E84300 /* OutfitGeneration */ = {
+			isa = PBXGroup;
+			children = (
+				D90431802FFBCC5300E84300 /* AI_Providers */,
+			);
+			path = OutfitGeneration;
+			sourceTree = "<group>";
+		};
+		D90431892FFBCF3000E84300 /* OutfitSelectionRepository */ = {
+			isa = PBXGroup;
+			children = (
+				D904318D2FFBCF8400E84300 /* OutfitSelectionRepositoryIMP.swift */,
+			);
+			path = OutfitSelectionRepository;
+			sourceTree = "<group>";
+		};
+		D904318A2FFBCF4C00E84300 /* OutfitSelection */ = {
+			isa = PBXGroup;
+			children = (
+				D904318B2FFBCF5E00E84300 /* OutfitSelectionDAO.swift */,
+			);
+			path = OutfitSelection;
+			sourceTree = "<group>";
+		};
+		D904318F2FFBD66900E84300 /* SavedOutfit */ = {
+			isa = PBXGroup;
+			children = (
+				D90431902FFBD67D00E84300 /* GeneratedOutfitDAO.swift */,
+			);
+			path = SavedOutfit;
+			sourceTree = "<group>";
+		};
+		D90431922FFBD6A100E84300 /* SavedOutfitRepository */ = {
+			isa = PBXGroup;
+			children = (
+				D90431932FFBD6AC00E84300 /* SavedOutfitRepositoryImpl.swift */,
+			);
+			path = SavedOutfitRepository;
 			sourceTree = "<group>";
 		};
 		D918C11A2FF6BBCB00FDAED6 /* Remote */ = {
@@ -7373,6 +7470,7 @@
 				D90431622FFBBB2D00E84300 /* SavedOutfitRepositoryProtocol.swift in Sources */,
 				9F9003262FF6EEB800B4B745 /* CollectionEntity.swift in Sources */,
 				9F28C70A2FF9EE0A0000940B /* CartDto.swift in Sources */,
+				D90431872FFBCD0600E84300 /* AIOutfitRepositoryImpl.swift in Sources */,
 				9F9D968E2FF89D9700A650B9 /* ProductRemoteDataSource.swift in Sources */,
 				D90431602FFBBB1D00E84300 /* AIOutfitRepositoryProtocol.swift in Sources */,
 				9F92BF592FF47DF100E090B7 /* BrandProductView.swift in Sources */,
@@ -7381,6 +7479,7 @@
 				9F9003292FF6EF7600B4B745 /* CollectionsRepoProtocol.swift in Sources */,
 				D960C1F62FF12A1500FFF4D9 /* SignInScreen.swift in Sources */,
 				D960C20F2FF1734B00FFF4D9 /* AuthEntities.swift in Sources */,
+				D904317A2FFBC88600E84300 /* HuggingFaceService.swift in Sources */,
 				D95A37292FFA88B4000C8A90 /* CheckOutView.swift in Sources */,
 				D93C26042FF5294400486A11 /* FavProductsScreen.swift in Sources */,
 				D918C12A2FF6BF5000FDAED6 /* FavProductRepo.swift in Sources */,
@@ -7394,6 +7493,8 @@
 				F5B53ADA2FF5F40F009F9F87 /* CartScreen.swift in Sources */,
 				F51C98A62FF5A0E000A9C2EE /* ProductService.swift in Sources */,
 				9FA058142FF8557A00DB93BB /* SearchUseCase.swift in Sources */,
+				D90431782FFBC80A00E84300 /* HuggingFaceEndPoint.swift in Sources */,
+				D90431942FFBD6AC00E84300 /* SavedOutfitRepositoryImpl.swift in Sources */,
 				F51C98A72FF5A0E000A9C2EE /* AddCartResponseMapper.swift in Sources */,
 				D9906F9C2FF7F57C00B9474E /* CouponEntity.swift in Sources */,
 				F51C98A82FF5A0E000A9C2EE /* ProductBodyMapper.swift in Sources */,
@@ -7418,14 +7519,17 @@
 				D95A37252FFA88B4000C8A90 /* PaymentRepositoryProtocol.swift in Sources */,
 				9F8F1E522FF3898D0016B844 /* HomeRepository.swift in Sources */,
 				9F90032E2FF6EFEB00B4B745 /* FetchCollectionUseCase.swift in Sources */,
+				D90431842FFBCCA500E84300 /* HuggingFaceProvider.swift in Sources */,
 				D9906FC92FF8191E00B9474E /* AddressError.swift in Sources */,
 				D91D00842FF84804002C8E1E /* AppConstantes.swift in Sources */,
 				D9259B0F2FF57BAD00A3A9D8 /* AuthShopifyService.swift in Sources */,
 				9F92BF5B2FF4803E00E090B7 /* BrandProductUseCase.swift in Sources */,
+				D90431822FFBCC6300E84300 /* AIProvider.swift in Sources */,
 				9F8F1E532FF3898D0016B844 /* HomeView.swift in Sources */,
 				D90431752FFBBCCD00E84300 /* ClearSelectionUseCase.swift in Sources */,
 				9F8F1E542FF3898D0016B844 /* HomeEntity.swift in Sources */,
 				9F8F1E562FF3898D0016B844 /* HomeViewModel.swift in Sources */,
+				D904317D2FFBCBCC00E84300 /* HuggingFaceDTOs.swift in Sources */,
 				9F9003362FF6F1FA00B4B745 /* CollectionListView.swift in Sources */,
 				D93C25FD2FF5294400486A11 /* FavProductsDAO.swift in Sources */,
 				9F90032C2FF6EFAC00B4B745 /* CollectionsRepository.swift in Sources */,
@@ -7488,6 +7592,7 @@
 				9F9474D12FFAFF8200F0A912 /* GuestCard.swift in Sources */,
 				D95A371F2FFA88B4000C8A90 /* ApplePayService.swift in Sources */,
 				F59DB2172FF6A852007BB715 /* CartRepoProtcol.swift in Sources */,
+				D904317F2FFBCBFD00E84300 /* HuggingFaceServiceError.swift in Sources */,
 				D960C2192FF17AF700FFF4D9 /* LoginWithEmail.swift in Sources */,
 				D960C2452FF1B40300FFF4D9 /* SignUpViewModel.swift in Sources */,
 				D90431662FFBBB5800E84300 /* RemoveProductFromSelectionUseCase.swift in Sources */,
@@ -7516,6 +7621,7 @@
 				9F9003322FF6F16500B4B745 /* CollectionListViewModel.swift in Sources */,
 				D960C2202FF17BE800FFF4D9 /* CreatNewAccount.swift in Sources */,
 				9F94981A2FF578BE000CEB5A /* EndPoint.swift in Sources */,
+				D904318E2FFBCF8400E84300 /* OutfitSelectionRepositoryIMP.swift in Sources */,
 				F5B53AF12FF6124F009F9F87 /* CartViewModelProtocol.swift in Sources */,
 				9F94981B2FF578BE000CEB5A /* ProductEndPoint.swift in Sources */,
 				F51C98B32FF5A12600A9C2EE /* Toast.swift in Sources */,
@@ -7531,6 +7637,7 @@
 				D960C19E2FF1167A00FFF4D9 /* NexCartApp.swift in Sources */,
 				F5B53AEB2FF60BFB009F9F87 /* CartEndPoint.swift in Sources */,
 				D9259B122FF582DC00A3A9D8 /* AuthDTOs.swift in Sources */,
+				D904318C2FFBCF5E00E84300 /* OutfitSelectionDAO.swift in Sources */,
 				D960C1ED2FF120A500FFF4D9 /* ApiService.swift in Sources */,
 				9F92BF532FF47D7900E090B7 /* BrandListViewModel.swift in Sources */,
 				D93C26032FF5294400486A11 /* FavProductViewModel.swift in Sources */,
@@ -7555,6 +7662,7 @@
 				9F9D96902FF8A11500A650B9 /* FetchProductByID.swift in Sources */,
 				D960C2112FF174C100FFF4D9 /* AuthRepoInterface.swift in Sources */,
 				D904315C2FFBBADE00E84300 /* OutfitGeneratorErrors.swift in Sources */,
+				D90431912FFBD67D00E84300 /* GeneratedOutfitDAO.swift in Sources */,
 				D918C11E2FF6BC3600FDAED6 /* FavProductDTO.swift in Sources */,
 				D9906FA22FF7F62A00B9474E /* ApplyCouponUseCase.swift in Sources */,
 				C8E241268AE83F747B6B76EF /* SettingsView.swift in Sources */,

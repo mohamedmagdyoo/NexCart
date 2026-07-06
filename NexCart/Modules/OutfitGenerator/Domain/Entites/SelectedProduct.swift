@@ -23,6 +23,6 @@ struct OutfitRequest {
 
 struct GeneratedOutfit: Equatable {
     let id: String
-    let generatedImageURL: String
+    let imageData: Data
     let generatedAt: Date
 }
