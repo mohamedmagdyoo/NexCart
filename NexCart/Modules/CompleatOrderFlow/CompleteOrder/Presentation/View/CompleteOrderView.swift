@@ -14,6 +14,7 @@ struct CompleteOrderView: View {
     let address: AddressEntity
 
     @Environment(\.presentationMode) var presentationMode
+    @State private var goToCartBag = false
 
     var body: some View {
         Group {
@@ -291,14 +292,14 @@ struct CompleteOrderView: View {
             .padding(.horizontal, 24)
 
             Spacer()
-            
+
+            NavigationLink(destination: BagView(), isActive: $goToCartBag) {
+                EmptyView()
+            }
+            .hidden()
+
             Button(action: {
-                NavigationLink(
-                    destination: BagView(
-                       
-                    ),
-                    label: { EmptyView() }
-                )
+                goToCartBag = true
             }) {
                 Text("Continue Shopping")
                     .font(AppColor.sans(16, .medium))
@@ -327,4 +328,3 @@ struct CompleteOrderView: View {
         }
     }
 }
-
