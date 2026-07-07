@@ -269,6 +269,7 @@ struct HomeView: View {
     
     struct HomeTabBar: View {
         @Binding var selectedTab: Int
+        @ObservedObject private var appSettings = AppSettings.shared
         
         private var tabs: [TabItemModel] {
             let ar = AppSettings.shared.isArabic
@@ -301,6 +302,9 @@ struct HomeView: View {
         
         private func tabItem(icon: String, label: String, index: Int) -> some View {
             let active = selectedTab == index
+            let inactiveColor: Color = AppSettings.shared.isDarkMode
+                ? Color(white: 0.38)
+                : AppColor.textSec
             return Button { selectedTab = index } label: {
                 VStack(spacing: 5) {
                     ZStack {
@@ -311,12 +315,12 @@ struct HomeView: View {
                         }
                         Image(systemName: active ? "\(icon).fill" : icon)
                             .font(.system(size: 19, weight: active ? .regular : .light))
-                            .foregroundColor(active ? AppColor.gold : AppColor.textSec)
+                            .foregroundColor(active ? AppColor.gold : inactiveColor)
                     }
                     Text(label)
                         .font(AppColor.sans(9, .medium))
                         .tracking(0.5)
-                        .foregroundColor(active ? AppColor.gold : AppColor.textSec)
+                        .foregroundColor(active ? AppColor.gold : inactiveColor)
                 }
                 .frame(maxWidth: .infinity)
             }

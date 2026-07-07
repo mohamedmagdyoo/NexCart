@@ -8,11 +8,31 @@
 import SwiftUI
 
 private extension Color {
-    static let favBackground = Color(red: 0.97, green: 0.93, blue: 0.88)
-    static let favCard = Color.white
-    static let favTextPrimary = Color(red: 0.16, green: 0.14, blue: 0.13)
-    static let favTextSecondary = Color(red: 0.55, green: 0.51, blue: 0.47)
-    static let favRemoveBg = Color(red: 0.93, green: 0.90, blue: 0.86)
+    static var favBackground: Color {
+        AppSettings.shared.isDarkMode
+            ? Color(hex: "#121212")
+            : Color(red: 0.97, green: 0.93, blue: 0.88)
+    }
+    static var favCard: Color {
+        AppSettings.shared.isDarkMode
+            ? Color(hex: "#1E1E1E")
+            : Color.white
+    }
+    static var favTextPrimary: Color {
+        AppSettings.shared.isDarkMode
+            ? Color(hex: "#E0E0E0")
+            : Color(red: 0.16, green: 0.14, blue: 0.13)
+    }
+    static var favTextSecondary: Color {
+        AppSettings.shared.isDarkMode
+            ? Color(white: 1, opacity: 0.40)
+            : Color(red: 0.55, green: 0.51, blue: 0.47)
+    }
+    static var favRemoveBg: Color {
+        AppSettings.shared.isDarkMode
+            ? Color(hex: "#2A2A2A")
+            : Color(red: 0.93, green: 0.90, blue: 0.86)
+    }
 }
 
 struct FavProductsScreen: View {
@@ -96,6 +116,7 @@ struct FavProductsScreen: View {
 struct FavScreenSuccesState: View {
     @ObservedObject var viewModel: FavProductsViewModel
     @Binding var selectedProduct: ProductEntity?
+    @ObservedObject private var appSettings = AppSettings.shared
     
     var body: some View {
         ScrollView {
@@ -138,6 +159,7 @@ private struct FavProductRow: View {
     let product: FavProduct
     let onTap: () -> Void
     let onRemove: () -> Void
+    @ObservedObject private var appSettings = AppSettings.shared
     
     var body: some View {
         HStack(spacing: 14) {
@@ -229,6 +251,7 @@ private extension FavProduct {
 }
 
 struct FavScreenLoadingState: View {
+    @ObservedObject private var appSettings = AppSettings.shared
     var body: some View {
         VStack {
             Spacer()
@@ -241,6 +264,7 @@ struct FavScreenLoadingState: View {
 }
 
 struct FavScreenEmptyState: View {
+    @ObservedObject private var appSettings = AppSettings.shared
     var body: some View {
         VStack(spacing: 12) {
             Spacer()

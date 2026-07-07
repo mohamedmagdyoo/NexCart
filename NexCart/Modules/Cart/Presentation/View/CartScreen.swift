@@ -25,12 +25,10 @@ struct BagView: View {
         cartViewModel.cartData.flatMap { $0.items }
     }
 
-    // Always computed live off current quantities/prices.
     private var subtotal: Double {
         allItems.reduce(0.0) { $0 + ($1.price * Double($1.quantity)) }
     }
 
- 
     private var discount: Double {
         guard let result = cartViewModel.couponResult, result.isValid else { return 0 }
         return min(result.discountAmount, subtotal)
@@ -52,8 +50,10 @@ struct BagView: View {
                 }
             }
         }
-        .task {
-            await cartViewModel.getAllCart()
+        .onAppear {
+            Task {
+                await cartViewModel.getAllCart()
+            }
         }
         .alert("Are you sure to delete?", isPresented: $showDeleteAlert) {
             Button("Delete", role: .destructive) {
@@ -97,7 +97,6 @@ struct BagView: View {
             let success = await cartViewModel.deleteFromCart(draftOrderId: String(item.drafOrderId))
             if success {
                 showToastMessage(appSettings.loc("Item deleted successfully", "تم حذف العنصر بنجاح"))
-                // Cart contents changed -> re-price any applied coupon.
                 await cartViewModel.revalidateCouponIfNeeded()
             } else {
                 withAnimation {
@@ -207,6 +206,7 @@ struct BagView: View {
                             BagItemRow(
                                 item: $item,
                                 image: cartViewModel.images[item.productId ?? 0] ?? "",
+                                isUpdating: cartViewModel.updatingItemIds.contains(item.id),
                                 onDelete: {
                                     itemToDelete = item
                                     bagIdForDeletion = bag.id
@@ -360,9 +360,8 @@ struct BagView: View {
 struct BagItemRow: View {
     @Binding var item: BagItemEntity
     var image: String
+    var isUpdating: Bool
     var onDelete: () -> Void
-    // NEW: notifies the parent whenever quantity changes so it can
-    // re-validate/re-price any applied coupon against the new subtotal.
     var onQuantityChange: (Int) -> Void
 
     private var displayName: String {
@@ -424,10 +423,15 @@ struct BagItemRow: View {
                         }
                     }
 
-                    Text("\(item.quantity)")
-                        .font(AppColor.sans(15, .medium))
-                        .foregroundColor(AppColor.textPrim)
-                        .frame(width: 32)
+                    if isUpdating {
+                        ProgressView()
+                            .frame(width: 32)
+                    } else {
+                        Text("\(item.quantity)")
+                            .font(AppColor.sans(15, .medium))
+                            .foregroundColor(AppColor.textPrim)
+                            .frame(width: 32)
+                    }
 
                     stepperButton(icon: "plus") {
                         item.quantity += 1
@@ -436,6 +440,7 @@ struct BagItemRow: View {
                 }
                 .background(AppColor.pill)
                 .clipShape(Capsule())
+                .disabled(isUpdating)
 
                 Spacer()
 

@@ -288,3 +288,40 @@ struct CustomerDefaultAddress: Codable, Identifiable {
     }
 }
 
+struct DraftOrderLineItemUpdate: Encodable {
+    let id: Int
+    let variantId: Int?
+    let quantity: Int
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case variantId = "variant_id"
+        case quantity
+    }
+}
+
+struct DraftOrderUpdateBody: Encodable {
+    let draftOrder: DraftOrderUpdatePayload
+
+    enum CodingKeys: String, CodingKey {
+        case draftOrder = "draft_order"
+    }
+}
+
+struct DraftOrderUpdatePayload: Encodable {
+    let lineItems: [DraftOrderLineItemUpdate]
+
+    enum CodingKeys: String, CodingKey {
+        case lineItems = "line_items"
+    }
+}
+
+
+
+struct DraftOrderSingleResponseDto: Decodable {
+    let draftOrder: CartOrderDto
+
+    enum CodingKeys: String, CodingKey {
+        case draftOrder = "draft_order"
+    }
+}

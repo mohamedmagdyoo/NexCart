@@ -23,6 +23,7 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
     @Published var images: [Int: String] = [:]
     @Published var couponResult: CouponApplicationResult?
     @Published var isApplyingCoupon: Bool = false
+    @Published var updatingItemIds: Set<Int> = []
 
     private var appliedCouponCode: String?
 
