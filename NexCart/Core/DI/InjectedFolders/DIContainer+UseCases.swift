@@ -84,7 +84,7 @@ extension DIContainer {
         
         container.register(CartUseCaseProtocol.self){
             r in
-            CartUseCase(cartRepo: r.resolve(CartRepoProtcol.self)!)
+            CartUseCase(repo: r.resolve(CartRepoProtcol.self)!)
         }
         
         

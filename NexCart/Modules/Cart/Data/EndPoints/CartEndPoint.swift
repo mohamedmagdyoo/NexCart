@@ -6,14 +6,13 @@
 //
 
 import Foundation
+
 enum CartEndPoint: EndPoint {
-    var body: Data?{
-        nil
-    }
-    
-    case singleProduct(productId:Int)
+
+    case singleProduct(productId: Int)
     case deleteFromCart(draftOrderId: String)
     case allCart(customerId: Int)
+    case updateQuantity(draftOrderId: String, lineItems: [DraftOrderLineItemUpdate])
 
     var baseUrl: String {
         "https://mad46-ios-team9.myshopify.com/admin/api/2024-01"
@@ -25,9 +24,12 @@ enum CartEndPoint: EndPoint {
             return "/draft_orders.json?customer_id=\(customerId)&status=open&limit=250"
 
         case .singleProduct(let productId):
-                    return "/products/\(productId).json"
-                
+            return "/products/\(productId).json"
+
         case .deleteFromCart(let draftOrderId):
+            return "/draft_orders/\(draftOrderId).json"
+
+        case .updateQuantity(let draftOrderId, _):
             return "/draft_orders/\(draftOrderId).json"
         }
     }
@@ -36,8 +38,23 @@ enum CartEndPoint: EndPoint {
         switch self {
         case .deleteFromCart:
             return "DELETE"
+        case .updateQuantity:
+            return "PUT"
         default:
             return "GET"
+        }
+    }
+
+    var body: Data? {
+        switch self {
+        case .updateQuantity(_, let lineItems):
+            let payload = DraftOrderUpdateBody(
+                draftOrder: DraftOrderUpdatePayload(lineItems: lineItems)
+            )
+            return try? JSONEncoder().encode(payload)
+
+        default:
+            return nil
         }
     }
 }

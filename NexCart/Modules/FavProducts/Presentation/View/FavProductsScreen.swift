@@ -8,11 +8,31 @@
 import SwiftUI
 
 private extension Color {
-    static let favBackground = Color(red: 0.97, green: 0.93, blue: 0.88)
-    static let favCard = Color.white
-    static let favTextPrimary = Color(red: 0.16, green: 0.14, blue: 0.13)
-    static let favTextSecondary = Color(red: 0.55, green: 0.51, blue: 0.47)
-    static let favRemoveBg = Color(red: 0.93, green: 0.90, blue: 0.86)
+    static var favBackground: Color {
+        AppSettings.shared.isDarkMode
+            ? Color(hex: "#121212")
+            : Color(red: 0.97, green: 0.93, blue: 0.88)
+    }
+    static var favCard: Color {
+        AppSettings.shared.isDarkMode
+            ? Color(hex: "#1E1E1E")
+            : Color.white
+    }
+    static var favTextPrimary: Color {
+        AppSettings.shared.isDarkMode
+            ? Color(hex: "#E0E0E0")
+            : Color(red: 0.16, green: 0.14, blue: 0.13)
+    }
+    static var favTextSecondary: Color {
+        AppSettings.shared.isDarkMode
+            ? Color(white: 1, opacity: 0.40)
+            : Color(red: 0.55, green: 0.51, blue: 0.47)
+    }
+    static var favRemoveBg: Color {
+        AppSettings.shared.isDarkMode
+            ? Color(hex: "#2A2A2A")
+            : Color(red: 0.93, green: 0.90, blue: 0.86)
+    }
 }
 
 struct FavProductsScreen: View {
@@ -20,6 +40,7 @@ struct FavProductsScreen: View {
     @StateObject private var viewModel: FavProductsViewModel = DIContainer.shared.container.resolve(FavProductsViewModel.self)!
     @EnvironmentObject var tabBarManager: TabBarManager
     @State private var selectedProduct: ProductEntity?
+    @ObservedObject private var appSettings = AppSettings.shared
     
     
 
@@ -76,13 +97,13 @@ struct FavProductsScreen: View {
     
     private var header: some View {
         HStack(alignment: .firstTextBaseline) {
-            Text("Favorites")
+            Text(appSettings.loc("Favorites", "المفضلة"))
                 .font(.system(.largeTitle, design: .serif))
                 .foregroundColor(.favTextPrimary)
             
             Spacer()
             
-            Text("\(viewModel.favProducts.count) piece\(viewModel.favProducts.count == 1 ? "" : "s")")
+            Text(appSettings.loc("\(viewModel.favProducts.count) piece\(viewModel.favProducts.count == 1 ? "" : "s")", "\(viewModel.favProducts.count) قطع"))
                 .font(.subheadline)
                 .foregroundColor(.favTextSecondary)
         }
@@ -95,6 +116,7 @@ struct FavProductsScreen: View {
 struct FavScreenSuccesState: View {
     @ObservedObject var viewModel: FavProductsViewModel
     @Binding var selectedProduct: ProductEntity?
+    @ObservedObject private var appSettings = AppSettings.shared
     
     var body: some View {
         ScrollView {
@@ -123,11 +145,11 @@ struct FavScreenSuccesState: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 24)
         }
-        .alert("Remove Favorite", isPresented: $viewModel.showRemoveAlert){
-            Button("Ok", role: .cancel){
+        .alert(AppSettings.shared.loc("Remove Favorite", "حذف المفضلة"), isPresented: $viewModel.showRemoveAlert){
+            Button(AppSettings.shared.loc("Ok", "حسناً"), role: .cancel){
                 viewModel.confirmRemoveProduct()
             }
-            Button("Cancel", role: .destructive){}
+            Button(AppSettings.shared.loc("Cancel", "إلغاء"), role: .destructive){}
         }
         
     }
@@ -137,6 +159,7 @@ private struct FavProductRow: View {
     let product: FavProduct
     let onTap: () -> Void
     let onRemove: () -> Void
+    @ObservedObject private var appSettings = AppSettings.shared
     
     var body: some View {
         HStack(spacing: 14) {
@@ -228,6 +251,7 @@ private extension FavProduct {
 }
 
 struct FavScreenLoadingState: View {
+    @ObservedObject private var appSettings = AppSettings.shared
     var body: some View {
         VStack {
             Spacer()
@@ -240,16 +264,17 @@ struct FavScreenLoadingState: View {
 }
 
 struct FavScreenEmptyState: View {
+    @ObservedObject private var appSettings = AppSettings.shared
     var body: some View {
         VStack(spacing: 12) {
             Spacer()
             Image(systemName: "heart")
                 .font(.system(size: 36, weight: .light))
                 .foregroundColor(.favTextSecondary)
-            Text("No saved pieces yet")
+            Text(AppSettings.shared.loc("No saved pieces yet", "لا توجد عناصر محفوظة"))
                 .font(.system(.body, design: .serif))
                 .foregroundColor(.favTextPrimary)
-            Text("Items you save will show up here.")
+            Text(AppSettings.shared.loc("Items you save will show up here.", "العناصر التي تحفظها ستظهر هنا."))
                 .font(.subheadline)
                 .foregroundColor(.favTextSecondary)
             Spacer()
