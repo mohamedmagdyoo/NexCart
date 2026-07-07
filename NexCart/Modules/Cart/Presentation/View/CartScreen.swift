@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct BagView: View {
-    @State private var promoCode: String = ""
+    @AppStorage("pendingCouponCode") private var promoCode: String = ""
     @StateObject private var cartViewModel: CartViewModel =
     DIContainer.shared.container.resolve(CartViewModel.self)!
 
@@ -262,7 +262,9 @@ struct BagView: View {
                     if let result = cartViewModel.couponResult {
                         showToastMessage(result.message)
                     }
+                    promoCode = ""
                 }
+                
             }) {
                 if cartViewModel.isApplyingCoupon {
                     ProgressView()

@@ -16,6 +16,7 @@ struct HomeView: View {
     @State private var isNavigatingToBrand: Bool = false
     @State private var showGuestAlert: Bool = false
     @State private var navigateToSignIn: Bool = false
+    @State private var showCouponToast: Bool = false
     
     private var isGuest: Bool {
         guard let data = UserDefaults.standard.data(forKey: "userEntity"),
@@ -58,7 +59,37 @@ struct HomeView: View {
         }
         .onChange(of: isNavigatingToBrand) { if $0 { tabBarManager.isHidden = true } }
         .guestAlert(isPresented: $showGuestAlert, navigateToSignIn: $navigateToSignIn)
+        .overlay(alignment: .top){
+            if showCouponToast {
+                HStack(spacing: 10) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(AppColor.gold)
+                        .font(.system(size: 16))
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Code added to cart!")
+                            .font(AppColor.sans(14, .semibold))
+                            .foregroundColor(.white)
+                        Text("FASHION60 is ready in your cart")
+                            .font(AppColor.sans(12))
+                            .foregroundColor(Color.white.opacity(0.75))
+                    }
+                    Spacer()
+                }
+                .padding(.horizontal, 18)
+                .padding(.vertical, 14)
+                .background(
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .fill(Color.black.opacity(0.85))
+                )
+                .padding(.horizontal, 20)
+                .padding(.top, 56)
+                .transition(.move(edge: .top).combined(with: .opacity))
+            }
+        }
+        .animation(.spring(response: 0.3), value: showCouponToast)
     }
+    
+    
     
     private var homeTab: some View {
         NavigationStack {
@@ -66,7 +97,8 @@ struct HomeView: View {
                 VStack(spacing: 0) {
                     HomeHeroSection(
                         slides: viewModel.slides,
-                        heroIndex: $heroIndex
+                        heroIndex: $heroIndex,
+                        showCouponToast: $showCouponToast
                     )
                     
                     HomeBrandsSection(
