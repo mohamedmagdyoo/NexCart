@@ -38,13 +38,13 @@ struct ProfileView: View {
                 }
                 
                 Section(header: Text("Account")) {
-                    NavigationLink(destination: Text("Order History")) {
+                    NavigationLink(destination: OrdersView(viewModel: DIContainer.shared.container.resolve(OrdersViewModel.self)!)) {
                         SettingsRowView(icon: "clock.fill", iconColor: .blue, title: "Order History")
                     }
                     NavigationLink(destination: Text("Wishlist")) {
                         SettingsRowView(icon: "heart.fill", iconColor: .red, title: "Wishlist")
                     }
-                    NavigationLink(destination: Text("Saved Addresses")) {
+                    NavigationLink(destination: AddressListView(viewModel: DIContainer.shared.container.resolve(AddressViewModel.self)!)) {
                         SettingsRowView(icon: "mappin.circle.fill", iconColor: .green, title: "Saved Addresses")
                     }
                 }
@@ -79,7 +79,7 @@ struct ProfileView: View {
                 
                 Section {
                     Button(action: {
-                        // Logout Action
+                        viewModel.logout()
                     }) {
                         HStack {
                             Spacer()

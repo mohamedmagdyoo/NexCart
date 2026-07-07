@@ -132,8 +132,8 @@ extension DIContainer {
             SelectPaymentMethodUseCase()
         }
         
-        container.register(SelectAddressUseCaseProtocol.self) { r in
-            SelectAddressUseCase(addressRepository: r.resolve(AddressRepository.self)!)
+        container.register(CompleteOrderUseCaseProtocol.self) { r in
+            CompleteOrderUseCase(repository: r.resolve(CompleteOrderRepositoryProtocol.self)!)
         }
     }
 }

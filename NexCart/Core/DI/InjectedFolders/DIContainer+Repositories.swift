@@ -91,5 +91,10 @@ extension DIContainer {
         container.register(PaymentRepositoryProtocol.self) { r in
             PaymentRepositoryImpl(applePayService: r.resolve(ApplePayServiceProtocol.self)!)
         }
+        
+        // Complete Order
+        container.register(CompleteOrderRepositoryProtocol.self) { r in
+            CompleteOrderRepositoryImpl(service: r.resolve(CreateOrderServiceProtocol.self)!)
+        }
     }
 }

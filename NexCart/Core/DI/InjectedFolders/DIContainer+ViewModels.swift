@@ -74,8 +74,7 @@ extension DIContainer {
                 cartUseCase: r.resolve(CartUseCaseProtocol.self)!,
                 applyCouponUseCase: r.resolve(ApplyCouponUseCaseProtocol.self)!
             )
-            
-        }
+        }.inObjectScope(.container)
         
         //Address
         container.register(AddressViewModel.self) { r in
@@ -93,6 +92,13 @@ extension DIContainer {
                 selectAddressUseCase: r.resolve(SelectAddressUseCaseProtocol.self)!,
                 getPaymentMethodsUseCase: r.resolve(GetPaymentMethodsUseCaseProtocol.self)!,
                 selectPaymentMethodUseCase: r.resolve(SelectPaymentMethodUseCaseProtocol.self)!
+            )
+        }
+        
+        container.register(CompleteOrderViewModel.self) { r in
+            CompleteOrderViewModel(
+                completeOrderUseCase: r.resolve(CompleteOrderUseCaseProtocol.self)!,
+                cartViewModel: r.resolve(CartViewModel.self)!
             )
         }
     }

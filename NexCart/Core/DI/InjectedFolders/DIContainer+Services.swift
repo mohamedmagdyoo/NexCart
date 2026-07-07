@@ -52,6 +52,10 @@ extension DIContainer{
         container.register(ApplePayServiceProtocol.self){ _ in
             ApplePayService()
         }
+        
+        container.register(CreateOrderServiceProtocol.self) { r in
+            CreateOrderServiceImpl(apiService: r.resolve(ApiServiceProtocol.self)!)
+        }
     }
 }
 

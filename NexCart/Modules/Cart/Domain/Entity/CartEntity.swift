@@ -26,6 +26,7 @@ struct BagItemEntity: Identifiable {
     let title: String
     let size: String
     let productId: Int?
+    let variantId: Int?
 
     let price: Double
     var quantity: Int
@@ -64,6 +65,7 @@ extension DraftOrderLineItem {
             title: title,
             size: variantTitle ?? "One size",
             productId: productId ?? 0,
+            variantId: variantId,
             price: Double(price) ?? 0,
             quantity: quantity,
             drafOrderId: draftOrderId

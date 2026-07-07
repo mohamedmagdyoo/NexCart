@@ -15,11 +15,18 @@ struct CheckoutView: View {
     var body: some View {
         ZStack {
             loadedContent
-        }
-        .navigationDestination(isPresented: $viewModel.navToNextScreen){
-            VStack{
-                //Here have to call the next actule screen
-                Text("Let's Confierm the order")
+            
+            if let selectedAddress = viewModel.selectedAddress {
+                NavigationLink(
+                    destination: CompleteOrderView(
+                        viewModel: DIContainer.shared.container.resolve(CompleteOrderViewModel.self)!,
+                        paymentMethod: viewModel.selectedPaymentMethod,
+                        total: total,
+                        address: selectedAddress
+                    ),
+                    isActive: $viewModel.navToNextScreen,
+                    label: { EmptyView() }
+                )
             }
         }
         .navigationTitle("Checkout")
