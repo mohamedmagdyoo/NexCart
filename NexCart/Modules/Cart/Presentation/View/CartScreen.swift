@@ -39,10 +39,12 @@ struct BagView: View {
         ZStack {
             AppColor.bg.ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                header
+            ScrollView {
+                VStack(spacing: 0) {
+                    header
 
-                content
+                    content
+                }
             }
         }
         .task {
@@ -210,10 +212,9 @@ struct BagView: View {
                 .padding(.horizontal, 20)
                 .padding(.top, 20)
                 .padding(.bottom, 24)
-                checkoutButton
-
             }
 
+            checkoutButton
         }
     }
 

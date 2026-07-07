@@ -95,6 +95,19 @@ extension DIContainer {
         // Complete Order
         container.register(CompleteOrderRepositoryProtocol.self) { r in
             CompleteOrderRepositoryImpl(service: r.resolve(CreateOrderServiceProtocol.self)!)
+        }.inObjectScope(.container)
+
+        //For Ai
+        container.register(OutfitSelectionRepositoryProtocol.self) { r in
+            OutfitSelectionRepositoryImpl(dao: r.resolve(SelectedProductDAOProtocol.self)!)
+        }
+
+        container.register(AIOutfitRepositoryProtocol.self) { r in
+            AIOutfitRepositoryImpl(provider: r.resolve(HuggingFaceProvider.self)!)
+        }
+
+        container.register(SavedOutfitRepositoryProtocol.self) { r in
+            SavedOutfitRepositoryImpl(dao: r.resolve(GeneratedOutfitDAOProtocol.self)!)
         }
     }
 }

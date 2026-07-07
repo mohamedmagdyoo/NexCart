@@ -140,6 +140,49 @@ extension DIContainer {
             CompleteOrderUseCase(repository:  r.resolve(CompleteOrderRepositoryProtocol.self)!)
         }
 
+        //For ai
+        container.register(AddProductToSelectionUseCaseProtocol.self) { r in
+            AddProductToSelectionUseCase(
+                repository: r.resolve(OutfitSelectionRepositoryProtocol.self)!
+            )
+        }
+
+        container.register(RemoveProductFromSelectionUseCaseProtocol.self) { r in
+            RemoveProductFromSelectionUseCase(
+                repository: r.resolve(OutfitSelectionRepositoryProtocol.self)!
+            )
+        }
+
+        container.register(GetSelectedProductsUseCaseProtocol.self) { r in
+            GetSelectedProductsUseCase(
+                repository: r.resolve(OutfitSelectionRepositoryProtocol.self)!
+            )
+        }
+        
+        //ai
+        container.register(GenerateOutfitUseCaseProtocol.self) { r in
+            GenerateOutfitUseCase(
+                repository: r.resolve(AIOutfitRepositoryProtocol.self)!
+            )
+        }
+        
+        //saved
+        container.register(SaveGeneratedOutfitUseCaseProtocol.self) { r in
+            SaveGeneratedOutfitUseCase(
+                repository: r.resolve(SavedOutfitRepositoryProtocol.self)!
+            )
+        }
+
+        container.register(GetSavedOutfitsUseCaseProtocol.self) { r in
+            GetSavedOutfitsUseCase(
+                repository: r.resolve(SavedOutfitRepositoryProtocol.self)!
+            )
+        }
+
+        container.register(DeleteSavedOutfitUseCaseProtocol.self) { r in
+            DeleteSavedOutfitUseCase(
+                repository: r.resolve(SavedOutfitRepositoryProtocol.self)!
+            )
+        }
     }
 }
-

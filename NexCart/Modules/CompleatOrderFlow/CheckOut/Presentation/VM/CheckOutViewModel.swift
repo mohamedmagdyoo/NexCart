@@ -82,6 +82,7 @@ final class CheckoutViewModel: ObservableObject {
         }
     }
     
+    //Just Example on test the payment
     func testPay(total: Double){
         let payWithAppleUseCse = ProcessPaymentWithApplePayUseCase(paymentRepository: PaymentRepositoryImpl(applePayService: ApplePayService()))
         

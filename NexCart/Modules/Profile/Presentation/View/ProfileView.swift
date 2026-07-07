@@ -47,6 +47,13 @@ struct ProfileView: View {
                     NavigationLink(destination: AddressListView(viewModel: DIContainer.shared.container.resolve(AddressViewModel.self)!)) {
                         SettingsRowView(icon: "mappin.circle.fill", iconColor: .green, title: "Saved Addresses")
                     }
+                    NavigationLink {
+                        OutfitGeneratorView(
+                            viewModel: DIContainer.shared.container.resolve(OutfitGeneratorViewModel.self)!
+                        )
+                    } label: {
+                        SettingsRowView(icon: "wand.and.stars", iconColor: .purple, title: "My Studio")
+                    }
                 }
                 
                 Section(header: Text("Preferences")) {
@@ -121,6 +128,8 @@ struct SettingsRowView: View {
     }
 }
 
+
 #Preview {
     ProfileView()
 }
+

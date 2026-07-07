@@ -57,6 +57,21 @@ extension DIContainer{
             CreateOrderServiceImpl(apiService: r.resolve(ApiServiceProtocol.self)!)
         }
         
+        //For AiFeature
+        container.register(GeneratedOutfitDAOProtocol.self) { _ in
+            GeneratedOutfitDAO()
+        }
+
+        container.register(SelectedProductDAOProtocol.self) { _ in
+            SelectedProductDAO()
+        }
+        
+        container.register(HuggingFaceServiceProtocol.self) { _ in
+            HuggingFaceService()
+        }
+
+        container.register(HuggingFaceProvider.self) { r in
+            HuggingFaceProvider(service: r.resolve(HuggingFaceServiceProtocol.self)!)
+        }
     }
 }
-
