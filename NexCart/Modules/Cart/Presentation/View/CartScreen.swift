@@ -12,6 +12,7 @@ struct BagView: View {
     @AppStorage("pendingCouponCode") private var promoCode: String = ""
     @StateObject private var cartViewModel: CartViewModel =
     DIContainer.shared.container.resolve(CartViewModel.self)!
+    @ObservedObject private var appSettings = AppSettings.shared
 
     @State private var itemToDelete: BagItemEntity?
     @State private var bagIdForDeletion: Int?
@@ -24,15 +25,19 @@ struct BagView: View {
         cartViewModel.cartData.flatMap { $0.items }
     }
 
+    // Always computed live off current quantities/prices.
     private var subtotal: Double {
         allItems.reduce(0.0) { $0 + ($1.price * Double($1.quantity)) }
     }
 
+ 
+    private var discount: Double {
+        guard let result = cartViewModel.couponResult, result.isValid else { return 0 }
+        return min(result.discountAmount, subtotal)
+    }
+
     private var total: Double {
-        if let result = cartViewModel.couponResult, result.isValid {
-            return result.finalTotal
-        }
-        return subtotal
+        max(subtotal - discount, 0)
     }
 
     var body: some View {
@@ -91,12 +96,14 @@ struct BagView: View {
         Task {
             let success = await cartViewModel.deleteFromCart(draftOrderId: String(item.drafOrderId))
             if success {
-                showToastMessage("Item deleted successfully")
+                showToastMessage(appSettings.loc("Item deleted successfully", "تم حذف العنصر بنجاح"))
+                // Cart contents changed -> re-price any applied coupon.
+                await cartViewModel.revalidateCouponIfNeeded()
             } else {
                 withAnimation {
                     cartViewModel.cartData[bagIndex].items.insert(removedItem, at: itemIndex)
                 }
-                showToastMessage("Failed to delete item")
+                showToastMessage(appSettings.loc("Failed to delete item", "فشل حذف العنصر"))
             }
         }
     }
@@ -159,7 +166,7 @@ struct BagView: View {
                 Button(action: {
                     Task { await cartViewModel.getAllCart() }
                 }) {
-                    Text("Retry")
+                    Text(appSettings.loc("Retry", "إعادة المحاولة"))
                         .font(AppColor.sans(15, .medium))
                         .foregroundColor(AppColor.white)
                         .padding(.horizontal, 24)
@@ -182,7 +189,7 @@ struct BagView: View {
                     .font(.system(size: 32))
                     .foregroundColor(AppColor.textSec)
 
-                Text("Your cart is empty")
+                Text(appSettings.loc("Your cart is empty", "سلتك فارغة"))
                     .font(AppColor.sans(15))
                     .foregroundColor(AppColor.textSec)
             }
@@ -197,11 +204,20 @@ struct BagView: View {
                 VStack(spacing: 16) {
                     ForEach($cartViewModel.cartData) { $bag in
                         ForEach($bag.items) { $item in
-                            BagItemRow(item: $item,image: cartViewModel.images[item.productId ?? 0] ?? "") {
-                                itemToDelete = item
-                                bagIdForDeletion = bag.id
-                                showDeleteAlert = true
-                            }
+                            BagItemRow(
+                                item: $item,
+                                image: cartViewModel.images[item.productId ?? 0] ?? "",
+                                onDelete: {
+                                    itemToDelete = item
+                                    bagIdForDeletion = bag.id
+                                    showDeleteAlert = true
+                                },
+                                onQuantityChange: { newQuantity in
+                                    Task {
+                                        await cartViewModel.updateQuantity(itemId: item.id, newQuantity: newQuantity)
+                                    }
+                                }
+                            )
                         }
                     }
 
@@ -221,13 +237,13 @@ struct BagView: View {
 
     private var header: some View {
         HStack(alignment: .firstTextBaseline) {
-            Text("Your cart")
+            Text(appSettings.loc("Your cart", "سلتك"))
                 .font(AppColor.serif(30, .medium))
                 .foregroundColor(AppColor.textPrim)
 
             Spacer()
 
-            Text("\(allItems.count) items")
+            Text(appSettings.loc("\(allItems.count) items", "\(allItems.count) عناصر"))
                 .font(AppColor.sans(14))
                 .foregroundColor(AppColor.textSec)
         }
@@ -243,7 +259,7 @@ struct BagView: View {
                     .font(.system(size: 15))
                     .foregroundColor(AppColor.textSec)
 
-                TextField("Promo code", text: $promoCode)
+                TextField(appSettings.loc("Promo code", "رمز الخصم"), text: $promoCode)
                     .font(AppColor.sans(15))
                     .foregroundColor(AppColor.textPrim)
             }
@@ -264,7 +280,6 @@ struct BagView: View {
                     }
                     promoCode = ""
                 }
-                
             }) {
                 if cartViewModel.isApplyingCoupon {
                     ProgressView()
@@ -274,7 +289,7 @@ struct BagView: View {
                         .background(AppColor.pillSel)
                         .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
                 } else {
-                    Text("Apply")
+                    Text(appSettings.loc("Apply", "تطبيق"))
                         .font(AppColor.sans(15, .medium))
                         .foregroundColor(AppColor.white)
                         .padding(.horizontal, 22)
@@ -288,17 +303,17 @@ struct BagView: View {
 
     private var summaryCard: some View {
         VStack(spacing: 12) {
-            summaryRow(label: "Subtotal", value: subtotal, secondary: true)
+            summaryRow(label: appSettings.loc("Subtotal", "المجموع الفرعي"), value: subtotal, secondary: true)
             
             if let result = cartViewModel.couponResult, result.isValid {
-                summaryRow(label: "Discount", value: result.discountAmount, secondary: true, isDiscount: true)
+                summaryRow(label: appSettings.loc("Discount", "الخصم"), value: discount, secondary: true, isDiscount: true)
             }
 
             Divider()
                 .background(AppColor.border)
                 .padding(.vertical, 4)
 
-            summaryRow(label: "Total", value: total, secondary: false)
+            summaryRow(label: appSettings.loc("Total", "الإجمالي"), value: total, secondary: false)
         }
         .padding(20)
         .background(AppColor.card)
@@ -328,7 +343,7 @@ struct BagView: View {
             let checkoutViewModel = DIContainer.shared.container.resolve(CheckoutViewModel.self)!
             CheckoutView(viewModel: checkoutViewModel, total: total)
         }) {
-            Text("Checkout · $\(total, specifier: "%.2f")")
+            Text(appSettings.loc("Checkout · $\(total, default: "%.2f")", "الدفع · $\(total, default: "%.2f")"))
                 .font(AppColor.sans(16, .medium))
                 .foregroundColor(AppColor.white)
                 .frame(maxWidth: .infinity)
@@ -344,8 +359,11 @@ struct BagView: View {
 
 struct BagItemRow: View {
     @Binding var item: BagItemEntity
-     var image:String
+    var image: String
     var onDelete: () -> Void
+    // NEW: notifies the parent whenever quantity changes so it can
+    // re-validate/re-price any applied coupon against the new subtotal.
+    var onQuantityChange: (Int) -> Void
 
     private var displayName: String {
         let parts = item.title.components(separatedBy: "|")
@@ -402,6 +420,7 @@ struct BagItemRow: View {
                     stepperButton(icon: "minus") {
                         if item.quantity > 1 {
                             item.quantity -= 1
+                            onQuantityChange(item.quantity)
                         }
                     }
 
@@ -412,6 +431,7 @@ struct BagItemRow: View {
 
                     stepperButton(icon: "plus") {
                         item.quantity += 1
+                        onQuantityChange(item.quantity)
                     }
                 }
                 .background(AppColor.pill)

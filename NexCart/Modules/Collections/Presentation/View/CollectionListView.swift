@@ -10,6 +10,7 @@ import SwiftUI
 struct CollectionsListView: View {
     @StateObject var viewModel: CollectionsListViewModel
     @EnvironmentObject var tabBarManager: TabBarManager
+    @ObservedObject private var appSettings = AppSettings.shared
 
     private let columns = [
         GridItem(.flexible(), spacing: 16),
@@ -48,7 +49,7 @@ struct CollectionsListView: View {
                 }
             }
         }
-        .navigationTitle("Shop")
+        .navigationTitle(appSettings.loc("Shop", "المتجر"))
         .task { await viewModel.loadCollections() }
         .refreshable { await viewModel.loadCollections() }
         .onAppear {
@@ -62,11 +63,11 @@ struct CollectionsListView: View {
                 .font(.system(size: 40))
                 .foregroundColor(AppColor.textSec)
 
-            Text("No Collections Available")
+            Text(appSettings.loc("No Collections Available", "لا توجد مجموعات"))
                 .font(AppColor.serif(20, .medium))
                 .foregroundColor(AppColor.textPrim)
 
-            Text("There are currently no collections to display. Please check back later.")
+            Text(appSettings.loc("There are currently no collections to display. Please check back later.", "لا توجد مجموعات لعرضها حالياً."))
                 .font(AppColor.sans(14))
                 .foregroundColor(AppColor.textSec)
                 .multilineTextAlignment(.center)

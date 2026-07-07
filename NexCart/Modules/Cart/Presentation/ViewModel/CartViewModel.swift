@@ -24,6 +24,8 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
     @Published var couponResult: CouponApplicationResult?
     @Published var isApplyingCoupon: Bool = false
 
+    private var appliedCouponCode: String?
+
     init(cartUseCase: CartUseCaseProtocol, applyCouponUseCase: ApplyCouponUseCaseProtocol) {
         self.cartUseCase = cartUseCase
         self.applyCouponUseCase = applyCouponUseCase
@@ -43,6 +45,13 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
         print("✅ currentCustomerId = \(id)")
         return id
     }
+
+    /// Current subtotal computed live from cartData, so it always reflects
+    /// whatever quantities are currently on screen.
+    var currentSubtotal: Double {
+        cartData.first?.items.reduce(0) { $0 + ($1.price * Double($1.quantity)) } ?? 0.0
+    }
+
     func getAllCart() async {
         cartState = .loading
         do {
@@ -79,16 +88,43 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
             return false
         }
     }
+
     @MainActor
     func applyCoupon(code: String) async {
+        guard !code.isEmpty else { return }
         isApplyingCoupon = true
-        let currentTotal = cartData.first?.total ?? 0.0
-        let result = await applyCouponUseCase.execute(code: code, currentTotal: currentTotal)
+        let result = await applyCouponUseCase.execute(code: code, currentTotal: currentSubtotal)
         couponResult = result
         isApplyingCoupon = false
+        // Remember the code (only if it was actually valid) so we can
+        // recompute the discount whenever the cart total changes later.
+        appliedCouponCode = result.isValid ? code : nil
     }
 
-    
+
+    @MainActor
+    func revalidateCouponIfNeeded() async {
+        guard let code = appliedCouponCode else { return }
+        isApplyingCoupon = true
+        let result = await applyCouponUseCase.execute(code: code, currentTotal: currentSubtotal)
+        couponResult = result
+        isApplyingCoupon = false
+        if !result.isValid {
+            appliedCouponCode = nil
+        }
+    }
+
+
+    @MainActor
+    func updateQuantity(itemId: BagItemEntity.ID, newQuantity: Int) async {
+        guard newQuantity > 0,
+              let bagIndex = cartData.indices.first,
+              let itemIndex = cartData[bagIndex].items.firstIndex(where: { $0.id == itemId }) else { return }
+
+        cartData[bagIndex].items[itemIndex].quantity = newQuantity
+        await revalidateCouponIfNeeded()
+    }
+
     private func mergeBagsIntoSingleCart(_ bags: [BagEntity]) -> [BagEntity] {
         guard !bags.isEmpty else { return [] }
 
@@ -130,7 +166,7 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
         return order.compactMap { merged[$0] }
     }
 
- 
+
     private func mergeKey(for item: BagItemEntity) -> String {
         "\(item.productId ?? 0)-\(item.size)"
     }

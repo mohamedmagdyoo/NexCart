@@ -51,6 +51,8 @@ struct HomeView: View {
         .environmentObject(tabBarManager)
         .animation(.easeInOut(duration: 0.3), value: tabBarManager.isHidden)
         .preferredColorScheme(appSettings.isDarkMode ? .dark : .light)
+        .environment(\.layoutDirection, appSettings.layoutDirection)
+        .id(appSettings.selectedLanguage)
         .onChange(of: isNavigatingToProduct) { newValue in
             if newValue { tabBarManager.isHidden = true }
         }
@@ -268,13 +270,16 @@ struct HomeView: View {
     struct HomeTabBar: View {
         @Binding var selectedTab: Int
         
-        let tabs = [
-            TabItemModel(icon: "house", label: "Home"),
-            TabItemModel(icon: "bag", label: "Shop"),
-            TabItemModel(icon: "heart", label: "Favorite"),
-            TabItemModel(icon: "cart", label: "Cart"),
-            TabItemModel(icon: "person", label: "Profile")
-        ]
+        private var tabs: [TabItemModel] {
+            let ar = AppSettings.shared.isArabic
+            return [
+                TabItemModel(icon: "house", label: ar ? "الرئيسية" : "Home"),
+                TabItemModel(icon: "bag", label: ar ? "المتجر" : "Shop"),
+                TabItemModel(icon: "heart", label: ar ? "المفضلة" : "Favorite"),
+                TabItemModel(icon: "cart", label: ar ? "السلة" : "Cart"),
+                TabItemModel(icon: "person", label: ar ? "الملف" : "Profile")
+            ]
+        }
         
         var body: some View {
             VStack(spacing: 0) {

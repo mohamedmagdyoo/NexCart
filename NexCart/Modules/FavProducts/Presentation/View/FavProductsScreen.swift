@@ -20,6 +20,7 @@ struct FavProductsScreen: View {
     @StateObject private var viewModel: FavProductsViewModel = DIContainer.shared.container.resolve(FavProductsViewModel.self)!
     @EnvironmentObject var tabBarManager: TabBarManager
     @State private var selectedProduct: ProductEntity?
+    @ObservedObject private var appSettings = AppSettings.shared
     
     
 
@@ -76,13 +77,13 @@ struct FavProductsScreen: View {
     
     private var header: some View {
         HStack(alignment: .firstTextBaseline) {
-            Text("Favorites")
+            Text(appSettings.loc("Favorites", "المفضلة"))
                 .font(.system(.largeTitle, design: .serif))
                 .foregroundColor(.favTextPrimary)
             
             Spacer()
             
-            Text("\(viewModel.favProducts.count) piece\(viewModel.favProducts.count == 1 ? "" : "s")")
+            Text(appSettings.loc("\(viewModel.favProducts.count) piece\(viewModel.favProducts.count == 1 ? "" : "s")", "\(viewModel.favProducts.count) قطع"))
                 .font(.subheadline)
                 .foregroundColor(.favTextSecondary)
         }
@@ -123,11 +124,11 @@ struct FavScreenSuccesState: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 24)
         }
-        .alert("Remove Favorite", isPresented: $viewModel.showRemoveAlert){
-            Button("Ok", role: .cancel){
+        .alert(AppSettings.shared.loc("Remove Favorite", "حذف المفضلة"), isPresented: $viewModel.showRemoveAlert){
+            Button(AppSettings.shared.loc("Ok", "حسناً"), role: .cancel){
                 viewModel.confirmRemoveProduct()
             }
-            Button("Cancel", role: .destructive){}
+            Button(AppSettings.shared.loc("Cancel", "إلغاء"), role: .destructive){}
         }
         
     }
@@ -246,10 +247,10 @@ struct FavScreenEmptyState: View {
             Image(systemName: "heart")
                 .font(.system(size: 36, weight: .light))
                 .foregroundColor(.favTextSecondary)
-            Text("No saved pieces yet")
+            Text(AppSettings.shared.loc("No saved pieces yet", "لا توجد عناصر محفوظة"))
                 .font(.system(.body, design: .serif))
                 .foregroundColor(.favTextPrimary)
-            Text("Items you save will show up here.")
+            Text(AppSettings.shared.loc("Items you save will show up here.", "العناصر التي تحفظها ستظهر هنا."))
                 .font(.subheadline)
                 .foregroundColor(.favTextSecondary)
             Spacer()

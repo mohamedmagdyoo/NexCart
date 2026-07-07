@@ -27,5 +27,6 @@ class ProfileViewModel: ObservableObject {
     
     func logout() {
         logOutUseCase?.excute()
+        UserDefaults.standard.removeObject(forKey: "userEntity")
     }
 }
