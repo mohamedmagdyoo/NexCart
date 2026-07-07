@@ -98,6 +98,7 @@ extension DIContainer {
         container.register(CompleteOrderViewModel.self) { r in
             CompleteOrderViewModel(
                 completeOrderUseCase: r.resolve(CompleteOrderUseCaseProtocol.self)!,
+                applePayUseCase: r.resolve(ProcessPaymentWithApplePayUseCase.self)!,
                 cartViewModel: r.resolve(CartViewModel.self)!
             )
         }

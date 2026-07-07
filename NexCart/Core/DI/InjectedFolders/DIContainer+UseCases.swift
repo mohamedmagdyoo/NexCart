@@ -132,9 +132,14 @@ extension DIContainer {
             SelectPaymentMethodUseCase()
         }
         
-        container.register(CompleteOrderUseCaseProtocol.self) { r in
-            CompleteOrderUseCase(repository: r.resolve(CompleteOrderRepositoryProtocol.self)!)
+        container.register(ProcessPaymentWithApplePayUseCase.self) { r in
+            ProcessPaymentWithApplePayUseCase(paymentRepository: r.resolve(PaymentRepositoryProtocol.self)!)
         }
+        
+        container.register(CompleteOrderUseCaseProtocol.self) { r in
+            CompleteOrderUseCase(repository:  r.resolve(CompleteOrderRepositoryProtocol.self)!)
+        }
+
     }
 }
 

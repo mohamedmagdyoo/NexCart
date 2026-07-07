@@ -293,7 +293,12 @@ struct CompleteOrderView: View {
             Spacer()
             
             Button(action: {
-                
+                NavigationLink(
+                    destination: BagView(
+                       
+                    ),
+                    label: { EmptyView() }
+                )
             }) {
                 Text("Continue Shopping")
                     .font(AppColor.sans(16, .medium))

@@ -17,10 +17,16 @@ final class CompleteOrderViewModel: CompleteOrderViewModelProtocol {
     @Published var estimatedDelivery: String?
 
     private let completeOrderUseCase: CompleteOrderUseCaseProtocol
+    private let applePayUseCase: ProcessPaymentWithApplePayUseCase
     let cartViewModel: CartViewModel
 
-    init(completeOrderUseCase: CompleteOrderUseCaseProtocol, cartViewModel: CartViewModel) {
+    init(
+        completeOrderUseCase: CompleteOrderUseCaseProtocol,
+        applePayUseCase: ProcessPaymentWithApplePayUseCase,
+        cartViewModel: CartViewModel
+    ) {
         self.completeOrderUseCase = completeOrderUseCase
+        self.applePayUseCase = applePayUseCase
         self.cartViewModel = cartViewModel
     }
 
@@ -42,93 +48,42 @@ final class CompleteOrderViewModel: CompleteOrderViewModelProtocol {
         error = nil
 
         if paymentMethod == .applePay {
-           await processApplePayThenOrder(total: total, address: address)
+            await processApplePayThenOrder(total: total, address: address)
         } else {
             await submitOrder(paymentMethod: paymentMethod, total: total, address: address)
         }
     }
 
-    private var applePayUseCase: ProcessPaymentWithApplePayUseCase?
-
     private func processApplePayThenOrder(total: Double, address: AddressEntity) async {
-        self.applePayUseCase = ProcessPaymentWithApplePayUseCase(
-            paymentRepository: PaymentRepositoryImpl(applePayService: ApplePayService())
-        )
-            do {
-                _ = try await applePayUseCase?.execute(total: total, currency: "USD", merchantIdentifier: "merchant.com.nexcart")
-                await submitOrder(paymentMethod: .applePay, total: total, address: address)
-            } catch {
-                self.error = "Apple Pay failed: \(error.localizedDescription)"
-                self.isLoading = false
-            }
-        
+        do {
+            _ = try await applePayUseCase.execute(total: total, currency: "USD", merchantIdentifier: "merchant.com.nexcart")
+            await submitOrder(paymentMethod: .applePay, total: total, address: address)
+        } catch {
+            self.error = "Apple Pay failed: \(error.localizedDescription)"
+            self.isLoading = false
+        }
     }
 
     private func submitOrder(paymentMethod: PaymentMethodType, total: Double, address: AddressEntity) async {
-        let nameParts = address.fullName.components(separatedBy: " ")
-        let firstName = nameParts.first ?? ""
-        let lastName = nameParts.dropFirst().joined(separator: " ")
+        do {
+            let result = try await completeOrderUseCase.execute(
+                allItems: allItems,
+                address: address,
+                paymentMethod: paymentMethod,
+                total: total
+            )
+            self.orderNumber = result.orderNumber
 
-        let lineItems: [OrderLineItemBody] = allItems.compactMap { item in
-            guard let variantId = item.variantId, variantId > 0 else {
-                print("⚠️ Skipping item with nil/zero variantId: \(item.title)")
-                return nil
-            }
-            print("📦 Submitting order with \(item.quantity) quantity items")
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MMM d"
+            let startDate = Calendar.current.date(byAdding: .day, value: 3, to: Date())!
+            let endDate = Calendar.current.date(byAdding: .day, value: 5, to: Date())!
+            self.estimatedDelivery = "\(formatter.string(from: startDate)) — \(formatter.string(from: endDate))"
 
-            return OrderLineItemBody(variantId: variantId, quantity: item.quantity)
+            isOrderPlaced = true
+        } catch {
+            self.error = error.localizedDescription
         }
-
-
-        guard !lineItems.isEmpty else {
-            error = "Items are missing variant IDs. Cannot place order."
-            isLoading = false
-            return
-        }
-
-        let shippingAddress = OrderShippingAddressBody(
-            firstName: firstName,
-            lastName: lastName.isEmpty ? firstName : lastName,
-            address1: address.streetAddress,
-            city: address.city,
-            province: address.state.isEmpty ? "NA" : address.state,
-            zip: address.zip.isEmpty ? "00000" : address.zip,
-            country: "EG"
-        )
-
-        let transaction = OrderTransactionBody(
-            kind: "sale",
-            status: "success",
-            gateway: paymentMethod == .cashOnDelivery ? "manual" : "apple_pay",
-            amount: String(format: "%.2f", total)
-        )
-
-        let user = AppConstants.shared.getUserEntity()
-
-        let orderBody = OrderCreateBody(
-            currency: "USD",
-            email: user?.email ?? "customer@example.com",
-            financialStatus: paymentMethod == .cashOnDelivery ? "pending" : "paid",
-            lineItems: lineItems,
-            shippingAddress: shippingAddress,
-            transactions: [transaction]
-        )
-
-            do {
-                let result = try await completeOrderUseCase.execute(orderInput: orderBody)
-                self.orderNumber = result.orderNumber
-
-                let formatter = DateFormatter()
-                formatter.dateFormat = "MMM d"
-                let startDate = Calendar.current.date(byAdding: .day, value: 3, to: Date())!
-                let endDate = Calendar.current.date(byAdding: .day, value: 5, to: Date())!
-                self.estimatedDelivery = "\(formatter.string(from: startDate)) — \(formatter.string(from: endDate))"
-
-                isOrderPlaced = true
-            } catch {
-                self.error = error.localizedDescription
-            }
-            isLoading = false
-        }
-    
+        isLoading = false
+    }
 }
