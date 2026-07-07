@@ -53,6 +53,10 @@ extension DIContainer{
             ApplePayService()
         }
         
+        container.register(CreateOrderServiceProtocol.self) { r in
+            CreateOrderServiceImpl(apiService: r.resolve(ApiServiceProtocol.self)!)
+        }
+        
         //For AiFeature
         container.register(GeneratedOutfitDAOProtocol.self) { _ in
             GeneratedOutfitDAO()
@@ -69,10 +73,5 @@ extension DIContainer{
         container.register(HuggingFaceProvider.self) { r in
             HuggingFaceProvider(service: r.resolve(HuggingFaceServiceProtocol.self)!)
         }
-
-
-        
-        
     }
 }
-

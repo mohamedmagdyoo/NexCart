@@ -39,7 +39,7 @@ struct BagView: View {
         ZStack {
             AppColor.bg.ignoresSafeArea()
 
-            ScrollView{
+            ScrollView {
                 VStack(spacing: 0) {
                     header
 
@@ -127,9 +127,7 @@ struct BagView: View {
             if allItems.isEmpty {
                 emptyView
             } else {
-                Group {
-                    cartContent
-                }
+                cartContent
             }
         }
     }
@@ -324,7 +322,10 @@ struct BagView: View {
     }
 
     private var checkoutButton: some View {
-        Button(action: {}) {
+        NavigationLink(destination: {
+            let checkoutViewModel = DIContainer.shared.container.resolve(CheckoutViewModel.self)!
+            CheckoutView(viewModel: checkoutViewModel, total: total)
+        }) {
             Text("Checkout · $\(total, specifier: "%.2f")")
                 .font(AppColor.sans(16, .medium))
                 .foregroundColor(AppColor.white)

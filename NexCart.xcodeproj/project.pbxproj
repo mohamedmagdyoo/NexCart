@@ -5226,7 +5226,18 @@
 		F5B53AED2FF610C3009F9F87 /* CartUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AEC2FF610C3009F9F87 /* CartUseCase.swift */; };
 		F5B53AEF2FF61223009F9F87 /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AEE2FF61223009F9F87 /* CartViewModel.swift */; };
 		F5B53AF12FF6124F009F9F87 /* CartViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B53AF02FF6124F009F9F87 /* CartViewModelProtocol.swift */; };
-/* End PBXBuildFile section */
+		DB249B2890D560F1430E0B87 /* CreateOrderServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE8C1F5F5748E4F385C3BC3 /* CreateOrderServiceProtocol.swift */; };
+		B7B36F4DA8A45B1B474B9BAD /* CompleteOrderRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F64B08119F2621ABF5E1F34 /* CompleteOrderRepositoryImpl.swift */; };
+		155C259CC4980DD611735C63 /* CompleteOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C898A33CC389BCA010CCDF06 /* CompleteOrderView.swift */; };
+		9156D0EDB5A83916B7C7BFA6 /* CreateOrderEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25675AAECABB223AE5F1E1F4 /* CreateOrderEndPoint.swift */; };
+		915CD58E47D036E999F22210 /* CompleteOrderRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E7140B02E3FDB3C21BDA02 /* CompleteOrderRepositoryProtocol.swift */; };
+		B0B0F497FD8A65D6C9810F60 /* CreateOrderDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30421C962954250875B6DAFB /* CreateOrderDto.swift */; };
+		F192FB9C1DEDF71085DF5F9E /* CompleteOrderUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BBA492B30DB893CC047D11 /* CompleteOrderUseCase.swift */; };
+		400D7E4281D464F64A7B9308 /* CompleteOrderViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5DB8E7FDF04798964682B6 /* CompleteOrderViewModelProtocol.swift */; };
+		E055E9E8590C7C0B086F4A5B /* CompleteOrderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DFB2675BC44DE77ECE3491B /* CompleteOrderViewModel.swift */; };
+		CA23107E8440486217F4ADF5 /* CreateOrderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B359D674550C60F9CEBF412D /* CreateOrderService.swift */; };
+		B00A4D46C894ED2FE066ED97 /* CompleteOrderEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B555F76C0BB9C3600D87F231 /* CompleteOrderEntity.swift */; };
+	/* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		D960C1B02FF1167C00FFF4D9 /* PBXContainerItemProxy */ = {
@@ -5467,7 +5478,18 @@
 		F5B53AEC2FF610C3009F9F87 /* CartUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartUseCase.swift; sourceTree = "<group>"; };
 		F5B53AEE2FF61223009F9F87 /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		F5B53AF02FF6124F009F9F87 /* CartViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModelProtocol.swift; sourceTree = "<group>"; };
-/* End PBXFileReference section */
+		C5E7140B02E3FDB3C21BDA02 /* CompleteOrderRepositoryProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CompleteOrderRepositoryProtocol.swift; sourceTree = "<group>"; };
+		25675AAECABB223AE5F1E1F4 /* CreateOrderEndPoint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateOrderEndPoint.swift; sourceTree = "<group>"; };
+		B359D674550C60F9CEBF412D /* CreateOrderService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateOrderService.swift; sourceTree = "<group>"; };
+		C898A33CC389BCA010CCDF06 /* CompleteOrderView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CompleteOrderView.swift; sourceTree = "<group>"; };
+		AF5DB8E7FDF04798964682B6 /* CompleteOrderViewModelProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CompleteOrderViewModelProtocol.swift; sourceTree = "<group>"; };
+		30421C962954250875B6DAFB /* CreateOrderDto.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateOrderDto.swift; sourceTree = "<group>"; };
+		8F64B08119F2621ABF5E1F34 /* CompleteOrderRepositoryImpl.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CompleteOrderRepositoryImpl.swift; sourceTree = "<group>"; };
+		54BBA492B30DB893CC047D11 /* CompleteOrderUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CompleteOrderUseCase.swift; sourceTree = "<group>"; };
+		3DFB2675BC44DE77ECE3491B /* CompleteOrderViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CompleteOrderViewModel.swift; sourceTree = "<group>"; };
+		B555F76C0BB9C3600D87F231 /* CompleteOrderEntity.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CompleteOrderEntity.swift; sourceTree = "<group>"; };
+		ABE8C1F5F5748E4F385C3BC3 /* CreateOrderServiceProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateOrderServiceProtocol.swift; sourceTree = "<group>"; };
+	/* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		D960C1972FF1167A00FFF4D9 /* Frameworks */ = {
@@ -6947,6 +6969,7 @@
 				D95A37092FFA88B4000C8A90 /* CheckOut */,
 				D9906FB32FF8181C00B9474E /* Address */,
 				D9906F952FF7F4E100B9474E /* CouponCode */,
+				7BB63739280F6FFD0E5021CE /* CompleteOrder */,
 			);
 			path = CompleatOrderFlow;
 			sourceTree = "<group>";
@@ -7392,7 +7415,116 @@
 			path = Entity;
 			sourceTree = "<group>";
 		};
-/* End PBXGroup section */
+		FDB6A5CC05A2C58AC9C0278E /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				8BEA0FC06826C9D04F4A5A78 /* ViewModel */,
+				4F08499FC53E706756B90F58 /* View */,
+			);
+			name = Presentation;
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		4F08499FC53E706756B90F58 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C898A33CC389BCA010CCDF06 /* CompleteOrderView.swift */,
+			);
+			name = View;
+			path = View;
+			sourceTree = "<group>";
+		};
+		DF6C189CEAB65ECCFC686BFA /* Dto */ = {
+			isa = PBXGroup;
+			children = (
+				30421C962954250875B6DAFB /* CreateOrderDto.swift */,
+			);
+			name = Dto;
+			path = Dto;
+			sourceTree = "<group>";
+		};
+		8B26F2349D5CEEC651B7A4C9 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				54BBA492B30DB893CC047D11 /* CompleteOrderUseCase.swift */,
+			);
+			name = UseCase;
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		FA6BECEE6217847C1D1E499C /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				8F64B08119F2621ABF5E1F34 /* CompleteOrderRepositoryImpl.swift */,
+				454C60B6C85273781946548A /* Network */,
+				DF6C189CEAB65ECCFC686BFA /* Dto */,
+				CEA8EDEB51EE073EEBF1C04F /* EndPoints */,
+			);
+			name = Data;
+			path = Data;
+			sourceTree = "<group>";
+		};
+		454C60B6C85273781946548A /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				B359D674550C60F9CEBF412D /* CreateOrderService.swift */,
+				ABE8C1F5F5748E4F385C3BC3 /* CreateOrderServiceProtocol.swift */,
+			);
+			name = Network;
+			path = Network;
+			sourceTree = "<group>";
+		};
+		7BB63739280F6FFD0E5021CE /* CompleteOrder */ = {
+			isa = PBXGroup;
+			children = (
+				FA6BECEE6217847C1D1E499C /* Data */,
+				D5147F0FF3321CF2BE7EAB00 /* Domain */,
+				FDB6A5CC05A2C58AC9C0278E /* Presentation */,
+			);
+			name = CompleteOrder;
+			path = CompleteOrder;
+			sourceTree = "<group>";
+		};
+		8BEA0FC06826C9D04F4A5A78 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				3DFB2675BC44DE77ECE3491B /* CompleteOrderViewModel.swift */,
+				AF5DB8E7FDF04798964682B6 /* CompleteOrderViewModelProtocol.swift */,
+			);
+			name = ViewModel;
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D5147F0FF3321CF2BE7EAB00 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				C5E7140B02E3FDB3C21BDA02 /* CompleteOrderRepositoryProtocol.swift */,
+				8B26F2349D5CEEC651B7A4C9 /* UseCase */,
+				E8DFC102ABA3BC7D9654557B /* Entity */,
+			);
+			name = Domain;
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		E8DFC102ABA3BC7D9654557B /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				B555F76C0BB9C3600D87F231 /* CompleteOrderEntity.swift */,
+			);
+			name = Entity;
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		CEA8EDEB51EE073EEBF1C04F /* EndPoints */ = {
+			isa = PBXGroup;
+			children = (
+				25675AAECABB223AE5F1E1F4 /* CreateOrderEndPoint.swift */,
+			);
+			name = EndPoints;
+			path = EndPoints;
+			sourceTree = "<group>";
+		};
+	/* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
 		D960C1992FF1167A00FFF4D9 /* NexCart */ = {
@@ -7752,7 +7884,18 @@
 				C8E241268AE83F747B6B76EF /* SettingsView.swift in Sources */,
 				3C3361BEF60316C01205FB54 /* UpdateProfileView.swift in Sources */,
 				CD0A8D8A807FDCAF3209C8BC /* AppSettings.swift in Sources */,
-			);
+
+				155C259CC4980DD611735C63 /* CompleteOrderView.swift in Sources */,
+				400D7E4281D464F64A7B9308 /* CompleteOrderViewModelProtocol.swift in Sources */,
+				9156D0EDB5A83916B7C7BFA6 /* CreateOrderEndPoint.swift in Sources */,
+				915CD58E47D036E999F22210 /* CompleteOrderRepositoryProtocol.swift in Sources */,
+				B00A4D46C894ED2FE066ED97 /* CompleteOrderEntity.swift in Sources */,
+				B0B0F497FD8A65D6C9810F60 /* CreateOrderDto.swift in Sources */,
+				B7B36F4DA8A45B1B474B9BAD /* CompleteOrderRepositoryImpl.swift in Sources */,
+				CA23107E8440486217F4ADF5 /* CreateOrderService.swift in Sources */,
+				DB249B2890D560F1430E0B87 /* CreateOrderServiceProtocol.swift in Sources */,
+				E055E9E8590C7C0B086F4A5B /* CompleteOrderViewModel.swift in Sources */,
+				F192FB9C1DEDF71085DF5F9E /* CompleteOrderUseCase.swift in Sources */,			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D960C1AB2FF1167C00FFF4D9 /* Sources */ = {
