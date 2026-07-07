@@ -8,5 +8,5 @@
 import Foundation
 
 protocol AIOutfitRepositoryProtocol {
-    func generate(request: OutfitRequest) async throws -> GeneratedOutfit
+    func generate(request: OutfitRequest,provider: AIProvider) async throws -> GeneratedOutfit
 }
