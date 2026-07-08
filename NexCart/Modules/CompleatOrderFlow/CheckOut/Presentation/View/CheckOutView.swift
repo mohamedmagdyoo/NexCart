@@ -32,6 +32,7 @@ struct CheckoutView: View {
                 )
             }
         }
+        .background(AppColor.bg.ignoresSafeArea())
         .navigationTitle("Checkout")
         .onAppear { viewModel.onAppear() }
     }
@@ -61,10 +62,10 @@ struct CheckoutView: View {
                 }) {
                     Text("Confirm Order · \(priceDisplay)")
                         .font(AppColor.sans(16, .medium))
-                        .foregroundColor(AppColor.white)
+                        .foregroundColor(AppColor.btnText)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 18)
-                        .background(AppColor.pillSel)
+                        .background(AppColor.btnBg)
                         .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
                 }
                 .padding(.horizontal, 20)
@@ -103,19 +104,25 @@ struct CheckoutView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(address.fullName)
                     .font(.body).bold()
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(AppColor.textPrim)
                 Text(address.streetAddress)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppColor.textSec)
                 Text("\(address.city), \(address.state) \(address.zip)")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppColor.textSec)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .strokeBorder(isSelected ? Color.orange : Color(.separator), lineWidth: isSelected ? 2 : 1)
-            )
+
+                    .fill(AppColor.card)                                              .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                    .strokeBorder(isSelected ? AppColor.gold : AppColor.border, lineWidth: isSelected ? 2 : 1)
+                                   )
+                           )
+
             .contentShape(Rectangle())
+
         }
         .buttonStyle(.plain)
     }
@@ -142,12 +149,12 @@ struct CheckoutView: View {
                     .foregroundStyle(.primary)
                 Spacer()
                 Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-                    .foregroundStyle(isSelected ? .orange : .secondary)
+                    .foregroundStyle(isSelected ? AppColor.gold : AppColor.textSec)
             }
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .strokeBorder(isSelected ? Color.orange : Color(.separator), lineWidth: isSelected ? 2 : 1)
+                    .strokeBorder(isSelected ? AppColor.gold : AppColor.border, lineWidth: isSelected ? 2 : 1)
             )
             .contentShape(Rectangle())
         }

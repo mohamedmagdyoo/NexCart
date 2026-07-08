@@ -192,7 +192,7 @@ struct ProductDetailView: View {
 
                     CircleNavButton(
                         systemName: isFavorited ? "heart.fill" : "heart",
-                        iconColor: isFavorited ? AppColor.gold : AppColor.textSec
+                        iconColor: isFavorited ? AppColor.gold : AppColor.textPrim
                     ) {
                         if isGuest {
                             showGuestAlert = true
@@ -210,9 +210,9 @@ struct ProductDetailView: View {
                     }) {
                         Image(systemName: "wand.and.stars")
                             .font(.system(size: 16, weight: .semibold))
-                            .foregroundColor(.black)
+                            .foregroundColor(AppColor.textPrim)
                             .frame(width: 44, height: 44)
-                            .background(AppColor.white)
+                            .background(AppColor.card)
                             .clipShape(Circle())
                             .shadow(color: Color.black.opacity(0.12), radius: 8, x: 0, y: 4)
                             .overlay(alignment: .topTrailing) {
@@ -222,7 +222,7 @@ struct ProductDetailView: View {
                                     .overlay {
                                         Text("\(productDetailsViewModel.numberOfStudioProducts)")
                                             .font(.system(size: 10, weight: .bold))
-                                            .foregroundColor(.white)
+                                            .foregroundColor(AppColor.white)
                                     }
                                     .offset(x: 4, y: -4)
                             }
@@ -445,14 +445,14 @@ struct ProductDetailView: View {
                     } label: {
                         HStack(spacing: 12) {
                             if isAddingToCart {
-                                ProgressView().tint(AppColor.white)
+                                ProgressView().tint(AppColor.btnText)
                             } else {
                                 Image(systemName: "bag.fill")
                                     .font(.system(size: 16, weight: .semibold))
-                                    .foregroundColor(AppColor.white)
+                                    .foregroundColor(AppColor.btnText)
                                 Text("Add to Bag")
                                     .font(AppColor.sans(16, .bold))
-                                    .foregroundColor(AppColor.white)
+                                    .foregroundColor(AppColor.btnText)
                             }
                         }
                         .frame(maxWidth: .infinity)
@@ -492,7 +492,7 @@ private struct CircleNavButton: View {
                 .font(.system(size: 16, weight: .semibold))
                 .foregroundColor(iconColor)
                 .frame(width: 44, height: 44)
-                .background(AppColor.white)
+                .background(AppColor.card)
                 .clipShape(Circle())
                 .shadow(color: Color.black.opacity(0.12), radius: 8, x: 0, y: 4)
         }

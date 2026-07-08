@@ -74,7 +74,7 @@ struct AddressListView: View {
                             Text("Add new address")
                                 .font(AppColor.sans(16, .semibold))
                         }
-                        .foregroundColor(.white)
+                        .foregroundColor(AppColor.card)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 16)
                         .background(AppColor.textPrim)
@@ -127,8 +127,8 @@ struct AddressCardView: View {
                     .font(.subheadline)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 6)
-                    .background(Color.green)
-                    .foregroundColor(.white)
+                    .background(AppColor.gold.opacity(0.12))
+                    .foregroundColor(AppColor.gold)
                     .clipShape(Capsule())
 
                     Spacer()
@@ -139,11 +139,14 @@ struct AddressCardView: View {
                 } else {
                     Button(action: onSetDefault) {
                         Text("Set as default")
-                            .font(.subheadline)
-                            .padding(.horizontal, 12)
+                            .font(AppColor.sans(13, .medium))
+                            .foregroundColor(AppColor.textPrim)
+                            .padding(.horizontal, 14)
                             .padding(.vertical, 6)
+                            .background(AppColor.surface)
+                            .clipShape(Capsule())
                             .overlay(
-                                Capsule().stroke(Color.secondary, lineWidth: 1)
+                            Capsule().stroke(AppColor.border, lineWidth: 0.5)
                             )
                     }
                     .buttonStyle(.plain)
@@ -158,11 +161,11 @@ struct AddressCardView: View {
             }
         }
         .padding()
-        .background(Color.white)
+        .background(AppColor.card)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .stroke(address.isDefault ? Color.green : Color.clear, lineWidth: 2)
+                .stroke(address.isDefault ? AppColor.gold.opacity(0.6): AppColor.border, lineWidth: 2)
         )
     }
 }

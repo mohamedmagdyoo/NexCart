@@ -53,7 +53,7 @@ final class CompleteOrderUseCase: CompleteOrderUseCaseProtocol {
         let user = AppConstants.shared.getUserEntity()
 
         let orderBody = OrderCreateBody(
-            currency: "USD",
+            currency: "\(AppSettings.shared.selectedCurrency)",
             email: user?.email ?? "customer@example.com",
             financialStatus: paymentMethod == .cashOnDelivery ? "pending" : "paid",
             lineItems: lineItems,
