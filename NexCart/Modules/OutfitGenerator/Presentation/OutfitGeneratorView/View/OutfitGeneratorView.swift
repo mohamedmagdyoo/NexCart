@@ -19,9 +19,15 @@ struct OutfitGeneratorView: View {
         }
         .padding()
         .navigationBarBackButtonHidden()
-        .navigationDestination(isPresented: $navigateToSaved) {
-            SavedOutfitsView(viewModel: DIContainer.shared.container.resolve(SavedOutfitsViewModel.self)!)
-        }
+        .background(
+            NavigationLink(
+                destination: SavedOutfitsView(viewModel: DIContainer.shared.container.resolve(SavedOutfitsViewModel.self)!),
+                isActive: $navigateToSaved
+            ) {
+                EmptyView()
+            }
+            .hidden()
+        )
         .task {
             await viewModel.loadSelectedProducts()
         }

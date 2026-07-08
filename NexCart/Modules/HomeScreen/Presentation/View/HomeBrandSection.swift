@@ -24,9 +24,9 @@ struct HomeBrandsSection: View {
 
     private var header: some View {
         HStack {
-            Text("SHOP BY BRAND")
+            Text(AppSettings.shared.loc("SHOP BY BRAND", "الماركات"))
                 .font(AppColor.sans(11, .semibold))
-                .tracking(3)
+                .tracking(AppSettings.shared.selectedLanguage == "ar" ? 0 : 3)
                 .foregroundColor(AppColor.textSec)
             Spacer()
 
@@ -36,7 +36,7 @@ struct HomeBrandsSection: View {
                 )
                 .onAppear { tabBarManager.isHidden = true }
             } label: {
-                Text("See all")
+                Text(AppSettings.shared.loc("See all", "عرض الكل"))
                     .font(AppColor.sans(13))
                     .foregroundColor(AppColor.gold)
             }

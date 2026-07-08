@@ -68,10 +68,10 @@ struct HomeView: View {
                         .foregroundColor(AppColor.gold)
                         .font(.system(size: 16))
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Code added to cart!")
+                        Text(appSettings.loc("Code added to cart!", "تمت إضافة الكود إلى السلة!"))
                             .font(AppColor.sans(14, .semibold))
                             .foregroundColor(.white)
-                        Text("FASHION60 is ready in your cart")
+                        Text(appSettings.loc("FASHION60 is ready in your cart", "الكود FASHION60 جاهز في سلتك"))
                             .font(AppColor.sans(12))
                             .foregroundColor(Color.white.opacity(0.75))
                     }
@@ -146,7 +146,7 @@ struct HomeView: View {
             .navigationDestination(isPresented: $isNavigatingToAllProducts) {
                 if let collectionViewModel = DIContainer.shared.container.resolve(
                     CollectionProductsViewModel.self,
-                    argument: CustomCollectionEntity(id: "all", title: "All Products", imageURL: "")
+                    argument: CustomCollectionEntity(id: "all", title: appSettings.loc("All Products", "جميع المنتجات"), imageURL: "")
                 ) {
                     CollectionProductsView(viewModel: collectionViewModel)
                         .navigationBarBackButtonHidden(true)

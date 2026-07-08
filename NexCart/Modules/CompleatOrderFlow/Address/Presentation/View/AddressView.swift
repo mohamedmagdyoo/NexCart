@@ -88,7 +88,6 @@ struct AddressListView: View {
             }
         }
         .navigationTitle("")
-        .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
         .goldBackButton()
         .toolbar(.hidden, for: .tabBar)

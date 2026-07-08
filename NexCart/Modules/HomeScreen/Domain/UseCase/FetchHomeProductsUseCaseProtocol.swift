@@ -40,12 +40,20 @@ final class FetchHeroSlidesUseCase: FetchHeroSlidesUseCaseProtocol {
         "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1200"
     ]
     
-    private let labels = ["SS25 COLLECTION", "EXCLUSIVE EDIT", "LIMITED EDITION"]
-    private let titles = ["The New\nArrivals", "Curated\nFor You", "Rare\nFinds"]
+    private let labels = [
+        AppSettings.shared.loc("SS25 COLLECTION", "مجموعة صيف ٢٥"),
+        AppSettings.shared.loc("EXCLUSIVE EDIT", "نسخة حصرية"),
+        AppSettings.shared.loc("LIMITED EDITION", "إصدار محدود")
+    ]
+    private let titles = [
+        AppSettings.shared.loc("The New\nArrivals", "الوصول\nالجديد"),
+        AppSettings.shared.loc("Curated\nFor You", "منسق\nلك"),
+        AppSettings.shared.loc("Rare\nFinds", "اكتشافات\nنادرة")
+    ]
     private let subtitles = [
-        "Fresh drops · Free global shipping",
-        "Hand-picked pieces · Express delivery",
-        "Only a few left · Shop now"
+        AppSettings.shared.loc("Fresh drops · Free global shipping", "تشكيلة جديدة · شحن عالمي مجاني"),
+        AppSettings.shared.loc("Hand-picked pieces · Express delivery", "قطع مختارة بعناية · توصيل سريع"),
+        AppSettings.shared.loc("Only a few left · Shop now", "بقي القليل · تسوق الآن")
     ]
 
     func execute() -> [HeroSlideEntity] {

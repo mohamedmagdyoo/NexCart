@@ -55,6 +55,11 @@ struct BagView: View {
                 await cartViewModel.getAllCart()
             }
         }
+        .onDisappear {
+            Task {
+                await cartViewModel.syncPendingChanges()
+            }
+        }
         .alert("Are you sure to delete?", isPresented: $showDeleteAlert) {
             Button("Delete", role: .destructive) {
                 if let item = itemToDelete, let bagId = bagIdForDeletion {
