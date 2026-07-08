@@ -12,24 +12,28 @@ struct OutfitGeneratorView: View {
     @State private var navigateToSaved = false
 
     var body: some View {
-        VStack(alignment: .leading) {
-            topBar
-            modelPicker
-            content
-        }
-        .padding()
-        .navigationBarBackButtonHidden()
-        .background(
-            NavigationLink(
-                destination: SavedOutfitsView(viewModel: DIContainer.shared.container.resolve(SavedOutfitsViewModel.self)!),
-                isActive: $navigateToSaved
-            ) {
-                EmptyView()
+        ScrollView{
+            VStack(alignment: .center, spacing: 20) {
+                topBar
+                modelPicker
+                    .padding(.bottom, 20)
+                content
+                Spacer()
             }
-            .hidden()
-        )
-        .task {
-            await viewModel.loadSelectedProducts()
+            .padding()
+            .navigationBarBackButtonHidden()
+            .background(
+                NavigationLink(
+                    destination: SavedOutfitsView(viewModel: DIContainer.shared.container.resolve(SavedOutfitsViewModel.self)!),
+                    isActive: $navigateToSaved
+                ) {
+                    EmptyView()
+                }
+                .hidden()
+            )
+            .task {
+                await viewModel.loadSelectedProducts()
+            }
         }
     }
 

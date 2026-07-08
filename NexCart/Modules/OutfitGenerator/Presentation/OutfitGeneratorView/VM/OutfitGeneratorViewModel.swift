@@ -21,6 +21,7 @@ final class OutfitGeneratorViewModel: ObservableObject {
     @Published var showSaveSheet: Bool = false
     @Published var outfitName: String = ""
     @Published var selectedProvider: AIProviderType = .pollinations
+    @Published var yourOutOfTokenForToday: String?
     
 
     private let getSelectedProductsUseCase: GetSelectedProductsUseCaseProtocol
@@ -54,11 +55,14 @@ final class OutfitGeneratorViewModel: ObservableObject {
             let request = OutfitRequest(selectedProducts: selectedProducts)
             let provider = selectedProvider.makeProvider()
             do {
-                print("The Request has \(request.selectedProducts.count) Product")
+                print("The Request has \(request.selectedProducts.count) Product with \(provider)")
                 let outfit = try await generateOutfitUseCase.execute(request: request, provider: provider)
                 state = .success(outfit)
             } catch let error as AIError {
+                print("From VM")
+                print(error.localizedDescription)
                 state = .error(message(for: error))
+                
             } catch {
                 state = .error("Something went wrong. Please try again.")
             }

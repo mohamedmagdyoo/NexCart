@@ -51,10 +51,6 @@ struct SignInIdleState: View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 0) {
                 
-                // MARK: Monogram — the one signature touch, quiet everywhere else
-                monogram
-                    .padding(.bottom, 28)
-                
                 // MARK: Title
                 Text("Welcome\nback.")
                     .font(.system(size: 38, weight: .bold, design: .serif))

@@ -71,7 +71,11 @@ extension DIContainer{
         }
 
         container.register(HuggingFaceProvider.self) { r in
-            HuggingFaceProvider(service: r.resolve(HuggingFaceServiceProtocol.self)!)
+            HuggingFaceProvider(
+                service: HuggingFaceService(),
+                imageDownloadService: ImageDownloadService(),
+                imageCompositionService: ImageCompositionService()
+            )
         }
     }
 }

@@ -16,6 +16,7 @@ enum AuthError: Error, LocalizedError {
     case userNotFound
     case networkError
     case socialLoginCancelled
+    case wrongStartWithPhoneNumber
     case unknown(Error)
     
     var errorDescription: String {
@@ -35,7 +36,9 @@ enum AuthError: Error, LocalizedError {
         case .socialLoginCancelled:
             return "Sign in was cancelled."
         case .unknown(_):
-            return "Email or Password wrong, try again..."
+            return "This Phone Number Used Before"
+        case .wrongStartWithPhoneNumber:
+            return "Phone Numbser must start with +2, try again..."
         case .passwordsDidNotMatchConfirmedPass:
             return "The pass don't mathc the confirm pass"
         }
