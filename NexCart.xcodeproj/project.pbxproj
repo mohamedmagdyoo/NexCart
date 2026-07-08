@@ -198,6 +198,7 @@
 		D9906FCB2FF8221D00B9474E /* AddressEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FCA2FF8221D00B9474E /* AddressEntity.swift */; };
 		D9906FCD2FF825F900B9474E /* AddressDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FCC2FF825F900B9474E /* AddressDao.swift */; };
 		D9906FCF2FF82C5B00B9474E /* AddNewAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FCE2FF82C5B00B9474E /* AddNewAddressView.swift */; };
+		D9974C372FFE7FE600FE915F /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9974C362FFE7FE600FE915F /* AppRouter.swift */; };
 		D9CFF5882FF4126200B7B8DE /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D9EAA1272FF274410097C038 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D9EAA1262FF274410097C038 /* FirebaseAuth */; };
 		D9EAA12C2FF275690097C038 /* FirebaseAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EAA12B2FF275690097C038 /* FirebaseAuthService.swift */; };
@@ -456,6 +457,7 @@
 		D9906FCA2FF8221D00B9474E /* AddressEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressEntity.swift; sourceTree = "<group>"; };
 		D9906FCC2FF825F900B9474E /* AddressDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDao.swift; sourceTree = "<group>"; };
 		D9906FCE2FF82C5B00B9474E /* AddNewAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAddressView.swift; sourceTree = "<group>"; };
+		D9974C362FFE7FE600FE915F /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 		D9CFF5822FF400C100B7B8DE /* ProductsRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsRepo.swift; sourceTree = "<group>"; };
 		D9EAA12B2FF275690097C038 /* FirebaseAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthService.swift; sourceTree = "<group>"; };
 		D9EAA1322FF27A3F0097C038 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
@@ -530,6 +532,7 @@
 			children = (
 				D91D00832FF84804002C8E1E /* AppConstantes.swift */,
 				7ED6E53D181A6CE7A2B7538C /* AppSettings.swift */,
+				D9974C362FFE7FE600FE915F /* AppRouter.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2739,6 +2742,7 @@
 				9F8F1E572FF3898D0016B844 /* HomeBrandSection.swift in Sources */,
 				F5B53AED2FF610C3009F9F87 /* CartUseCase.swift in Sources */,
 				D95A37212FFA88B4000C8A90 /* ApplePayErrors.swift in Sources */,
+				D9974C372FFE7FE600FE915F /* AppRouter.swift in Sources */,
 				D90431682FFBBB6600E84300 /* GetSelectedProductsUseCase.swift in Sources */,
 				9F90033C2FF705C700B4B745 /* FilterSheet.swift in Sources */,
 				9F8F1E582FF3898D0016B844 /* HomeProtocol.swift in Sources */,

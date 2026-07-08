@@ -297,10 +297,10 @@ struct CompleteOrderView: View {
 
             Spacer()
 
-            NavigationLink(destination: BagView(), isActive: $goToCartBag) {
-                EmptyView()
-            }
-            .hidden()
+//            NavigationLink(destination: HomeView(), isActive: $goToCartBag) {
+//                EmptyView()
+//            }
+//            .hidden()
 
             Button(action: {
                 goToCartBag = true
@@ -315,6 +315,11 @@ struct CompleteOrderView: View {
             }
             .padding(.horizontal, 24)
             .padding(.bottom, 110)
+        }
+        .onChange(of: goToCartBag) { newValue in
+            if newValue {
+                AppRouter.shared.selectedTab = 0
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white.ignoresSafeArea())
