@@ -65,7 +65,11 @@ final class FavProductsViewModel: ObservableObject {
         isLoadingProduct = true
         defer { isLoadingProduct = false }
         do {
-            return try await fetchProductByIdUseCase.execute(productID: product.id)
+            var favProduct =  try await fetchProductByIdUseCase.execute(productID: product.id)
+            
+            favProduct.isFavorited = true
+            
+            return favProduct
         } catch {
             alert = AlertModel(
                 title: "Couldn't Load Product",

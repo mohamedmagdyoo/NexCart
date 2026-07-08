@@ -70,7 +70,8 @@ struct HomeBrandsSection: View {
                                             case .success(let image):
                                                 image
                                                     .resizable()
-                                                    .scaledToFill()
+                                                    .scaledToFit()
+                                                    .padding(5)
                                                     .frame(width: 66, height: 66)
                                                     .clipShape(Circle())
                                             case .empty:
@@ -95,7 +96,7 @@ struct HomeBrandsSection: View {
                                     .tracking(0.5)
                                     .foregroundColor(AppColor.textPrim)
                                     .lineLimit(1)
-                                    .frame(width: 76)
+                                    .frame(width: 78)
                             }
                         }
                         .buttonStyle(PlainButtonStyle())

@@ -109,57 +109,60 @@ struct AddressCardView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Text(address.displayName)
-                    .font(AppColor.sans(16, .semibold))
-                    .foregroundColor(AppColor.textPrim)
+                    .font(.headline)
                 Spacer()
-                if address.isDefault {
-                    Text("Default")
-                        .font(AppColor.sans(12, .medium))
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 5)
-                        .background(Color.green)
-                        .clipShape(Capsule())
-                }
             }
 
             Text(address.streetAddress)
-                .font(AppColor.sans(14))
-                .foregroundColor(AppColor.textSec)
+                .foregroundColor(.secondary)
             Text(address.cityStateZipLine)
-                .font(AppColor.sans(14))
-                .foregroundColor(AppColor.textSec)
+                .foregroundColor(.secondary)
 
             HStack {
-                if !address.isDefault {
+                if address.isDefault {
+                    HStack(spacing: 4) {
+                        Image(systemName: "checkmark")
+                        Text("Default")
+                    }
+                    .font(.subheadline)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(Color.green)
+                    .foregroundColor(.white)
+                    .clipShape(Capsule())
+
+                    Spacer()
+
+                    Text("SELECTED")
+                        .font(.caption)
+                        .foregroundColor(.green)
+                } else {
                     Button(action: onSetDefault) {
                         Text("Set as default")
-                            .font(AppColor.sans(13, .medium))
-                            .foregroundColor(AppColor.textPrim)
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 7)
-                            .overlay(Capsule().stroke(AppColor.border, lineWidth: 1))
+                            .font(.subheadline)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .overlay(
+                                Capsule().stroke(Color.secondary, lineWidth: 1)
+                            )
                     }
                     .buttonStyle(.plain)
-                }
 
-                Spacer()
+                    Spacer()
 
-                Button(action: onDelete) {
-                    Image(systemName: "trash")
-                        .font(.system(size: 15))
-                        .foregroundColor(.red.opacity(0.7))
-                        .frame(width: 36, height: 36)
-                        .background(Circle().fill(Color.red.opacity(0.08)))
+                    Button(action: onDelete) {
+                        Image(systemName: "trash")
+                            .foregroundColor(.red)
+                    }
                 }
             }
         }
-        .padding(16)
-        .background(AppColor.card)
+        .padding()
+        .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .stroke(address.isDefault ? Color.green.opacity(0.5) : AppColor.border, lineWidth: address.isDefault ? 1.5 : 0.5)
+                .stroke(address.isDefault ? Color.green : Color.clear, lineWidth: 2)
         )
     }
 }

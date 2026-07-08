@@ -56,7 +56,7 @@ final class CompleteOrderViewModel: CompleteOrderViewModelProtocol {
 
     private func processApplePayThenOrder(total: Double, address: AddressEntity) async {
         do {
-            _ = try await applePayUseCase.execute(total: total, currency: "USD", merchantIdentifier: "merchant.com.nexcart")
+            _ = try await applePayUseCase.execute(total: total, currency: AppSettings.shared.selectedCurrency, merchantIdentifier: "merchant.com.nexcart")
             await submitOrder(paymentMethod: .applePay, total: total, address: address)
         } catch {
             self.error = "Apple Pay failed: \(error.localizedDescription)"

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct HomeView: View {
     
+    
     @StateObject private var viewModel = DIContainer.shared.container.resolve(HomeViewModel.self)!
     @StateObject private var tabBarManager = TabBarManager()
     @State private var heroIndex: Int = 0
@@ -18,6 +19,9 @@ struct HomeView: View {
     @State private var navigateToSignIn: Bool = false
     @State private var showCouponToast: Bool = false
     
+    @StateObject private var router = AppRouter.shared
+
+    
     private var isGuest: Bool {
         guard let data = UserDefaults.standard.data(forKey: "userEntity"),
               let user = try? JSONDecoder().decode(UserEntity.self, from: data)
@@ -33,7 +37,7 @@ struct HomeView: View {
         ZStack(alignment: .bottom) {
             AppColor.bg.ignoresSafeArea()
             
-            TabView(selection: $selectedTab) {
+            TabView(selection: $router.selectedTab) {
                 homeTab
                 shopTab
                 favoritesTab
@@ -44,7 +48,7 @@ struct HomeView: View {
             .ignoresSafeArea(.all, edges: .bottom)
             
             if !tabBarManager.isHidden {
-                HomeTabBar(selectedTab: $selectedTab)
+                HomeTabBar(selectedTab: $router.selectedTab)
                     .zIndex(1)
             }
         }
@@ -191,14 +195,32 @@ struct HomeView: View {
     }
     
     private var cartTab: some View {
-        NavigationStack {
-            GuestGuard {
-                BagView()
-            }
-            .onAppear { tabBarManager.isHidden = false }
+        
+        NavigationStack(path: $router.cartPath) {
+            BagView()
+                .navigationDestination(for: CartRoute.self) { route in
+                    switch route {
+                    case .checkout(let total):
+                        CheckoutView(
+                            viewModel: DIContainer.shared.container.resolve(CheckoutViewModel.self)!,
+                            total: total
+                        )
+                        
+
+                    case .completeOrder(let payment, let total, let address):
+                        CompleteOrderView(
+                            viewModel: DIContainer.shared.container.resolve(CompleteOrderViewModel.self)!,
+                            paymentMethod: payment,
+                            total: total,
+                            address: address
+                        )
+                    }
+                }
         }
         .navigationViewStyle(.stack)
         .tag(3)
+        
+        
     }
     
     private var profileTab: some View {

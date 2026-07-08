@@ -67,8 +67,6 @@ struct FavProductsScreen: View {
             tabBarManager.isHidden = (newValue != nil)
         }
         .navigationTitle("")
-        .navigationBarBackButtonHidden(true)
-        .goldBackButton()
         .alert(item: $viewModel.alert) { alert in
             Alert(
                 title: Text(alert.title),

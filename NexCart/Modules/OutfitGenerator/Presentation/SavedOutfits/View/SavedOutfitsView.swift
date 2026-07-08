@@ -31,6 +31,8 @@ struct SavedOutfitsView: View {
                         } label: {
                             SavedOutfitRow(outfit: outfit)
                         }
+                        .navigationBarBackButtonHidden()
+                        
                         .swipeActions {
                             Button(role: .destructive) {
                                 Task { await viewModel.delete(id: outfit.id) }
@@ -81,6 +83,7 @@ struct SavedOutfitDetailView: View {
         }
         .padding(.horizontal)
         .padding(.top, 12)
+        .goldBackButton()
         
         Spacer()
     }
