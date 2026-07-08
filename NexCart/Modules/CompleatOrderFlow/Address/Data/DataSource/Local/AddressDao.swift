@@ -37,13 +37,13 @@ final class CoreDataAddressDao: AddressDao {
     func insert(_ address: AddressEntity) throws {
         let context = container.viewContext
 
-        var address = address
-
-        let defaultAddress = try fetchDefault(ownerID: address.ownerUserId)
-
-        if defaultAddress == nil {
-            address.isDefault = true
-        }
+//        var address = address
+//
+//        let defaultAddress = try fetchDefault(ownerID: address.ownerUserId)
+//
+//        if defaultAddress == nil {
+//            address.isDefault = true
+//        }
 
         let managedObject = AddressMO(context: context)
         map(address, into: managedObject)

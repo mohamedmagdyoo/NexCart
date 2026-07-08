@@ -129,28 +129,28 @@ final class AddressViewModel: ObservableObject {
     }
 
     func setDefault(_ address: AddressEntity) async {
-        guard case .success(let currentAddresses) = listState else { return }
+         guard case .success(let currentAddresses) = listState else { return }
 
-        do {
-            for existing in currentAddresses where existing.isDefault && existing.id != address.id {
-                try await deleteAddressUseCase.execute(id: existing.id)
-                var demoted = existing
-                demoted.isDefault = false
-                try await addAddressUseCase.execute(demoted)
-            }
+         do {
+             for existing in currentAddresses where existing.isDefault && existing.id != address.id {
+                 try await deleteAddressUseCase.execute(id: existing.id)
+                 var demoted = existing
+                 demoted.isDefault = false
+                 try await addAddressUseCase.execute(demoted)
+             }
 
-            try await deleteAddressUseCase.execute(id: address.id)
-            var promoted = address
-            promoted.isDefault = true
-            try await addAddressUseCase.execute(promoted)
+             try await deleteAddressUseCase.execute(id: address.id)
+             var promoted = address
+             promoted.isDefault = true
+             try await addAddressUseCase.execute(promoted)
 
-            await loadAddresses()
-        } catch let error as AddressError {
-            listState = .error(error)
-        } catch {
-            listState = .error(.unknown(underlying: error.localizedDescription))
-        }
-    }
+             await loadAddresses()
+         } catch let error as AddressError {
+             listState = .error(error)
+         } catch {
+             listState = .error(.unknown(underlying: error.localizedDescription))
+         }
+     }
 
     func clearForm() {
         fullName = ""

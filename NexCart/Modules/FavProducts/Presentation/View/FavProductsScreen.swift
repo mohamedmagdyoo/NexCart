@@ -68,7 +68,6 @@ struct FavProductsScreen: View {
         }
         .navigationTitle("")
         .navigationBarBackButtonHidden(true)
-        .goldBackButton()
         .alert(item: $viewModel.alert) { alert in
             Alert(
                 title: Text(alert.title),
