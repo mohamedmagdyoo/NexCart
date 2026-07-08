@@ -103,9 +103,8 @@ extension DIContainer {
         }
 
         container.register(AIOutfitRepositoryProtocol.self) { r in
-            AIOutfitRepositoryImpl(provider: r.resolve(HuggingFaceProvider.self)!)
+            AIOutfitRepositoryImpl()
         }
-
         container.register(SavedOutfitRepositoryProtocol.self) { r in
             SavedOutfitRepositoryImpl(dao: r.resolve(GeneratedOutfitDAOProtocol.self)!)
         }

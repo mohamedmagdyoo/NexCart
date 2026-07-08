@@ -23,19 +23,8 @@ struct OrderDetailView: View {
         }
         .background(AppColor.bg.ignoresSafeArea())
         .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: { presentationMode.wrappedValue.dismiss() }) {
-                    Image(systemName: "chevron.left")
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(AppColor.textPrim)
-                        .frame(width: 38, height: 38)
-                        .background(AppColor.card)
-                        .clipShape(Circle())
-                        .overlay(Circle().stroke(AppColor.border, lineWidth: 0.5))
-                }
-            }
-        }
+        .goldBackButton()
+        .toolbar(.hidden, for: .tabBar)
     }
 
     private var headerCard: some View {
@@ -216,19 +205,23 @@ struct OrderDetailView: View {
 
     private func statusBgColor(for status: String) -> Color {
         switch status.lowercased() {
-        case "paid":     return Color.green.opacity(0.12)
-        case "pending":  return Color.orange.opacity(0.12)
-        case "refunded": return Color.red.opacity(0.12)
-        default:         return AppColor.surface
+        case "paid":                        return Color.green.opacity(0.12)
+        case "pending":                     return Color.orange.opacity(0.12)
+        case "refunded", "voided":          return Color.red.opacity(0.12)
+        case "in_transit", "in transit":    return Color.yellow.opacity(0.15)
+        case "partially_paid":              return Color.blue.opacity(0.12)
+        default:                            return AppColor.surface
         }
     }
 
     private func statusTextColor(for status: String) -> Color {
         switch status.lowercased() {
-        case "paid":     return .green
-        case "pending":  return .orange
-        case "refunded": return .red
-        default:         return AppColor.textSec
+        case "paid":                        return .green
+        case "pending":                     return .orange
+        case "refunded", "voided":          return .red
+        case "in_transit", "in transit":    return Color(red: 0.7, green: 0.55, blue: 0.0)
+        case "partially_paid":              return .blue
+        default:                            return AppColor.textSec
         }
     }
 }

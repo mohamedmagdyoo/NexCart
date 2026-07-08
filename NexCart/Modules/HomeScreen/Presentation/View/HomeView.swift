@@ -68,10 +68,10 @@ struct HomeView: View {
                         .foregroundColor(AppColor.gold)
                         .font(.system(size: 16))
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Code added to cart!")
+                        Text(appSettings.loc("Code added to cart!", "تمت إضافة الكود إلى السلة!"))
                             .font(AppColor.sans(14, .semibold))
                             .foregroundColor(.white)
-                        Text("FASHION60 is ready in your cart")
+                        Text(appSettings.loc("FASHION60 is ready in your cart", "الكود FASHION60 جاهز في سلتك"))
                             .font(AppColor.sans(12))
                             .foregroundColor(Color.white.opacity(0.75))
                     }
@@ -134,62 +134,37 @@ struct HomeView: View {
                 }
             }
             .ignoresSafeArea(edges: .top)
-            .background {
+            .navigationDestination(isPresented: $isNavigatingToProduct) {
                 if let product = viewModel.products.first(where: { $0.id == selectedProductId }) {
-                    NavigationLink(
-                        destination: ProductDetailView(
-                            product: product,
-                            productViewModel: DIContainer.shared.container.resolve(ProductDetailViewModel.self)!
-                        )
-                        .navigationBarBackButtonHidden(true),
-                        isActive: $isNavigatingToProduct
-                    ) {
-                        EmptyView()
-                    }
-                } else {
-                    EmptyView()
+                    ProductDetailView(
+                        product: product,
+                        productViewModel: DIContainer.shared.container.resolve(ProductDetailViewModel.self)!
+                    )
+                    .navigationBarBackButtonHidden(true)
                 }
-                
-                NavigationLink(
-                    destination: Group {
-                        if let collectionViewModel = DIContainer.shared.container.resolve(
-                            CollectionProductsViewModel.self,
-                            argument: CustomCollectionEntity(id: "all", title: "All Products", imageURL: "")
-                        ) {
-                            CollectionProductsView(viewModel: collectionViewModel)
-                        } else {
-                            EmptyView()
-                        }
-                    }
-                        .navigationBarBackButtonHidden(true),
-                    isActive: $isNavigatingToAllProducts
+            }
+            .navigationDestination(isPresented: $isNavigatingToAllProducts) {
+                if let collectionViewModel = DIContainer.shared.container.resolve(
+                    CollectionProductsViewModel.self,
+                    argument: CustomCollectionEntity(id: "all", title: appSettings.loc("All Products", "جميع المنتجات"), imageURL: "")
                 ) {
-                    EmptyView()
+                    CollectionProductsView(viewModel: collectionViewModel)
+                        .navigationBarBackButtonHidden(true)
                 }
-                
-                if let brand = viewModel.selectedBrand {
-                    NavigationLink(
-                        destination: Group {
-                            if let brandViewModel = DIContainer.shared.container.resolve(
-                                BrandProductsViewModel.self,
-                                argument: brand
-                            ) {
-                                BrandProductsView(viewModel: brandViewModel)
-                            } else {
-                                EmptyView()
-                            }
-                        }
-                            .navigationBarBackButtonHidden(true),
-                        isActive: $isNavigatingToBrand
-                    ) {
-                        EmptyView()
-                    }
+            }
+            .navigationDestination(isPresented: $isNavigatingToBrand) {
+                if let brand = viewModel.selectedBrand,
+                   let brandViewModel = DIContainer.shared.container.resolve(
+                    BrandProductsViewModel.self,
+                    argument: brand
+                   ) {
+                    BrandProductsView(viewModel: brandViewModel)
+                        .navigationBarBackButtonHidden(true)
                 }
             }
             .task { await viewModel.fetchHomeData() }
             .onAppear { tabBarManager.isHidden = false }
         }
-        .navigationViewStyle(.stack)
         .tag(0)
     }
     
@@ -230,6 +205,7 @@ struct HomeView: View {
         NavigationView {
             GuestGuard {
                 ProfileView()
+                    .onAppear { tabBarManager.isHidden = false }
             }
             .onAppear { tabBarManager.isHidden = false }
         }

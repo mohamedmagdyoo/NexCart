@@ -3,36 +3,16 @@
 //  NexCart
 //
 //  Created by Mohamed Magdy on 30/06/2026.
-//
+
 
 import SwiftUI
 
 private extension Color {
-    static var favBackground: Color {
-        AppSettings.shared.isDarkMode
-            ? Color(hex: "#121212")
-            : Color(red: 0.97, green: 0.93, blue: 0.88)
-    }
-    static var favCard: Color {
-        AppSettings.shared.isDarkMode
-            ? Color(hex: "#1E1E1E")
-            : Color.white
-    }
-    static var favTextPrimary: Color {
-        AppSettings.shared.isDarkMode
-            ? Color(hex: "#E0E0E0")
-            : Color(red: 0.16, green: 0.14, blue: 0.13)
-    }
-    static var favTextSecondary: Color {
-        AppSettings.shared.isDarkMode
-            ? Color(white: 1, opacity: 0.40)
-            : Color(red: 0.55, green: 0.51, blue: 0.47)
-    }
-    static var favRemoveBg: Color {
-        AppSettings.shared.isDarkMode
-            ? Color(hex: "#2A2A2A")
-            : Color(red: 0.93, green: 0.90, blue: 0.86)
-    }
+    static var favBackground: Color { AppColor.bg }
+    static var favCard: Color { AppColor.card }
+    static var favTextPrimary: Color { AppColor.textPrim }
+    static var favTextSecondary: Color { AppColor.textSec }
+    static var favRemoveBg: Color { AppColor.surface }
 }
 
 struct FavProductsScreen: View {
@@ -86,6 +66,9 @@ struct FavProductsScreen: View {
         .onChange(of: selectedProduct) { newValue in
             tabBarManager.isHidden = (newValue != nil)
         }
+        .navigationTitle("")
+        .navigationBarBackButtonHidden(true)
+        .goldBackButton()
         .alert(item: $viewModel.alert) { alert in
             Alert(
                 title: Text(alert.title),

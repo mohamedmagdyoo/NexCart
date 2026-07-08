@@ -31,11 +31,11 @@ struct HomeNewInSection: View {
 
     private var sectionHeader: some View {
         HStack {
-            Text("New Arrivals")
+            Text(AppSettings.shared.loc("New Arrivals", "أحدث الإضافات"))
                 .font(AppColor.serif(28))
                 .foregroundColor(AppColor.textPrim)
             Spacer()
-            Button("See all") {
+            Button(AppSettings.shared.loc("See all", "عرض الكل")) {
                 onSeeAll()
             }
             .font(AppColor.sans(13))

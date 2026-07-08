@@ -29,13 +29,16 @@ struct OrderEntity: Identifiable {
     let currency: String
     
     var statusDisplay: String {
-        switch financialStatus {
-        case "paid":      return "Delivered"
-        case "pending":   return "In Transit"
-        case "refunded":  return "Refunded"
-        default:          return financialStatus.capitalized
+            if financialStatus == "refunded" {
+                return "Refunded"
+            }
+            switch fulfillmentStatus?.lowercased() {
+            case "fulfilled":
+                return "Delivered"
+            default:
+                return "In Transit" 
+            }
         }
-    }
     
     var formattedDate: String {
         let formatter = ISO8601DateFormatter()
