@@ -30,10 +30,12 @@ struct OrderCreateBody: Encodable {
 struct OrderLineItemBody: Encodable {
     let variantId: Int
     let quantity: Int
+    let price: String
 
     enum CodingKeys: String, CodingKey {
         case variantId = "variant_id"
         case quantity
+        case price
     }
 }
 

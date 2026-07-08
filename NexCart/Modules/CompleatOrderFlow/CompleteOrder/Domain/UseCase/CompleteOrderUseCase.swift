@@ -22,11 +22,16 @@ final class CompleteOrderUseCase: CompleteOrderUseCaseProtocol {
         let firstName = nameParts.first ?? ""
         let lastName = nameParts.dropFirst().joined(separator: " ")
 
+        let rate = AppSettings.shared.currencyRate
+        let originalSubtotal = allItems.reduce(0.0) { $0 + ($1.price * rate * Double($1.quantity)) }
+        let discountRatio = originalSubtotal > 0 ? (total / originalSubtotal) : 1.0
+
         let lineItems: [OrderLineItemBody] = allItems.compactMap { item in
             guard let variantId = item.variantId, variantId > 0 else {
                 return nil
             }
-            return OrderLineItemBody(variantId: variantId, quantity: item.quantity)
+            let discountedPrice = item.price * discountRatio
+            return OrderLineItemBody(variantId: variantId, quantity: item.quantity, price: String(format: "%.2f", discountedPrice))
         }
 
         guard !lineItems.isEmpty else {
@@ -47,7 +52,7 @@ final class CompleteOrderUseCase: CompleteOrderUseCaseProtocol {
             kind: "sale",
             status: "success",
             gateway: paymentMethod == .cashOnDelivery ? "manual" : "apple_pay",
-            amount: String(format: "%.2f", total)
+            amount: String(format: "%.2f", total / rate)
         )
 
         let user = AppConstants.shared.getUserEntity()

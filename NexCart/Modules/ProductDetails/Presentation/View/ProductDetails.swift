@@ -194,12 +194,19 @@ struct ProductDetailView: View {
                 Spacer()
 
                 HStack(spacing: 12) {
-                    CircleNavButton(systemName: "cart") {
-                        if isGuest {
+                    if isGuest {
+                        CircleNavButton(systemName: "cart") {
                             showGuestAlert = true
-                        } else {
-                            AppRouter.shared.selectedTab = 3
-                            presentationMode.wrappedValue.dismiss()
+                        }
+                    } else {
+                        NavigationLink(destination: BagView()) {
+                            Image(systemName: "cart")
+                                .font(.system(size: 16, weight: .semibold))
+                                .foregroundColor(AppColor.textPrim)
+                                .frame(width: 44, height: 44)
+                                .background(AppColor.white)
+                                .clipShape(Circle())
+                                .shadow(color: Color.black.opacity(0.12), radius: 8, x: 0, y: 4)
                         }
                     }
 

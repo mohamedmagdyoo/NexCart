@@ -138,38 +138,51 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
         let changedItemIds = Set(pendingQuantityChanges.keys)
         updatingItemIds.formUnion(changedItemIds)
 
+        var draftOrdersToDelete = Set<Int>()
+        var payloadByDraftOrder: [Int: [DraftOrderLineItemUpdate]] = [:]
+
         let bag = cartData[bagIndex]
+        
+        for item in bag.items {
+            let draftOrderId = item.drafOrderId
+            let quantity = pendingQuantityChanges[item.id] ?? item.quantity
+            
+            let update = DraftOrderLineItemUpdate(
+                id: item.id,
+                variantId: item.variantId,
+                quantity: quantity
+            )
+            
+            payloadByDraftOrder[draftOrderId, default: []].append(update)
+            
+            if changedItemIds.contains(item.id) {
+                let duplicates = item.draftOrderIds.filter { $0 != draftOrderId }
+                draftOrdersToDelete.formUnion(duplicates)
+            }
+        }
+        
+        for duplicateId in draftOrdersToDelete {
+            _ = try? await cartUseCase.deleteFromCart(draftOrderId: String(duplicateId))
+        }
+
         let affectedDraftOrderIds = Set(
-            bag.items
-                .filter { changedItemIds.contains($0.id) }
-                .map { $0.drafOrderId }
+            bag.items.filter { changedItemIds.contains($0.id) }.map { $0.drafOrderId }
         )
 
         for draftOrderId in affectedDraftOrderIds {
-      
-            guard let currentBagIndex = cartData.indices.first else { continue }
-            let sameOrderItems = cartData[currentBagIndex].items.filter { $0.drafOrderId == draftOrderId }
-
-            let payload = sameOrderItems.map { item -> DraftOrderLineItemUpdate in
-                DraftOrderLineItemUpdate(
-                    id: item.id,
-                    variantId: item.variantId,
-                    quantity: pendingQuantityChanges[item.id] ?? item.quantity
-                )
-            }
-
-            print("payload \(payload)")
-            do {
-                let canonicalOrder = try await cartUseCase.updateQuantity(
-                    draftOrderId: String(draftOrderId),
-                    lineItems: payload
-                )
-                replaceItems(fromDraftOrderId: draftOrderId, with: canonicalOrder.items)
-            } catch {
-                cartState = .error(message: "Failed to update quantity")
-                await getAllCart()
-                updatingItemIds.subtract(changedItemIds)
-                return
+            if let payload = payloadByDraftOrder[draftOrderId] {
+                do {
+                    let canonicalOrder = try await cartUseCase.updateQuantity(
+                        draftOrderId: String(draftOrderId),
+                        lineItems: payload
+                    )
+                    replaceItems(fromDraftOrderId: draftOrderId, with: canonicalOrder.items)
+                } catch {
+                    cartState = .error(message: "Failed to update quantity")
+                    await getAllCart()
+                    updatingItemIds.subtract(changedItemIds)
+                    return
+                }
             }
         }
 
