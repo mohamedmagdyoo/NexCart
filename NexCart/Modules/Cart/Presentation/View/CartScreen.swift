@@ -43,11 +43,13 @@ struct BagView: View {
             AppColor.bg.ignoresSafeArea()
 
             ScrollView {
-                VStack(spacing: 0) {
+                VStack {
                     header
 
                     content
+                    Spacer()
                 }
+                .padding(.bottom, 90)
             }
         }
         .onAppear {

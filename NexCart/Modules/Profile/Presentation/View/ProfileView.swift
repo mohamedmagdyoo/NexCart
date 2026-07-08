@@ -44,9 +44,6 @@ struct ProfileView: View {
                 NavigationLink(destination: OrdersView(viewModel: DIContainer.shared.container.resolve(OrdersViewModel.self)!)) {
                     SettingsRowView(icon: "clock.fill", iconColor: .blue, title: appSettings.loc("Order History", "سجل الطلبات"))
                 }
-                NavigationLink(destination: FavProductsScreen()) {
-                    SettingsRowView(icon: "heart.fill", iconColor: .red, title: appSettings.loc("Wishlist", "قائمة الأمنيات"))
-                }
                 NavigationLink(destination: AddressListView(
                     viewModel: DIContainer.shared.container.resolve(AddressViewModel.self)!,
                     ownerUserId: currentUserId
