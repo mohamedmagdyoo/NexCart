@@ -8,7 +8,14 @@
 import Foundation
 
 protocol CompleteOrderUseCaseProtocol {
-    func execute(allItems: [BagItemEntity], address: AddressEntity, paymentMethod: PaymentMethodType, total: Double) async throws -> CompleteOrderEntity
+    func execute(
+        allItems: [BagItemEntity],
+        address: AddressEntity,
+        paymentMethod: PaymentMethodType,
+        total: Double,
+        discountCode: String?,
+        discountAmount: Double
+    ) async throws -> CompleteOrderEntity
 }
 
 final class CompleteOrderUseCase: CompleteOrderUseCaseProtocol {
@@ -17,7 +24,15 @@ final class CompleteOrderUseCase: CompleteOrderUseCaseProtocol {
     init(repository: CompleteOrderRepositoryProtocol) {
         self.repository = repository
     }
-    func execute(allItems: [BagItemEntity], address: AddressEntity, paymentMethod: PaymentMethodType, total: Double) async throws -> CompleteOrderEntity {
+
+    func execute(
+        allItems: [BagItemEntity],
+        address: AddressEntity,
+        paymentMethod: PaymentMethodType,
+        total: Double,
+        discountCode: String?,
+        discountAmount: Double
+    ) async throws -> CompleteOrderEntity {
         let nameParts = address.fullName.components(separatedBy: " ")
         let firstName = nameParts.first ?? ""
         let lastName = nameParts.dropFirst().joined(separator: " ")
@@ -52,13 +67,25 @@ final class CompleteOrderUseCase: CompleteOrderUseCaseProtocol {
 
         let user = AppConstants.shared.getUserEntity()
 
+        let discountCodes: [OrderDiscountCodeBody]? = {
+            guard let discountCode, !discountCode.isEmpty, discountAmount > 0 else { return nil }
+            return [
+                OrderDiscountCodeBody(
+                    code: discountCode,
+                    amount: String(format: "%.2f", discountAmount),
+                    type: "fixed_amount"
+                )
+            ]
+        }()
+
         let orderBody = OrderCreateBody(
             currency: "\(AppSettings.shared.selectedCurrency)",
             email: user?.email ?? "customer@example.com",
             financialStatus: paymentMethod == .cashOnDelivery ? "pending" : "paid",
             lineItems: lineItems,
             shippingAddress: shippingAddress,
-            transactions: [transaction]
+            transactions: [transaction],
+            discountCodes: discountCodes
         )
 
         return try await repository.placeOrder(orderInput: orderBody)
