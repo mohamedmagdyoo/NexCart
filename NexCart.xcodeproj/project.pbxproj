@@ -1130,8 +1130,8 @@
 		D5147F0FF3321CF2BE7EAB00 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				C5E7140B02E3FDB3C21BDA02 /* CompleteOrderRepositoryProtocol.swift */,
 				8B26F2349D5CEEC651B7A4C9 /* UseCase */,
+				C5E7140B02E3FDB3C21BDA02 /* CompleteOrderRepositoryProtocol.swift */,
 				E8DFC102ABA3BC7D9654557B /* Entity */,
 			);
 			path = Domain;
