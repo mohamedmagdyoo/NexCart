@@ -13,39 +13,39 @@ struct BagView: View {
     @StateObject private var cartViewModel: CartViewModel =
     DIContainer.shared.container.resolve(CartViewModel.self)!
     @ObservedObject private var appSettings = AppSettings.shared
-
+    
     @State private var itemToDelete: BagItemEntity?
     @State private var bagIdForDeletion: Int?
     @State private var showDeleteAlert = false
     @State private var showToast = false
     @State private var toastMessage = ""
-
-
+    
+    
     private var allItems: [BagItemEntity] {
         cartViewModel.cartData.flatMap { $0.items }
     }
-
+    
     private var subtotal: Double {
         allItems.reduce(0.0) { $0 + ($1.price * Double($1.quantity)) }
     }
-
+    
     private var discount: Double {
         guard let result = cartViewModel.couponResult, result.isValid else { return 0 }
         return min(result.discountAmount, subtotal)
     }
-
+    
     private var total: Double {
         max(subtotal - discount, 0)
     }
-
+    
     var body: some View {
         ZStack {
             AppColor.bg.ignoresSafeArea()
-
+            
             ScrollView {
                 VStack {
                     header
-
+                    
                     content
                     Spacer()
                 }
@@ -74,7 +74,7 @@ struct BagView: View {
             toastView
         )
     }
-
+    
     @ViewBuilder
     private var toastView: some View {
         if showToast {
@@ -93,13 +93,13 @@ struct BagView: View {
             .animation(.easeInOut, value: showToast)
         }
     }
-
+    
     private func deleteItem(_ item: BagItemEntity, fromBagId bagId: Int) {
         guard let bagIndex = cartViewModel.cartData.firstIndex(where: { $0.id == bagId }),
               let itemIndex = cartViewModel.cartData[bagIndex].items.firstIndex(where: { $0.id == item.id }) else { return }
-
+        
         let removedItem = cartViewModel.cartData[bagIndex].items.remove(at: itemIndex)
-
+        
         Task {
             let success = await cartViewModel.deleteFromCart(draftOrderId: String(item.drafOrderId))
             if success {
@@ -113,7 +113,7 @@ struct BagView: View {
             }
         }
     }
-
+    
     private func showToastMessage(_ message: String) {
         toastMessage = message
         withAnimation {
@@ -125,17 +125,17 @@ struct BagView: View {
             }
         }
     }
-
-
+    
+    
     @ViewBuilder
     private var content: some View {
         switch cartViewModel.cartState {
         case .loading:
             loadingView
-
+            
         case .error(let message):
             errorView(message: message)
-
+            
         case .success:
             if allItems.isEmpty {
                 emptyView
@@ -144,7 +144,7 @@ struct BagView: View {
             }
         }
     }
-
+    
     private var loadingView: some View {
         VStack {
             Spacer()
@@ -155,7 +155,7 @@ struct BagView: View {
         }
         .frame(maxWidth: .infinity)
     }
-
+    
     private func errorView(message: String) -> some View {
         VStack {
             Spacer()
@@ -163,12 +163,12 @@ struct BagView: View {
                 Image(systemName: "exclamationmark.triangle")
                     .font(.system(size: 32))
                     .foregroundColor(AppColor.textSec)
-
+                
                 Text(message)
                     .font(AppColor.sans(15))
                     .foregroundColor(AppColor.textSec)
                     .multilineTextAlignment(.center)
-
+                
                 Button(action: {
                     Task { await cartViewModel.getAllCart() }
                 }) {
@@ -186,7 +186,7 @@ struct BagView: View {
         }
         .frame(maxWidth: .infinity)
     }
-
+    
     private var emptyView: some View {
         VStack {
             Spacer()
@@ -194,7 +194,7 @@ struct BagView: View {
                 Image(systemName: "cart")
                     .font(.system(size: 32))
                     .foregroundColor(AppColor.textSec)
-
+                
                 Text(appSettings.loc("Your cart is empty", "سلتك فارغة"))
                     .font(AppColor.sans(15))
                     .foregroundColor(AppColor.textSec)
@@ -203,7 +203,7 @@ struct BagView: View {
         }
         .frame(maxWidth: .infinity)
     }
-
+    
     private var cartContent: some View {
         VStack(spacing: 0) {
             ScrollView {
@@ -227,29 +227,29 @@ struct BagView: View {
                             )
                         }
                     }
-
+                    
                     promoField
-
+                    
                     summaryCard
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 20)
                 .padding(.bottom, 24)
             }
-
+            
             checkoutButton
         }
     }
-
-
+    
+    
     private var header: some View {
         HStack(alignment: .firstTextBaseline) {
             Text(appSettings.loc("Your cart", "سلتك"))
                 .font(AppColor.serif(30, .medium))
                 .foregroundColor(AppColor.textPrim)
-
+            
             Spacer()
-
+            
             Text(appSettings.loc("\(allItems.count) items", "\(allItems.count) عناصر"))
                 .font(AppColor.sans(14))
                 .foregroundColor(AppColor.textSec)
@@ -258,14 +258,14 @@ struct BagView: View {
         .padding(.top, 20)
         .padding(.bottom, 4)
     }
-
+    
     private var promoField: some View {
         HStack(spacing: 12) {
             HStack(spacing: 10) {
                 Image(systemName: "tag")
                     .font(.system(size: 15))
                     .foregroundColor(AppColor.textSec)
-
+                
                 TextField(appSettings.loc("Promo code", "رمز الخصم"), text: $promoCode)
                     .font(AppColor.sans(15))
                     .foregroundColor(AppColor.textPrim)
@@ -278,7 +278,7 @@ struct BagView: View {
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
                     .stroke(AppColor.border, lineWidth: 1)
             )
-
+            
             Button(action: {
                 Task {
                     await cartViewModel.applyCoupon(code: promoCode)
@@ -307,7 +307,7 @@ struct BagView: View {
             }
         }
     }
-
+    
     private var summaryCard: some View {
         VStack(spacing: 12) {
             summaryRow(label: appSettings.loc("Subtotal", "المجموع الفرعي"), value: subtotal, secondary: true)
@@ -315,11 +315,11 @@ struct BagView: View {
             if let result = cartViewModel.couponResult, result.isValid {
                 summaryRow(label: appSettings.loc("Discount", "الخصم"), value: discount, secondary: true, isDiscount: true)
             }
-
+            
             Divider()
                 .background(AppColor.border)
                 .padding(.vertical, 4)
-
+            
             summaryRow(label: appSettings.loc("Total", "الإجمالي"), value: total, secondary: false)
         }
         .padding(20)
@@ -330,33 +330,37 @@ struct BagView: View {
                 .stroke(AppColor.border, lineWidth: 1)
         )
     }
-
+    
     private func summaryRow(label: String, value: Double, secondary: Bool, isDiscount: Bool = false) -> some View {
         HStack {
             Text(label)
                 .font(secondary ? AppColor.sans(15) : AppColor.serif(19, .medium))
                 .foregroundColor(secondary ? AppColor.textSec : AppColor.textPrim)
-
+            
             Spacer()
-
+            
             Text(isDiscount ? "-\(AppSettings.shared.selectedCurrency)\(value, specifier: "%.2f")" : "\(AppSettings.shared.selectedCurrency)\(value, specifier: "%.2f")")
                 .font(secondary ? AppColor.sans(15) : AppColor.serif(19, .medium))
                 .foregroundColor(isDiscount ? .green : (secondary ? AppColor.textPrim : AppColor.textPrim))
         }
     }
-
+    
     private var checkoutButton: some View {
-        NavigationLink(destination: {
-            let checkoutViewModel = DIContainer.shared.container.resolve(CheckoutViewModel.self)!
-            CheckoutView(viewModel: checkoutViewModel, total: total)
-        }) {
-            Text(appSettings.loc("Checkout · \(AppSettings.shared.selectedCurrency)\(total)", "الدفع · \(AppSettings.shared.selectedCurrency)\(total)"))
-                .font(AppColor.sans(16, .medium))
-                .foregroundColor(AppColor.white)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-                .background(AppColor.pillSel)
-                .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        Button {
+            AppRouter.shared.cartPath.append(
+                CartRoute.checkout(total: total)
+            )
+        } label: {
+            Text(appSettings.loc(
+                "Checkout · \(AppSettings.shared.selectedCurrency)\(total)",
+                "الدفع · \(AppSettings.shared.selectedCurrency)\(total)"
+            ))
+            .font(AppColor.sans(16, .medium))
+            .foregroundColor(AppColor.white)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 18)
+            .background(AppColor.pillSel)
+            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
         .padding(.horizontal, 20)
         .padding(.bottom, 20)
@@ -370,7 +374,7 @@ struct BagItemRow: View {
     var isUpdating: Bool
     var onDelete: () -> Void
     var onQuantityChange: (Int) -> Void
-
+    
     private var displayName: String {
         let parts = item.title.components(separatedBy: "|")
         if parts.count > 1 {
@@ -378,7 +382,7 @@ struct BagItemRow: View {
         }
         return item.title.trimmingCharacters(in: .whitespaces)
     }
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack(alignment: .top, spacing: 14) {
@@ -393,34 +397,34 @@ struct BagItemRow: View {
                         } placeholder: {
                             ProgressView()
                         }
-                        .frame(width: 68, height: 84)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .frame(width: 68, height: 84)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
                     )
-
+                
                 VStack(alignment: .leading, spacing: 4) {
                     Text(item.brand)
                         .font(AppColor.sans(11, .medium))
                         .tracking(1)
                         .foregroundColor(AppColor.textSec)
-
+                    
                     Text(displayName)
                         .font(AppColor.serif(18, .medium))
                         .foregroundColor(AppColor.textPrim)
-
+                    
                     Text(item.size)
                         .font(AppColor.sans(14))
                         .foregroundColor(AppColor.textSec)
                 }
-
+                
                 Spacer()
-
+                
                 Button(action: onDelete) {
                     Image(systemName: "trash")
                         .font(.system(size: 15))
                         .foregroundColor(AppColor.textSec)
                 }
             }
-
+            
             HStack {
                 HStack(spacing: 0) {
                     stepperButton(icon: "minus") {
@@ -429,7 +433,7 @@ struct BagItemRow: View {
                             onQuantityChange(item.quantity)
                         }
                     }
-
+                    
                     if isUpdating {
                         ProgressView()
                             .frame(width: 32)
@@ -439,7 +443,7 @@ struct BagItemRow: View {
                             .foregroundColor(AppColor.textPrim)
                             .frame(width: 32)
                     }
-
+                    
                     stepperButton(icon: "plus") {
                         item.quantity += 1
                         onQuantityChange(item.quantity)
@@ -448,14 +452,14 @@ struct BagItemRow: View {
                 .background(AppColor.pill)
                 .clipShape(Capsule())
                 .disabled(isUpdating)
-
+                
                 Spacer()
-
+                
                 VStack(alignment: .trailing, spacing: 2) {
                     Text("\(AppSettings.shared.selectedCurrency)\(item.price, specifier: "%.2f")")
                         .font(AppColor.serif(19, .medium))
                         .foregroundColor(AppColor.textPrim)
-
+                    
                     Text("per piece")
                         .font(AppColor.sans(12))
                         .foregroundColor(AppColor.textSec)
@@ -470,7 +474,7 @@ struct BagItemRow: View {
                 .stroke(AppColor.border, lineWidth: 1)
         )
     }
-
+    
     private func stepperButton(icon: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Image(systemName: icon)

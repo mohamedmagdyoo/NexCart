@@ -17,7 +17,7 @@ struct CompleteOrderView: View {
     }
 
     @Environment(\.presentationMode) var presentationMode
-    @State private var goToCartBag = false
+//    @State private var goToCartBag = false
 
     var body: some View {
         Group {
@@ -297,13 +297,8 @@ struct CompleteOrderView: View {
 
             Spacer()
 
-//            NavigationLink(destination: HomeView(), isActive: $goToCartBag) {
-//                EmptyView()
-//            }
-//            .hidden()
-
             Button(action: {
-                goToCartBag = true
+                AppRouter.shared.returnToHomeFromCheckout()
             }) {
                 Text("Continue Shopping")
                     .font(AppColor.sans(16, .medium))
@@ -316,11 +311,7 @@ struct CompleteOrderView: View {
             .padding(.horizontal, 24)
             .padding(.bottom, 110)
         }
-        .onChange(of: goToCartBag) { newValue in
-            if newValue {
-                AppRouter.shared.selectedTab = 0
-            }
-        }
+
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white.ignoresSafeArea())
     }

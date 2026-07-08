@@ -20,6 +20,7 @@ struct HomeView: View {
     @State private var showCouponToast: Bool = false
     
     @StateObject private var router = AppRouter.shared
+
     
     private var isGuest: Bool {
         guard let data = UserDefaults.standard.data(forKey: "userEntity"),
@@ -194,14 +195,32 @@ struct HomeView: View {
     }
     
     private var cartTab: some View {
-        NavigationStack {
-            GuestGuard {
-                BagView()
-            }
-            .onAppear { tabBarManager.isHidden = false }
+        
+        NavigationStack(path: $router.cartPath) {
+            BagView()
+                .navigationDestination(for: CartRoute.self) { route in
+                    switch route {
+                    case .checkout(let total):
+                        CheckoutView(
+                            viewModel: DIContainer.shared.container.resolve(CheckoutViewModel.self)!,
+                            total: total
+                        )
+                        
+
+                    case .completeOrder(let payment, let total, let address):
+                        CompleteOrderView(
+                            viewModel: DIContainer.shared.container.resolve(CompleteOrderViewModel.self)!,
+                            paymentMethod: payment,
+                            total: total,
+                            address: address
+                        )
+                    }
+                }
         }
         .navigationViewStyle(.stack)
         .tag(3)
+        
+        
     }
     
     private var profileTab: some View {

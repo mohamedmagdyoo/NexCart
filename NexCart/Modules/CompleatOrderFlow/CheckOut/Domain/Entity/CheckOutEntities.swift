@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum PaymentMethodType {
+enum PaymentMethodType: Hashable {
     case cashOnDelivery
     case applePay
 }

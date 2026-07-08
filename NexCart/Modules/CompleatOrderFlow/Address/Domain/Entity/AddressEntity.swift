@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct AddressEntity: Identifiable, Equatable {
+struct AddressEntity: Identifiable, Equatable , Hashable{
     let id: String
     var fullName: String
     var streetAddress: String
