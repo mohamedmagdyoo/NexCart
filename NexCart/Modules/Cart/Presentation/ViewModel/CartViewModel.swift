@@ -28,6 +28,7 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
     private var appliedCouponCode: String?
     
     private var pendingQuantityChanges: [Int: Int] = [:]
+    private var syncTask: Task<Void, Never>?
     
     init(cartUseCase: CartUseCaseProtocol, applyCouponUseCase: ApplyCouponUseCaseProtocol) {
         self.cartUseCase = cartUseCase
@@ -54,8 +55,21 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
         cartData.first?.items.reduce(0) { $0 + ($1.price * Double($1.quantity)) } ?? 0.0
     }
 
+    func triggerSync() {
+        guard syncTask == nil else { return }
+        syncTask = Task {
+            await syncPendingChanges()
+            syncTask = nil
+        }
+    }
+
     func getAllCart() async {
         cartState = .loading
+        
+        if let task = syncTask {
+            _ = await task.result
+        }
+        
         do {
             let allCarts = try await cartUseCase.getAllCart(currentCustomerId: currentCustomerId)
             let customerBags = allCarts.filter {

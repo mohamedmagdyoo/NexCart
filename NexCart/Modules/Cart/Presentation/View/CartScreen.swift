@@ -59,9 +59,7 @@ struct BagView: View {
             }
         }
         .onDisappear {
-            Task {
-                await cartViewModel.syncPendingChanges()
-            }
+            cartViewModel.triggerSync()
         }
         .alert("Are you sure to delete?", isPresented: $showDeleteAlert) {
             Button("Delete", role: .destructive) {
@@ -350,11 +348,10 @@ struct BagView: View {
     }
     
     private var checkoutButton: some View {
-        Button {
-            AppRouter.shared.cartPath.append(
-                CartRoute.checkout(total: total)
-            )
-        } label: {
+        NavigationLink(destination: CheckoutView(
+            viewModel: DIContainer.shared.container.resolve(CheckoutViewModel.self)!,
+            total: total
+        )) {
             Text(appSettings.loc(
                 "Checkout · \(AppSettings.shared.selectedCurrency)\(total)",
                 "الدفع · \(AppSettings.shared.selectedCurrency)\(total)"
