@@ -59,7 +59,6 @@ final class CheckoutViewModel: ObservableObject {
         do {
             addresses = try await getAllAddressesUseCase.execute(ownerID: ownerID )
             selectedAddress = addresses.first
-            print("\(selectedAddress?.city)")
         } catch {
             screenError = "Couldn't load your addresses."
             
@@ -70,6 +69,9 @@ final class CheckoutViewModel: ObservableObject {
         Task {
             do {
                 addresses = try await selectAddressUseCase.execute(ownerID: ownerID , selected: address)
+                selectedAddress = address
+                print("Selected \(address.city)")
+                
             } catch {
                 screenError = "Couldn't select that address."
             }

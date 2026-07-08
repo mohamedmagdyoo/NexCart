@@ -17,7 +17,6 @@ struct CompleteOrderView: View {
     }
 
     @Environment(\.presentationMode) var presentationMode
-//    @State private var goToCartBag = false
 
     var body: some View {
         Group {

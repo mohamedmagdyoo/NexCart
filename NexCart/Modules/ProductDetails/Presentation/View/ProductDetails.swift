@@ -91,6 +91,7 @@ struct ProductDetailView: View {
         ZStack(alignment: .bottom) {
             AppColor.bg.ignoresSafeArea()
 
+            
             NavigationLink(destination: BagView(), isActive: $navigateToCart) {
                 EmptyView()
             }
