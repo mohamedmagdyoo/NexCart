@@ -12,7 +12,7 @@ struct OutfitSelectionContentView: View {
     
     var body: some View {
         ScrollView{
-            VStack(spacing: 16) {
+            VStack(alignment: .center, spacing: 16) {
                 if viewModel.selectedProducts.isEmpty {
                     emptyState
                 } else {

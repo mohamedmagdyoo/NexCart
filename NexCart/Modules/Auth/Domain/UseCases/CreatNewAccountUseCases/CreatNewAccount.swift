@@ -33,6 +33,10 @@ final class CreatNewAccountUseCase: CreatNewAccountUseCaseProtocol{
             throw AuthError.passwordsDidNotMatchConfirmedPass
         }
         
+        if credentials.phone!.prefix(2) != "+2"{
+            throw AuthError.wrongStartWithPhoneNumber
+        }
+        
         productsRepository.cleanFavTabel()
         return try await authRepo.createAccount(with: credentials)
     }

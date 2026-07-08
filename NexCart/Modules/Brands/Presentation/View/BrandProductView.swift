@@ -6,7 +6,7 @@
 //
 import Foundation
 import SwiftUI
-
+@MainActor
 struct BrandProductsView: View {
     @StateObject var viewModel: BrandProductsViewModel
     @State private var selectedProductId: Int?
@@ -27,53 +27,36 @@ struct BrandProductsView: View {
     ]
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                header
-                categoryPills
-                countAndFilterRow
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    header
+                    categoryPills
+                    countAndFilterRow
 
-                if viewModel.isLoading {
-                    ProgressView()
-                        .frame(maxWidth: .infinity)
-                        .padding(.top, 60)
-                } else if let error = viewModel.errorMessage {
-                    Text(error)
-                        .font(AppColor.sans(14))
-                        .foregroundColor(AppColor.textSec)
-                        .padding(.top, 60)
-                        .frame(maxWidth: .infinity)
-                } else if viewModel.filteredProducts.isEmpty {
-                    emptyStatePlaceholder
-                } else {
-                    productGrid
+                    if viewModel.isLoading {
+                        ProgressView()
+                            .frame(maxWidth: .infinity)
+                            .padding(.top, 60)
+                    } else if let error = viewModel.errorMessage {
+                        Text(error)
+                            .font(AppColor.sans(14))
+                            .foregroundColor(AppColor.textSec)
+                            .padding(.top, 60)
+                            .frame(maxWidth: .infinity)
+                    } else if viewModel.filteredProducts.isEmpty {
+                        emptyStatePlaceholder
+                    } else {
+                        productGrid
+                    }
                 }
             }
+            .background(AppColor.bg.ignoresSafeArea())
+            .navigationBarBackButtonHidden(true)
+            .goldBackButton()
+            .task { await viewModel.loadProducts() }
+            .refreshable { await viewModel.loadProducts() }
+            .guestAlert(isPresented: $showGuestAlert, navigateToSignIn: $navigateToSignIn)
         }
-        .background(AppColor.bg.ignoresSafeArea())
-        .navigationBarBackButtonHidden(true)
-        .goldBackButton()
-        .background {
-            if let productId = selectedProductId,
-               let product = viewModel.filteredProducts.first(where: { $0.id == productId }) {
-                NavigationLink(
-                    destination: ProductDetailView(
-                        product: product,
-                        productViewModel: DIContainer.shared.container.resolve(ProductDetailViewModel.self)!
-                    ),
-                    isActive: $isNavigatingToProduct
-                ) {
-                    EmptyView()
-                }
-            } else {
-                EmptyView()
-            }
-        }
-        .task { await viewModel.loadProducts() }
-        .refreshable { await viewModel.loadProducts() }
-        .guestAlert(isPresented: $showGuestAlert, navigateToSignIn: $navigateToSignIn)
-    }
-
     private var header: some View {
         HStack {
             Text(viewModel.brand.name)
@@ -94,12 +77,12 @@ struct BrandProductsView: View {
                     } label: {
                         Text(category.name)
                             .font(AppColor.sans(14, .medium))
-                            .foregroundColor(viewModel.selectedCategory.id == category.id ? .white : AppColor.textPrim)
+                            .foregroundColor(viewModel.selectedCategory.id == category.id ? AppColor.btnText : AppColor.textPrim)
                             .padding(.horizontal, 16)
                             .padding(.vertical, 8)
                             .background(
                                 Capsule()
-                                    .fill(viewModel.selectedCategory.id == category.id ? AppColor.textPrim : AppColor.surface)
+                                    .fill(viewModel.selectedCategory.id == category.id ? AppColor.btnBg : AppColor.surface)
                             )
                     }
                 }
@@ -121,28 +104,41 @@ struct BrandProductsView: View {
     private var productGrid: some View {
         LazyVGrid(columns: columns, spacing: 20) {
             ForEach(viewModel.filteredProducts) { product in
-                Button(action: {
-                    selectedProductId = product.id
-                    isNavigatingToProduct = true
-                }) {
-                    ProductCardView(
-                        product: product,
-                        isFavorited: product.isFavorited,
-                        onFavoriteToggle: {
-                            if isGuest {
-                                showGuestAlert = true
-                            } else {
-                                viewModel.toggleFavorite(productId: product.id)
+                ZStack {
+                    NavigationLink(
+                        tag: product.id,
+                        selection: $selectedProductId
+                    ) {
+                        ProductDetailView(
+                            product: product,
+                            productViewModel: DIContainer.shared.container.resolve(ProductDetailViewModel.self)!
+                        )
+                    } label: {
+                        EmptyView()
+                    }
+                    .opacity(0)
+
+                    Button(action: {
+                        selectedProductId = product.id
+                    }) {
+                        ProductCardView(
+                            product: product,
+                            isFavorited: product.isFavorited,
+                            onFavoriteToggle: {
+                                if isGuest {
+                                    showGuestAlert = true
+                                } else {
+                                    viewModel.toggleFavorite(productId: product.id)
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
+                    .buttonStyle(PlainButtonStyle())
                 }
-                .buttonStyle(PlainButtonStyle())
             }
         }
         .padding(.horizontal, 20)
     }
-
     private var emptyStatePlaceholder: some View {
         VStack(spacing: 20) {
             Image(systemName: "magnifyingglass")

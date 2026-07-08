@@ -66,11 +66,17 @@ final class CompleteOrderViewModel: CompleteOrderViewModelProtocol {
 
     private func submitOrder(paymentMethod: PaymentMethodType, total: Double, address: AddressEntity) async {
         do {
+            let isCouponValid = cartViewModel.couponResult?.isValid == true
+            let discountCode = isCouponValid ? cartViewModel.couponResult?.coupon?.code : nil
+            let discountAmount = isCouponValid ? (cartViewModel.couponResult?.discountAmount ?? 0) : 0
+
             let result = try await completeOrderUseCase.execute(
                 allItems: allItems,
                 address: address,
                 paymentMethod: paymentMethod,
-                total: total
+                total: total,
+                discountCode: discountCode,
+                discountAmount: discountAmount
             )
             self.orderNumber = result.orderNumber
 
@@ -79,6 +85,10 @@ final class CompleteOrderViewModel: CompleteOrderViewModelProtocol {
             let startDate = Calendar.current.date(byAdding: .day, value: 3, to: Date())!
             let endDate = Calendar.current.date(byAdding: .day, value: 5, to: Date())!
             self.estimatedDelivery = "\(formatter.string(from: startDate)) — \(formatter.string(from: endDate))"
+
+            let draftOrderIds = Array(Set(allItems.map { String($0.drafOrderId) }))
+            _ = await cartViewModel.deleteFromCart(draftOrderIds: draftOrderIds)
+            cartViewModel.cartData.removeAll()
 
             isOrderPlaced = true
         } catch {

@@ -295,12 +295,12 @@ struct BagView: View {
                         .tint(AppColor.white)
                         .padding(.horizontal, 22)
                         .padding(.vertical, 14)
-                        .background(AppColor.pillSel)
+                        .background(AppColor.btnBg)
                         .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
                 } else {
                     Text(appSettings.loc("Apply", "تطبيق"))
                         .font(AppColor.sans(15, .medium))
-                        .foregroundColor(AppColor.white)
+                        .foregroundColor(AppColor.btnText)
                         .padding(.horizontal, 22)
                         .padding(.vertical, 14)
                         .background(AppColor.pillSel)
@@ -348,19 +348,16 @@ struct BagView: View {
     }
     
     private var checkoutButton: some View {
-        NavigationLink(destination: CheckoutView(
-            viewModel: DIContainer.shared.container.resolve(CheckoutViewModel.self)!,
-            total: total
-        )) {
+        NavigationLink(value: CartRoute.checkout(total: total)) {
             Text(appSettings.loc(
                 "Checkout · \(AppSettings.shared.selectedCurrency)\(total)",
                 "الدفع · \(AppSettings.shared.selectedCurrency)\(total)"
             ))
             .font(AppColor.sans(16, .medium))
-            .foregroundColor(AppColor.white)
+            .foregroundColor(AppColor.btnText)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 18)
-            .background(AppColor.pillSel)
+            .background(AppColor.btnBg)
             .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
         .padding(.horizontal, 20)

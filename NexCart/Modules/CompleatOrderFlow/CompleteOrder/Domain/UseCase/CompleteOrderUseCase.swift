@@ -8,7 +8,14 @@
 import Foundation
 
 protocol CompleteOrderUseCaseProtocol {
-    func execute(allItems: [BagItemEntity], address: AddressEntity, paymentMethod: PaymentMethodType, total: Double) async throws -> CompleteOrderEntity
+    func execute(
+        allItems: [BagItemEntity],
+        address: AddressEntity,
+        paymentMethod: PaymentMethodType,
+        total: Double,
+        discountCode: String?,
+        discountAmount: Double
+    ) async throws -> CompleteOrderEntity
 }
 
 final class CompleteOrderUseCase: CompleteOrderUseCaseProtocol {
@@ -17,21 +24,26 @@ final class CompleteOrderUseCase: CompleteOrderUseCaseProtocol {
     init(repository: CompleteOrderRepositoryProtocol) {
         self.repository = repository
     }
-    func execute(allItems: [BagItemEntity], address: AddressEntity, paymentMethod: PaymentMethodType, total: Double) async throws -> CompleteOrderEntity {
+
+    func execute(
+        allItems: [BagItemEntity],
+        address: AddressEntity,
+        paymentMethod: PaymentMethodType,
+        total: Double,
+        discountCode: String?,
+        discountAmount: Double
+    ) async throws -> CompleteOrderEntity {
         let nameParts = address.fullName.components(separatedBy: " ")
         let firstName = nameParts.first ?? ""
         let lastName = nameParts.dropFirst().joined(separator: " ")
 
         let rate = AppSettings.shared.currencyRate
-        let originalSubtotal = allItems.reduce(0.0) { $0 + ($1.price * rate * Double($1.quantity)) }
-        let discountRatio = originalSubtotal > 0 ? (total / originalSubtotal) : 1.0
 
         let lineItems: [OrderLineItemBody] = allItems.compactMap { item in
             guard let variantId = item.variantId, variantId > 0 else {
                 return nil
             }
-            let discountedPrice = item.price * discountRatio
-            return OrderLineItemBody(variantId: variantId, quantity: item.quantity, price: String(format: "%.2f", discountedPrice))
+            return OrderLineItemBody(variantId: variantId, quantity: item.quantity, price: String(format: "%.2f", item.price * rate))
         }
 
         guard !lineItems.isEmpty else {
@@ -57,13 +69,25 @@ final class CompleteOrderUseCase: CompleteOrderUseCaseProtocol {
 
         let user = AppConstants.shared.getUserEntity()
 
+        let discountCodes: [OrderDiscountCodeBody]? = {
+            guard let discountCode, !discountCode.isEmpty, discountAmount > 0 else { return nil }
+            return [
+                OrderDiscountCodeBody(
+                    code: discountCode,
+                    amount: String(format: "%.2f", discountAmount),
+                    type: "fixed_amount"
+                )
+            ]
+        }()
+
         let orderBody = OrderCreateBody(
-            currency: "USD",
+            currency: "\(AppSettings.shared.selectedCurrency)",
             email: user?.email ?? "customer@example.com",
             financialStatus: paymentMethod == .cashOnDelivery ? "pending" : "paid",
             lineItems: lineItems,
             shippingAddress: shippingAddress,
-            transactions: [transaction]
+            transactions: [transaction],
+            discountCodes: discountCodes
         )
 
         return try await repository.placeOrder(orderInput: orderBody)

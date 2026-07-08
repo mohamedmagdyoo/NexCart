@@ -114,7 +114,7 @@ struct HomeProductCard: View {
                 .font(.system(size: 13, weight: .medium))
                 .foregroundColor(product.isFavorited ? AppColor.gold : AppColor.textSec)
                 .frame(width: 30, height: 30)
-                .background(Circle().fill(Color.white.opacity(0.88)))
+                .background(Circle().fill(AppColor.card))
         }
     }
 

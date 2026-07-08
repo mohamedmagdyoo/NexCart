@@ -97,9 +97,10 @@ struct ProfileView: View {
                     }
                 }
             }
+            
         }
         .listStyle(.insetGrouped)
-        .padding(.bottom, 100)
+        .padding(.bottom, 80)
         .navigationTitle(appSettings.loc("Profile", "الملف الشخصي"))
         .onAppear {
             viewModel.fetchProfile()

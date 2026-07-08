@@ -16,7 +16,6 @@ struct SelectedProduct: Equatable {
     let brand: String?
 }
 
-//MARK: For the request and the response in domain layer not data layer 
 struct OutfitRequest {
     let selectedProducts: [SelectedProduct]
 }
