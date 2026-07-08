@@ -18,77 +18,75 @@ struct ProfileView: View {
     var body: some View {
         List {
             Section {
-                    HStack(spacing: 16) {
-                        Circle()
-                            .fill(Color.gray.opacity(0.2))
-                            .frame(width: 60, height: 60)
-                            .overlay(
-                                Text(String(viewModel.user?.displayName?.first ?? "S"))
-                                    .font(.system(size: 24, weight: .semibold))
-                                    .foregroundColor(.primary)
-                            )
- 
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(viewModel.user?.displayName ?? appSettings.loc("User Name", "اسم المستخدم"))
-                                .font(.headline)
- 
-                            Text(viewModel.user?.email ?? "user@example.com")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                    .padding(.vertical, 8)
-                }
- 
-                Section(header: Text(appSettings.loc("Account", "الحساب"))) {
-                    NavigationLink(destination: OrdersView(viewModel: DIContainer.shared.container.resolve(OrdersViewModel.self)!)) {
-                        SettingsRowView(icon: "clock.fill", iconColor: .blue, title: appSettings.loc("Order History", "سجل الطلبات"))
-                    }
-                    NavigationLink(destination: FavProductsScreen()) {
-                        SettingsRowView(icon: "heart.fill", iconColor: .red, title: appSettings.loc("Wishlist", "قائمة الأمنيات"))
-                    }
-                    NavigationLink(destination: AddressListView(
-                        viewModel: DIContainer.shared.container.resolve(AddressViewModel.self)!,
-                        ownerUserId: currentUserId
-                    )) {
-                        SettingsRowView(icon: "mappin.circle.fill", iconColor: .green, title: appSettings.loc("Saved Addresses", "العناوين المحفوظة"))
-                    }
-
-                    NavigationLink {
-                        OutfitGeneratorView(
-                            viewModel: DIContainer.shared.container.resolve(OutfitGeneratorViewModel.self)!
+                HStack(spacing: 16) {
+                    Circle()
+                        .fill(Color.gray.opacity(0.2))
+                        .frame(width: 60, height: 60)
+                        .overlay(
+                            Text(String(viewModel.user?.displayName?.first ?? "S"))
+                                .font(.system(size: 24, weight: .semibold))
+                                .foregroundColor(.primary)
                         )
-                    } label: {
-                        SettingsRowView(icon: "wand.and.stars", iconColor: .purple, title: appSettings.loc("My Studio", "استوديو الخاص بي"))
+ 
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(viewModel.user?.displayName ?? appSettings.loc("User Name", "اسم المستخدم"))
+                            .font(.headline)
+ 
+                        Text(viewModel.user?.email ?? "user@example.com")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
                     }
+                }
+                .padding(.vertical, 8)
+            }
+ 
+            Section(header: Text(appSettings.loc("Account", "الحساب"))) {
+                NavigationLink(destination: OrdersView(viewModel: DIContainer.shared.container.resolve(OrdersViewModel.self)!)) {
+                    SettingsRowView(icon: "clock.fill", iconColor: .blue, title: appSettings.loc("Order History", "سجل الطلبات"))
+                }
+                NavigationLink(destination: FavProductsScreen()) {
+                    SettingsRowView(icon: "heart.fill", iconColor: .red, title: appSettings.loc("Wishlist", "قائمة الأمنيات"))
+                }
+                NavigationLink(destination: AddressListView(
+                    viewModel: DIContainer.shared.container.resolve(AddressViewModel.self)!,
+                    ownerUserId: currentUserId
+                )) {
+                    SettingsRowView(icon: "mappin.circle.fill", iconColor: .green, title: appSettings.loc("Saved Addresses", "العناوين المحفوظة"))
                 }
 
-            
- 
-                Section(header: Text(appSettings.loc("Preferences", "التفضيلات"))) {
-                    Toggle(isOn: $appSettings.isDarkMode) {
-                        SettingsRowView(icon: "moon.fill", iconColor: .indigo, title: appSettings.loc("Dark Mode", "الوضع الداكن"))
-                    }
-                    .tint(.indigo)
- 
-                    Picker(selection: $appSettings.selectedLanguage, label: SettingsRowView(icon: "character.book.closed.fill", iconColor: .blue, title: appSettings.loc("Language", "اللغة"))) {
-                        Text("English").tag("en")
-                        Text("العربية").tag("ar")
-                    }
- 
-                    Picker(selection: $appSettings.selectedCurrency, label: SettingsRowView(icon: "dollarsign.circle.fill", iconColor: .orange, title: appSettings.loc("Currency", "العملة"))) {
-                        ForEach(appSettings.availableCurrencies, id: \.self) { currency in
-                            Text(currency).tag(currency)
-                        }
-                    }
- 
-                    Picker(selection: $appSettings.selectedCountry, label: SettingsRowView(icon: "globe", iconColor: .purple, title: appSettings.loc("Country", "البلد"))) {
-                        ForEach(appSettings.availableCountries, id: \.self) { country in
-                            Text(country).tag(country)
-                        }
-                    }
-                
+                NavigationLink {
+                    OutfitGeneratorView(
+                        viewModel: DIContainer.shared.container.resolve(OutfitGeneratorViewModel.self)!
+                    )
+                } label: {
+                    SettingsRowView(icon: "wand.and.stars", iconColor: .purple, title: appSettings.loc("My Studio", "استوديو الخاص بي"))
                 }
+            }
+
+            Section(header: Text(appSettings.loc("Preferences", "التفضيلات"))) {
+                Toggle(isOn: $appSettings.isDarkMode) {
+                    SettingsRowView(icon: "moon.fill", iconColor: .indigo, title: appSettings.loc("Dark Mode", "الوضع الداكن"))
+                }
+                .tint(.indigo)
+ 
+                Picker(selection: $appSettings.selectedLanguage, label: SettingsRowView(icon: "character.book.closed.fill", iconColor: .blue, title: appSettings.loc("Language", "اللغة"))) {
+                    Text("English").tag("en")
+                    Text("العربية").tag("ar")
+                }
+ 
+                Picker(selection: $appSettings.selectedCurrency, label: SettingsRowView(icon: "dollarsign.circle.fill", iconColor: .orange, title: appSettings.loc("Currency", "العملة"))) {
+                    ForEach(appSettings.availableCurrencies, id: \.self) { currency in
+                        Text(currency).tag(currency)
+                    }
+                }
+ 
+                Picker(selection: $appSettings.selectedCountry, label: SettingsRowView(icon: "globe", iconColor: .purple, title: appSettings.loc("Country", "البلد"))) {
+                    ForEach(appSettings.availableCountries, id: \.self) { country in
+                        Text(country).tag(country)
+                    }
+                }
+            }
+
             Section {
                 Button(action: {
                     viewModel.logout()
@@ -102,13 +100,13 @@ struct ProfileView: View {
                     }
                 }
             }
-            }
-            .listStyle(.insetGrouped)
-            .padding(.bottom, 100)
-            .navigationTitle(appSettings.loc("Profile", "الملف الشخصي"))
-            .onAppear {
-                viewModel.fetchProfile()
-            }
+        }
+        .listStyle(.insetGrouped)
+        .padding(.bottom, 100)
+        .navigationTitle(appSettings.loc("Profile", "الملف الشخصي"))
+        .onAppear {
+            viewModel.fetchProfile()
+        }
     }
 }
  
