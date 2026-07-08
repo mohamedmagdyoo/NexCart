@@ -343,7 +343,7 @@ struct BagView: View {
             let checkoutViewModel = DIContainer.shared.container.resolve(CheckoutViewModel.self)!
             CheckoutView(viewModel: checkoutViewModel, total: total)
         }) {
-            Text(appSettings.loc("Checkout · $\(total, default: "%.2f")", "الدفع · $\(total, default: "%.2f")"))
+            Text(appSettings.loc("Checkout · $\(total)", "الدفع · $\(total)"))
                 .font(AppColor.sans(16, .medium))
                 .foregroundColor(AppColor.white)
                 .frame(maxWidth: .infinity)

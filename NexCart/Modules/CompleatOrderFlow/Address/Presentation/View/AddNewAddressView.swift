@@ -12,87 +12,97 @@ struct AddNewAddressView: View {
     @Binding var isPresented: Bool
 
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ZStack {
-                Color(red: 0.96, green: 0.93, blue: 0.87)
-                    .ignoresSafeArea()
+                AppColor.bg.ignoresSafeArea()
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
-                        Text("New address")
-                            .font(.system(.largeTitle, design: .serif))
+                        Text("New Address")
+                            .font(AppColor.serif(28, .medium))
+                            .foregroundColor(AppColor.textPrim)
 
                         Text("Add a shipping address to use at checkout.")
-                            .foregroundColor(.secondary)
+                            .font(AppColor.sans(14))
+                            .foregroundColor(AppColor.textSec)
 
-                        AddressFieldView(title: "Full name", text: $viewModel.fullName)
-                        AddressFieldView(title: "Street address", text: $viewModel.streetAddress)
-                        AddressFieldView(title: "City", text: $viewModel.city)
+                        addressField(title: "Full name", text: $viewModel.fullName)
+                        addressField(title: "Street address", text: $viewModel.streetAddress)
+                        addressField(title: "City", text: $viewModel.city)
 
                         HStack(spacing: 12) {
-                            AddressFieldView(title: "State", text: $viewModel.state)
-                            AddressFieldView(title: "ZIP", text: $viewModel.zip)
+                            addressField(title: "State", text: $viewModel.state)
+                            addressField(title: "ZIP", text: $viewModel.zip)
                         }
 
                         if case .error(let error) = viewModel.formState {
                             Text(error.errorDescription ?? "Something went wrong.")
+                                .font(AppColor.sans(13))
                                 .foregroundColor(.red)
-                                .font(.footnote)
                         }
 
                         Button {
                             Task {
                                 let success = await viewModel.submitNewAddress()
-                                if success {
-                                    isPresented = false
-                                }
+                                if success { isPresented = false }
                             }
                         } label: {
                             HStack {
                                 if case .loading = viewModel.formState {
-                                    ProgressView()
-                                        .tint(.white)
+                                    ProgressView().tint(.white)
                                 } else {
                                     Text("Save address")
+                                        .font(AppColor.sans(16, .semibold))
                                 }
                             }
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color(red: 0.15, green: 0.08, blue: 0.06))
                             .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                            .background(AppColor.textPrim)
                             .clipShape(Capsule())
                         }
                         .padding(.top, 12)
                     }
-                    .padding()
+                    .padding(.horizontal, 20)
+                    .padding(.top, 20)
+                    .padding(.bottom, 40)
                 }
             }
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         isPresented = false
                     } label: {
                         Image(systemName: "xmark")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundColor(AppColor.textSec)
+                            .frame(width: 32, height: 32)
+                            .background(Circle().fill(AppColor.surface))
                     }
                 }
             }
         }
     }
-}
 
-struct AddressFieldView: View {
-    let title: String
-    @Binding var text: String
-
-    var body: some View {
+    private func addressField(title: String, text: Binding<String>) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(title)
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-            TextField("", text: $text)
-                .padding()
-                .background(Color.white)
-                .clipShape(Capsule())
+                .font(AppColor.sans(12, .medium))
+                .foregroundColor(AppColor.textSec)
+                .tracking(0.5)
+
+            TextField("", text: text)
+                .font(AppColor.sans(15))
+                .foregroundColor(AppColor.textPrim)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 14)
+                .background(AppColor.card)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(AppColor.border, lineWidth: 0.5)
+                )
         }
     }
 }

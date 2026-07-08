@@ -134,62 +134,37 @@ struct HomeView: View {
                 }
             }
             .ignoresSafeArea(edges: .top)
-            .background {
+            .navigationDestination(isPresented: $isNavigatingToProduct) {
                 if let product = viewModel.products.first(where: { $0.id == selectedProductId }) {
-                    NavigationLink(
-                        destination: ProductDetailView(
-                            product: product,
-                            productViewModel: DIContainer.shared.container.resolve(ProductDetailViewModel.self)!
-                        )
-                        .navigationBarBackButtonHidden(true),
-                        isActive: $isNavigatingToProduct
-                    ) {
-                        EmptyView()
-                    }
-                } else {
-                    EmptyView()
+                    ProductDetailView(
+                        product: product,
+                        productViewModel: DIContainer.shared.container.resolve(ProductDetailViewModel.self)!
+                    )
+                    .navigationBarBackButtonHidden(true)
                 }
-                
-                NavigationLink(
-                    destination: Group {
-                        if let collectionViewModel = DIContainer.shared.container.resolve(
-                            CollectionProductsViewModel.self,
-                            argument: CustomCollectionEntity(id: "all", title: "All Products", imageURL: "")
-                        ) {
-                            CollectionProductsView(viewModel: collectionViewModel)
-                        } else {
-                            EmptyView()
-                        }
-                    }
-                        .navigationBarBackButtonHidden(true),
-                    isActive: $isNavigatingToAllProducts
+            }
+            .navigationDestination(isPresented: $isNavigatingToAllProducts) {
+                if let collectionViewModel = DIContainer.shared.container.resolve(
+                    CollectionProductsViewModel.self,
+                    argument: CustomCollectionEntity(id: "all", title: "All Products", imageURL: "")
                 ) {
-                    EmptyView()
+                    CollectionProductsView(viewModel: collectionViewModel)
+                        .navigationBarBackButtonHidden(true)
                 }
-                
-                if let brand = viewModel.selectedBrand {
-                    NavigationLink(
-                        destination: Group {
-                            if let brandViewModel = DIContainer.shared.container.resolve(
-                                BrandProductsViewModel.self,
-                                argument: brand
-                            ) {
-                                BrandProductsView(viewModel: brandViewModel)
-                            } else {
-                                EmptyView()
-                            }
-                        }
-                            .navigationBarBackButtonHidden(true),
-                        isActive: $isNavigatingToBrand
-                    ) {
-                        EmptyView()
-                    }
+            }
+            .navigationDestination(isPresented: $isNavigatingToBrand) {
+                if let brand = viewModel.selectedBrand,
+                   let brandViewModel = DIContainer.shared.container.resolve(
+                    BrandProductsViewModel.self,
+                    argument: brand
+                   ) {
+                    BrandProductsView(viewModel: brandViewModel)
+                        .navigationBarBackButtonHidden(true)
                 }
             }
             .task { await viewModel.fetchHomeData() }
             .onAppear { tabBarManager.isHidden = false }
         }
-        .navigationViewStyle(.stack)
         .tag(0)
     }
     
@@ -230,6 +205,7 @@ struct HomeView: View {
         NavigationView {
             GuestGuard {
                 ProfileView()
+                    .onAppear { tabBarManager.isHidden = false }
             }
             .onAppear { tabBarManager.isHidden = false }
         }

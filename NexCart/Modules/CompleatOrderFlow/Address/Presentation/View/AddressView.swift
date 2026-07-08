@@ -5,97 +5,98 @@
 //  Created by Mohamed Magdy on 03/07/2026.
 //
 
-
 import SwiftUI
 
 struct AddressListView: View {
     @ObservedObject var viewModel: AddressViewModel
+    let ownerUserId: String
     @State private var showingAddAddress = false
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Color(red: 0.96, green: 0.93, blue: 0.87)
-                    .ignoresSafeArea()
+        ZStack {
+            AppColor.bg.ignoresSafeArea()
 
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 20) {
-                        GoldBackButton()
-                        
-                        HStack(spacing: 8) {
-                            Image(systemName: "mappin.and.ellipse")
-                            Text("Saved addresses")
-                                .font(.system(.title2, design: .serif))
-                        }
-                        .padding(.top, 12)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    HStack(alignment: .firstTextBaseline) {
+                        Text("Shipping Addresses")
+                            .font(AppColor.serif(28, .medium))
+                            .foregroundColor(AppColor.textPrim)
+                        Spacer()
+                    }
+                    .padding(.top, 12)
 
-                        switch viewModel.listState {
-                        case .idle, .loading:
-                            ProgressView()
-                                .frame(maxWidth: .infinity)
-                                .padding(.top, 40)
-
-                        case .empty:
-                            Text("No saved addresses yet.")
-                                .foregroundColor(.secondary)
-                                .frame(maxWidth: .infinity)
-                                .padding(.top, 40)
-
-                        case .success(let addresses):
-                            ForEach(addresses) { address in
-                                AddressCardView(
-                                    address: address,
-                                    onSetDefault: {
-                                        Task { await viewModel.setDefault(address) }
-                                    },
-                                    onDelete: {
-                                        Task { await viewModel.delete(address) }
-                                    }
-                                )
-                            }
-
-                        case .error(let error):
-                            Text(error.errorDescription ?? "Something went wrong.")
-                                .foregroundColor(.red)
-                                .frame(maxWidth: .infinity)
-                                .padding(.top, 40)
-                        }
-
-                        Button {
-                            showingAddAddress = true
-                        } label: {
-                            HStack {
-                                Image(systemName: "plus")
-                                Text("Add new address")
-                            }
+                    switch viewModel.listState {
+                    case .idle, .loading:
+                        ProgressView()
                             .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color(red: 0.15, green: 0.08, blue: 0.06))
-                            .foregroundColor(.white)
-                            .clipShape(Capsule())
+                            .padding(.top, 40)
+
+                    case .empty:
+                        VStack(spacing: 12) {
+                            Image(systemName: "mappin.slash")
+                                .font(.system(size: 36, weight: .light))
+                                .foregroundColor(AppColor.textSec.opacity(0.5))
+                            Text("No saved addresses yet.")
+                                .font(AppColor.sans(15))
+                                .foregroundColor(AppColor.textSec)
                         }
-                        .padding(.top, 12)
+                        .frame(maxWidth: .infinity)
+                        .padding(.top, 40)
+
+                    case .success(let addresses):
+                        ForEach(addresses) { address in
+                            AddressCardView(
+                                address: address,
+                                onSetDefault: {
+                                    Task { await viewModel.setDefault(address) }
+                                },
+                                onDelete: {
+                                    Task { await viewModel.delete(address) }
+                                }
+                            )
+                        }
+
+                    case .error(let error):
+                        Text(error.errorDescription ?? "Something went wrong.")
+                            .font(AppColor.sans(14))
+                            .foregroundColor(.red)
+                            .frame(maxWidth: .infinity)
+                            .padding(.top, 40)
                     }
-                    .padding()
-                }
-            }
-            .navigationTitle("Addresses")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+
                     Button {
+                        showingAddAddress = true
                     } label: {
-                        Image(systemName: "chevron.left")
+                        HStack {
+                            Image(systemName: "plus")
+                            Text("Add new address")
+                                .font(AppColor.sans(16, .semibold))
+                        }
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .background(AppColor.textPrim)
+                        .clipShape(Capsule())
                     }
+                    .padding(.top, 12)
+
+                    Color.clear.frame(height: 80)
                 }
+                .padding(.horizontal, 20)
             }
-            .navigationBarBackButtonHidden()
-            .sheet(isPresented: $showingAddAddress) {
-                AddNewAddressView(viewModel: viewModel, isPresented: $showingAddAddress)
-            }
-            .task {
-                await viewModel.loadAddresses()
-            }
+        }
+        .navigationTitle("")
+        .navigationBarHidden(true)
+        .navigationBarBackButtonHidden(true)
+        .goldBackButton()
+        .toolbar(.hidden, for: .tabBar)
+        .sheet(isPresented: $showingAddAddress) {
+            AddNewAddressView(viewModel: viewModel, isPresented: $showingAddAddress)
+        }
+        .task {
+            await viewModel.loadAddresses()
         }
     }
 }
@@ -109,64 +110,57 @@ struct AddressCardView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Text(address.displayName)
-                    .font(.headline)
+                    .font(AppColor.sans(16, .semibold))
+                    .foregroundColor(AppColor.textPrim)
                 Spacer()
-                Button(action: {}) {
-                    Image(systemName: "pencil")
-                        .foregroundColor(.secondary)
+                if address.isDefault {
+                    Text("Default")
+                        .font(AppColor.sans(12, .medium))
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 5)
+                        .background(Color.green)
+                        .clipShape(Capsule())
                 }
             }
 
             Text(address.streetAddress)
-                .foregroundColor(.secondary)
+                .font(AppColor.sans(14))
+                .foregroundColor(AppColor.textSec)
             Text(address.cityStateZipLine)
-                .foregroundColor(.secondary)
+                .font(AppColor.sans(14))
+                .foregroundColor(AppColor.textSec)
 
             HStack {
-                if address.isDefault {
-                    HStack(spacing: 4) {
-                        Image(systemName: "checkmark")
-                        Text("Default")
-                    }
-                    .font(.subheadline)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 6)
-                    .background(Color.green)
-                    .foregroundColor(.white)
-                    .clipShape(Capsule())
-
-                    Spacer()
-
-                    Text("SELECTED")
-                        .font(.caption)
-                        .foregroundColor(.green)
-                } else {
+                if !address.isDefault {
                     Button(action: onSetDefault) {
                         Text("Set as default")
-                            .font(.subheadline)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
-                            .overlay(
-                                Capsule().stroke(Color.secondary, lineWidth: 1)
-                            )
+                            .font(AppColor.sans(13, .medium))
+                            .foregroundColor(AppColor.textPrim)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 7)
+                            .overlay(Capsule().stroke(AppColor.border, lineWidth: 1))
                     }
                     .buttonStyle(.plain)
+                }
 
-                    Spacer()
+                Spacer()
 
-                    Button(action: onDelete) {
-                        Image(systemName: "trash")
-                            .foregroundColor(.red)
-                    }
+                Button(action: onDelete) {
+                    Image(systemName: "trash")
+                        .font(.system(size: 15))
+                        .foregroundColor(.red.opacity(0.7))
+                        .frame(width: 36, height: 36)
+                        .background(Circle().fill(Color.red.opacity(0.08)))
                 }
             }
         }
-        .padding()
-        .background(Color.white)
+        .padding(16)
+        .background(AppColor.card)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .stroke(address.isDefault ? Color.green : Color.clear, lineWidth: 2)
+                .stroke(address.isDefault ? Color.green.opacity(0.5) : AppColor.border, lineWidth: address.isDefault ? 1.5 : 0.5)
         )
     }
 }
