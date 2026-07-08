@@ -32,9 +32,12 @@ final class OrdersViewModel: ObservableObject {
     var filteredOrders: [OrderEntity] {
         switch selectedFilter {
         case .all:       return orders
-        case .inTransit: return orders.filter { $0.financialStatus == "pending" }
-        case .delivered: return orders.filter { $0.financialStatus == "paid" }
-        case .refunded:  return orders.filter { $0.financialStatus == "refunded" }
+        case .inTransit:
+                    return orders.filter { ($0.fulfillmentStatus?.lowercased() != "fulfilled") && ($0.financialStatus != "refunded") }
+                case .delivered:
+                    return orders.filter { $0.fulfillmentStatus?.lowercased() == "fulfilled" }
+                case .refunded:
+                    return orders.filter { $0.financialStatus == "refunded" }
         }
     }
     

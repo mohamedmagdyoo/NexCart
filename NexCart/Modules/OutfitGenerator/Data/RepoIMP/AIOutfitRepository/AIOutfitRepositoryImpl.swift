@@ -8,13 +8,8 @@
 import Foundation
 
 final class AIOutfitRepositoryImpl: AIOutfitRepositoryProtocol {
-    private let provider: AIProvider
-
-    init(provider: AIProvider) {
-        self.provider = provider
-    }
-
-    func generate(request: OutfitRequest) async throws -> GeneratedOutfit {
+    
+    func generate(request: OutfitRequest,provider: AIProvider) async throws -> GeneratedOutfit {
         do {
             return try await provider.generate(request: request)
         } catch let error as AIError {

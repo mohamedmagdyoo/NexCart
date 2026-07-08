@@ -20,6 +20,8 @@ final class OutfitGeneratorViewModel: ObservableObject {
     @Published var state: OutfitGeneratorScreenState = .selection
     @Published var showSaveSheet: Bool = false
     @Published var outfitName: String = ""
+    @Published var selectedProvider: AIProviderType = .pollinations
+    
 
     private let getSelectedProductsUseCase: GetSelectedProductsUseCaseProtocol
     private let removeProductUseCase: RemoveProductFromSelectionUseCaseProtocol
@@ -48,18 +50,19 @@ final class OutfitGeneratorViewModel: ObservableObject {
     }
 
     func generateOutfit() async {
-        state = .loading
-        let request = OutfitRequest(selectedProducts: selectedProducts)
-        do {
-            print("The Request has \(request.selectedProducts.count) Product")
-            let outfit = try await generateOutfitUseCase.execute(request: request)
-            state = .success(outfit)
-        } catch let error as AIError {
-            state = .error(message(for: error))
-        } catch {
-            state = .error("Something went wrong. Please try again.")
+            state = .loading
+            let request = OutfitRequest(selectedProducts: selectedProducts)
+            let provider = selectedProvider.makeProvider()
+            do {
+                print("The Request has \(request.selectedProducts.count) Product")
+                let outfit = try await generateOutfitUseCase.execute(request: request, provider: provider)
+                state = .success(outfit)
+            } catch let error as AIError {
+                state = .error(message(for: error))
+            } catch {
+                state = .error("Something went wrong. Please try again.")
+            }
         }
-    }
 
     func cancelResult() {
         state = .selection

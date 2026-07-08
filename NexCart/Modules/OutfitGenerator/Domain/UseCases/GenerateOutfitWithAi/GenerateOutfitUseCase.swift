@@ -8,7 +8,7 @@
 import Foundation
 
 protocol GenerateOutfitUseCaseProtocol {
-    func execute(request: OutfitRequest) async throws -> GeneratedOutfit
+    func execute(request: OutfitRequest,provider:AIProvider) async throws -> GeneratedOutfit
 }
 
 final class GenerateOutfitUseCase: GenerateOutfitUseCaseProtocol {
@@ -18,7 +18,7 @@ final class GenerateOutfitUseCase: GenerateOutfitUseCaseProtocol {
         self.repository = repository
     }
 
-    func execute(request: OutfitRequest) async throws -> GeneratedOutfit {
-        try await repository.generate(request: request)
+    func execute(request: OutfitRequest,provider:AIProvider) async throws -> GeneratedOutfit {
+        try await repository.generate(request: request,provider: provider)
     }
 }

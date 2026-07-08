@@ -1,0 +1,97 @@
+//
+//  PollinationsProvider.swift
+//  NexCart
+//
+//  Created by shady ramadan on 07/07/2026.
+//
+
+import Foundation
+
+final class PollinationsProvider: AIProvider {
+
+    private let session: URLSession
+
+    init(session: URLSession = .shared) {
+        self.session = session
+    }
+
+    func generate(request: OutfitRequest) async throws -> GeneratedOutfit {
+        let prompt = buildPrompt(from: request)
+        print("🎨 Pollinations prompt: \(prompt)")
+
+        guard let encodedPrompt = prompt.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let url = URL(string: "https://image.pollinations.ai/prompt/\(encodedPrompt)?width=768&height=1024&model=flux&nologo=true&enhance=true")
+        else {
+            print("❌ Pollinations: invalid URL")
+            throw AIError.generationFailed
+        }
+
+        print("🌐 Pollinations URL: \(url)")
+
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "GET"
+        urlRequest.timeoutInterval = 120
+
+        let (data, response): (Data, URLResponse)
+        do {
+            (data, response) = try await session.data(for: urlRequest)
+        } catch {
+            print("❌ Pollinations network error: \(error)")
+            throw AIError.generationFailed
+        }
+
+        guard let httpResponse = response as? HTTPURLResponse else {
+            print("❌ Pollinations: invalid response type")
+            throw AIError.generationFailed
+        }
+
+        print("✅ Pollinations status: \(httpResponse.statusCode), data size: \(data.count) bytes")
+
+        guard (200...299).contains(httpResponse.statusCode) else {
+            print("❌ Pollinations bad status: \(httpResponse.statusCode)")
+            throw AIError.generationFailed
+        }
+
+        guard !data.isEmpty else {
+            print("❌ Pollinations: empty data")
+            throw AIError.generationFailed
+        }
+
+        return GeneratedOutfit(
+            id: UUID().uuidString,
+            imageData: data,
+            generatedAt: Date()
+        )
+    }
+
+    private func buildPrompt(from request: OutfitRequest) -> String {
+            // 1. تفكيك كل منتج واستخدام كل الـ Features بتاعته لبناء وصف هيكلي دقيق
+            let itemizedOutfits = request.selectedProducts.enumerated().map { (index, product) -> String in
+                let title = product.title
+                // لو مفيش داتا بنحط قيم افتراضية عشان الـ Prompt ميبقاش ناقص
+                let category = (product.category?.isEmpty == false) ? product.category! : "apparel piece"
+                let brand = (product.brand?.isEmpty == false) ? product.brand! : "premium retail brand"
+                let color = (product.color?.isEmpty == false) ? product.color! : "matching"
+                
+                return """
+                - Piece \(index + 1) [\(category.uppercased())]: A strictly realistic \(color) \(category) designed by \(brand). Exact retail item name: "\(title)". \
+                Features standard commercial tailoring, visible high-quality fabric texture (appropriate to the item type), precise physical seams, realistic hems, and authentic garment proportions.
+                """
+            }.joined(separator: "\n")
+
+            // 2. الـ Master Prompt: بيقفل على الـ AI كل سكك التهييس ويجبره على الواقعية
+            let prompt = """
+            Ultra-realistic, 8k resolution, high-end commercial e-commerce fashion photography. A professional human model standing in a bright, clean, minimalist white photography studio. \
+            The model is wearing a meticulously styled, highly accurate retail outfit consisting EXACTLY of the following separate pieces:
+            
+            \(itemizedOutfits)
+            
+            CRITICAL GENERATION INSTRUCTIONS:
+            1. STRUCTURAL INTEGRITY: Maintain absolute structural boundaries for every garment. Do NOT merge or blend pieces. A jacket must look like a real physical jacket, pants must look like real pants.
+            2. TEXTILE REALISM: Hyper-detailed textile rendering. Show the authentic fabric weave, natural clothing drapery, realistic wrinkles, and crisp stitching lines. 
+            3. COMMERCIAL AESTHETIC: The lighting must be soft, dramatic studio lighting with realistic drop shadows. Sharp focus on the apparel. No CGI look, no illustration, no distorted AI artifacts. The clothing must look exactly like ready-to-wear physical items from a luxury fashion catalog.
+            """
+
+            return prompt
+        }
+}
