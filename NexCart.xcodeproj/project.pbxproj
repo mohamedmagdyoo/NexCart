@@ -528,6 +528,7 @@
 		335FE4EFF5A8C88D6B83CC80 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D91D00832FF84804002C8E1E /* AppConstantes.swift */,
 				7ED6E53D181A6CE7A2B7538C /* AppSettings.swift */,
 			);
 			path = Utils;
@@ -1426,14 +1427,6 @@
 			path = RepoInterfaces;
 			sourceTree = "<group>";
 		};
-		D91D00822FF847F5002C8E1E /* Util */ = {
-			isa = PBXGroup;
-			children = (
-				D91D00832FF84804002C8E1E /* AppConstantes.swift */,
-			);
-			path = Util;
-			sourceTree = "<group>";
-		};
 		D91E74892FF5150E00D941C4 /* OnBoarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -2000,7 +1993,6 @@
 			isa = PBXGroup;
 			children = (
 				D90431AF2FFC2DC000E84300 /* Config */,
-				D91D00822FF847F5002C8E1E /* Util */,
 				D960C22F2FF1981100FFF4D9 /* DI */,
 				335FE4EFF5A8C88D6B83CC80 /* Utils */,
 			);

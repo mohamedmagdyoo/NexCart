@@ -12,4 +12,8 @@ struct CompleteOrderEntity {
     let orderNumber: String
     let email: String
     let totalPrice: String
+    
+    var priceDisplay: String {
+        "\(AppSettings.shared.selectedCurrency) \(String(format: "%.2f", totalPrice))"
+    }
 }

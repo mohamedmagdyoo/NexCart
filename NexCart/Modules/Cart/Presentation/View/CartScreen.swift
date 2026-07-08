@@ -339,7 +339,7 @@ struct BagView: View {
 
             Spacer()
 
-            Text(isDiscount ? "-$\(value, specifier: "%.2f")" : "$\(value, specifier: "%.2f")")
+            Text(isDiscount ? "-\(AppSettings.shared.selectedCurrency)\(value, specifier: "%.2f")" : "\(AppSettings.shared.selectedCurrency)\(value, specifier: "%.2f")")
                 .font(secondary ? AppColor.sans(15) : AppColor.serif(19, .medium))
                 .foregroundColor(isDiscount ? .green : (secondary ? AppColor.textPrim : AppColor.textPrim))
         }
@@ -350,7 +350,7 @@ struct BagView: View {
             let checkoutViewModel = DIContainer.shared.container.resolve(CheckoutViewModel.self)!
             CheckoutView(viewModel: checkoutViewModel, total: total)
         }) {
-            Text(appSettings.loc("Checkout · $\(total)", "الدفع · $\(total)"))
+            Text(appSettings.loc("Checkout · \(AppSettings.shared.selectedCurrency)\(total)", "الدفع · \(AppSettings.shared.selectedCurrency)\(total)"))
                 .font(AppColor.sans(16, .medium))
                 .foregroundColor(AppColor.white)
                 .frame(maxWidth: .infinity)
@@ -452,7 +452,7 @@ struct BagItemRow: View {
                 Spacer()
 
                 VStack(alignment: .trailing, spacing: 2) {
-                    Text("$\(item.price, specifier: "%.2f")")
+                    Text("\(AppSettings.shared.selectedCurrency)\(item.price, specifier: "%.2f")")
                         .font(AppColor.serif(19, .medium))
                         .foregroundColor(AppColor.textPrim)
 

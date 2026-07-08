@@ -12,6 +12,9 @@ struct CompleteOrderView: View {
     let paymentMethod: PaymentMethodType
     let total: Double
     let address: AddressEntity
+    var priceDisplay: String {
+        "\(AppSettings.shared.selectedCurrency) \(String(format: "%.2f", total))"
+    }
 
     @Environment(\.presentationMode) var presentationMode
     @State private var goToCartBag = false
@@ -36,6 +39,7 @@ struct CompleteOrderView: View {
                 summaryScreen
             }
         }
+        .padding(.bottom, 90)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(viewModel.isOrderPlaced ? "" : "Complete Order")
         .navigationBarBackButtonHidden(true)
@@ -144,7 +148,7 @@ struct CompleteOrderView: View {
                         .font(AppColor.serif(18, .medium))
                         .foregroundColor(AppColor.textSec)
                     Spacer()
-                    Text(String(format: "$%.2f", total))
+                    Text(priceDisplay)
                         .font(AppColor.serif(22, .medium))
                         .foregroundColor(AppColor.textPrim)
                 }
@@ -232,7 +236,7 @@ struct CompleteOrderView: View {
 
             Spacer()
 
-            Text(String(format: "$%.2f", item.price * Double(item.quantity)))
+            Text(String(format: "\(AppSettings.shared.selectedCurrency)%.2f", item.price * Double(item.quantity)))
                 .font(AppColor.serif(16, .medium))
                 .foregroundColor(AppColor.textPrim)
         }
@@ -279,7 +283,7 @@ struct CompleteOrderView: View {
             VStack(spacing: 16) {
                 detailRow(title: "Order number", value: viewModel.orderNumber ?? "N/A")
                 Divider()
-                detailRow(title: "Total", value: String(format: "$%.2f", total))
+                detailRow(title: "Total", value: String(priceDisplay))
                 Divider()
                 detailRow(title: "Estimated delivery", value: viewModel.estimatedDelivery ?? "TBD")
                 Divider()

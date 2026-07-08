@@ -11,6 +11,9 @@ import SwiftUI
 struct CheckoutView: View {
     @StateObject var viewModel: CheckoutViewModel
     let total: Double
+    var priceDisplay: String {
+        "\(AppSettings.shared.selectedCurrency) \(String(format: "%.2f", total))"
+    }
     
     var body: some View {
         ZStack {
@@ -54,10 +57,9 @@ struct CheckoutView: View {
                 
                 //Confirme Order Button
                 Button(action: {
-//                    viewModel.testPay(total: 1000)
                     viewModel.didConfirmeButtonCliked()
                 }) {
-                    Text("Confirm Order · $\(total, specifier: "%.2f")")
+                    Text("Confirm Order · \(priceDisplay)")
                         .font(AppColor.sans(16, .medium))
                         .foregroundColor(AppColor.white)
                         .frame(maxWidth: .infinity)
@@ -154,7 +156,7 @@ struct CheckoutView: View {
                 .bold()
                 .foregroundStyle(.secondary)
             Spacer()
-            Text(total, format: .currency(code: "USD"))
+            Text(total, format: .currency(code: AppSettings.shared.selectedCurrency))
                 .font(.title2.bold())
         }
     }
