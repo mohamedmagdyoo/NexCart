@@ -16,6 +16,7 @@ struct DraftOrderMapper {
             totalPrice: dto.draftOrder.totalPrice,
             items: dto.draftOrder.lineItems.map {
                 DraftOrderItem(
+                    id: $0.id,
                     productID: $0.productID,
                     variantID: $0.variantID,
                     title: $0.title,

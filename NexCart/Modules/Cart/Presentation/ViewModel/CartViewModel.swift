@@ -26,10 +26,9 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
     @Published var updatingItemIds: Set<Int> = []
 
     private var appliedCouponCode: String?
-
- 
+    
     private var pendingQuantityChanges: [Int: Int] = [:]
-
+    
     init(cartUseCase: CartUseCaseProtocol, applyCouponUseCase: ApplyCouponUseCaseProtocol) {
         self.cartUseCase = cartUseCase
         self.applyCouponUseCase = applyCouponUseCase
@@ -63,7 +62,7 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
                 $0.customer?.id == currentCustomerId
             }
             cartData = mergeBagsIntoSingleCart(customerBags)
-            pendingQuantityChanges.removeAll() 
+            pendingQuantityChanges.removeAll()
             try await getSingleProdut()
             await revalidateCouponIfNeeded()
             cartState = .success(bagData: cartData)
@@ -85,9 +84,11 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
         }
     }
 
-    func deleteFromCart(draftOrderId: String) async -> Bool {
+    func deleteFromCart(draftOrderIds: [String]) async -> Bool {
         do {
-            try await cartUseCase.deleteFromCart(draftOrderId: draftOrderId)
+            for draftOrderId in draftOrderIds {
+                try await cartUseCase.deleteFromCart(draftOrderId: draftOrderId)
+            }
             return true
         } catch {
             cartState = .error(message: "Failed to delete item")
@@ -126,7 +127,6 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
         cartData[bagIndex].items[itemIndex].quantity = newQuantity
         pendingQuantityChanges[itemId] = newQuantity
 
-       
         await revalidateCouponIfNeeded()
     }
 
@@ -178,7 +178,6 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
         await revalidateCouponIfNeeded()
     }
 
-
     private func replaceItems(fromDraftOrderId draftOrderId: Int, with canonicalItems: [BagItemEntity]) {
         guard let bagIndex = cartData.indices.first else { return }
         var items = cartData[bagIndex].items
@@ -219,9 +218,14 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
             let key = mergeKey(for: item)
             if var existing = merged[key] {
                 existing.quantity += item.quantity
+                existing.draftOrderIds.append(contentsOf: item.draftOrderIds)
                 merged[key] = existing
             } else {
-                merged[key] = item
+                var newItem = item
+                if newItem.draftOrderIds.isEmpty {
+                    newItem.draftOrderIds = [newItem.drafOrderId]
+                }
+                merged[key] = newItem
                 order.append(key)
             }
         }

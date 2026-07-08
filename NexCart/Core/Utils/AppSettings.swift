@@ -14,6 +14,15 @@ class AppSettings: ObservableObject {
 
     var isArabic: Bool { selectedLanguage == "ar" }
 
+    var currencyRate: Double {
+        switch selectedCurrency {
+        case "EGP": return 50.0
+        case "EUR": return 0.92
+        case "SAR": return 3.75
+        default: return 1.0 // USD
+        }
+    }
+
     func loc(_ en: String, _ ar: String) -> String {
         isArabic ? ar : en
     }

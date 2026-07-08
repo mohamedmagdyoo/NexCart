@@ -474,7 +474,7 @@
 		F51C98A32FF5A0E000A9C2EE /* AddCartResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCartResponse.swift; sourceTree = "<group>"; };
 		F51C98A42FF5A0E000A9C2EE /* AddCartResponseMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCartResponseMapper.swift; sourceTree = "<group>"; };
 		F51C98A52FF5A0E000A9C2EE /* ProductRepoImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRepoImpl.swift; sourceTree = "<group>"; };
-		F51C98AB2FF5A12600A9C2EE /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
+		F51C98AB2FF5A12600A9C2EE /* ProductViewModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
 		F51C98AC2FF5A12600A9C2EE /* ProductViewModelPorotocl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModelPorotocl.swift; sourceTree = "<group>"; };
 		F51C98AE2FF5A12600A9C2EE /* ProductDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetails.swift; sourceTree = "<group>"; };
 		F51C98AF2FF5A12600A9C2EE /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };

@@ -26,7 +26,8 @@ struct BagView: View {
     }
     
     private var subtotal: Double {
-        allItems.reduce(0.0) { $0 + ($1.price * Double($1.quantity)) }
+        let rate = AppSettings.shared.currencyRate
+        return allItems.reduce(0.0) { $0 + ($1.price * Double($1.quantity) * rate) }
     }
     
     private var discount: Double {
@@ -101,9 +102,11 @@ struct BagView: View {
         let removedItem = cartViewModel.cartData[bagIndex].items.remove(at: itemIndex)
         
         Task {
-            let success = await cartViewModel.deleteFromCart(draftOrderId: String(item.drafOrderId))
+            let draftOrderIds = item.draftOrderIds.isEmpty ? [String(item.drafOrderId)] : item.draftOrderIds.map { String($0) }
+            let success = await cartViewModel.deleteFromCart(draftOrderIds: draftOrderIds)
             if success {
                 showToastMessage(appSettings.loc("Item deleted successfully", "تم حذف العنصر بنجاح"))
+                NotificationCenter.default.post(name: Notification.Name("cartItemDeleted"), object: nil, userInfo: ["variantId": item.variantId ?? 0])
                 await cartViewModel.revalidateCouponIfNeeded()
             } else {
                 withAnimation {
@@ -222,6 +225,7 @@ struct BagView: View {
                                 onQuantityChange: { newQuantity in
                                     Task {
                                         await cartViewModel.updateQuantity(itemId: item.id, newQuantity: newQuantity)
+                                        NotificationCenter.default.post(name: Notification.Name("cartItemUpdated"), object: nil, userInfo: ["variantId": item.variantId ?? 0, "quantity": newQuantity])
                                     }
                                 }
                             )
@@ -456,7 +460,7 @@ struct BagItemRow: View {
                 Spacer()
                 
                 VStack(alignment: .trailing, spacing: 2) {
-                    Text("\(AppSettings.shared.selectedCurrency)\(item.price, specifier: "%.2f")")
+                    Text("\(AppSettings.shared.selectedCurrency)\(item.price * AppSettings.shared.currencyRate, specifier: "%.2f")")
                         .font(AppColor.serif(19, .medium))
                         .foregroundColor(AppColor.textPrim)
                     

@@ -10,10 +10,10 @@ struct ProductDetailView: View {
     @State private var currentImageIndex: Int = 0
     @State private var quantity: Int = 1
     @State private var addedToBag: Bool = false
-    @State private var navigateToCart: Bool = false
     @State private var showToast: Bool = false
     @State private var showGuestAlert: Bool = false
     @State private var navigateToSignIn: Bool = false
+    @ObservedObject private var appSettings = AppSettings.shared
     @StateObject private var productDetailsViewModel: ProductDetailViewModel
 
     init(product: ProductEntity, productViewModel: ProductDetailViewModel) {
@@ -91,12 +91,6 @@ struct ProductDetailView: View {
         ZStack(alignment: .bottom) {
             AppColor.bg.ignoresSafeArea()
 
-            
-            NavigationLink(destination: BagView(), isActive: $navigateToCart) {
-                EmptyView()
-            }
-            .hidden()
-
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     imageSection
@@ -122,6 +116,24 @@ struct ProductDetailView: View {
         }
         .toolbar(.hidden, for: .tabBar)
         .navigationBarHidden(true)
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("cartItemUpdated"))) { notification in
+            if let userInfo = notification.userInfo,
+               let variantId = userInfo["variantId"] as? Int,
+               let newQuantity = userInfo["quantity"] as? Int,
+               variantId == selectedVariant?.id {
+                self.quantity = newQuantity
+                self.addedToBag = true
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("cartItemDeleted"))) { notification in
+            if let userInfo = notification.userInfo,
+               let variantId = userInfo["variantId"] as? Int,
+               variantId == selectedVariant?.id {
+                self.quantity = 1
+                self.addedToBag = false
+                productDetailsViewModel.currentDraftOrder = nil
+            }
+        }
         .guestAlert(isPresented: $showGuestAlert, navigateToSignIn: $navigateToSignIn)
         .onChange(of: selectedVariant?.id) { _ in
             quantity = 1
@@ -186,7 +198,8 @@ struct ProductDetailView: View {
                         if isGuest {
                             showGuestAlert = true
                         } else {
-                            navigateToCart = true
+                            AppRouter.shared.selectedTab = 3
+                            presentationMode.wrappedValue.dismiss()
                         }
                     }
 
@@ -251,12 +264,12 @@ struct ProductDetailView: View {
 
                 HStack(alignment: .bottom) {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(String(format: "$%.2f", displayPrice))
+                        Text(String(format: "%@%.2f", appSettings.selectedCurrency, displayPrice * appSettings.currencyRate))
                             .font(AppColor.sans(32, .bold))
                             .foregroundColor(AppColor.textPrim)
 
                         if let compareAt = selectedVariant?.compareAtPrice ?? product.variants.first?.compareAtPrice {
-                            Text("$\(compareAt)")
+                            Text(String(format: "%@%.2f", appSettings.selectedCurrency, (Double(compareAt) ?? 0) * appSettings.currencyRate))
                                 .font(AppColor.sans(16))
                                 .foregroundColor(AppColor.textSec)
                                 .strikethrough(true, color: AppColor.textSec)
@@ -287,7 +300,7 @@ struct ProductDetailView: View {
 
                 if !colors.isEmpty {
                     VStack(alignment: .leading, spacing: 16) {
-                        Text("Color")
+                        Text(appSettings.loc("Color", "اللون"))
                             .font(AppColor.serif(18))
                             .foregroundColor(AppColor.textPrim)
 
@@ -308,7 +321,7 @@ struct ProductDetailView: View {
                 if !sizes.isEmpty {
                     VStack(alignment: .leading, spacing: 16) {
                         HStack {
-                            Text("Size")
+                            Text(appSettings.loc("Size", "المقاس"))
                                 .font(AppColor.serif(18))
                                 .foregroundColor(AppColor.textPrim)
                             Spacer()
@@ -330,7 +343,7 @@ struct ProductDetailView: View {
 
                 if let bodyHtml = product.bodyHtml {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("Description")
+                        Text(appSettings.loc("Description", "الوصف"))
                             .font(AppColor.serif(18))
                             .foregroundColor(AppColor.textPrim)
 
@@ -365,11 +378,11 @@ struct ProductDetailView: View {
             VStack(spacing: 14) {
                 HStack(alignment: .center) {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Total Price")
+                        Text(appSettings.loc("Total Price", "السعر الإجمالي"))
                             .font(AppColor.sans(12, .medium))
                             .foregroundColor(AppColor.textSec)
                             .tracking(1)
-                        Text(String(format: "$%.2f", displayPrice))
+                        Text(String(format: "%@%.2f", appSettings.selectedCurrency, displayPrice * appSettings.currencyRate))
                             .font(AppColor.sans(24, .bold))
                             .foregroundColor(AppColor.textPrim)
                     }
@@ -379,14 +392,10 @@ struct ProductDetailView: View {
                     if addedToBag {
                         HStack(spacing: 0) {
                             Button {
-                                guard quantity > 1, let variantID = selectedVariant?.id else { return }
+                                guard quantity > 1 else { return }
                                 quantity -= 1
                                 Task {
-                                    await productDetailsViewModel.addToCart(
-                                        variantID: variantID,
-                                        customerID: currentCustomerId,
-                                        quantity: quantity
-                                    )
+                                    await productDetailsViewModel.updateCartQuantity(quantity: quantity)
                                 }
                             } label: {
                                 Image(systemName: "minus")
@@ -401,14 +410,9 @@ struct ProductDetailView: View {
                                 .frame(width: 28)
 
                             Button {
-                                guard let variantID = selectedVariant?.id else { return }
                                 quantity += 1
                                 Task {
-                                    await productDetailsViewModel.addToCart(
-                                        variantID: variantID,
-                                        customerID: currentCustomerId,
-                                        quantity: quantity
-                                    )
+                                    await productDetailsViewModel.updateCartQuantity(quantity: quantity)
                                 }
                             } label: {
                                 Image(systemName: "plus")
@@ -450,7 +454,7 @@ struct ProductDetailView: View {
                                 Image(systemName: "bag.fill")
                                     .font(.system(size: 16, weight: .semibold))
                                     .foregroundColor(AppColor.white)
-                                Text("Add to Bag")
+                                Text(appSettings.loc("Add to Bag", "أضف للسلة"))
                                     .font(AppColor.sans(16, .bold))
                                     .foregroundColor(AppColor.white)
                             }

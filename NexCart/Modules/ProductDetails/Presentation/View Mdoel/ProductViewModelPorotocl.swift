@@ -15,5 +15,6 @@ protocol ProductDetailsViewModelProtocol: ObservableObject {
         customerID: Int,
         quantity: Int
     ) async 
+    func updateCartQuantity(quantity: Int) async
     
 }

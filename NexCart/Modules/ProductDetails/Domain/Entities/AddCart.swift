@@ -15,6 +15,7 @@ struct DraftOrder {
 }
 
 struct DraftOrderItem {
+    let id: Int
     let productID: Int
     let variantID: Int
     let title: String
