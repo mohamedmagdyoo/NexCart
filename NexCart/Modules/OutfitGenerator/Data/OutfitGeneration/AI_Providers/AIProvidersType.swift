@@ -29,8 +29,14 @@ enum AIProviderType: String, CaseIterable, Identifiable {
  
     func makeProvider() -> AIProvider {
         switch self {
-        case .pollinations: return PollinationsProvider()
-        case .huggingFace:  return HuggingFaceProvider(service: HuggingFaceService())
+        case.pollinations: return PollinationsProvider()
+        case .huggingFace:
+            let imageDownloadService = ImageDownloadService()
+            return HuggingFaceProvider(
+                service: HuggingFaceService(imageDownloadService: imageDownloadService),
+                imageDownloadService: imageDownloadService,
+                imageCompositionService: ImageCompositionService()
+            )
         }
     }
 }

@@ -46,9 +46,11 @@ struct OutfitResultView: View {
                             .foregroundColor(.white)
                             .clipShape(RoundedRectangle(cornerRadius: 16))
                     }
+                    
+                    Spacer()
                 }
                 .padding(.horizontal)
-                .padding(.bottom)
+                .padding(.bottom, 90)
             }
         }
         .sheet(isPresented: $viewModel.showSaveSheet) {

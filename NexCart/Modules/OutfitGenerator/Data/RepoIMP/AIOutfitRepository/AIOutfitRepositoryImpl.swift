@@ -13,8 +13,10 @@ final class AIOutfitRepositoryImpl: AIOutfitRepositoryProtocol {
         do {
             return try await provider.generate(request: request)
         } catch let error as AIError {
+            print(error.localizedDescription)
             throw error
         } catch {
+            print(error.localizedDescription)
             throw AIError.generationFailed
         }
     }

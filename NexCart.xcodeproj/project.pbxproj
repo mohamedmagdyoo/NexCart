@@ -199,6 +199,8 @@
 		D9906FCD2FF825F900B9474E /* AddressDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FCC2FF825F900B9474E /* AddressDao.swift */; };
 		D9906FCF2FF82C5B00B9474E /* AddNewAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9906FCE2FF82C5B00B9474E /* AddNewAddressView.swift */; };
 		D9974C372FFE7FE600FE915F /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9974C362FFE7FE600FE915F /* AppRouter.swift */; };
+		D9974C3A2FFEC9DB00FE915F /* ImageDonwnloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9974C392FFEC9DB00FE915F /* ImageDonwnloader.swift */; };
+		D9974C3C2FFECA0B00FE915F /* ImageComposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9974C3B2FFECA0B00FE915F /* ImageComposition.swift */; };
 		D9CFF5882FF4126200B7B8DE /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D9EAA1272FF274410097C038 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D9EAA1262FF274410097C038 /* FirebaseAuth */; };
 		D9EAA12C2FF275690097C038 /* FirebaseAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EAA12B2FF275690097C038 /* FirebaseAuthService.swift */; };
@@ -458,6 +460,8 @@
 		D9906FCC2FF825F900B9474E /* AddressDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDao.swift; sourceTree = "<group>"; };
 		D9906FCE2FF82C5B00B9474E /* AddNewAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAddressView.swift; sourceTree = "<group>"; };
 		D9974C362FFE7FE600FE915F /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		D9974C392FFEC9DB00FE915F /* ImageDonwnloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDonwnloader.swift; sourceTree = "<group>"; };
+		D9974C3B2FFECA0B00FE915F /* ImageComposition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageComposition.swift; sourceTree = "<group>"; };
 		D9CFF5822FF400C100B7B8DE /* ProductsRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsRepo.swift; sourceTree = "<group>"; };
 		D9EAA12B2FF275690097C038 /* FirebaseAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthService.swift; sourceTree = "<group>"; };
 		D9EAA1322FF27A3F0097C038 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
@@ -1268,10 +1272,10 @@
 		D90431762FFBC7F400E84300 /* HuggingFace */ = {
 			isa = PBXGroup;
 			children = (
+				D9974C382FFEC9CE00FE915F /* Services */,
 				D904317B2FFBCBBC00E84300 /* DTOs */,
 				D904317E2FFBCBFD00E84300 /* HuggingFaceServiceError.swift */,
 				D90431772FFBC80A00E84300 /* HuggingFaceEndPoint.swift */,
-				D90431792FFBC88600E84300 /* HuggingFaceService.swift */,
 				D90431832FFBCCA500E84300 /* HuggingFaceProvider.swift */,
 			);
 			path = HuggingFace;
@@ -1288,10 +1292,10 @@
 		D90431802FFBCC5300E84300 /* AI_Providers */ = {
 			isa = PBXGroup;
 			children = (
-				9FA5E9F92FFDC96100634AA6 /* Pollination */,
 				D90431812FFBCC6300E84300 /* AIProvider.swift */,
-				D90431762FFBC7F400E84300 /* HuggingFace */,
 				9FA5E9FC2FFDC9C300634AA6 /* AIProvidersType.swift */,
+				9FA5E9F92FFDC96100634AA6 /* Pollination */,
+				D90431762FFBC7F400E84300 /* HuggingFace */,
 			);
 			path = AI_Providers;
 			sourceTree = "<group>";
@@ -2235,6 +2239,24 @@
 			path = UseCases;
 			sourceTree = "<group>";
 		};
+		D9974C382FFEC9CE00FE915F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D90431792FFBC88600E84300 /* HuggingFaceService.swift */,
+				D9974C3D2FFECA1200FE915F /* Image */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		D9974C3D2FFECA1200FE915F /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				D9974C392FFEC9DB00FE915F /* ImageDonwnloader.swift */,
+				D9974C3B2FFECA0B00FE915F /* ImageComposition.swift */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
 		D9EAA1282FF2750D0097C038 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -2704,6 +2726,7 @@
 				F51C98A82FF5A0E000A9C2EE /* ProductBodyMapper.swift in Sources */,
 				9F9003382FF6F23C00B4B745 /* CollectionProductsView.swift in Sources */,
 				F51C98A92FF5A0E000A9C2EE /* AddCartResponse.swift in Sources */,
+				D9974C3C2FFECA0B00FE915F /* ImageComposition.swift in Sources */,
 				9FA0580E2FF8547600DB93BB /* SearchRepoProtocol.swift in Sources */,
 				F51C98AA2FF5A0E000A9C2EE /* ProductRepoImpl.swift in Sources */,
 				F51C989E2FF5A0A800A9C2EE /* ProductDetailsRepo.swift in Sources */,
@@ -2793,6 +2816,7 @@
 				D960C2472FF1B6CA00FFF4D9 /* ShardViews.swift in Sources */,
 				D9EAA1332FF27A3F0097C038 /* AuthRepository.swift in Sources */,
 				D904316C2FFBBBB000E84300 /* GenerateOutfitUseCase.swift in Sources */,
+				D9974C3A2FFEC9DB00FE915F /* ImageDonwnloader.swift in Sources */,
 				D960C21D2FF17B6100FFF4D9 /* LoginAsGuest.swift in Sources */,
 				D93C25FE2FF5294400486A11 /* FavProductsDaoProtocol.swift in Sources */,
 				D960C1F42FF1243400FFF4D9 /* LaunchScreen.swift in Sources */,
