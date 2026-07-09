@@ -55,7 +55,7 @@ struct AddNewAddressView: View {
                                         .font(AppColor.sans(16, .semibold))
                                 }
                             }
-                            .foregroundColor(.white)
+                            .foregroundColor(AppColor.card)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 16)
                             .background(AppColor.textPrim)

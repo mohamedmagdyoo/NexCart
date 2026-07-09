@@ -40,6 +40,7 @@ struct OutfitGeneratorView: View {
 
                 Text("Outfit Generator")
                     .font(.system(size: 28, weight: .heavy, design: .default))
+                    .foregroundColor(AppColor.textPrim)
             }
 
             Spacer()
@@ -49,9 +50,9 @@ struct OutfitGeneratorView: View {
             } label: {
                 Image(systemName: "square.stack.3d.up.fill")
                     .font(.system(size: 18, weight: .semibold))
-                    .foregroundColor(.black)
+                    .foregroundColor(AppColor.textPrim)
                     .frame(width: 44, height: 44)
-                    .background(Color.white)
+                    .background(AppColor.card)
                     .clipShape(Circle())
                     .shadow(color: Color.black.opacity(0.12), radius: 8, x: 0, y: 4)
             }
@@ -83,15 +84,15 @@ struct OutfitGeneratorView: View {
                HStack(spacing: 8) {
                    Image(systemName: provider.iconName)
                        .font(.system(size: 13, weight: .semibold))
-                       .foregroundColor(isSelected ? .white : AppColor.textSec)
+                       .foregroundColor(isSelected ? AppColor.card : AppColor.textSec)
     
                    VStack(alignment: .leading, spacing: 1) {
                        Text(provider.rawValue)
                            .font(AppColor.sans(13, .semibold))
-                           .foregroundColor(isSelected ? .white : AppColor.textPrim)
+                           .foregroundColor(isSelected ? AppColor.card : AppColor.textPrim)
                        Text(provider.description)
                            .font(AppColor.sans(10))
-                           .foregroundColor(isSelected ? .white.opacity(0.75) : AppColor.textSec)
+                           .foregroundColor(isSelected ? AppColor.card.opacity(0.75) : AppColor.textSec)
                    }
     
                    Spacer()
@@ -99,7 +100,7 @@ struct OutfitGeneratorView: View {
                    if isSelected {
                        Image(systemName: "checkmark.circle.fill")
                            .font(.system(size: 14))
-                           .foregroundColor(.white)
+                           .foregroundColor(AppColor.card)
                    }
                }
                .padding(.horizontal, 14)

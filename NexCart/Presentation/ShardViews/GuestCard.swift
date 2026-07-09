@@ -56,10 +56,10 @@ struct GuestGuard<Content: View>: View {
             } label: {
                 Text("Sign in")
                     .font(AppColor.sans(16, .semibold))
-                    .foregroundColor(.white)
+                    .foregroundColor(AppColor.btnText) // ✅ متغير حسب المود
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
-                    .background(Color.black)
+                    .background(AppColor.btnBg)      // ✅ متغير حسب المود
                     .clipShape(Capsule())
             }
             .padding(.horizontal, 40)

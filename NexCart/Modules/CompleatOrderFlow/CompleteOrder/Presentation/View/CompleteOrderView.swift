@@ -51,7 +51,7 @@ struct CompleteOrderView: View {
                     }) {
                         Image(systemName: "chevron.left")
                             .font(.system(size: 16, weight: .semibold))
-                            .foregroundColor(.black)
+                            .foregroundColor(AppColor.btnText)
                             .frame(width: 40, height: 40)
                             .background(Color.white)
                             .clipShape(Circle())
@@ -168,10 +168,10 @@ struct CompleteOrderView: View {
                 }) {
                     Text("Complete Payment")
                         .font(AppColor.sans(16, .medium))
-                        .foregroundColor(AppColor.white)
+                        .foregroundColor(AppColor.btnText)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 18)
-                        .background(AppColor.pillSel)
+                        .background(AppColor.btnBg)
                         .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
                 }
                 .disabled(viewModel.allItems.isEmpty)
@@ -272,10 +272,10 @@ struct CompleteOrderView: View {
             VStack(spacing: 10) {
                 Text("Order placed.")
                     .font(AppColor.serif(34, .medium))
-                    .foregroundColor(.black)
+                    .foregroundColor(AppColor.textPrim)
                 Text("Thank you, \(address.fullName.components(separatedBy: " ").first ?? "Customer"). We're preparing your pieces and will share tracking shortly.")
                     .font(AppColor.sans(15))
-                    .foregroundColor(.gray)
+                    .foregroundColor(AppColor.textSec)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 32)
             }
@@ -290,9 +290,9 @@ struct CompleteOrderView: View {
                 detailRow(title: "Shipping to", value: "\(address.streetAddress), \(address.city)")
             }
             .padding(20)
-            .background(Color.white)
+            .background(AppColor.card)
             .clipShape(RoundedRectangle(cornerRadius: 16))
-            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray.opacity(0.25), lineWidth: 1))
+            .overlay(RoundedRectangle(cornerRadius: 16).stroke(AppColor.border.opacity(0.25), lineWidth: 1))
             .padding(.horizontal, 24)
 
             Spacer()
@@ -302,10 +302,10 @@ struct CompleteOrderView: View {
             }) {
                 Text("Continue Shopping")
                     .font(AppColor.sans(16, .medium))
-                    .foregroundColor(AppColor.white)
+                    .foregroundColor(AppColor.btnText)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 18)
-                    .background(AppColor.pillSel)
+                    .background(AppColor.btnBg)
                     .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
             }
             .padding(.horizontal, 24)
@@ -313,18 +313,18 @@ struct CompleteOrderView: View {
         }
 
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.white.ignoresSafeArea())
+        .background(AppColor.bg.ignoresSafeArea())
     }
 
     private func detailRow(title: String, value: String) -> some View {
         HStack {
             Text(title)
                 .font(AppColor.sans(14))
-                .foregroundColor(.gray)
+                .foregroundColor(AppColor.textSec)
             Spacer()
             Text(value)
                 .font(AppColor.sans(14, .semibold))
-                .foregroundColor(.black)
+                .foregroundColor(AppColor.textPrim)
         }
     }
 }
