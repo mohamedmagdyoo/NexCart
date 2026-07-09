@@ -18,12 +18,14 @@ struct OrderCreateBody: Encodable {
     let lineItems: [OrderLineItemBody]
     let shippingAddress: OrderShippingAddressBody
     let transactions: [OrderTransactionBody]
+    let discountCodes: [OrderDiscountCodeBody]?
 
     enum CodingKeys: String, CodingKey {
         case currency, email, transactions
         case financialStatus = "financial_status"
         case lineItems = "line_items"
         case shippingAddress = "shipping_address"
+        case discountCodes = "discount_codes"
     }
 }
 
@@ -75,4 +77,9 @@ struct CreatedOrderNode: Decodable {
         case id, name, email
         case totalPrice = "total_price"
     }
+}
+struct OrderDiscountCodeBody: Encodable {
+    let code: String
+    let amount: String
+    let type: String   
 }

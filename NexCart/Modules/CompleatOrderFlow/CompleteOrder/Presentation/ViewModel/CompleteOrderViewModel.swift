@@ -66,11 +66,17 @@ final class CompleteOrderViewModel: CompleteOrderViewModelProtocol {
 
     private func submitOrder(paymentMethod: PaymentMethodType, total: Double, address: AddressEntity) async {
         do {
+            let isCouponValid = cartViewModel.couponResult?.isValid == true
+            let discountCode = isCouponValid ? cartViewModel.couponResult?.coupon?.code : nil
+            let discountAmount = isCouponValid ? (cartViewModel.couponResult?.discountAmount ?? 0) : 0
+
             let result = try await completeOrderUseCase.execute(
                 allItems: allItems,
                 address: address,
                 paymentMethod: paymentMethod,
-                total: total
+                total: total,
+                discountCode: discountCode,
+                discountAmount: discountAmount
             )
             self.orderNumber = result.orderNumber
 
