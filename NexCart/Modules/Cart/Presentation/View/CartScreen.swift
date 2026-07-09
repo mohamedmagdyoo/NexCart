@@ -1,0 +1,484 @@
+//
+//  CartScreen.swift
+//  NexCart
+//
+//  Created by Antoneos Philip on 01/07/2026.
+//
+
+import Foundation
+import SwiftUI
+
+struct BagView: View {
+    @AppStorage("pendingCouponCode") private var promoCode: String = ""
+    @StateObject private var cartViewModel: CartViewModel =
+    DIContainer.shared.container.resolve(CartViewModel.self)!
+    @ObservedObject private var appSettings = AppSettings.shared
+    
+    @State private var itemToDelete: BagItemEntity?
+    @State private var bagIdForDeletion: Int?
+    @State private var showDeleteAlert = false
+    @State private var showToast = false
+    @State private var toastMessage = ""
+    
+    
+    private var allItems: [BagItemEntity] {
+        cartViewModel.cartData.flatMap { $0.items }
+    }
+    
+    private var subtotal: Double {
+        let rate = AppSettings.shared.currencyRate
+        return allItems.reduce(0.0) { $0 + ($1.price * Double($1.quantity) * rate) }
+    }
+    
+    private var discount: Double {
+        guard let result = cartViewModel.couponResult, result.isValid else { return 0 }
+        return min(result.discountAmount, subtotal)
+    }
+    
+    private var total: Double {
+        max(subtotal - discount, 0)
+    }
+    
+    var body: some View {
+        ZStack {
+            AppColor.bg.ignoresSafeArea()
+            
+            ScrollView {
+                VStack {
+                    header
+                    
+                    content
+                    Spacer()
+                }
+                .padding(.bottom, 90)
+            }
+        }
+        .onAppear {
+            Task {
+                await cartViewModel.getAllCart()
+                if !promoCode.isEmpty && cartViewModel.couponResult == nil {
+                    await cartViewModel.applyCoupon(code: promoCode)
+                }
+            }
+        }
+        .onDisappear {
+            cartViewModel.triggerSync()
+        }
+        .alert("Are you sure to delete?", isPresented: $showDeleteAlert) {
+            Button("Delete", role: .destructive) {
+                if let item = itemToDelete, let bagId = bagIdForDeletion {
+                    deleteItem(item, fromBagId: bagId)
+                }
+            }
+            Button("Cancel", role: .cancel) {}
+        }
+        .overlay(
+            toastView
+        )
+    }
+    
+    @ViewBuilder
+    private var toastView: some View {
+        if showToast {
+            VStack {
+                Spacer()
+                Text(toastMessage)
+                    .font(AppColor.sans(14, .medium))
+                    .foregroundColor(AppColor.white)
+                    .padding(.horizontal, 24)
+                    .padding(.vertical, 12)
+                    .background(Color.black.opacity(0.8))
+                    .clipShape(Capsule())
+                    .padding(.bottom, 100)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+            }
+            .animation(.easeInOut, value: showToast)
+        }
+    }
+    
+    private func deleteItem(_ item: BagItemEntity, fromBagId bagId: Int) {
+        guard let bagIndex = cartViewModel.cartData.firstIndex(where: { $0.id == bagId }),
+              let itemIndex = cartViewModel.cartData[bagIndex].items.firstIndex(where: { $0.id == item.id }) else { return }
+        
+        let removedItem = cartViewModel.cartData[bagIndex].items.remove(at: itemIndex)
+        
+        Task {
+            let draftOrderIds = item.draftOrderIds.isEmpty ? [String(item.drafOrderId)] : item.draftOrderIds.map { String($0) }
+            let success = await cartViewModel.deleteFromCart(draftOrderIds: draftOrderIds)
+            if success {
+                showToastMessage(appSettings.loc("Item deleted successfully", "تم حذف العنصر بنجاح"))
+                NotificationCenter.default.post(name: Notification.Name("cartItemDeleted"), object: nil, userInfo: ["variantId": item.variantId ?? 0])
+                await cartViewModel.revalidateCouponIfNeeded()
+            } else {
+                withAnimation {
+                    cartViewModel.cartData[bagIndex].items.insert(removedItem, at: itemIndex)
+                }
+                showToastMessage(appSettings.loc("Failed to delete item", "فشل حذف العنصر"))
+            }
+        }
+    }
+    
+    private func showToastMessage(_ message: String) {
+        toastMessage = message
+        withAnimation {
+            showToast = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            withAnimation {
+                showToast = false
+            }
+        }
+    }
+    
+    
+    @ViewBuilder
+    private var content: some View {
+        switch cartViewModel.cartState {
+        case .loading:
+            loadingView
+            
+        case .error(let message):
+            errorView(message: message)
+            
+        case .success:
+            if allItems.isEmpty {
+                emptyView
+            } else {
+                cartContent
+            }
+        }
+    }
+    
+    private var loadingView: some View {
+        VStack {
+            Spacer()
+            ProgressView()
+                .progressViewStyle(.circular)
+                .tint(AppColor.textPrim)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+    }
+    
+    private func errorView(message: String) -> some View {
+        VStack {
+            Spacer()
+            HomeErrorView(message: message) {
+                await cartViewModel.getAllCart()
+            }
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+    }
+    
+    private var emptyView: some View {
+        VStack {
+            Spacer()
+            VStack(spacing: 14) {
+                Image(systemName: "cart")
+                    .font(.system(size: 32))
+                    .foregroundColor(AppColor.textSec)
+                
+                Text(appSettings.loc("Your cart is empty", "سلتك فارغة"))
+                    .font(AppColor.sans(15))
+                    .foregroundColor(AppColor.textSec)
+            }
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+    }
+    
+    private var cartContent: some View {
+        VStack(spacing: 0) {
+            ScrollView {
+                VStack(spacing: 16) {
+                    ForEach($cartViewModel.cartData) { $bag in
+                        ForEach($bag.items) { $item in
+                            BagItemRow(
+                                item: $item,
+                                image: cartViewModel.images[item.productId ?? 0] ?? "",
+                                isUpdating: cartViewModel.updatingItemIds.contains(item.id),
+                                onDelete: {
+                                    itemToDelete = item
+                                    bagIdForDeletion = bag.id
+                                    showDeleteAlert = true
+                                },
+                                onQuantityChange: { newQuantity in
+                                    Task {
+                                        await cartViewModel.updateQuantity(itemId: item.id, newQuantity: newQuantity)
+                                        NotificationCenter.default.post(name: Notification.Name("cartItemUpdated"), object: nil, userInfo: ["variantId": item.variantId ?? 0, "quantity": newQuantity])
+                                    }
+                                }
+                            )
+                        }
+                    }
+                    
+                    promoField
+                    
+                    summaryCard
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 20)
+                .padding(.bottom, 24)
+            }
+            
+            checkoutButton
+        }
+    }
+    
+    
+    private var header: some View {
+        HStack(alignment: .firstTextBaseline) {
+            Text(appSettings.loc("Your cart", "سلتك"))
+                .font(AppColor.serif(30, .medium))
+                .foregroundColor(AppColor.textPrim)
+            
+            Spacer()
+            
+            Text(appSettings.loc("\(allItems.count) items", "\(allItems.count) عناصر"))
+                .font(AppColor.sans(14))
+                .foregroundColor(AppColor.textSec)
+        }
+        .padding(.horizontal, 20)
+        .padding(.top, 20)
+        .padding(.bottom, 4)
+    }
+    
+    private var promoField: some View {
+        let isApplied = cartViewModel.couponResult?.isValid == true
+        
+        return HStack(spacing: 12) {
+            HStack(spacing: 10) {
+                Image(systemName: "tag")
+                    .font(.system(size: 15))
+                    .foregroundColor(AppColor.textSec)
+                
+                TextField(appSettings.loc("Promo code", "رمز الخصم"), text: $promoCode)
+                    .font(AppColor.sans(15))
+                    .foregroundColor(AppColor.textPrim)
+                    .disabled(isApplied)
+                
+                if isApplied {
+                    Button(action: {
+                        promoCode = ""
+                        cartViewModel.removeCoupon()
+                    }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(AppColor.textSec)
+                            .font(.system(size: 16))
+                    }
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 14)
+            .background(AppColor.card)
+            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .stroke(AppColor.border, lineWidth: 1)
+            )
+            
+            if !isApplied {
+                Button(action: {
+                    Task {
+                        await cartViewModel.applyCoupon(code: promoCode)
+                        if let result = cartViewModel.couponResult {
+                            showToastMessage(result.message)
+                        }
+                    }
+                }) {
+                    if cartViewModel.isApplyingCoupon {
+                        ProgressView()
+                            .tint(AppColor.white)
+                            .padding(.horizontal, 22)
+                            .padding(.vertical, 14)
+                            .background(AppColor.btnBg)
+                            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                    } else {
+                        Text(appSettings.loc("Apply", "تطبيق"))
+                            .font(AppColor.sans(15, .medium))
+                            .foregroundColor(AppColor.btnText)
+                            .padding(.horizontal, 22)
+                            .padding(.vertical, 14)
+                            .background(AppColor.pillSel)
+                            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                    }
+                }
+            }
+        }
+    }
+    
+    private var summaryCard: some View {
+        VStack(spacing: 12) {
+            summaryRow(label: appSettings.loc("Subtotal", "المجموع الفرعي"), value: subtotal, secondary: true)
+            
+            if let result = cartViewModel.couponResult, result.isValid {
+                summaryRow(label: appSettings.loc("Discount", "الخصم"), value: discount, secondary: true, isDiscount: true)
+            }
+            
+            Divider()
+                .background(AppColor.border)
+                .padding(.vertical, 4)
+            
+            summaryRow(label: appSettings.loc("Total", "الإجمالي"), value: total, secondary: false)
+        }
+        .padding(20)
+        .background(AppColor.card)
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .stroke(AppColor.border, lineWidth: 1)
+        )
+    }
+    
+    private func summaryRow(label: String, value: Double, secondary: Bool, isDiscount: Bool = false) -> some View {
+        HStack {
+            Text(label)
+                .font(secondary ? AppColor.sans(15) : AppColor.serif(19, .medium))
+                .foregroundColor(secondary ? AppColor.textSec : AppColor.textPrim)
+            
+            Spacer()
+            
+            Text(isDiscount ? "-\(AppSettings.shared.selectedCurrency)\(value, specifier: "%.2f")" : "\(AppSettings.shared.selectedCurrency)\(value, specifier: "%.2f")")
+                .font(secondary ? AppColor.sans(15) : AppColor.serif(19, .medium))
+                .foregroundColor(isDiscount ? .green : (secondary ? AppColor.textPrim : AppColor.textPrim))
+        }
+    }
+    
+    private var checkoutButton: some View {
+        
+        
+        NavigationLink(value: CartRoute.checkout(total: total)) {
+            Text(appSettings.loc(
+                "Checkout · \(AppSettings.shared.selectedCurrency)\(total.asGroupedString)",
+                "الدفع · \(AppSettings.shared.selectedCurrency)\(total)"
+            ))
+            .font(AppColor.sans(16, .medium))
+            .foregroundColor(AppColor.btnText)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 18)
+            .background(AppColor.btnBg)
+            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        }
+        .padding(.horizontal, 20)
+        .padding(.bottom, 20)
+        .padding(.top, 8)
+    }
+}
+
+struct BagItemRow: View {
+    @Binding var item: BagItemEntity
+    var image: String
+    var isUpdating: Bool
+    var onDelete: () -> Void
+    var onQuantityChange: (Int) -> Void
+    
+    private var displayName: String {
+        let parts = item.title.components(separatedBy: "|")
+        if parts.count > 1 {
+            return parts[1].trimmingCharacters(in: .whitespaces)
+        }
+        return item.title.trimmingCharacters(in: .whitespaces)
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack(alignment: .top, spacing: 14) {
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(AppColor.surface)
+                    .frame(width: 68, height: 84)
+                    .overlay(
+                        AsyncImage(url: URL(string: image)) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                        } placeholder: {
+                            ProgressView()
+                        }
+                            .frame(width: 68, height: 84)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                    )
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(item.brand)
+                        .font(AppColor.sans(11, .medium))
+                        .tracking(1)
+                        .foregroundColor(AppColor.textSec)
+                    
+                    Text(displayName)
+                        .font(AppColor.serif(18, .medium))
+                        .foregroundColor(AppColor.textPrim)
+                    
+                    Text(item.size)
+                        .font(AppColor.sans(14))
+                        .foregroundColor(AppColor.textSec)
+                }
+                
+                Spacer()
+                
+                Button(action: onDelete) {
+                    Image(systemName: "trash")
+                        .font(.system(size: 15))
+                        .foregroundColor(AppColor.textSec)
+                }
+            }
+            
+            HStack {
+                HStack(spacing: 0) {
+                    stepperButton(icon: "minus") {
+                        if item.quantity > 1 {
+                            item.quantity -= 1
+                            onQuantityChange(item.quantity)
+                        }
+                    }
+                    
+                    if isUpdating {
+                        ProgressView()
+                            .frame(width: 32)
+                    } else {
+                        Text("\(item.quantity)")
+                            .font(AppColor.sans(15, .medium))
+                            .foregroundColor(AppColor.textPrim)
+                            .frame(width: 32)
+                    }
+                    
+                    stepperButton(icon: "plus") {
+                        item.quantity += 1
+                        onQuantityChange(item.quantity)
+                    }
+                }
+                .background(AppColor.pill)
+                .clipShape(Capsule())
+                .disabled(isUpdating)
+                
+                Spacer()
+                
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text("\(AppSettings.shared.selectedCurrency)\(item.price * AppSettings.shared.currencyRate, specifier: "%.2f")")
+                        .font(AppColor.serif(19, .medium))
+                        .foregroundColor(AppColor.textPrim)
+                    
+                    Text("per piece")
+                        .font(AppColor.sans(12))
+                        .foregroundColor(AppColor.textSec)
+                }
+            }
+        }
+        .padding(16)
+        .background(AppColor.card)
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .stroke(AppColor.border, lineWidth: 1)
+        )
+    }
+    
+    private func stepperButton(icon: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: icon)
+                .font(.system(size: 12, weight: .semibold))
+                .foregroundColor(AppColor.textPrim)
+                .frame(width: 32, height: 32)
+        }
+    }
+}

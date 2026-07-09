@@ -1,0 +1,34 @@
+//
+//  BrandsEndPoint.swift
+//  NexCart
+//
+//  Created by shady ramadan on 30/06/2026.
+//
+
+import Foundation
+
+enum BrandsEndPoint: EndPoint {
+    var body: Data?{
+        return nil
+    }
+    
+    case allBrands
+    case allCategories
+
+    var baseUrl: String {
+        "https://mad46-ios-team9.myshopify.com/admin/api/2024-01"
+    }
+
+    var path: String {
+        switch self {
+        case .allBrands:
+            return "/smart_collections.json"
+        case .allCategories:
+            return "/custom_collections.json"
+        }
+    }
+
+    var method: String {
+        "GET"
+    }
+}

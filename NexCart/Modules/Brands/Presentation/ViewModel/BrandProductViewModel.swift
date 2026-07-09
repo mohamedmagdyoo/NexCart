@@ -1,0 +1,110 @@
+//
+//  BrandProductViewModel.swift
+//  NexCart
+//
+//  Created by shady ramadan on 30/06/2026.
+//
+
+import Foundation
+
+struct CategoryEntity: Identifiable, Hashable {
+    let id: String
+    let name: String
+}
+@MainActor
+final class BrandProductsViewModel: ObservableObject {
+    
+    @Published var products: [ProductEntity] = []
+    @Published var categories: [CategoryEntity] = [CategoryEntity(id: "all", name: "All")]
+    @Published var selectedCategory: CategoryEntity = CategoryEntity(id: "all", name: "All")
+    @Published var isLoading = false
+    @Published var errorMessage: String?
+
+    let brand: BrandEntity
+    private let fetchBrandProductsUseCase: FetchBrandProductsUseCaseProtocol
+    private let coreDataService = CoreDataService.shared
+
+    init(brand: BrandEntity, fetchBrandProductsUseCase: FetchBrandProductsUseCaseProtocol) {
+        self.brand = brand
+        self.fetchBrandProductsUseCase = fetchBrandProductsUseCase
+    }
+
+    func toggleFavorite(productId: Int) {
+        guard let index = products.firstIndex(where: { $0.id == productId }) else { return }
+        products[index].isFavorited.toggle()
+        
+        let product = products[index]
+        if product.isFavorited {
+            coreDataService.saveProductToDatabase(product: product)
+        } else {
+            coreDataService.deleteProductFromDatabase(id: product.id)
+        }
+    }
+
+    // NOTE: This still matches on the product name as a stand-in, since ProductEntity
+    // doesn't currently expose a product type / tags field from the API.
+    // If/when ProductsResponseDTO exposes `product_type` or `tags`, switch this to
+    // filter on that instead — name-based matching will misclassify items like
+    // "Shoe Polish" or anything whose name doesn't literally contain the category word.
+    var filteredProducts: [ProductEntity] {
+        guard selectedCategory.id != "all" else { return products }
+
+        return products.filter { product in
+            let name = product.name.lowercased()
+            return name.contains(selectedCategory.name.lowercased())
+        }
+    }
+
+    func loadProducts() async {
+        isLoading = true
+        errorMessage = nil
+        
+        // Fetch products
+        do {
+            var fetchedProducts = try await fetchBrandProductsUseCase.execute(collectionId: brand.id, brandName: brand.name)
+            
+            // Check favorites against Core Data
+            for i in fetchedProducts.indices {
+                fetchedProducts[i].isFavorited = coreDataService.isFavorite(id: fetchedProducts[i].id)
+            }
+            
+            #if DEBUG
+            print("==================================================")
+            print("🚀 [SUCCESS] Fetched Products for Brand: \(brand.name)")
+            print("📊 Total Products Received from API: \(fetchedProducts.count)")
+            if fetchedProducts.count > 0 {
+                let firstFew = fetchedProducts.prefix(3).map { "[\($0.name) - Vendor: \($0.brand)]" }.joined(separator: ", ")
+                print("👀 Sample Products: \(firstFew)")
+            }
+            print("==================================================")
+            #endif
+            products = fetchedProducts
+        } catch {
+            #if DEBUG
+            print("==================================================")
+            print("❌ [ERROR] FetchProducts failed for \(brand.name) (id: \(brand.id))")
+            print("❌ Error details: \(error)")
+            print("==================================================")
+            #endif
+            errorMessage = "Couldn't load products. Pull to refresh."
+        }
+        
+        // Fetch categories separately
+        do {
+            let fetchedCategories = try await fetchBrandProductsUseCase.fetchCategories()
+            var allCats = [CategoryEntity(id: "all", name: "All")]
+            allCats.append(contentsOf: fetchedCategories)
+            categories = allCats
+        } catch {
+            #if DEBUG
+            print("❌ FetchCategories failed: \(error)")
+            #endif
+        }
+        
+        isLoading = false
+    }
+
+    func select(_ category: CategoryEntity) {
+        selectedCategory = category
+    }
+}
