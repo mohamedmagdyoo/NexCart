@@ -81,7 +81,7 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
             await revalidateCouponIfNeeded()
             cartState = .success(bagData: cartData)
         } catch {
-            cartState = .error(message: "Failed to load cart \(error)")
+            cartState = .error(message: "Failed to load your cart. Please check your connection and try again.")
         }
     }
 
@@ -94,7 +94,7 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
                 images[product.id] = product.imageURL
             }
         } catch {
-            cartState = .error(message: "Failed to load product")
+            cartState = .error(message: "Failed to load products. Please check your connection and try again.")
         }
     }
 
@@ -105,7 +105,7 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
             }
             return true
         } catch {
-            cartState = .error(message: "Failed to delete item")
+            cartState = .error(message: "Failed to delete item. Please try again.")
             return false
         }
     }
@@ -118,6 +118,12 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
         couponResult = result
         isApplyingCoupon = false
         appliedCouponCode = result.isValid ? code : nil
+    }
+
+    @MainActor
+    func removeCoupon() {
+        couponResult = nil
+        appliedCouponCode = nil
     }
 
     @MainActor

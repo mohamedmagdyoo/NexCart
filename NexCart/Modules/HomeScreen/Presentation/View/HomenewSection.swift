@@ -219,7 +219,7 @@ struct HomeErrorView: View {
             Text("Something went wrong")
                 .font(AppColor.sans(16, .medium))
                 .foregroundColor(AppColor.textPrim)
-            Text(message)
+            Text("Please check your internet connection and try again.")
                 .font(AppColor.sans(12))
                 .foregroundColor(AppColor.textSec)
                 .multilineTextAlignment(.center)

@@ -56,6 +56,9 @@ struct BagView: View {
         .onAppear {
             Task {
                 await cartViewModel.getAllCart()
+                if !promoCode.isEmpty && cartViewModel.couponResult == nil {
+                    await cartViewModel.applyCoupon(code: promoCode)
+                }
             }
         }
         .onDisappear {
@@ -160,29 +163,9 @@ struct BagView: View {
     private func errorView(message: String) -> some View {
         VStack {
             Spacer()
-            VStack(spacing: 14) {
-                Image(systemName: "exclamationmark.triangle")
-                    .font(.system(size: 32))
-                    .foregroundColor(AppColor.textSec)
-                
-                Text(message)
-                    .font(AppColor.sans(15))
-                    .foregroundColor(AppColor.textSec)
-                    .multilineTextAlignment(.center)
-                
-                Button(action: {
-                    Task { await cartViewModel.getAllCart() }
-                }) {
-                    Text(appSettings.loc("Retry", "إعادة المحاولة"))
-                        .font(AppColor.sans(15, .medium))
-                        .foregroundColor(AppColor.white)
-                        .padding(.horizontal, 24)
-                        .padding(.vertical, 12)
-                        .background(AppColor.pillSel)
-                        .clipShape(Capsule())
-                }
+            HomeErrorView(message: message) {
+                await cartViewModel.getAllCart()
             }
-            .padding(.horizontal, 32)
             Spacer()
         }
         .frame(maxWidth: .infinity)
@@ -262,7 +245,9 @@ struct BagView: View {
     }
     
     private var promoField: some View {
-        HStack(spacing: 12) {
+        let isApplied = cartViewModel.couponResult?.isValid == true
+        
+        return HStack(spacing: 12) {
             HStack(spacing: 10) {
                 Image(systemName: "tag")
                     .font(.system(size: 15))
@@ -271,6 +256,18 @@ struct BagView: View {
                 TextField(appSettings.loc("Promo code", "رمز الخصم"), text: $promoCode)
                     .font(AppColor.sans(15))
                     .foregroundColor(AppColor.textPrim)
+                    .disabled(isApplied)
+                
+                if isApplied {
+                    Button(action: {
+                        promoCode = ""
+                        cartViewModel.removeCoupon()
+                    }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(AppColor.textSec)
+                            .font(.system(size: 16))
+                    }
+                }
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 14)
@@ -281,30 +278,31 @@ struct BagView: View {
                     .stroke(AppColor.border, lineWidth: 1)
             )
             
-            Button(action: {
-                Task {
-                    await cartViewModel.applyCoupon(code: promoCode)
-                    if let result = cartViewModel.couponResult {
-                        showToastMessage(result.message)
+            if !isApplied {
+                Button(action: {
+                    Task {
+                        await cartViewModel.applyCoupon(code: promoCode)
+                        if let result = cartViewModel.couponResult {
+                            showToastMessage(result.message)
+                        }
                     }
-                    promoCode = ""
-                }
-            }) {
-                if cartViewModel.isApplyingCoupon {
-                    ProgressView()
-                        .tint(AppColor.white)
-                        .padding(.horizontal, 22)
-                        .padding(.vertical, 14)
-                        .background(AppColor.btnBg)
-                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                } else {
-                    Text(appSettings.loc("Apply", "تطبيق"))
-                        .font(AppColor.sans(15, .medium))
-                        .foregroundColor(AppColor.btnText)
-                        .padding(.horizontal, 22)
-                        .padding(.vertical, 14)
-                        .background(AppColor.pillSel)
-                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                }) {
+                    if cartViewModel.isApplyingCoupon {
+                        ProgressView()
+                            .tint(AppColor.white)
+                            .padding(.horizontal, 22)
+                            .padding(.vertical, 14)
+                            .background(AppColor.btnBg)
+                            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                    } else {
+                        Text(appSettings.loc("Apply", "تطبيق"))
+                            .font(AppColor.sans(15, .medium))
+                            .foregroundColor(AppColor.btnText)
+                            .padding(.horizontal, 22)
+                            .padding(.vertical, 14)
+                            .background(AppColor.pillSel)
+                            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                    }
                 }
             }
         }

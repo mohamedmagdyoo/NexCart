@@ -14,4 +14,6 @@ protocol CartViewModelProtocol {
     func deleteFromCart(draftOrderIds: [String]) async -> Bool
     
     func applyCoupon(code: String) async
+    
+    func removeCoupon()
 }
