@@ -88,11 +88,14 @@ struct CheckoutView: View {
                 }
             }else{
                 ForEach(Array(viewModel.addresses.enumerated()), id: \.element.id) { index, address in
-                    addressRow(address, isSelected: index == 0)
+                    addressRow(address, isSelected: address.id == viewModel.selectedAddress?.id)
                 }
+
             }
         }
     }
+   
+    
     
     private func addressRow(_ address: AddressEntity, isSelected: Bool) -> some View {
         Button {
@@ -111,11 +114,15 @@ struct CheckoutView: View {
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: 16)
+
                     .fill(AppColor.card)                                              .overlay(
                         RoundedRectangle(cornerRadius: 16)
                     .strokeBorder(isSelected ? AppColor.gold : AppColor.border, lineWidth: isSelected ? 2 : 1)
                                    )
                            )
+
+            .contentShape(Rectangle())
+
         }
         .buttonStyle(.plain)
     }
@@ -149,6 +156,7 @@ struct CheckoutView: View {
                 RoundedRectangle(cornerRadius: 16)
                     .strokeBorder(isSelected ? AppColor.gold : AppColor.border, lineWidth: isSelected ? 2 : 1)
             )
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
     }
