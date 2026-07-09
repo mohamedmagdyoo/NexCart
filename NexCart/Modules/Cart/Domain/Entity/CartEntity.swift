@@ -31,6 +31,7 @@ struct BagItemEntity: Identifiable {
     let price: Double
     var quantity: Int
     let drafOrderId : Int
+    var draftOrderIds: [Int] = []
 }
 
 struct CustomerEntity: Identifiable {
@@ -68,7 +69,8 @@ extension DraftOrderLineItem {
             variantId: variantId,
             price: Double(price) ?? 0,
             quantity: quantity,
-            drafOrderId: draftOrderId
+            drafOrderId: draftOrderId,
+            draftOrderIds: [draftOrderId]
         )
     }
 }

@@ -26,10 +26,10 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
     @Published var updatingItemIds: Set<Int> = []
 
     private var appliedCouponCode: String?
-
- 
+    
     private var pendingQuantityChanges: [Int: Int] = [:]
-
+    private var syncTask: Task<Void, Never>?
+    
     init(cartUseCase: CartUseCaseProtocol, applyCouponUseCase: ApplyCouponUseCaseProtocol) {
         self.cartUseCase = cartUseCase
         self.applyCouponUseCase = applyCouponUseCase
@@ -55,20 +55,33 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
         cartData.first?.items.reduce(0) { $0 + ($1.price * Double($1.quantity)) } ?? 0.0
     }
 
+    func triggerSync() {
+        guard syncTask == nil else { return }
+        syncTask = Task {
+            await syncPendingChanges()
+            syncTask = nil
+        }
+    }
+
     func getAllCart() async {
         cartState = .loading
+        
+        if let task = syncTask {
+            _ = await task.result
+        }
+        
         do {
             let allCarts = try await cartUseCase.getAllCart(currentCustomerId: currentCustomerId)
             let customerBags = allCarts.filter {
                 $0.customer?.id == currentCustomerId
             }
             cartData = mergeBagsIntoSingleCart(customerBags)
-            pendingQuantityChanges.removeAll() 
+            pendingQuantityChanges.removeAll()
             try await getSingleProdut()
             await revalidateCouponIfNeeded()
             cartState = .success(bagData: cartData)
         } catch {
-            cartState = .error(message: "Failed to load cart \(error)")
+            cartState = .error(message: "Failed to load your cart. Please check your connection and try again.")
         }
     }
 
@@ -81,16 +94,18 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
                 images[product.id] = product.imageURL
             }
         } catch {
-            cartState = .error(message: "Failed to load product")
+            cartState = .error(message: "Failed to load products. Please check your connection and try again.")
         }
     }
 
-    func deleteFromCart(draftOrderId: String) async -> Bool {
+    func deleteFromCart(draftOrderIds: [String]) async -> Bool {
         do {
-            try await cartUseCase.deleteFromCart(draftOrderId: draftOrderId)
+            for draftOrderId in draftOrderIds {
+                try await cartUseCase.deleteFromCart(draftOrderId: draftOrderId)
+            }
             return true
         } catch {
-            cartState = .error(message: "Failed to delete item")
+            cartState = .error(message: "Failed to delete item. Please try again.")
             return false
         }
     }
@@ -103,6 +118,12 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
         couponResult = result
         isApplyingCoupon = false
         appliedCouponCode = result.isValid ? code : nil
+    }
+
+    @MainActor
+    func removeCoupon() {
+        couponResult = nil
+        appliedCouponCode = nil
     }
 
     @MainActor
@@ -126,7 +147,6 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
         cartData[bagIndex].items[itemIndex].quantity = newQuantity
         pendingQuantityChanges[itemId] = newQuantity
 
-       
         await revalidateCouponIfNeeded()
     }
 
@@ -138,38 +158,51 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
         let changedItemIds = Set(pendingQuantityChanges.keys)
         updatingItemIds.formUnion(changedItemIds)
 
+        var draftOrdersToDelete = Set<Int>()
+        var payloadByDraftOrder: [Int: [DraftOrderLineItemUpdate]] = [:]
+
         let bag = cartData[bagIndex]
+        
+        for item in bag.items {
+            let draftOrderId = item.drafOrderId
+            let quantity = pendingQuantityChanges[item.id] ?? item.quantity
+            
+            let update = DraftOrderLineItemUpdate(
+                id: item.id,
+                variantId: item.variantId,
+                quantity: quantity
+            )
+            
+            payloadByDraftOrder[draftOrderId, default: []].append(update)
+            
+            if changedItemIds.contains(item.id) {
+                let duplicates = item.draftOrderIds.filter { $0 != draftOrderId }
+                draftOrdersToDelete.formUnion(duplicates)
+            }
+        }
+        
+        for duplicateId in draftOrdersToDelete {
+            _ = try? await cartUseCase.deleteFromCart(draftOrderId: String(duplicateId))
+        }
+
         let affectedDraftOrderIds = Set(
-            bag.items
-                .filter { changedItemIds.contains($0.id) }
-                .map { $0.drafOrderId }
+            bag.items.filter { changedItemIds.contains($0.id) }.map { $0.drafOrderId }
         )
 
         for draftOrderId in affectedDraftOrderIds {
-      
-            guard let currentBagIndex = cartData.indices.first else { continue }
-            let sameOrderItems = cartData[currentBagIndex].items.filter { $0.drafOrderId == draftOrderId }
-
-            let payload = sameOrderItems.map { item -> DraftOrderLineItemUpdate in
-                DraftOrderLineItemUpdate(
-                    id: item.id,
-                    variantId: item.variantId,
-                    quantity: pendingQuantityChanges[item.id] ?? item.quantity
-                )
-            }
-
-            print("payload \(payload)")
-            do {
-                let canonicalOrder = try await cartUseCase.updateQuantity(
-                    draftOrderId: String(draftOrderId),
-                    lineItems: payload
-                )
-                replaceItems(fromDraftOrderId: draftOrderId, with: canonicalOrder.items)
-            } catch {
-                cartState = .error(message: "Failed to update quantity")
-                await getAllCart()
-                updatingItemIds.subtract(changedItemIds)
-                return
+            if let payload = payloadByDraftOrder[draftOrderId] {
+                do {
+                    let canonicalOrder = try await cartUseCase.updateQuantity(
+                        draftOrderId: String(draftOrderId),
+                        lineItems: payload
+                    )
+                    replaceItems(fromDraftOrderId: draftOrderId, with: canonicalOrder.items)
+                } catch {
+                    cartState = .error(message: "Failed to update quantity")
+                    await getAllCart()
+                    updatingItemIds.subtract(changedItemIds)
+                    return
+                }
             }
         }
 
@@ -177,7 +210,6 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
         updatingItemIds.subtract(changedItemIds)
         await revalidateCouponIfNeeded()
     }
-
 
     private func replaceItems(fromDraftOrderId draftOrderId: Int, with canonicalItems: [BagItemEntity]) {
         guard let bagIndex = cartData.indices.first else { return }
@@ -219,9 +251,14 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
             let key = mergeKey(for: item)
             if var existing = merged[key] {
                 existing.quantity += item.quantity
+                existing.draftOrderIds.append(contentsOf: item.draftOrderIds)
                 merged[key] = existing
             } else {
-                merged[key] = item
+                var newItem = item
+                if newItem.draftOrderIds.isEmpty {
+                    newItem.draftOrderIds = [newItem.drafOrderId]
+                }
+                merged[key] = newItem
                 order.append(key)
             }
         }

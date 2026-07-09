@@ -65,6 +65,7 @@ extension DIContainer {
         container.register(ProductDetailViewModel.self) { r in
             ProductDetailViewModel(
                 addCartUseCase: r.resolve(AddCartUseCase.self)!,
+                cartUseCase: r.resolve(CartUseCaseProtocol.self)!,
                 addProductToStudioUseCase: r.resolve(AddProductToSelectionUseCaseProtocol.self)!,
                 getSelectedProductsUseCase: r.resolve(GetSelectedProductsUseCaseProtocol.self)!
             )

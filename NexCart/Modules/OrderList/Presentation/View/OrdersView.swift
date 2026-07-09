@@ -10,6 +10,7 @@ import SwiftUI
 struct OrdersView: View {
     @StateObject var viewModel: OrdersViewModel
     @EnvironmentObject var tabBarManager: TabBarManager
+    @ObservedObject private var appSettings = AppSettings.shared
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -202,7 +203,7 @@ struct OrdersView: View {
                     Text("Total")
                         .font(AppColor.sans(12))
                         .foregroundColor(AppColor.textSec.opacity(0.7))
-                    Text("\(order.currency) \(Int(order.totalPrice))")
+                    Text("\(appSettings.selectedCurrency) \(Int(order.totalPrice * appSettings.currencyRate))")
                         .font(AppColor.sans(18, .semibold))
                         .foregroundColor(AppColor.textPrim)
                 }

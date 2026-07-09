@@ -10,6 +10,7 @@ import SwiftUI
 struct OrderDetailView: View {
     let order: OrderEntity
     @Environment(\.presentationMode) var presentationMode
+    @ObservedObject private var appSettings = AppSettings.shared
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -47,7 +48,7 @@ struct OrderDetailView: View {
             HStack(spacing: 0) {
                 metaItem(label: "ITEMS", value: "\(order.lineItems.count)")
                 Spacer()
-                metaItem(label: "CURRENCY", value: order.currency)
+                metaItem(label: "CURRENCY", value: appSettings.selectedCurrency)
                 Spacer()
                 metaItem(label: "ORDER NO.", value: "#\(order.orderNumber)")
             }
@@ -130,7 +131,7 @@ struct OrderDetailView: View {
             Spacer()
 
             VStack(alignment: .trailing, spacing: 6) {
-                Text("\(order.currency) \(Int(item.price))")
+                Text("\(appSettings.selectedCurrency) \(Int(item.price * appSettings.currencyRate))")
                     .font(AppColor.sans(16, .semibold))
                     .foregroundColor(AppColor.textPrim)
                 Text("Qty: \(item.quantity)")
@@ -158,14 +159,14 @@ struct OrderDetailView: View {
                 .padding(.horizontal, 4)
 
             VStack(spacing: 0) {
-                summaryRow(label: "Subtotal", value: "\(order.currency) \(Int(order.totalPrice))")
+                summaryRow(label: "Subtotal", value: "\(appSettings.selectedCurrency) \(Int(order.totalPrice * appSettings.currencyRate))")
                 Divider().background(AppColor.border).padding(.horizontal, 16)
                 HStack {
                     Text("Total")
                         .font(AppColor.sans(17, .semibold))
                         .foregroundColor(AppColor.textPrim)
                     Spacer()
-                    Text("\(order.currency) \(Int(order.totalPrice))")
+                    Text("\(appSettings.selectedCurrency) \(Int(order.totalPrice * appSettings.currencyRate))")
                         .font(AppColor.sans(20, .semibold))
                         .foregroundColor(AppColor.textPrim)
                 }

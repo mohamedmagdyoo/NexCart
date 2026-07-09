@@ -37,11 +37,13 @@ final class CompleteOrderUseCase: CompleteOrderUseCaseProtocol {
         let firstName = nameParts.first ?? ""
         let lastName = nameParts.dropFirst().joined(separator: " ")
 
+        let rate = AppSettings.shared.currencyRate
+
         let lineItems: [OrderLineItemBody] = allItems.compactMap { item in
             guard let variantId = item.variantId, variantId > 0 else {
                 return nil
             }
-            return OrderLineItemBody(variantId: variantId, quantity: item.quantity)
+            return OrderLineItemBody(variantId: variantId, quantity: item.quantity, price: String(format: "%.2f", item.price * rate))
         }
 
         guard !lineItems.isEmpty else {
@@ -62,7 +64,7 @@ final class CompleteOrderUseCase: CompleteOrderUseCaseProtocol {
             kind: "sale",
             status: "success",
             gateway: paymentMethod == .cashOnDelivery ? "manual" : "apple_pay",
-            amount: String(format: "%.2f", total)
+            amount: String(format: "%.2f", total / rate)
         )
 
         let user = AppConstants.shared.getUserEntity()

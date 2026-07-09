@@ -18,23 +18,20 @@ struct CheckoutView: View {
     var body: some View {
         ZStack {
             loadedContent
-            
-            if let selectedAddress = viewModel.selectedAddress {
-                NavigationLink(
-                    destination: CompleteOrderView(
-                        viewModel: DIContainer.shared.container.resolve(CompleteOrderViewModel.self)!,
-                        paymentMethod: viewModel.selectedPaymentMethod,
-                        total: total,
-                        address: selectedAddress
-                    ),
-                    isActive: $viewModel.navToNextScreen,
-                    label: { EmptyView() }
-                )
-            }
         }
         .background(AppColor.bg.ignoresSafeArea())
         .navigationTitle("Checkout")
         .onAppear { viewModel.onAppear() }
+        .onChange(of: viewModel.navToNextScreen) { newValue in
+            if newValue, let selectedAddress = viewModel.selectedAddress {
+                AppRouter.shared.cartPath.append(CartRoute.completeOrder(
+                    payment: viewModel.selectedPaymentMethod,
+                    total: total,
+                    address: selectedAddress
+                ))
+                viewModel.navToNextScreen = false
+            }
+        }
     }
     
     private var loadedContent: some View {

@@ -86,6 +86,10 @@ final class CompleteOrderViewModel: CompleteOrderViewModelProtocol {
             let endDate = Calendar.current.date(byAdding: .day, value: 5, to: Date())!
             self.estimatedDelivery = "\(formatter.string(from: startDate)) — \(formatter.string(from: endDate))"
 
+            let draftOrderIds = Array(Set(allItems.map { String($0.drafOrderId) }))
+            _ = await cartViewModel.deleteFromCart(draftOrderIds: draftOrderIds)
+            cartViewModel.cartData.removeAll()
+
             isOrderPlaced = true
         } catch {
             self.error = error.localizedDescription
