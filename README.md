@@ -104,8 +104,3 @@ Presentation (SwiftUI Views + ViewModels)
 
 Built by a team as part of the ITI/JETS Mobile Lab course project.
 
----
-
-## 📄 License
-
-_Add your license here._
